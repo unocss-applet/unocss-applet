@@ -15,7 +15,7 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import UnoCSS from 'unocss/vite'
 
-import { presetUni } from '@unocss-applet/preset-applet'
+import presetApplet from '@unocss-applet/preset-applet'
 
 export default defineConfig({
   plugins: [
@@ -23,7 +23,7 @@ export default defineConfig({
     UnoCSS({
       presets: [
         // presetUno(),
-        presetUni(),
+        presetApplet(),
       ],
     }),
   ],
