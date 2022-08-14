@@ -1,0 +1,61 @@
+{
+  "name": "@unocss-applet/preset-applet",
+  "type": "module",
+  "version": "0.0.0",
+  "packageManager": "pnpm@7.2.1",
+  "description": "",
+  "author": "Neil Lee <zguolee@foxmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/unocss-applet/unocss-applet/tree/main/packages/preset-applet#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unocss-applet/unocss-applet.git",
+    "directory": "packages/preset-applet"
+  },
+  "bugs": "https://github.com/unocss-applet/unocss-applet/issues",
+  "keywords": [
+    "unocss",
+    "unocss-preset",
+    "uni-app"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
+    },
+    "./theme": {
+      "types": "./dist/theme.d.ts",
+      "require": "./dist/theme.cjs",
+      "import": "./dist/theme.mjs"
+    },
+    "./colors": {
+      "types": "./dist/colors.d.ts",
+      "require": "./dist/colors.cjs",
+      "import": "./dist/colors.mjs"
+    },
+    "./utils": {
+      "types": "./dist/utils.d.ts",
+      "require": "./dist/utils.cjs",
+      "import": "./dist/utils.mjs"
+    },
+    "./*": "./*"
+  },
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "*.css"
+  ],
+  "scripts": {
+    "build": "unbuild",
+    "stub": "unbuild --stub"
+  },
+  "dependencies": {
+    "@unocss/core": "0.45.6",
+    "@unocss/preset-mini": "0.45.6",
+    "@unocss/preset-wind": "0.45.6"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "name": "@unocss-applet/transformer-rename-class",
+  "type": "module",
+  "version": "0.0.0",
+  "packageManager": "pnpm@7.2.1",
+  "description": "",
+  "author": "Neil Lee <zguolee@foxmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/unocss-applet/unocss-applet/tree/main/packages/transformer-rename-class#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unocss-applet/unocss-applet.git",
+    "directory": "packages/transformer-rename-class"
+  },
+  "bugs": "https://github.com/unocss-applet/unocss-applet/issues",
+  "keywords": [
+    "unocss",
+    "unocss-transformer"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "unbuild",
+    "stub": "unbuild --stub"
+  },
+  "dependencies": {
+    "@unocss/core": "^0.45.6"
+  },
+  "devDependencies": {
+    "magic-string": "^0.26.2"
+  }
+}
