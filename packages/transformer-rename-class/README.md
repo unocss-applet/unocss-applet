@@ -2,6 +2,26 @@
 
 Coverts class selector name to hash.
 
+## Instal
+
+```bash
+npm i @unocss-applet/transformer-rename-class --save-dev # with npm
+yarn add @unocss-applet/transformer-rename-class -D # with yarn
+pnpm add @unocss-applet/transformer-rename-class -D # with pnpm
+```
+
+```ts
+import { defineConfig } from 'unocss'
+import transformerRenameClass from '@unocss-applet/transformer-rename-class'
+
+export default defineConfig({
+  // ...
+  transformers: [
+    transformerRenameClass(),
+  ],
+})
+```
+
 ## Usage
 
 > Only effect when class selector name include `[.:%!#()[\/\],]`.

@@ -2,12 +2,12 @@
 
 The `UniApp` preset for [UnoCSS](https://github.com/unocss/unocss), fork from [@unocss/preset-uno](https://github.com/unocss/unocss/tree/main/packages/preset-uno) and modified to transform some CSS selector that mini-program can't use.
 
-## Installation
+## Install
 
 ```bash
-npm i @unocss-applet/preset-applet unocss --save-dev # with npm
-yarn add @unocss-applet/preset-applet unocss -D # with yarn
-pnpm add @unocss-applet/preset-applet unocss -D # with pnpm
+npm i @unocss-applet/preset-applet --save-dev # with npm
+yarn add @unocss-applet/preset-applet -D # with yarn
+pnpm add @unocss-applet/preset-applet -D # with pnpm
 ```
 
 ```ts

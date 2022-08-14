@@ -2,17 +2,17 @@
 
 Coverts rem to rpx for utils.
 
-## Installation
+## Instal
 
 ```bash
-npm i unocss-preset-rem-to-rpx unocss --save-dev # with npm
-yarn add unocss-preset-rem-to-rpx unocss -D # with yarn
-pnpm add unocss-preset-rem-to-rpx unocss -D # with pnpm
+npm i @unocss-applet/preset-rem-to-rpx --save-dev # with npm
+yarn add @unocss-applet/preset-rem-to-rpx -D # with yarn
+pnpm add @unocss-applet/preset-rem-to-rpx -D # with pnpm
 ```
 
 ```ts
 import presetUno from '@unocss/preset-uno'
-import presetRemToRpx from 'unocss-preset-rem-to-rpx'
+import presetRemToRpx from '@unocss-applet/preset-rem-to-rpx'
 
 UnoCSS({
   presets: [
