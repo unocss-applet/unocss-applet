@@ -66,9 +66,7 @@ export default function transformerRenameClass(options: RenameClassOptions = {})
         const body = matchSplit[1].slice(1, -1)
 
         if (charReg.test(body)) {
-          console.log(body)
           const replacements = await compileApplet(body, ctx)
-          console.log(replacements)
           s.overwrite(start, start + match[0].length, `${matchSplit[0]}="${replacements.join(' ')}"`)
         }
       }
