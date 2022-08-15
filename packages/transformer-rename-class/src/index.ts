@@ -37,6 +37,8 @@ export default function transformerRenameClass(options: RenameClassOptions = {})
     const result = await Promise.all(body.split(/\s+/).filter(Boolean).map(async i => [i, !!await uno.parseToken(i)] as const))
     const known = result.filter(([, matched]) => matched).map(([i]) => i)
     const unknown = result.filter(([, matched]) => !matched).map(([i]) => i)
+    console.log('known', known)
+    console.log('unknown', unknown)
     replacements.push(...unknown)
     body = known.join(' ')
     if (body) {
@@ -64,15 +66,24 @@ export default function transformerRenameClass(options: RenameClassOptions = {})
         const body = matchSplit[1].slice(1, -1)
 
         if (charReg.test(body)) {
+          console.log(body)
           const replacements = await compileApplet(body, ctx)
+          console.log(replacements)
           s.overwrite(start, start + match[0].length, `${matchSplit[0]}="${replacements.join(' ')}"`)
         }
       }
       const stringMatches = [...s.original.matchAll(stringRE)]
       for (const match of stringMatches) {
         // skip `${...}`
-        if (match[0].includes('${'))
+        if (/\$\{.*\}/g.test(match[0]))
           continue
+        // skip all the image formats in HTML
+        if (/\.(png|jpg|jpeg|gif|svg)/g.test(match[0]))
+          continue
+        // skip http(s)://
+        if (/^http(s)?:\/\//g.test(match[0]))
+          continue
+
         const start = match.index!
         const body = match[0].slice(1, -1)
         if (charReg.test(body)) {

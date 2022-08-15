@@ -44,7 +44,10 @@ describe('transformer-rename-class', () => {
         <div class="py-3.5 grid-cols-[0.7fr_repeat(7,1fr)]">
           py-3
         </div>
-        <div hover-class="text-green-500/50">
+        <div class="bg-[url('/img/hero-pattern.svg')]">
+          uniapp
+        </div>
+        <div class="bg-[url('https://raw.githubusercontent.com/unocss/unocss/main/playground/public/icon-gray.svg')]">
           uniapp
         </div>
         <div class="m-0.5 p-1 text-2xl" :class="true ? '' : 'text-yellow-500 p-2.5'">
@@ -74,7 +77,10 @@ describe('transformer-rename-class', () => {
               <div class=\\"uno-0tr0xg\\">
                 py-3
               </div>
-              <div hover-class=\\"uno-cteohy\\">
+              <div class=\\"uno-qdng63\\">
+                uniapp
+              </div>
+              <div class=\\"uno-exs88i\\">
                 uniapp
               </div>
               <div class=\\"uno-tw4biu\\" :class=\\"true ? '' : 'uno-qju0i9'\\">
@@ -88,9 +94,10 @@ describe('transformer-rename-class', () => {
       .uno-tw4biu{margin:0.125rem;padding:0.25rem;font-size:1.5rem;line-height:2rem;}
       .uno-2gzdpm{border-width:1px;border-style:solid;--un-bg-opacity:1;background-color:rgba(191,219,254,var(--un-bg-opacity));--un-bg-opacity:1 !important;background-color:rgba(239,68,68,var(--un-bg-opacity)) !important;padding-left:0.5rem;padding-right:0.5rem;transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms;}
       .uno-98db2v{--un-bg-opacity:1;background-color:hsla(2.7,81.9%,69.6%,var(--un-bg-opacity));}
+      .uno-exs88i{--un-url:url('https://raw.githubusercontent.com/unocss/unocss/main/playground/public/icon-gray.svg');background-image:var(--un-url);}
+      .uno-qdng63{--un-url:url('/img/hero-pattern.svg');background-image:var(--un-url);}
       .uno-qju0i9{padding:0.625rem;--un-text-opacity:1;color:rgba(234,179,8,var(--un-text-opacity));}
       .uno-2zpnl9{color:rgba(187,247,208,0.5);}
-      .uno-cteohy{color:rgba(34,197,94,0.5);}
       /* layer: default */
       .flex{display:flex;}
       .flex-col{flex-direction:column;}
