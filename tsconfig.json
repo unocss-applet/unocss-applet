@@ -18,7 +18,8 @@
     "paths": {
       "@unocss-applet/preset-rem-to-rpx": ["./packages/preset-rem-to-rpx/src/index.ts"],
       "@unocss-applet/preset-applet": ["./packages/preset-applet/src/index.ts"],
-      "@unocss-applet/transformer-rename-class": ["./packages/transformer-rename-class/src/index.ts"]
+      "@unocss-applet/transformer-rename-class": ["./packages/transformer-rename-class/src/index.ts"],
+      "unocss-applet": ["./packages/unocss-applet/src/index.ts"]
     }
   },
   "exclude": [

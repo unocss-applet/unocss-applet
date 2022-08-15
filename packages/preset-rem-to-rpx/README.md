@@ -9,20 +9,21 @@ npm i @unocss-applet/preset-rem-to-rpx --save-dev # with npm
 yarn add @unocss-applet/preset-rem-to-rpx -D # with yarn
 pnpm add @unocss-applet/preset-rem-to-rpx -D # with pnpm
 ```
+  
+  ## Usage
 
 ```ts
-import presetUno from '@unocss/preset-uno'
+import { defineConfig } from 'unocss'
+
 import presetRemToRpx from '@unocss-applet/preset-rem-to-rpx'
 
-UnoCSS({
+export default defineConfig({
   presets: [
-    presetUno(),
-    presetRemToRpx()
+    // ...
+    presetRemToRpx({ baseFontSize: 16, screenWidth: 375 }),
   ],
 })
 ```
-
-## Usage
 
 ```html
 <div class="m-2"></div>

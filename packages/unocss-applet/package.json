@@ -1,0 +1,62 @@
+{
+  "name": "unocss-applet",
+  "type": "module",
+  "version": "0.0.5",
+  "packageManager": "pnpm@7.2.1",
+  "description": "",
+  "author": "Neil Lee <zguolee@foxmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/unocss-applet/unocss-applet#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unocss-applet/unocss-applet.git"
+  },
+  "bugs": "https://github.com/unocss-applet/unocss-applet/issues",
+  "keywords": [
+    "unocss",
+    "uni-app",
+    "atomic-css",
+    "atomic-css-engine",
+    "css",
+    "tailwind",
+    "windicss"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
+    },
+    "./preset-applet": {
+      "types": "./dist/preset-applet.d.ts",
+      "require": "./dist/preset-applet.cjs",
+      "import": "./dist/preset-applet.mjs"
+    },
+    "./preset-rem-to-rpx": {
+      "types": "./dist/preset-rem-to-rpx.d.ts",
+      "require": "./dist/preset-rem-to-rpx.cjs",
+      "import": "./dist/preset-rem-to-rpx.mjs"
+    },
+    "./transformer-rename-class": {
+      "types": "./dist/transformer-rename-class.d.ts",
+      "require": "./dist/transformer-rename-class.cjs",
+      "import": "./dist/transformer-rename-class.mjs"
+    }
+  },
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "unbuild",
+    "stub": "unbuild --stub"
+  },
+  "dependencies": {
+    "@unocss-applet/preset-applet": "workspace:*",
+    "@unocss-applet/preset-rem-to-rpx": "workspace:*",
+    "@unocss-applet/transformer-rename-class": "workspace:*"
+  }
+}

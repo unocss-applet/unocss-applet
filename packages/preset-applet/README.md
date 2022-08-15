@@ -10,22 +10,14 @@ yarn add @unocss-applet/preset-applet -D # with yarn
 pnpm add @unocss-applet/preset-applet -D # with pnpm
 ```
 
-```ts
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import UnoCSS from 'unocss/vite'
+## Usage
 
+```ts
 import presetApplet from '@unocss-applet/preset-applet'
 
 export default defineConfig({
-  plugins: [
-    vue(),
-    UnoCSS({
-      presets: [
-        // presetUno(),
-        presetApplet(),
-      ],
-    }),
+  presets: [
+    presetApplet({ enableApplet: false }),
   ],
 })
 ```

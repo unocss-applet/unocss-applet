@@ -10,8 +10,13 @@ yarn add @unocss-applet/transformer-rename-class -D # with yarn
 pnpm add @unocss-applet/transformer-rename-class -D # with pnpm
 ```
 
+## Usage
+
+> Only effect when class selector name include `[.:%!#()[\/\],]`.
+
 ```ts
 import { defineConfig } from 'unocss'
+
 import transformerRenameClass from '@unocss-applet/transformer-rename-class'
 
 export default defineConfig({
@@ -22,9 +27,6 @@ export default defineConfig({
 })
 ```
 
-## Usage
-
-> Only effect when class selector name include `[.:%!#()[\/\],]`.
 
 ```html
 // from
