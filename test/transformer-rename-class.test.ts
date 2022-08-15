@@ -39,7 +39,7 @@ describe('transformer-rename-class', () => {
           </div>
         </div>
         <div class="p-1" :class="true ? 'text-yellow-500' : ''">
-          abckefghijklmnopqrstuvwxyz
+          {{ \`index\${index + 1}\` }}
         </div>
         <div class="py-3.5 grid-cols-[0.7fr_repeat(7,1fr)]">
           py-3
@@ -69,7 +69,7 @@ describe('transformer-rename-class', () => {
                 </div>
               </div>
               <div class=\\"p-1\\" :class=\\"true ? 'text-yellow-500' : ''\\">
-                abckefghijklmnopqrstuvwxyz
+                {{ \`index\${index + 1}\` }}
               </div>
               <div class=\\"uno-0tr0xg\\">
                 py-3

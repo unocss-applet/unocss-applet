@@ -55,6 +55,7 @@ export default function transformerRenameClass(options: RenameClassOptions = {})
     async transform(s, _, ctx) {
       const classMatches = [...s.original.matchAll(classRE)]
       for (const match of classMatches) {
+        // skip `... ? ... : ...`
         if (/\?.*:/g.test(match[0]))
           continue
         const start = match.index!
@@ -69,6 +70,9 @@ export default function transformerRenameClass(options: RenameClassOptions = {})
       }
       const stringMatches = [...s.original.matchAll(stringRE)]
       for (const match of stringMatches) {
+        // skip `${...}`
+        if (match[0].includes('${'))
+          continue
         const start = match.index!
         const body = match[0].slice(1, -1)
         if (charReg.test(body)) {
