@@ -1,4 +1,4 @@
-import type { Preset } from '@unocss/core'
+import type { Preset } from 'unocss'
 
 const remRE = /^-?[\.\d]+rem$/
 

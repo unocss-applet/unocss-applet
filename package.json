@@ -21,13 +21,13 @@
     "@unocss-applet/preset-rem-to-rpx": "workspace:*",
     "@unocss-applet/transformer-rename-class": "workspace:*",
     "@unocss/preset-mini": "^0.45.6",
-    "@unocss/preset-uno": "^0.45.6",
     "bumpp": "^8.2.1",
     "eslint": "^8.21.0",
     "esno": "^0.16.3",
     "rimraf": "^3.0.2",
     "typescript": "^4.7.4",
     "unbuild": "^0.8.8",
+    "unocss": "^0.45.6",
     "vite": "^3.0.7",
     "vitest": "^0.21.1"
   }

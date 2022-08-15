@@ -1,4 +1,4 @@
-import type { Preset } from '@unocss/core'
+import type { Preset } from 'unocss'
 import type { PresetMiniOptions, Theme } from '@unocss/preset-mini'
 import { rules, shortcuts, theme, variants } from '@unocss/preset-wind'
 import { preflights } from './preflights'
@@ -8,13 +8,13 @@ import { variantColorMix } from './variants/mix'
 export type { Theme }
 
 export interface PresetAppletOptions extends PresetMiniOptions {
-  enableAppletPostprocess?: boolean
+  enableApplet?: boolean
 }
 
 export const presetApplet = (options: PresetAppletOptions = {}): Preset<Theme> => {
   options.dark = options.dark ?? 'class'
   options.attributifyPseudo = options.attributifyPseudo ?? false
-  options.enableAppletPostprocess = options.enableAppletPostprocess ?? true
+  options.enableApplet = options.enableApplet ?? true
 
   return {
     name: 'unocss-preset-applet',
@@ -29,7 +29,7 @@ export const presetApplet = (options: PresetAppletOptions = {}): Preset<Theme> =
     preflights,
     postprocess: [
       (util) => {
-        options.enableAppletPostprocess && (util.selector = unoCSSToAppletProcess(util.selector))
+        options.enableApplet && (util.selector = unoCSSToAppletProcess(util.selector))
         return util
       }],
     prefix: options.prefix,

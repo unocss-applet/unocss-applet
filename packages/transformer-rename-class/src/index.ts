@@ -1,4 +1,4 @@
-import type { SourceCodeTransformer, UnocssPluginContext } from '@unocss/core'
+import type { SourceCodeTransformer, UnocssPluginContext } from 'unocss'
 
 export interface RenameClassOptions {
   /**
