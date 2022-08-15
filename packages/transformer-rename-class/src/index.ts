@@ -51,7 +51,7 @@ export default function transformerRenameClass(options: RenameClassOptions = {})
 
   return {
     name: 'rename-class',
-    enforce: 'post',
+    enforce: 'pre',
     async transform(s, _, ctx) {
       const classMatches = [...s.original.matchAll(classRE)]
       for (const match of classMatches) {
