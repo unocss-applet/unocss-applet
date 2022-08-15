@@ -37,8 +37,6 @@ export default function transformerRenameClass(options: RenameClassOptions = {})
     const result = await Promise.all(body.split(/\s+/).filter(Boolean).map(async i => [i, !!await uno.parseToken(i)] as const))
     const known = result.filter(([, matched]) => matched).map(([i]) => i)
     const unknown = result.filter(([, matched]) => !matched).map(([i]) => i)
-    console.log('known', known)
-    console.log('unknown', unknown)
     replacements.push(...unknown)
     body = known.join(' ')
     if (body) {
