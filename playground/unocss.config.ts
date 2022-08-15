@@ -4,7 +4,7 @@ import { presetApplet, presetRemToRpx, transformerRenameClass } from 'unocss-app
 
 export default defineConfig({
   presets: [
-    presetApplet({ enableApplet: false }),
+    presetApplet(),
     presetRemToRpx({ baseFontSize: 16, screenWidth: 375 }),
     presetIcons(),
   ],

@@ -1,6 +1,6 @@
 # @unocss-applet/preset-applet
 
-The `UniApp` preset for [UnoCSS](https://github.com/unocss/unocss), fork from [@unocss/preset-uno](https://github.com/unocss/unocss/tree/main/packages/preset-uno) and modified to transform some CSS selector that mini-program can't use.
+The Applet preset for [UnoCSS](https://github.com/unocss/unocss), fork from [@unocss/preset-uno](https://github.com/unocss/unocss/tree/main/packages/preset-uno) and modified to transform some CSS selector that mini-program can't use.
 
 ## Install
 
@@ -17,18 +17,39 @@ import presetApplet from '@unocss-applet/preset-applet'
 
 export default defineConfig({
   presets: [
-    presetApplet({ enableApplet: false }),
+    presetApplet(),
+  ],
+})
+```
+
+| form | to      | sample                 |
+| ---- | ------- | ---------------------- |
+| [`*`](https://github.com/unocss/unocss/blob/main/packages/preset-mini/src/preflights.ts) | [`page`](./src/preflights.ts) | - |
+
+> If you need to use a class selector that contains `[.:%!#()[\/\],]`, it needs to be used with [@unocss-applet/transformer-rename-class](../unocss-applet/)
+
+
+```ts
+import presetApplet from '@unocss-applet/preset-applet'
+import transformerRenameClass from '@unocss-applet/transformer-rename-class'
+
+export default defineConfig({
+  presets: [
+    presetApplet(),
+  ],
+  transformers: [
+    transformerRenameClass(),
   ],
 })
 ```
 
 ## Change
 
+> Only effect when enabled when set `presetApplet({ enableApplet: false })`.
 ### CSS selector transform
 
 | form | to      | sample                 |
 | ---- | ------- | ---------------------- |
-| [`*`](https://github.com/unocss/unocss/blob/main/packages/preset-mini/src/preflights.ts) | [`page`](./src/preflights.ts) | - |
 | `\.` | `-point-` | `p-0.5` -> `p-0-point-5` |
 | `\/` | `-div-` | `p-1/2` -> `p-1-div-2` |
 | `\:` | `-c-` | `dark:text-green-500` -> `dark-c-text-green-500` |
