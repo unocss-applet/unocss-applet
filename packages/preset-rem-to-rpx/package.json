@@ -1,7 +1,7 @@
 {
   "name": "@unocss-applet/preset-rem-to-rpx",
   "type": "module",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "packageManager": "pnpm@7.2.1",
   "description": "",
   "author": "Neil Lee <zguolee@foxmail.com>",
