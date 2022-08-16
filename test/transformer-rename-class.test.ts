@@ -42,7 +42,7 @@ describe('transformer-rename-class', () => {
           {{ \`index\${index + 1}\` }}
         </div>
         <div class="py-3.5 grid-cols-[0.7fr_repeat(7,1fr)]">
-          py-3
+          py-4.5
         </div>
         <div class="bg-[url('/img/hero-pattern.svg')]">
           uniapp
@@ -75,7 +75,7 @@ describe('transformer-rename-class', () => {
                 {{ \`index\${index + 1}\` }}
               </div>
               <div class=\\"uno-0tr0xg\\">
-                py-3
+                py-4.5
               </div>
               <div class=\\"uno-qdng63\\">
                 uniapp
@@ -105,7 +105,7 @@ describe('transformer-rename-class', () => {
       .items-center{align-items:center;}
       .justify-center{justify-content:center;}
       .p-1{padding:0.25rem;}
-      .py-3{padding-top:0.75rem;padding-bottom:0.75rem;}
+      .py-4\\\\.5{padding-top:1.125rem;padding-bottom:1.125rem;}
       .text-4xl{font-size:2.25rem;line-height:2.5rem;}
       .text-green-500{--un-text-opacity:1;color:rgba(34,197,94,var(--un-text-opacity));}
       .text-yellow-500{--un-text-opacity:1;color:rgba(234,179,8,var(--un-text-opacity));}",

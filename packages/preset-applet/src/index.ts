@@ -11,10 +11,10 @@ export interface PresetAppletOptions extends PresetMiniOptions {
   enableApplet?: boolean
 }
 
-export const presetApplet = (options: PresetAppletOptions = {}): Preset<Theme> => {
+const presetApplet = (options: PresetAppletOptions = {}): Preset<Theme> => {
   options.dark = options.dark ?? 'class'
   options.attributifyPseudo = options.attributifyPseudo ?? false
-  options.enableApplet = options.enableApplet ?? false
+  options.enableApplet = options.enableApplet ?? true
 
   return {
     name: 'unocss-preset-applet',
