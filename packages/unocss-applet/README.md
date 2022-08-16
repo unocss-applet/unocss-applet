@@ -1,6 +1,6 @@
 # unocss-applet
 
-The Applet preset and transformer for [UnoCSS](https://github.com/unocss/unocss), modified to transform some CSS selector that mini-program can't use.
+The Applet preset and transformer for [UnoCSS](https://github.com/unocss/unocss), modified to transform some CSS selector.
 
 ## Instal
 
@@ -20,7 +20,7 @@ import { presetApplet, presetRemToRpx, transformerRenameClass } from 'unocss-app
 export default defineConfig({
   presets: [
     presetApplet(),
-    presetRemToRpx({ baseFontSize: 16, screenWidth: 375 }),
+    presetRemToRpx(),
   ],
   transformers: [
     transformerRenameClass(),
