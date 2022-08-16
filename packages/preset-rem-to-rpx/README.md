@@ -10,7 +10,7 @@ yarn add @unocss-applet/preset-rem-to-rpx -D # with yarn
 pnpm add @unocss-applet/preset-rem-to-rpx -D # with pnpm
 ```
   
-  ## Usage
+## Usage
 
 ```ts
 import { defineConfig } from 'unocss'
@@ -23,6 +23,22 @@ export default defineConfig({
     presetRemToRpx({ baseFontSize: 16, screenWidth: 375 }),
   ],
 })
+```
+
+## Type Declarations
+```ts
+export interface RemToRpxOptions {
+  /**
+   * 1rem = n px
+   * @default 16
+   */
+  baseFontSize?: number
+  /**
+   * screen width in px
+   * @default 375
+   */
+  screenWidth?: number
+}
 ```
 
 ```html

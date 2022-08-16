@@ -1,6 +1,6 @@
 # @unocss-applet/preset-applet
 
-The Applet preset for [UnoCSS](https://github.com/unocss/unocss), fork from [@unocss/preset-uno](https://github.com/unocss/unocss/tree/main/packages/preset-uno) and modified to transform some CSS selector that mini-program can't use.
+The Applet preset for [UnoCSS](https://github.com/unocss/unocss), fork from [@unocss/preset-uno](https://github.com/unocss/unocss/tree/main/packages/preset-uno) and modified to transform some CSS selector.
 
 ## Install
 
@@ -22,31 +22,30 @@ export default defineConfig({
 })
 ```
 
+## Type Declarations
+```ts
+// PresetMiniOptions https://github.com/unocss/unocss/blob/main/packages/preset-mini/src/index.ts#L30-L55
+export interface PresetAppletOptions extends PresetMiniOptions {
+  /**
+   * Enable applet, only build applet should be true
+   * e.g. In uniapp `enableApplet: !(process.env.UNI_PLATFORM === 'h5')` to disable rename class in h5
+   * @default true
+   */
+  enableApplet?: boolean
+}
+```
+
+## Change
+
 | form | to      | sample                 |
 | ---- | ------- | ---------------------- |
 | [`*`](https://github.com/unocss/unocss/blob/main/packages/preset-mini/src/preflights.ts) | [`page`](./src/preflights.ts) | - |
 
 > If you need to use a class selector that contains `[.:%!#()[\/\],]`, it needs to be used with [@unocss-applet/transformer-rename-class](../unocss-applet/)
 
+## More
 
-```ts
-import presetApplet from '@unocss-applet/preset-applet'
-import transformerRenameClass from '@unocss-applet/transformer-rename-class'
-
-export default defineConfig({
-  presets: [
-    presetApplet(),
-  ],
-  transformers: [
-    transformerRenameClass(),
-  ],
-})
-```
-
-## Change
-
-> Only effect when enabled when set `presetApplet({ enableApplet: false })`.
-### CSS selector transform
+> Default enabled because for [issue#2](https://github.com/unocss-applet/unocss-applet/issues/2) in applet, to disable just set `enableApplet: false`
 
 | form | to      | sample                 |
 | ---- | ------- | ---------------------- |

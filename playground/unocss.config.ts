@@ -1,14 +1,19 @@
-import { defineConfig, presetIcons } from 'unocss'
+import { defineConfig, presetIcons, transformerDirectives } from 'unocss'
 
 import { presetApplet, presetRemToRpx, transformerRenameClass } from 'unocss-applet'
 
 export default defineConfig({
   presets: [
-    presetApplet(),
-    presetRemToRpx({ baseFontSize: 16, screenWidth: 375 }),
+    presetApplet({
+      enableApplet: !(process.env.UNI_PLATFORM === 'h5'),
+    }),
+    presetRemToRpx(),
     presetIcons(),
   ],
   transformers: [
-    transformerRenameClass(),
+    transformerDirectives(),
+    transformerRenameClass({
+      enableRename: !(process.env.UNI_PLATFORM === 'h5'),
+    }),
   ],
 })

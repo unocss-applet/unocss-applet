@@ -27,6 +27,51 @@ export default defineConfig({
 })
 ```
 
+## Type Declarations
+```ts
+export interface RenameClassOptions {
+  /**
+   * Prefix for compile class name
+   * @default 'uno-'
+   */
+  classPrefix?: string
+
+  /**
+   * Hash function
+   */
+  hashFn?: (str: string) => string
+
+  /**
+   * The layer name of generated rules
+   * @default 'applet_shortcuts'
+   */
+  layer?: string
+
+  /**
+   * Enable rename class, only build applet should be true
+   * e.g. In uniapp `enableRename: !(process.env.UNI_PLATFORM === 'h5')` to disable rename class in h5
+   * @default true
+   */
+  enableRename?: boolean
+
+  /**
+   * Separators to expand.
+   *
+   * ```
+   * foo-(bar baz) -> foo-bar foo-baz
+   *    ^
+   *    separator
+   * ```
+   *
+   * You may set it to `[':']` for strictness.
+   *
+   * @default [':', '-']
+   * @see https://github.com/unocss/unocss/pull/1231
+   */
+  separators?: (':' | '-')[]
+}
+```
+
 ## Example
 ### Using in with `class`
 #### without

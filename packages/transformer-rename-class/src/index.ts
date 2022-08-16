@@ -1,4 +1,5 @@
 import type { SourceCodeTransformer, UnocssPluginContext } from 'unocss'
+import { expandVariantGroup } from '@unocss/core'
 
 export interface RenameClassOptions {
   /**
@@ -14,8 +15,32 @@ export interface RenameClassOptions {
 
   /**
    * The layer name of generated rules
+   * @default 'applet_shortcuts'
    */
   layer?: string
+
+  /**
+   * Enable rename class, only build applet should be true
+   * e.g. In uniapp `enableRename: !(process.env.UNI_PLATFORM === 'h5')` to disable rename class in h5
+   * @default true
+   */
+  enableRename?: boolean
+
+  /**
+   * Separators to expand.
+   *
+   * ```
+   * foo-(bar baz) -> foo-bar foo-baz
+   *    ^
+   *    separator
+   * ```
+   *
+   * You may set it to `[':']` for strictness.
+   *
+   * @default [':', '-']
+   * @see https://github.com/unocss/unocss/pull/1231
+   */
+  separators?: (':' | '-')[]
 }
 
 export default function transformerRenameClass(options: RenameClassOptions = {}): SourceCodeTransformer {
@@ -23,6 +48,7 @@ export default function transformerRenameClass(options: RenameClassOptions = {})
     classPrefix = 'uno-',
     hashFn = hash,
     layer = 'applet_shortcuts',
+    enableRename = true,
   } = options
 
   // Regular expression of characters to be escaped
@@ -30,6 +56,63 @@ export default function transformerRenameClass(options: RenameClassOptions = {})
 
   const classRE = /:?(hover-)?class=\".*?\"/g
   const stringRE = /(['\`]).*?(['\`])/g
+
+  return {
+    name: 'rename-class',
+    enforce: 'pre',
+    async transform(s, _, ctx) {
+      if (!enableRename) {
+        // https://github.com/unocss/unocss/tree/main/packages/transformer-variant-group
+        expandVariantGroup(s, options.separators)
+      }
+      else {
+        // process class
+        const classMatches = [...s.original.matchAll(classRE)]
+        for (const match of classMatches) {
+          // skip `... ? ... : ...`
+          if (/\?.*:/g.test(match[0]))
+            continue
+
+          // skip `... : ...`
+          if (/{.+:.+}/g.test(match[0]))
+            continue
+
+          const start = match.index!
+          const matchSplit = match[0].split('=')
+
+          const body = expandVariantGroup(matchSplit[1].slice(1, -1), options.separators)
+
+          if (charReg.test(body)) {
+            const replacements = await compileApplet(body, ctx)
+            s.overwrite(start, start + match[0].length, `${matchSplit[0]}="${replacements.join(' ')}"`)
+          }
+        }
+
+        // process string
+        const stringMatches = [...s.original.matchAll(stringRE)]
+        for (const match of stringMatches) {
+          // skip `${...}`
+          if (/\$\{.*\}/g.test(match[0]))
+            continue
+
+          // https://tailwindcss.com/docs/background-image#arbitrary-values
+          // skip all the image formats in HTML for bg-[url('...')]
+          if (/\.(png|jpg|jpeg|gif|svg)/g.test(match[0]))
+            continue
+          // skip http(s)://
+          if (/^http(s)?:\/\//g.test(match[0]))
+            continue
+
+          const start = match.index!
+          const body = match[0].slice(1, -1)
+          if (charReg.test(body)) {
+            const replacements = await compileApplet(body, ctx)
+            s.overwrite(start, start + match[0].length, `'${replacements.join(' ')}'`)
+          }
+        }
+      }
+    },
+  }
 
   async function compileApplet(body: string, ctx: UnocssPluginContext): Promise<string[]> {
     const { uno, tokens } = ctx
@@ -47,47 +130,6 @@ export default function transformerRenameClass(options: RenameClassOptions = {})
       tokens.add(className)
     }
     return replacements
-  }
-
-  return {
-    name: 'rename-class',
-    enforce: 'pre',
-    async transform(s, _, ctx) {
-      const classMatches = [...s.original.matchAll(classRE)]
-      for (const match of classMatches) {
-        // skip `... ? ... : ...`
-        if (/\?.*:/g.test(match[0]))
-          continue
-        const start = match.index!
-        const matchSplit = match[0].split('=')
-
-        const body = matchSplit[1].slice(1, -1)
-
-        if (charReg.test(body)) {
-          const replacements = await compileApplet(body, ctx)
-          s.overwrite(start, start + match[0].length, `${matchSplit[0]}="${replacements.join(' ')}"`)
-        }
-      }
-      const stringMatches = [...s.original.matchAll(stringRE)]
-      for (const match of stringMatches) {
-        // skip `${...}`
-        if (/\$\{.*\}/g.test(match[0]))
-          continue
-        // skip all the image formats in HTML
-        if (/\.(png|jpg|jpeg|gif|svg)/g.test(match[0]))
-          continue
-        // skip http(s)://
-        if (/^http(s)?:\/\//g.test(match[0]))
-          continue
-
-        const start = match.index!
-        const body = match[0].slice(1, -1)
-        if (charReg.test(body)) {
-          const replacements = await compileApplet(body, ctx)
-          s.overwrite(start, start + match[0].length, `'${replacements.join(' ')}'`)
-        }
-      }
-    },
   }
 }
 
