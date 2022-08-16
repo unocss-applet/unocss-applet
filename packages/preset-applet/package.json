@@ -1,7 +1,7 @@
 {
   "name": "@unocss-applet/preset-applet",
   "type": "module",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "packageManager": "pnpm@7.2.1",
   "description": "",
   "author": "Neil Lee <zguolee@foxmail.com>",
