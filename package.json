@@ -8,6 +8,8 @@
     "build": "rimraf packages/*/dist && pnpm -r --filter=./packages/* run build && pnpm -r run build-post",
     "play:mp-weixin": "npm -C playground run dev:mp-weixin",
     "build:mp-weixin": "npm -C playground run build:mp-weixin",
+    "play:h5": "npm -C playground run dev:h5",
+    "build:h5": "npm -C playground run build:h5",
     "release": "bumpp package.json packages/**/package.json",
     "stub": "pnpm -r --filter=./packages/* --parallel run stub",
     "typecheck": "tsc --noEmit",
