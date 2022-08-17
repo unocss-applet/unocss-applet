@@ -78,13 +78,13 @@ export default function transformerRenameClass(options: RenameClassOptions = {})
             continue
 
           const start = match.index!
-          const matchSplit = match[0].split('=')
+          const matchSplit = match[0].split('class=')
 
           const body = expandVariantGroup(matchSplit[1].slice(1, -1), options.separators)
 
           if (charReg.test(body)) {
             const replacements = await compileApplet(body, ctx)
-            s.overwrite(start, start + match[0].length, `${matchSplit[0]}="${replacements.join(' ')}"`)
+            s.overwrite(start, start + match[0].length, `${matchSplit[0]}class="${replacements.join(' ')}"`)
           }
         }
 
@@ -95,12 +95,13 @@ export default function transformerRenameClass(options: RenameClassOptions = {})
           if (/\$\{.*\}/g.test(match[0]))
             continue
 
+          // There may be no need
           // https://tailwindcss.com/docs/background-image#arbitrary-values
           // skip all the image formats in HTML for bg-[url('...')]
           if (/\.(png|jpg|jpeg|gif|svg)/g.test(match[0]))
             continue
           // skip http(s)://
-          if (/^http(s)?:\/\//g.test(match[0]))
+          if (/http(s)?:\/\//g.test(match[0]))
             continue
 
           const start = match.index!

@@ -21,7 +21,10 @@ const type = 'text'
     <div :class="{ 'is-textarea-icon': type === 'textarea' }">
       uniapp
     </div>
-    <div class="bg-[url('https://raw.githubusercontent.com/unocss/unocss/main/playground/public/icon-gray.svg')]">
+    <div
+      class="bg-[url(https://avatars.githubusercontent.com/u/40738594?s=40&v=4)]"
+      :class="{ 'bg-[url(https://avatars.githubusercontent.com/u/40738594?s=40&v=4)]': type === 'textarea' }"
+    >
       uniapp
     </div>
     <div class="m-0.5 p-1 text-2xl" :class="true ? '' : 'text-yellow-500 p-2.5'">
