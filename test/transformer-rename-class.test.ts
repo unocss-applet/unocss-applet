@@ -37,6 +37,7 @@ describe('transformer-rename-class', () => {
       const bg = 'uno-98db2v'
       const index = 1
       const type = 'text'
+      const bool = true
       </script>
 
       <template>
@@ -47,22 +48,23 @@ describe('transformer-rename-class', () => {
               0123456789
             </div>
           </div>
-          <div class=\\"p-1\\" :class=\\"true ? 'text-yellow-500' : ''\\">
+          <div class=\\"p-1\\" :class=\\"bool ? 'text-yellow-500' : ''\\">
             {{ \`index\${index + 1}\` }}
           </div>
           <div class=\\"uno-0tr0xg\\">
             py-4.5
           </div>
+          <uni-easyinput />
           <div :class=\\"{ 'is-textarea-icon': type === 'textarea' }\\">
             uniapp
           </div>
           <div
             class=\\"uno-g7ig4t\\"
-            :class=\\"{ 'uno-g7ig4t': type === 'textarea' }\\"
+            :class=\\"{ 'bg-[url(https://avatars.githubusercontent.com/u/40738594?s=40&v=4)]': type === 'textarea' }\\"
           >
             uniapp
           </div>
-          <div class=\\"uno-tw4biu\\" :class=\\"true ? '' : 'uno-qju0i9'\\">
+          <div class=\\"uno-tw4biu\\" :class=\\"bool ? '' : 'uno-qju0i9'\\">
             abckefghijklmnopqrstuvwxyz
           </div>
         </div>

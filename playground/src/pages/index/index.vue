@@ -2,6 +2,7 @@
 const bg = 'bg-[hsl(2.7,81.9%,69.6%)]'
 const index = 1
 const type = 'text'
+const bool = true
 </script>
 
 <template>
@@ -12,12 +13,13 @@ const type = 'text'
         0123456789
       </div>
     </div>
-    <div class="p-1" :class="true ? 'text-yellow-500' : ''">
+    <div class="p-1" :class="bool ? 'text-yellow-500' : ''">
       {{ `index${index + 1}` }}
     </div>
     <div class="py-3.5 grid-cols-[0.7fr_repeat(7,1fr)]">
       py-4.5
     </div>
+    <uni-easyinput />
     <div :class="{ 'is-textarea-icon': type === 'textarea' }">
       uniapp
     </div>
@@ -27,7 +29,7 @@ const type = 'text'
     >
       uniapp
     </div>
-    <div class="m-0.5 p-1 text-2xl" :class="true ? '' : 'text-yellow-500 p-2.5'">
+    <div class="m-0.5 p-1 text-2xl" :class="bool ? '' : 'text-yellow-500 p-2.5'">
       abckefghijklmnopqrstuvwxyz
     </div>
   </div>

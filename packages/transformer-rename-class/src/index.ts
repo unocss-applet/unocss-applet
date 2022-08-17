@@ -55,7 +55,8 @@ export default function transformerRenameClass(options: RenameClassOptions = {})
   const charReg = /[.:%!#()[\/\],]/
 
   const classRE = /:?(hover-)?class=\".*?\"/g
-  const stringRE = /(['\`]).*?(['\`])/g
+  const string1RE = /([']).*?(['])/g
+  const string2RE = /([\`]).*?([\`])/g
 
   return {
     name: 'rename-class',
@@ -88,13 +89,9 @@ export default function transformerRenameClass(options: RenameClassOptions = {})
           }
         }
 
-        // process string
-        const stringMatches = [...s.original.matchAll(stringRE)]
-        for (const match of stringMatches) {
-          // skip `${...}`
-          if (/\$\{.*\}/g.test(match[0]))
-            continue
-
+        // process string1
+        const string1Matches = [...s.original.matchAll(string1RE)]
+        for (const match of string1Matches) {
           // There may be no need
           // https://tailwindcss.com/docs/background-image#arbitrary-values
           // skip all the image formats in HTML for bg-[url('...')]
@@ -102,6 +99,21 @@ export default function transformerRenameClass(options: RenameClassOptions = {})
             continue
           // skip http(s)://
           if (/http(s)?:\/\//g.test(match[0]))
+            continue
+
+          const start = match.index!
+          const body = match[0].slice(1, -1)
+          if (charReg.test(body)) {
+            const replacements = await compileApplet(body, ctx)
+            s.overwrite(start, start + match[0].length, `'${replacements.join(' ')}'`)
+          }
+        }
+
+        // process string2
+        const string2Matches = [...s.original.matchAll(string2RE)]
+        for (const match of string2Matches) {
+          // skip `${...}`
+          if (/\$\{.*\}/g.test(match[0]))
             continue
 
           const start = match.index!

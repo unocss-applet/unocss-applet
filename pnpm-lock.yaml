@@ -88,7 +88,9 @@ importers:
       '@dcloudio/uni-mp-toutiao': 3.0.0-alpha-3040820220424001
       '@dcloudio/uni-mp-weixin': 3.0.0-alpha-3040820220424001
       '@dcloudio/uni-quickapp-webview': 3.0.0-alpha-3040820220424001
+      '@dcloudio/uni-ui': ^1.4.20
       '@dcloudio/vite-plugin-uni': 3.0.0-alpha-3040820220424001
+      sass: ^1.54.4
       vue: ^3.2.33
       vue-i18n: ^9.1.9
       vuex: ^4.0.2
@@ -105,6 +107,7 @@ importers:
       '@dcloudio/uni-mp-toutiao': 3.0.0-alpha-3040820220424001_postcss@8.4.16+vue@3.2.37
       '@dcloudio/uni-mp-weixin': 3.0.0-alpha-3040820220424001_postcss@8.4.16+vue@3.2.37
       '@dcloudio/uni-quickapp-webview': 3.0.0-alpha-3040820220424001_postcss@8.4.16+vue@3.2.37
+      '@dcloudio/uni-ui': 1.4.20
       vue: 3.2.37
       vue-i18n: 9.2.2_vue@3.2.37
       vuex: 4.0.2_vue@3.2.37
@@ -113,6 +116,7 @@ importers:
       '@dcloudio/uni-automator': 3.0.0-alpha-3040820220424001_postcss@8.4.16+vue@3.2.37
       '@dcloudio/uni-cli-shared': 3.0.0-alpha-3040820220424001_postcss@8.4.16+vue@3.2.37
       '@dcloudio/vite-plugin-uni': 3.0.0-alpha-3040820220424001_47452i42yfdxk5vv6bxy52mozq
+      sass: 1.54.4
 
 packages:
 
@@ -923,6 +927,10 @@ packages:
       - vue
     dev: false
 
+  /@dcloudio/uni-ui/1.4.20:
+    resolution: {integrity: sha512-vWrT64u83H1YYrTF1SpWI0ZTplP/411a9tSPqd6ePRXDDODueWTfngguP/iEzAyeXMYLoS1N3rUWoTSxYrr9zQ==}
+    dev: false
+
   /@dcloudio/vite-plugin-uni/3.0.0-alpha-3040820220424001_47452i42yfdxk5vv6bxy52mozq:
     resolution: {integrity: sha512-ksXzUTHkjOYJ/XqJmTSR25edamCSPXOPUkaTeZ138MECuNongJUDksxPXvDzYEFwtv+7Nm4Y93EmpBcNPvs3Zw==}
     hasBin: true
@@ -950,7 +958,7 @@ packages:
       hash-sum: 2.0.0
       jsonc-parser: 3.0.0
       picocolors: 1.0.0
-      vite: 2.9.15
+      vite: 2.9.15_sass@1.54.4
     transitivePeerDependencies:
       - postcss
       - supports-color
@@ -1604,7 +1612,7 @@ packages:
       magic-string: 0.26.2
       regenerator-runtime: 0.13.9
       systemjs: 6.12.2
-      vite: 2.9.15
+      vite: 2.9.15_sass@1.54.4
     dev: true
 
   /@vitejs/plugin-vue-jsx/1.3.10:
@@ -1628,7 +1636,7 @@ packages:
       vite: ^2.5.10
       vue: ^3.2.25
     dependencies:
-      vite: 2.9.15
+      vite: 2.9.15_sass@1.54.4
       vue: 3.2.37
 
   /@vue/babel-helper-vue-transform-on/1.0.2:
@@ -3871,6 +3879,9 @@ packages:
     engines: {node: '>= 4'}
     dev: true
 
+  /immutable/4.1.0:
+    resolution: {integrity: sha512-oNkuqVTA8jqG1Q6c+UglTOD1xhC1BtjKI7XkCXRkZHrN5m18/XsnUp8Q89GkQO/z+0WjonSvl0FLhDYftp46nQ==}
+
   /import-fresh/3.3.0:
     resolution: {integrity: sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw==}
     engines: {node: '>=6'}
@@ -5058,6 +5069,15 @@ packages:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
     dev: true
 
+  /sass/1.54.4:
+    resolution: {integrity: sha512-3tmF16yvnBwtlPrNBHw/H907j8MlOX8aTBnlNX1yrKx24RKcJGPyLhFUwkoKBKesR3unP93/2z14Ll8NicwQUA==}
+    engines: {node: '>=12.0.0'}
+    hasBin: true
+    dependencies:
+      chokidar: 3.5.3
+      immutable: 4.1.0
+      source-map-js: 1.0.2
+
   /scule/0.3.2:
     resolution: {integrity: sha512-zIvPdjOH8fv8CgrPT5eqtxHQXmPNnV/vHJYffZhE43KZkvULvpCTvOt1HPlFaCZx287INL9qaqrZg34e8NgI4g==}
     dev: true
@@ -5587,6 +5607,31 @@ packages:
       postcss: 8.4.16
       resolve: 1.22.1
       rollup: 2.77.3
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: true
+
+  /vite/2.9.15_sass@1.54.4:
+    resolution: {integrity: sha512-fzMt2jK4vQ3yK56te3Kqpkaeq9DkcZfBbzHwYpobasvgYmP2SoAr6Aic05CsB4CzCZbsDv4sujX3pkEGhLabVQ==}
+    engines: {node: '>=12.2.0'}
+    hasBin: true
+    peerDependencies:
+      less: '*'
+      sass: '*'
+      stylus: '*'
+    peerDependenciesMeta:
+      less:
+        optional: true
+      sass:
+        optional: true
+      stylus:
+        optional: true
+    dependencies:
+      esbuild: 0.14.54
+      postcss: 8.4.16
+      resolve: 1.22.1
+      rollup: 2.77.3
+      sass: 1.54.4
     optionalDependencies:
       fsevents: 2.3.2
 
