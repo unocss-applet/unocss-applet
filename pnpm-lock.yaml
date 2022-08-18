@@ -93,7 +93,6 @@ importers:
       sass: ^1.54.4
       vue: ^3.2.33
       vue-i18n: ^9.1.9
-      vuex: ^4.0.2
     dependencies:
       '@dcloudio/uni-app': 3.0.0-alpha-3040820220424001_postcss@8.4.16+vue@3.2.37
       '@dcloudio/uni-app-plus': 3.0.0-alpha-3040820220424001_47452i42yfdxk5vv6bxy52mozq
@@ -110,7 +109,6 @@ importers:
       '@dcloudio/uni-ui': 1.4.20
       vue: 3.2.37
       vue-i18n: 9.2.2_vue@3.2.37
-      vuex: 4.0.2_vue@3.2.37
     devDependencies:
       '@dcloudio/types': 3.0.13
       '@dcloudio/uni-automator': 3.0.0-alpha-3040820220424001_postcss@8.4.16+vue@3.2.37
@@ -5752,15 +5750,6 @@ packages:
       '@vue/runtime-dom': 3.2.37
       '@vue/server-renderer': 3.2.37_vue@3.2.37
       '@vue/shared': 3.2.37
-
-  /vuex/4.0.2_vue@3.2.37:
-    resolution: {integrity: sha512-M6r8uxELjZIK8kTKDGgZTYX/ahzblnzC4isU1tpmEuOIIKmV+TRdc+H4s8ds2NuZ7wpUTdGRzJRtoj+lI+pc0Q==}
-    peerDependencies:
-      vue: ^3.0.2
-    dependencies:
-      '@vue/devtools-api': 6.2.1
-      vue: 3.2.37
-    dev: false
 
   /which-boxed-primitive/1.0.2:
     resolution: {integrity: sha512-bwZdv0AKLpplFY2KZRX6TvyuN7ojjr7lwkg6ml0roIy9YeuSr7JS372qlNW18UQYzgYK9ziGcerWqZOmEn9VNg==}

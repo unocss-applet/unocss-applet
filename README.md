@@ -1,6 +1,6 @@
 # unocss-applet
 
-The Applet preset and transformer for [UnoCSS](https://github.com/unocss/unocss), modified to transform some CSS selector.
+Using [UnoCSS](https://github.com/unocss/unocss) in Applet(uniapp...).
 
 ## Instal
 
