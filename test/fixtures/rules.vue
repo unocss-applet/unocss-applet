@@ -7,8 +7,8 @@ const bool = true
 
 <template>
   <div class="flex aaa flex-col justify-center items-center">
-    <div class="text-green-500 text-4xl rotate-180 i-carbon-campsite" :class="bg" />
-    <div class="border bg-blue-200 px-2 transition-all bg-red-500 font-(light mono) ">
+    <div text="green-500 4xl" class="rotate-180 i-carbon-campsite" :class="bool ? bg : ''" />
+    <div class="border bg-blue-200 px-2 transition-all bg-red-500 font-(light mono)" h20>
       <div class="text-green-200/50 hover:(!bg-gray-400 text-white font-medium)">
         0123456789
       </div>
@@ -16,19 +16,15 @@ const bool = true
     <div class="p-1" :class="bool ? 'text-yellow-500' : ''">
       {{ `index${index + 1}` }}
     </div>
-    <div class="py-3.5 grid-cols-[0.7fr_repeat(7,1fr)]">
-      py-4.5
+    <div class="grid-cols-[0.7fr_repeat(7,1fr)]" flex="~ col">
+      <div w-10 h-10 flex="1">
+        1
+      </div>
+      <div w-10 h-10 flex="1">
+        2
+      </div>
     </div>
     <uni-easyinput />
-    <div :class="{ 'is-textarea-icon': type === 'textarea' }">
-      uniapp
-    </div>
-    <div
-      class="bg-[url(https://avatars.githubusercontent.com/u/40738594?s=40&v=4)]"
-      :class="{ 'bg-[url(https://avatars.githubusercontent.com/u/40738594?s=40&v=4)]': type === 'textarea' }"
-    >
-      uniapp
-    </div>
     <div class="m-0.5 p-1 text-2xl" :class="bool ? '' : 'text-yellow-500 p-2.5'">
       abckefghijklmnopqrstuvwxyz
     </div>

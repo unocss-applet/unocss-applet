@@ -1,13 +1,13 @@
-# @unocss-applet/transformer-rename-class
+# @unocss-applet/transformer-applet
 
 Coverts class selector name to hash.
 
 ## Instal
 
 ```bash
-npm i @unocss-applet/transformer-rename-class --save-dev # with npm
-yarn add @unocss-applet/transformer-rename-class -D # with yarn
-pnpm add @unocss-applet/transformer-rename-class -D # with pnpm
+npm i @unocss-applet/transformer-applet --save-dev # with npm
+yarn add @unocss-applet/transformer-applet -D # with yarn
+pnpm add @unocss-applet/transformer-applet -D # with pnpm
 ```
 
 ## Usage
@@ -17,19 +17,19 @@ pnpm add @unocss-applet/transformer-rename-class -D # with pnpm
 ```ts
 import { defineConfig } from 'unocss'
 
-import transformerRenameClass from '@unocss-applet/transformer-rename-class'
+import transformerApplet from '@unocss-applet/transformer-applet'
 
 export default defineConfig({
   // ...
   transformers: [
-    transformerRenameClass(),
+    transformerApplet(),
   ],
 })
 ```
 
 ## Type Declarations
 ```ts
-export interface RenameClassOptions {
+export interface TransformerAppletOptions {
   /**
    * Prefix for compile class name
    * @default 'uno-'
@@ -46,29 +46,6 @@ export interface RenameClassOptions {
    * @default 'applet_shortcuts'
    */
   layer?: string
-
-  /**
-   * Enable rename class, only build applet should be true
-   * e.g. In uniapp `enableRename: !(process.env.UNI_PLATFORM === 'h5')` to disable rename class in h5
-   * @default true
-   */
-  enableRename?: boolean
-
-  /**
-   * Separators to expand.
-   *
-   * ```
-   * foo-(bar baz) -> foo-bar foo-baz
-   *    ^
-   *    separator
-   * ```
-   *
-   * You may set it to `[':']` for strictness.
-   *
-   * @default [':', '-']
-   * @see https://github.com/unocss/unocss/pull/1231
-   */
-  separators?: (':' | '-')[]
 }
 ```
 

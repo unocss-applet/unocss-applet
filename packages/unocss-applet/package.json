@@ -38,10 +38,10 @@
       "require": "./dist/preset-rem-to-rpx.cjs",
       "import": "./dist/preset-rem-to-rpx.mjs"
     },
-    "./transformer-rename-class": {
-      "types": "./dist/transformer-rename-class.d.ts",
-      "require": "./dist/transformer-rename-class.cjs",
-      "import": "./dist/transformer-rename-class.mjs"
+    "./transformer-applet": {
+      "types": "./dist/transformer-applet.d.ts",
+      "require": "./dist/transformer-applet.cjs",
+      "import": "./dist/transformer-applet.mjs"
     }
   },
   "main": "./dist/index.mjs",
@@ -57,6 +57,7 @@
   "dependencies": {
     "@unocss-applet/preset-applet": "workspace:*",
     "@unocss-applet/preset-rem-to-rpx": "workspace:*",
-    "@unocss-applet/transformer-rename-class": "workspace:*"
+    "@unocss-applet/transformer-applet": "workspace:*",
+    "@unocss-applet/transformer-attributify": "workspace:*"
   }
 }

@@ -1,32 +1,30 @@
 {
-  "name": "@unocss-applet/preset-rem-to-rpx",
+  "name": "@unocss-applet/transformer-attributify",
   "type": "module",
   "version": "0.1.2",
   "packageManager": "pnpm@7.2.1",
   "description": "",
   "author": "Neil Lee <zguolee@foxmail.com>",
   "license": "MIT",
-  "homepage": "https://github.com/unocss-applet/unocss-applet/tree/main/packages/preset-rem-to-rpx#readme",
+  "homepage": "https://github.com/unocss-applet/unocss-applet/tree/main/packages/transformer-attributify#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/unocss-applet/unocss-applet.git",
-    "directory": "packages/preset-rem-to-rpx"
+    "directory": "packages/transformer-attributify"
   },
   "bugs": "https://github.com/unocss-applet/unocss-applet/issues",
   "keywords": [
     "unocss",
-    "unocss-preset",
-    "uni-app"
+    "unocss-transformer"
   ],
   "sideEffects": false,
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
       "require": "./dist/index.cjs",
       "import": "./dist/index.mjs"
     }
   },
-  "main": "./dist/index.mjs",
+  "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "files": [
@@ -38,5 +36,8 @@
   },
   "dependencies": {
     "@unocss/core": "^0.45.13"
+  },
+  "devDependencies": {
+    "magic-string": "^0.26.2"
   }
 }
