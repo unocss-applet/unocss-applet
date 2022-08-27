@@ -7,13 +7,13 @@ const bool = true
 
 <template>
   <div class="flex aaa flex-col justify-center items-center">
-    <div text="green-500 4xl" class="rotate-180 i-carbon-campsite" :class="bg" />
+    <div text="4xl" class="rotate-180 i-carbon-campsite" :class="bg" />
     <div class="border bg-blue-200 px-2 transition-all bg-red-500 font-(light mono) ">
-      <div class="text-green-200/50 hover:(!bg-gray-400 text-white font-medium)">
+      <div class="hover:(!bg-gray-400 text-white font-medium)" text="#6f4">
         0123456789
       </div>
     </div>
-    <div class="p-1" :class="bool ? 'text-yellow-500' : ''">
+    <div class="p-1" :class="bool ? 'text-yellow-500 px-2.5' : ''">
       {{ `index${index + 1}` }}
     </div>
     <div class="bg-green" flex="~ col gap-2">
@@ -24,7 +24,7 @@ const bool = true
         2
       </div>
     </div>
-    <!-- <uni-easyinput /> -->
+    <uni-easyinput />
     <div class="bg-[url(https://static.runoob.com/images/demo/demo3.jpg)]" w-20 h-10>
       bg-img
     </div>

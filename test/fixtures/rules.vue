@@ -24,7 +24,8 @@ const bool = true
         2
       </div>
     </div>
-    <uni-easyinput />
+
+    <button />
     <div class="m-0.5 p-1 text-2xl" :class="bool ? '' : 'text-yellow-500 p-2.5'">
       abckefghijklmnopqrstuvwxyz
     </div>

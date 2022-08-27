@@ -59,7 +59,8 @@ describe('transformer-applet', () => {
               2
             </div>
           </div>
-          <uni-easyinput />
+
+          <button />
           <div class=\\"uno-tw4biu\\" :class=\\"bool ? '' : 'uno-qju0i9'\\">
             abckefghijklmnopqrstuvwxyz
           </div>

@@ -40,8 +40,9 @@ else {
   presets.push(presetApplet())
   presets.push(presetRemToRpx())
 
-  transformers.push(transformerApplet())
+  // don't change the order
   transformers.push(transformerAttributify())
+  transformers.push(transformerApplet())
 }
 
 export default defineConfig({

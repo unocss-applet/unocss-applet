@@ -34,13 +34,10 @@ export interface TransformerAttributifyOptions {
   ignoreAttributes?: string[]
 
   /**
-    * Non-valued attributes will also match if the actual value represented in DOM is `true`.
-    * This option exists for supporting frameworks that encodes non-valued attributes as `true`.
-    * Enabling this option will break rules that ends with `true`.
-    *
-    * @default false
-    */
-  trueToNonValued?: boolean
+   * Delete attributes that added in `class=""`
+   * @default false
+   */
+  deleteClass?: boolean
 }
 
 const strippedPrefixes = [
@@ -59,62 +56,68 @@ export default function transformerAttributify(options: TransformerAttributifyOp
   const nonValuedAttribute = options?.nonValuedAttribute ?? true
   const prefix = options.prefix ?? 'un-'
   const prefixedOnly = options.prefixedOnly ?? false
+  const deleteClass = options.deleteClass ?? false
 
   return {
     name: 'transformer-attributify',
     enforce: 'pre',
-    async transform(s, _) {
+    async transform(s, _, { uno }) {
       const code = new MagicString(s.toString())
-      Array.from(code.original.matchAll(elementRE))
-        .forEach((match) => {
-          const start = match.index!
-          let matchStrTemp = match[0]
-          let existsClass = ''
-          const attrSelectors: string[] = []
+      const elementMatches = code.original.matchAll(elementRE)
+      for (const eleMatch of elementMatches) {
+        const start = eleMatch.index!
+        let matchStrTemp = eleMatch[0]
+        let existsClass = ''
+        const attrSelectors: string[] = []
+        const valuedAttributes = Array.from((eleMatch[1] || '').matchAll(valuedAttributeRE))
 
-          const valuedAttributes = Array.from((match[1] || '').matchAll(valuedAttributeRE))
+        for (const attribute of valuedAttributes) {
+          const matchStr = attribute[0]
+          const name = attribute[1]
+          const content = attribute[3]
+          let _name = prefixedOnly ? name.replace(prefix, '') : name
 
-          valuedAttributes.forEach(([matchStr, name, _, content]) => {
-            let _name = prefixedOnly ? name.replace(prefix, '') : name
-
-            if (!ignoreAttributes.includes(_name)) {
-              for (const prefix of strippedPrefixes) {
-                if (_name.startsWith(prefix)) {
-                  _name = _name.slice(prefix.length)
-                  break
-                }
+          if (!ignoreAttributes.includes(_name)) {
+            for (const prefix of strippedPrefixes) {
+              if (_name.startsWith(prefix)) {
+                _name = _name.slice(prefix.length)
+                break
               }
-              if (!content) {
-                if (isValidSelector(_name) && nonValuedAttribute !== false) {
+            }
+
+            if (!content) {
+              if (isValidSelector(_name) && nonValuedAttribute !== false) {
+                if (await uno.parseToken(_name)) {
                   attrSelectors.push(_name)
-                  matchStrTemp = matchStrTemp.replace(` ${_name}`, '')
+                  deleteClass && (matchStrTemp = matchStrTemp.replace(` ${_name}`, ''))
                 }
-                return
               }
-
+            }
+            else {
               if (['class', 'className'].includes(_name)) {
                 if (!name.includes(':'))
                   existsClass = content
               }
               else {
-                attrSelectors.push(...content
-                  .split(splitterRE)
-                  .filter(Boolean)
-                  .map(v => v === '~' ? _name : `${_name}-${v}`))
-                matchStrTemp = matchStrTemp.replace(` ${matchStr}`, '')
+                const attrs = await Promise.all(content.split(splitterRE).filter(Boolean).map(async v => [v === '~' ? _name : `${_name}-${v}`, !!await uno.parseToken(v === '~' ? _name : `${_name}-${v}`)] as const))
+                const result = attrs.filter(([, v]) => v).map(([v]) => v)
+                attrSelectors.push(...result)
+                deleteClass && (matchStrTemp = matchStrTemp.replace(` ${matchStr}`, ''))
               }
             }
-          })
-          if (attrSelectors.length) {
-            if (!existsClass) {
-              code.overwrite(start, start + match[0].length, `${matchStrTemp.slice(0, -1)} class="${attrSelectors.join(' ')}"${matchStrTemp.slice(-1)}`)
-            }
-            else {
-              matchStrTemp = matchStrTemp.replace(existsClass, `${existsClass} ${attrSelectors.join(' ')}`)
-              code.overwrite(start, start + match[0].length, matchStrTemp)
-            }
           }
-        })
+        }
+        if (attrSelectors.length) {
+          if (!existsClass) {
+            code.overwrite(start, start + eleMatch[0].length, `${matchStrTemp.slice(0, -1)} class="${attrSelectors.join(' ')}"${matchStrTemp.slice(-1)}`)
+          }
+          else {
+            matchStrTemp = matchStrTemp.replace(existsClass, `${existsClass} ${attrSelectors.join(' ')}`)
+            code.overwrite(start, start + eleMatch[0].length, matchStrTemp)
+          }
+        }
+      }
+
       s.overwrite(0, s.original.length, code.toString())
     },
   }

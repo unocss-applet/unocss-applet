@@ -3,8 +3,12 @@
 
 <template>
   <div h-80 text-center flex flex-col align-center select-none all:transition-400>
+    <!-- comment -->
     <input type="checkbox" peer mt-a>
-    <div mb-a group peer-checked="text-4xl">
+    <button ref="sss" h-10 w-10 bg-blue block hhh>
+      Button
+    </button>
+    <div mb-a block group peer-checked="text-4xl">
       <div
         font-100 text-4xl mb--3 p-10
         bg-gradient="to-r from-yellow-400 via-red-500 to-pink-500"

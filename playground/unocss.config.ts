@@ -25,8 +25,8 @@ else {
   presets.push(presetApplet())
   presets.push(presetRemToRpx())
 
-  transformers.push(transformerApplet())
   transformers.push(transformerAttributify())
+  transformers.push(transformerApplet())
 }
 
 export default defineConfig({
