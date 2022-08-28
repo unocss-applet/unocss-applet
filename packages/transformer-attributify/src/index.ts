@@ -1,44 +1,7 @@
 import MagicString from 'magic-string'
 import type { SourceCodeTransformer } from 'unocss'
 import { isValidSelector } from 'unocss'
-
-export interface TransformerAttributifyOptions {
-
-  /**
-    * @default 'un-'
-    */
-  prefix?: string
-
-  /**
-    * Only match for prefixed attributes
-    *
-    * @default false
-    */
-  prefixedOnly?: boolean
-
-  /**
-    * Support matching non-valued attributes
-    *
-    * For example
-    * ```html
-    * <div mt-2 />
-    * ```
-    *
-    * @default true
-    */
-  nonValuedAttribute?: boolean
-
-  /**
-    * A list of attributes to be ignored from extracting.
-    */
-  ignoreAttributes?: string[]
-
-  /**
-   * Delete attributes that added in `class=""`
-   * @default false
-   */
-  deleteClass?: boolean
-}
+import type { TransformerAttributifyOptions } from './types'
 
 const strippedPrefixes = [
   'v-bind:',
@@ -63,6 +26,7 @@ export default function transformerAttributify(options: TransformerAttributifyOp
     enforce: 'pre',
     async transform(s, _, { uno }) {
       const code = new MagicString(s.toString())
+
       const elementMatches = code.original.matchAll(elementRE)
       for (const eleMatch of elementMatches) {
         const start = eleMatch.index!
@@ -99,7 +63,9 @@ export default function transformerAttributify(options: TransformerAttributifyOp
                   existsClass = content
               }
               else {
-                const attrs = await Promise.all(content.split(splitterRE).filter(Boolean).map(async v => [v === '~' ? _name : `${_name}-${v}`, !!await uno.parseToken(v === '~' ? _name : `${_name}-${v}`)] as const))
+                const attrs = await Promise.all(content.split(splitterRE).filter(Boolean)
+                  .map(async v =>
+                    [v === '~' ? _name : `${_name}-${v}`, !!await uno.parseToken(v === '~' ? _name : `${_name}-${v}`)] as const))
                 const result = attrs.filter(([, v]) => v).map(([v]) => v)
                 attrSelectors.push(...result)
                 deleteClass && (matchStrTemp = matchStrTemp.replace(` ${matchStr}`, ''))

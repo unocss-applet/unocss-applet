@@ -5,7 +5,7 @@
   <div h-80 text-center flex flex-col align-center select-none all:transition-400>
     <!-- comment -->
     <input type="checkbox" peer mt-a>
-    <button ref="sss" h-10 w-10 bg-blue block hhh>
+    <button ref="sss" btn-block h-10 w-10 bg-blue block hhh>
       Button
     </button>
     <div mb-a block group peer-checked="text-4xl">
@@ -15,7 +15,7 @@
       >
         ~
       </div>
-      <div text-5xl font-100 sm="bg-blue-600">
+      <div text-5xl font-100 sm="bg-blue-600" bg="base" color="base">
         unocss
       </div>
       <div op-20 font-200 mt-1 tracking-wider group-hover="text-teal-400 op-50">

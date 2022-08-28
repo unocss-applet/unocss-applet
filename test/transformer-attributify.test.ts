@@ -9,8 +9,22 @@ import presetUno from '@unocss/preset-uno'
 
 describe('transformer-attributify', () => {
   const uno = createGenerator({
+    shortcuts: [
+      // you could still have object style
+      {
+        'bg-base': 'bg-gray-100 dark:bg-dark',
+        'color-base': 'text-gray-700 dark:text-light-2',
+        'color-base-second': 'text-gray-400 dark:text-gray-500/60',
+        'btn': 'py-2 px-4 font-semibold rounded-lg shadow-md',
+      },
+      // dynamic shortcuts
+      [/^btn-(.*)$/, ([, c]) => `bg-${c}-400 text-${c}-100 py-2 px-4 rounded-lg`],
+    ],
     presets: [
       presetUno({ attributifyPseudo: true }),
+    ],
+    rules: [
+      [/^m-(\d)$/, ([, d]) => ({ margin: `${+d / 4}rem` })],
     ],
   })
   const transformer = transformerAttributify()
@@ -40,7 +54,7 @@ describe('transformer-attributify', () => {
         <div h-80 text-center flex flex-col align-center select-none all:transition-400 class=\\"h-80 text-center flex flex-col select-none all:transition-400\\">
           <!-- comment -->
           <input type=\\"checkbox\\" peer mt-a class=\\"mt-a\\">
-          <button ref=\\"sss\\" h-10 w-10 bg-blue block hhh class=\\"h-10 w-10 bg-blue block\\">
+          <button ref=\\"sss\\" btn-block h-10 w-10 bg-blue block hhh class=\\"btn-block h-10 w-10 bg-blue block\\">
             Button
           </button>
           <div mb-a block group peer-checked=\\"text-4xl\\" class=\\"mb-a block peer-checked-text-4xl\\">
@@ -50,7 +64,7 @@ describe('transformer-attributify', () => {
              class=\\"font-100 text-4xl mb--3 p-10 bg-gradient-to-r bg-gradient-from-yellow-400 bg-gradient-via-red-500 bg-gradient-to-pink-500\\">
               ~
             </div>
-            <div text-5xl font-100 sm=\\"bg-blue-600\\" class=\\"text-5xl font-100 sm-bg-blue-600\\">
+            <div text-5xl font-100 sm=\\"bg-blue-600\\" bg=\\"base\\" color=\\"base\\" class=\\"text-5xl font-100 sm-bg-blue-600 bg-base color-base\\">
               unocss
             </div>
             <div op-20 font-200 mt-1 tracking-wider group-hover=\\"text-teal-400 op-50\\" class=\\"op-20 font-200 mt-1 tracking-wider group-hover-text-teal-400 group-hover-op-50\\">
@@ -72,13 +86,18 @@ describe('transformer-attributify', () => {
         </div>
       </template>
       ",
-        "css": "/* layer: default */
+        "css": "/* layer: shortcuts */
+      .btn-block{border-radius:0.5rem;padding-top:0.5rem;padding-bottom:0.5rem;padding-left:1rem;padding-right:1rem;}
+      .bg-base{--un-bg-opacity:1;background-color:rgba(243,244,246,var(--un-bg-opacity));}
+      .dark .bg-base{--un-bg-opacity:1;background-color:rgba(34,34,34,var(--un-bg-opacity));}
+      .color-base{--un-text-opacity:1;color:rgba(55,65,81,var(--un-text-opacity));}
+      .dark .color-base{--un-text-opacity:1;color:rgba(250,250,250,var(--un-text-opacity));}
+      /* layer: default */
       .pointer-events-none{pointer-events:none;}
       .absolute{position:absolute;}
       .relative{position:relative;}
       .left-4{left:1rem;}
       .top-1\\\\/3{top:33.3333333333%;}
-      .m-0{margin:0rem;}
       .ma{margin:auto;}
       .mb--3{margin-bottom:-0.75rem;}
       .mb-a{margin-bottom:auto;}
@@ -138,6 +157,7 @@ describe('transformer-attributify', () => {
       .transition-200{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:200ms;}
       .after-content-\\\\[\\\\!\\\\]::after,
       .content-\\\\[\\\\!\\\\]{content:\\"!\\";}
+      .m-0{margin:0rem;}
       @media (min-width: 640px){
       .sm-bg-blue-600{--un-bg-opacity:1;background-color:rgba(37,99,235,var(--un-bg-opacity));}
       }",
