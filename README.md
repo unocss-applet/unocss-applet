@@ -13,6 +13,7 @@ pnpm add unocss-applet -D # with pnpm
 ## Usage
 
 ```ts
+import type { Preset, SourceCodeTransformer } from 'unocss'
 import {
   defineConfig,
   presetAttributify,
@@ -29,8 +30,8 @@ import {
   transformerAttributify,
 } from 'unocss-applet'
 
-const presets = []
-const transformers = []
+const presets: Preset[] = []
+const transformers: SourceCodeTransformer[] = []
 
 if (process.env.UNI_PLATFORM === 'h5') {
   presets.push(presetUno())
