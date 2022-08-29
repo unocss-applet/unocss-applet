@@ -8,6 +8,10 @@
     <button ref="sss" btn-block h-10 w-10 bg-blue block hhh>
       Button
     </button>
+    <div class="[&>*]:border-gray/50">
+      <div>a</div>
+      <div>b</div>
+    </div>
     <div mb-a block group peer-checked="text-4xl">
       <div
         font-100 text-4xl mb--3 p-10

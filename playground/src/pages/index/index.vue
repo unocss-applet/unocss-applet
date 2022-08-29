@@ -8,19 +8,22 @@ const bool = true
 <template>
   <div class="flex aaa flex-col justify-center items-center">
     <div text="4xl" class="rotate-180 i-carbon-campsite" :class="bg" />
-    <div class="border bg-blue-200 px-2 transition-all bg-red-500 font-(light mono) ">
+    <div class="border bg-blue-200 font-(light mono) ">
       <div class="hover:(!bg-gray-400 text-white font-medium)" text="#6f4">
         0123456789
       </div>
     </div>
+    <div :class="{ 'bg-blue': bool }" p-2>
+      class
+    </div>
     <div class="p-1" :class="bool ? 'text-yellow-500 px-2.5' : ''">
       {{ `index${index + 1}` }}
     </div>
-    <div class="bg-green" flex="~ col gap-2">
-      <div text-center w-10 h-10 flex="1" bg-red>
+    <div flex="~ col gap-2" border="2 blue">
+      <div text-center w-10 h-10 flex="1" text="red">
         1
       </div>
-      <div w-10 h-10 flex="1">
+      <div w-10 h-10 flex="1" text-blue>
         2
       </div>
     </div>

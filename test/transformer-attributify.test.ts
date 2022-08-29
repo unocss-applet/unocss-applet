@@ -57,6 +57,9 @@ describe('transformer-attributify', () => {
           <button ref=\\"sss\\" btn-block h-10 w-10 bg-blue block hhh class=\\"btn-block h-10 w-10 bg-blue block\\">
             Button
           </button>
+          <div class=\\"[&>*]:border-gray/50\\">
+            &>
+          </div>
           <div mb-a block group peer-checked=\\"text-4xl\\" class=\\"mb-a block peer-checked-text-4xl\\">
             <div
               font-100 text-4xl mb--3 p-10
@@ -121,6 +124,7 @@ describe('transformer-attributify', () => {
       [peer=\\"\\"]:focus~.peer-focus-scale-75,
       [peer=\\"\\"]:not(:placeholder-shown)~.peer-not-placeholder-shown-scale-75{--un-scale-x:0.75;--un-scale-y:0.75;transform:translateX(var(--un-translate-x)) translateY(var(--un-translate-y)) translateZ(var(--un-translate-z)) rotate(var(--un-rotate)) rotateX(var(--un-rotate-x)) rotateY(var(--un-rotate-y)) rotateZ(var(--un-rotate-z)) skewX(var(--un-skew-x)) skewY(var(--un-skew-y)) scaleX(var(--un-scale-x)) scaleY(var(--un-scale-y)) scaleZ(var(--un-scale-z));}
       .select-none{user-select:none;}
+      .\\\\[\\\\&\\\\>\\\\*\\\\]\\\\:border-gray\\\\/50>*{border-color:rgba(156,163,175,0.5);}
       .bg-blue{--un-bg-opacity:1;background-color:rgba(96,165,250,var(--un-bg-opacity));}
       .bg-blue-600{--un-bg-opacity:1;background-color:rgba(37,99,235,var(--un-bg-opacity));}
       .bg-gradient-from-yellow-400,
