@@ -59,6 +59,11 @@ export default defineConfig({
 })
 ```
 
+## Example
+
+- [starter-uni](https://github.com/zguolee/starter-uni)
+- [ColorTimetable](https://github.com/zguolee/ColorTimetable)
+
 ## Acknowledgement
 - [UnoCSS](https://github.com/unocss/unocss)
 
