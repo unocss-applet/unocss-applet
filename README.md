@@ -1,6 +1,12 @@
 # unocss-applet
 
-Using [UnoCSS](https://github.com/unocss/unocss) in Applet(uniapp...).
+Using [UnoCSS](https://github.com/unocss/unocss) in Applet(UniApp...).
+
+## Presets and Plugins
+- [@unocss-applet/preset-applet](./packages/preset-applet) - The default preset  (right now it's equivalent to `@unocss/preset-uno`)
+- [@unocss-applet/preset-rem-to-rpx](./packages/preset-rem-to-rpx) - Coverts rem to rpx for utils.
+- [@unocss-applet/transformer-applet](./packages/transformer-applet) - Compile classes that do not support applets into one class.
+- [@unocss-applet/transformer-attributify](./packages/transformer-attributify) - Enables Attributify Mode for applet.
 
 ## Instal
 
@@ -13,6 +19,7 @@ pnpm add unocss-applet -D # with pnpm
 ## Usage
 
 ```ts
+// unocss.config.ts
 import type { Preset, SourceCodeTransformer } from 'unocss'
 import {
   defineConfig,
@@ -35,6 +42,7 @@ const transformers: SourceCodeTransformer[] = []
 
 if (process.env.UNI_PLATFORM === 'h5') {
   presets.push(presetUno())
+  // you can add `presetAttributify()` in `unocss.config.ts` instead of here to enable unocss attributify mode prompt although preset is not working for applet
   presets.push(presetAttributify())
 }
 else {
