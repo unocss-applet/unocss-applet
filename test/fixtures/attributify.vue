@@ -1,17 +1,26 @@
 <script setup lang="ts">
+const bg = 'bg-[hsl(2.7,81.9%,69.6%)]'
+const index = 1
+const type = 'text'
+const bool = true
 </script>
 
 <template>
   <div h-80 text-center flex flex-col align-center select-none all:transition-400>
     <!-- comment -->
     <input type="checkbox" peer mt-a>
+    <div text="green-500 4xl" class="rotate-180 i-carbon-campsite" :class="bool ? bg : ''" />
     <button ref="sss" btn-block h-10 w-10 bg-blue block hhh>
       Button
     </button>
+    <div class="p-1 [&>*]:border-gray/50" :class="bool ? 'text-yellow-500' : ''">
+      {{ `index${+1}` }}
+    </div>
     <div class="[&>*]:border-gray/50">
       <div>a</div>
       <div>b</div>
     </div>
+    <div i-carbon-campsite inline-block color="blue" />
     <div mb-a block group peer-checked="text-4xl">
       <div
         font-100 text-4xl mb--3 p-10

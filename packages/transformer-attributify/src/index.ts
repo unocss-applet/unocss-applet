@@ -76,12 +76,13 @@ export default function transformerAttributify(options: TransformerAttributifyOp
         }
         if (attrSelectors.length) {
           if (!existsClass) {
-            code.overwrite(start, start + eleMatch[0].length, `${matchStrTemp.slice(0, -1)} class="${attrSelectors.join(' ')}"${matchStrTemp.slice(-1)}`)
+            const sliceNum = matchStrTemp.endsWith('/>') ? -2 : -1
+            matchStrTemp = `${matchStrTemp.slice(0, sliceNum)} class="${attrSelectors.join(' ')}"${matchStrTemp.slice(sliceNum)}`
           }
           else {
             matchStrTemp = matchStrTemp.replace(existsClass, `${existsClass} ${attrSelectors.join(' ')}`)
-            code.overwrite(start, start + eleMatch[0].length, matchStrTemp)
           }
+          code.overwrite(start, start + eleMatch[0].length, matchStrTemp)
         }
       }
 

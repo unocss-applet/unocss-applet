@@ -19,6 +19,7 @@ const bool = true
     <div class="p-1" :class="bool ? 'text-yellow-500 px-2.5' : ''">
       {{ `index${index + 1}` }}
     </div>
+    <div i-carbon-campsite inline-block color="blue" />
     <div flex="~ col gap-2" border="2 blue">
       <div text-center w-10 h-10 flex="1" text="red">
         1

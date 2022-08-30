@@ -48,18 +48,28 @@ describe('transformer-attributify', () => {
     expect(result).toMatchInlineSnapshot(`
       {
         "code": "<script setup lang=\\"ts\\">
+      const bg = 'bg-[hsl(2.7,81.9%,69.6%)]'
+      const index = 1
+      const type = 'text'
+      const bool = true
       </script>
 
       <template>
         <div h-80 text-center flex flex-col align-center select-none all:transition-400 class=\\"h-80 text-center flex flex-col select-none all:transition-400\\">
           <!-- comment -->
           <input type=\\"checkbox\\" peer mt-a class=\\"mt-a\\">
+          <div text=\\"green-500 4xl\\" class=\\"rotate-180 i-carbon-campsite text-green-500 text-4xl\\" :class=\\"bool ? bg : ''\\" />
           <button ref=\\"sss\\" btn-block h-10 w-10 bg-blue block hhh class=\\"btn-block h-10 w-10 bg-blue block\\">
             Button
           </button>
-          <div class=\\"[&>*]:border-gray/50\\">
-            &>
+          <div class=\\"p-1 [&>*]:border-gray/50\\" :class=\\"bool ? 'text-yellow-500' : ''\\">
+            {{ \`index\${+1}\` }}
           </div>
+          <div class=\\"[&>*]:border-gray/50\\">
+            <div>a</div>
+            <div>b</div>
+          </div>
+          <div i-carbon-campsite inline-block color=\\"blue\\"  class=\\"inline-block color-blue\\"/>
           <div mb-a block group peer-checked=\\"text-4xl\\" class=\\"mb-a block peer-checked-text-4xl\\">
             <div
               font-100 text-4xl mb--3 p-10
@@ -107,6 +117,7 @@ describe('transformer-attributify', () => {
       .mt-1{margin-top:0.25rem;}
       .mt-a{margin-top:auto;}
       .block{display:block;}
+      .inline-block{display:inline-block;}
       .h-10{height:2.5rem;}
       .h-14{height:3.5rem;}
       .h-80{height:20rem;}
@@ -120,11 +131,13 @@ describe('transformer-attributify', () => {
       .-translate-y-4,
       [peer=\\"\\"]:focus~.peer-focus--translate-y-4,
       [peer=\\"\\"]:not(:placeholder-shown)~.peer-not-placeholder-shown--translate-y-4{--un-translate-y:-1rem;transform:translateX(var(--un-translate-x)) translateY(var(--un-translate-y)) translateZ(var(--un-translate-z)) rotate(var(--un-rotate)) rotateX(var(--un-rotate-x)) rotateY(var(--un-rotate-y)) rotateZ(var(--un-rotate-z)) skewX(var(--un-skew-x)) skewY(var(--un-skew-y)) scaleX(var(--un-scale-x)) scaleY(var(--un-scale-y)) scaleZ(var(--un-scale-z));}
+      .rotate-180{--un-rotate-x:0;--un-rotate-y:0;--un-rotate-z:0;--un-rotate:180deg;transform:translateX(var(--un-translate-x)) translateY(var(--un-translate-y)) translateZ(var(--un-translate-z)) rotate(var(--un-rotate)) rotateX(var(--un-rotate-x)) rotateY(var(--un-rotate-y)) rotateZ(var(--un-rotate-z)) skewX(var(--un-skew-x)) skewY(var(--un-skew-y)) scaleX(var(--un-scale-x)) scaleY(var(--un-scale-y)) scaleZ(var(--un-scale-z));}
       .scale-75,
       [peer=\\"\\"]:focus~.peer-focus-scale-75,
       [peer=\\"\\"]:not(:placeholder-shown)~.peer-not-placeholder-shown-scale-75{--un-scale-x:0.75;--un-scale-y:0.75;transform:translateX(var(--un-translate-x)) translateY(var(--un-translate-y)) translateZ(var(--un-translate-z)) rotate(var(--un-rotate)) rotateX(var(--un-rotate-x)) rotateY(var(--un-rotate-y)) rotateZ(var(--un-rotate-z)) skewX(var(--un-skew-x)) skewY(var(--un-skew-y)) scaleX(var(--un-scale-x)) scaleY(var(--un-scale-y)) scaleZ(var(--un-scale-z));}
       .select-none{user-select:none;}
       .\\\\[\\\\&\\\\>\\\\*\\\\]\\\\:border-gray\\\\/50>*{border-color:rgba(156,163,175,0.5);}
+      .bg-\\\\[hsl\\\\(2\\\\.7\\\\,81\\\\.9\\\\%\\\\,69\\\\.6\\\\%\\\\)\\\\]{--un-bg-opacity:1;background-color:hsla(2.7,81.9%,69.6%,var(--un-bg-opacity));}
       .bg-blue{--un-bg-opacity:1;background-color:rgba(96,165,250,var(--un-bg-opacity));}
       .bg-blue-600{--un-bg-opacity:1;background-color:rgba(37,99,235,var(--un-bg-opacity));}
       .bg-gradient-from-yellow-400,
@@ -134,6 +147,7 @@ describe('transformer-attributify', () => {
       .bg-gradient-to-pink-500,
       .to-pink-500{--un-gradient-to:rgba(236,72,153,var(--un-to-opacity, 1));}
       .bg-gradient-to-r{--un-gradient-shape:to right;--un-gradient:var(--un-gradient-shape), var(--un-gradient-stops);background-image:linear-gradient(var(--un-gradient));}
+      .p-1{padding:0.25rem;}
       .p-10{padding:2.5rem;}
       .px-4{padding-left:1rem;padding-right:1rem;}
       .pt-4{padding-top:1rem;}
@@ -145,6 +159,7 @@ describe('transformer-attributify', () => {
       .font-200{font-weight:200;}
       .leading-1rem{line-height:1rem;}
       .tracking-wider{letter-spacing:0.05em;}
+      .color-blue{--un-text-opacity:1;color:rgba(96,165,250,var(--un-text-opacity));}
       .text-gray-7{--un-text-opacity:1;color:rgba(55,65,81,var(--un-text-opacity));}
       .text-green-500,
       [peer=\\"\\"]:focus~.peer-focus-text-green-500,
@@ -153,6 +168,7 @@ describe('transformer-attributify', () => {
       .text-teal-400,
       [group=\\"\\"]:hover .group-hover-text-teal-400{--un-text-opacity:1;color:rgba(45,212,191,var(--un-text-opacity));}
       .text-true-gray-800{--un-text-opacity:1;color:rgba(38,38,38,var(--un-text-opacity));}
+      .text-yellow-500{--un-text-opacity:1;color:rgba(234,179,8,var(--un-text-opacity));}
       .op-20{opacity:0.2;}
       .op-50,
       [group=\\"\\"]:hover .group-hover-op-50{opacity:0.5;}
