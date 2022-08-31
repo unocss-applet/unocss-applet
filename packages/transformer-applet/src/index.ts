@@ -3,40 +3,46 @@ import MagicString from 'magic-string'
 import type { TransformerAppletOptions } from './types'
 import { compileApplet } from './compile'
 
+const elementRE = /<\w(?=.*>)[\w:\.$-]*\s(((\&>)|.*?)*?)\/?>/gs
+const valuedAttributeRE = /([?]|(?!\d|-{2}|-\d)[a-zA-Z0-9\u00A0-\uFFFF-_:!%-]+)(?:={?(["'])([^\2]*?)\2}?)?/g
+
+// Regular expression of characters to be escaped
+const charReg = /[.:%!#()[\/\],]/
+
+const string1RE = /([']).*?(['])/g
+const string2RE = /([\`]).*?([\`])/g
+
 export default function transformerApplet(options: TransformerAppletOptions = {}): SourceCodeTransformer {
-  // Regular expression of characters to be escaped
-  const charReg = /[.:%!#()[\/\],]/
-
-  const classRE = /:?(hover-)?class=\".*?\"/g
-  const string1RE = /([']).*?(['])/g
-  const string2RE = /([\`]).*?([\`])/g
-
   return {
     name: 'transformer-applet',
     enforce: 'pre',
     async transform(s, _, ctx) {
-      const code = new MagicString(s.toString())
-      // process class
-      const classMatches = [...code.original.matchAll(classRE)]
-      for (const match of classMatches) {
-        // skip `... ? ... : ...`
-        if (/\?.*:/g.test(match[0]))
-          continue
+      let code = new MagicString(s.toString())
 
-        // skip `... : ...`
-        if (/{.+:.+}/g.test(match[0]))
-          continue
+      // process class attribute
+      const elementMatches = code.original.matchAll(elementRE)
+      for (const eleMatch of elementMatches) {
+        const start = eleMatch.index!
+        let matchStrTemp = eleMatch[0]
+        const valuedAttributes = Array.from((eleMatch[1] || '').matchAll(valuedAttributeRE))
 
-        const start = match.index!
-        const matchSplit = match[0].split('class=')
+        for (const attribute of valuedAttributes) {
+          // const matchStr = attribute[0]
+          const name = attribute[1]
+          const content = attribute[3]
 
-        const body = matchSplit[1].slice(1, -1)
-
-        if (charReg.test(body)) {
-          const replacements = await compileApplet(body, ctx, options)
-          code.overwrite(start, start + match[0].length, `${matchSplit[0]}class="${replacements.join(' ')}"`)
+          if (!content)
+            continue
+          if (['class', 'className', 'hover-class'].includes(name)) {
+            if (!name.includes(':')) {
+              const replacements = await compileApplet(content, ctx, options)
+              matchStrTemp = matchStrTemp.replace(content, replacements.join(' '))
+            }
+          }
         }
+        code.overwrite(start, start + eleMatch[0].length, matchStrTemp)
       }
+      code = new MagicString(code.toString())
 
       // process string1
       const string1Matches = [...code.original.matchAll(string1RE)]

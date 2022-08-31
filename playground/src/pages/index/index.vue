@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const bg = 'bg-[hsl(2.7,81.9%,69.6%)]'
 const index = 1
-const type = 'text'
+const customClass = 'text-red'
 const bool = true
 </script>
 
@@ -13,8 +13,8 @@ const bool = true
         0123456789
       </div>
     </div>
-    <div :class="{ 'bg-blue': bool }" p-2>
-      class
+    <div :class="{ 'bg-blue': bool }" p-2 :hover-class="['!bg-green']">
+      class="hover:bg-green"
     </div>
     <div class="p-1" :class="bool ? 'text-yellow-500 px-2.5' : ''">
       {{ `index${index + 1}` }}
@@ -35,5 +35,9 @@ const bool = true
     <div class="m-0.5 p-1 text-2xl" :class="bool ? '' : 'text-yellow-500 p-2.5'">
       abckefghijklmnopqrstuvwxyz
     </div>
+    <!-- eslint-disable-next-line vue/prefer-separate-static-class -->
+    <view :class="['underline', customClass]">
+      aaa
+    </view>
   </div>
 </template>
