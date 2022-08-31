@@ -42,145 +42,95 @@ describe('transformer-attributify', () => {
 
   test('basic', async () => {
     const content = await fs.readFile(
-      path.resolve(__dirname, './fixtures/attributify.vue'),
+      path.resolve(__dirname, './fixtures/rules.vue'),
     )
     const result = await transform(content.toString())
     expect(result).toMatchInlineSnapshot(`
       {
         "code": "<script setup lang=\\"ts\\">
+      import { ref } from 'vue'
       const bg = 'bg-[hsl(2.7,81.9%,69.6%)]'
       const index = 1
-      const type = 'text'
-      const bool = true
+      const customClass = 'text-red'
+      const bool = ref<boolean>()
       </script>
 
       <template>
-        <div h-80 text-center flex flex-col align-center select-none all:transition-400 class=\\"h-80 text-center flex flex-col select-none all:transition-400\\">
-          <!-- comment -->
-          <input type=\\"checkbox\\" peer mt-a class=\\"mt-a\\">
-          <div text=\\"green-500 4xl\\" class=\\"rotate-180 i-carbon-campsite text-green-500 text-4xl\\" :class=\\"bool ? bg : ''\\" />
-          <button ref=\\"sss\\" btn-block h-10 w-10 bg-blue block hhh class=\\"btn-block h-10 w-10 bg-blue block\\">
-            Button
-          </button>
-          <div class=\\"p-1 [&>*]:border-gray/50\\" :class=\\"bool ? 'text-yellow-500' : ''\\">
-            {{ \`index\${+1}\` }}
-          </div>
-          <div class=\\"[&>*]:border-gray/50\\">
-            <div>a</div>
-            <div>b</div>
-          </div>
-          <div i-carbon-campsite inline-block color=\\"blue\\"  class=\\"inline-block color-blue\\"/>
-          <div mb-a block group peer-checked=\\"text-4xl\\" class=\\"mb-a block peer-checked-text-4xl\\">
-            <div
-              font-100 text-4xl mb--3 p-10
-              bg-gradient=\\"to-r from-yellow-400 via-red-500 to-pink-500\\"
-             class=\\"font-100 text-4xl mb--3 p-10 bg-gradient-to-r bg-gradient-from-yellow-400 bg-gradient-via-red-500 bg-gradient-to-pink-500\\">
-              ~
-            </div>
-            <div text-5xl font-100 sm=\\"bg-blue-600\\" bg=\\"base\\" color=\\"base\\" class=\\"text-5xl font-100 sm-bg-blue-600 bg-base color-base\\">
-              unocss
-            </div>
-            <div op-20 font-200 mt-1 tracking-wider group-hover=\\"text-teal-400 op-50\\" class=\\"op-20 font-200 mt-1 tracking-wider group-hover-text-teal-400 group-hover-op-50\\">
-              Re-imaging Atomic CSS
+        <div class=\\"text-center aaa p-4\\" p=\\"4\\">
+          <div text=\\"4xl\\" class=\\"rotate-180 i-carbon-campsite text-4xl\\" :class=\\"bg\\" />
+          <div class=\\"border bg-blue-200 font-(light mono) \\">
+            <div class=\\"hover:(!bg-gray-600 text-white font-medium) text-#fff\\" text=\\"#fff\\">
+              0123456789
             </div>
           </div>
-        </div>
-        <div flex class=\\"flex\\">
-          <div ma inline-flex relative h-14 class=\\"ma inline-flex relative h-14\\">
-            <input type=\\"text\\" m-0 pt-4 px-4 text-true-gray-800 peer placeholder=\\"unocss\\" un-placeholder=\\"text-red\\" class=\\"m-0 pt-4 px-4 text-true-gray-800\\">
-            <label
-              absolute leading-1rem left-4 pointer-events-none text-gray-7 top=\\"1/3\\" transition=\\"200 linear\\"
-              peer-not-placeholder-shown=\\"-translate-y-4 scale-75 origin-top-left text-green-500\\"
-              peer-focus=\\"-translate-y-4 scale-75 origin-top-left text-green-500\\"
-              before=\\"content-!\\"
-              after=\\"content-[!]\\"
-             class=\\"absolute leading-1rem left-4 pointer-events-none text-gray-7 top-1/3 transition-200 peer-not-placeholder-shown--translate-y-4 peer-not-placeholder-shown-scale-75 peer-not-placeholder-shown-origin-top-left peer-not-placeholder-shown-text-green-500 peer-focus--translate-y-4 peer-focus-scale-75 peer-focus-origin-top-left peer-focus-text-green-500 after-content-[!]\\">Experience now</label>
+          <div :class=\\"{ 'bg-blue': bool }\\" p-2 :hover-class=\\"['!bg-green']\\" class=\\"p-2\\">
+            class=\\"hover:bg-green\\"
+          </div>
+          <div flex=\\"~ col gap-1\\" class=\\"p-1 flex flex-col flex-gap-1 items-center\\" items-center :class=\\"bool ? 'text-yellow-500 px-2.5' : ''\\">
+            <div i-carbon-campsite inline-block color=\\"blue\\" text=\\"xl\\"  class=\\"inline-block color-blue text-xl\\"/>
+            {{ \`index\${index + 1}\` }}
+          </div>
+          <div flex=\\"~ col\\" border=\\"2 blue\\" class=\\"flex flex-col border-2 border-blue\\">
+            <div text-right h-10 flex=\\"1\\" text=\\"red\\" :class=\\"{ 'text-sm': index > 0 }\\" class=\\"text-right h-10 flex-1 text-red\\">
+              0123456789
+            </div>
+            <div h-10 flex=\\"1\\" text-blue :class=\\"[index > 1 ? 'text' : '']\\" :style=\\"[index > 1 ? '' : '']\\" :type=\\"index > 1\\" class=\\"h-10 flex-1 text-blue\\">
+              0123456789
+            </div>
+          </div>
+          <div class=\\"bg-[url(https://static.runoob.com/images/demo/demo2.jpg)] w-40 h-20 ma color-white bg-center bg-cover\\" w-40 h-20 ma color=\\"white\\" bg=\\"center cover\\">
+            bg-img
+          </div>
+          <div class=\\"m-0.5 p-1 text-2xl\\" :class=\\"bool ? '' : 'text-yellow-500 p-2.5'\\">
+            abckefghijklmnopqrstuvwxyz
           </div>
         </div>
       </template>
+
       ",
-        "css": "/* layer: shortcuts */
-      .btn-block{border-radius:0.5rem;padding-top:0.5rem;padding-bottom:0.5rem;padding-left:1rem;padding-right:1rem;}
-      .bg-base{--un-bg-opacity:1;background-color:rgba(243,244,246,var(--un-bg-opacity));}
-      .dark .bg-base{--un-bg-opacity:1;background-color:rgba(34,34,34,var(--un-bg-opacity));}
-      .color-base{--un-text-opacity:1;color:rgba(55,65,81,var(--un-text-opacity));}
-      .dark .color-base{--un-text-opacity:1;color:rgba(250,250,250,var(--un-text-opacity));}
-      /* layer: default */
-      .pointer-events-none{pointer-events:none;}
-      .absolute{position:absolute;}
-      .relative{position:relative;}
-      .left-4{left:1rem;}
-      .top-1\\\\/3{top:33.3333333333%;}
+        "css": "/* layer: default */
+      .m-0\\\\.5{margin:0.125rem;}
       .ma{margin:auto;}
-      .mb--3{margin-bottom:-0.75rem;}
-      .mb-a{margin-bottom:auto;}
-      .mt-1{margin-top:0.25rem;}
-      .mt-a{margin-top:auto;}
-      .block{display:block;}
       .inline-block{display:inline-block;}
       .h-10{height:2.5rem;}
-      .h-14{height:3.5rem;}
-      .h-80{height:20rem;}
-      .w-10{width:2.5rem;}
+      .h-20{height:5rem;}
+      .w-40{width:10rem;}
       .flex{display:flex;}
-      .inline-flex{display:inline-flex;}
+      .flex-1{flex:1 1 0%;}
       .flex-col{flex-direction:column;}
-      .origin-top-left,
-      [peer=\\"\\"]:focus~.peer-focus-origin-top-left,
-      [peer=\\"\\"]:not(:placeholder-shown)~.peer-not-placeholder-shown-origin-top-left{transform-origin:top left;}
-      .-translate-y-4,
-      [peer=\\"\\"]:focus~.peer-focus--translate-y-4,
-      [peer=\\"\\"]:not(:placeholder-shown)~.peer-not-placeholder-shown--translate-y-4{--un-translate-y:-1rem;transform:translateX(var(--un-translate-x)) translateY(var(--un-translate-y)) translateZ(var(--un-translate-z)) rotate(var(--un-rotate)) rotateX(var(--un-rotate-x)) rotateY(var(--un-rotate-y)) rotateZ(var(--un-rotate-z)) skewX(var(--un-skew-x)) skewY(var(--un-skew-y)) scaleX(var(--un-scale-x)) scaleY(var(--un-scale-y)) scaleZ(var(--un-scale-z));}
       .rotate-180{--un-rotate-x:0;--un-rotate-y:0;--un-rotate-z:0;--un-rotate:180deg;transform:translateX(var(--un-translate-x)) translateY(var(--un-translate-y)) translateZ(var(--un-translate-z)) rotate(var(--un-rotate)) rotateX(var(--un-rotate-x)) rotateY(var(--un-rotate-y)) rotateZ(var(--un-rotate-z)) skewX(var(--un-skew-x)) skewY(var(--un-skew-y)) scaleX(var(--un-scale-x)) scaleY(var(--un-scale-y)) scaleZ(var(--un-scale-z));}
-      .scale-75,
-      [peer=\\"\\"]:focus~.peer-focus-scale-75,
-      [peer=\\"\\"]:not(:placeholder-shown)~.peer-not-placeholder-shown-scale-75{--un-scale-x:0.75;--un-scale-y:0.75;transform:translateX(var(--un-translate-x)) translateY(var(--un-translate-y)) translateZ(var(--un-translate-z)) rotate(var(--un-rotate)) rotateX(var(--un-rotate-x)) rotateY(var(--un-rotate-y)) rotateZ(var(--un-rotate-z)) skewX(var(--un-skew-x)) skewY(var(--un-skew-y)) scaleX(var(--un-scale-x)) scaleY(var(--un-scale-y)) scaleZ(var(--un-scale-z));}
-      .select-none{user-select:none;}
-      .\\\\[\\\\&\\\\>\\\\*\\\\]\\\\:border-gray\\\\/50>*{border-color:rgba(156,163,175,0.5);}
+      .items-center{align-items:center;}
+      .flex-gap-1,
+      .gap-1{grid-gap:0.25rem;gap:0.25rem;}
+      .border{border-width:1px;border-style:solid;}
+      .border-2{border-width:2px;border-style:solid;}
+      .border-blue{--un-border-opacity:1;border-color:rgba(96,165,250,var(--un-border-opacity));}
+      .\\\\!bg-green{--un-bg-opacity:1 !important;background-color:rgba(74,222,128,var(--un-bg-opacity)) !important;}
       .bg-\\\\[hsl\\\\(2\\\\.7\\\\,81\\\\.9\\\\%\\\\,69\\\\.6\\\\%\\\\)\\\\]{--un-bg-opacity:1;background-color:hsla(2.7,81.9%,69.6%,var(--un-bg-opacity));}
       .bg-blue{--un-bg-opacity:1;background-color:rgba(96,165,250,var(--un-bg-opacity));}
-      .bg-blue-600{--un-bg-opacity:1;background-color:rgba(37,99,235,var(--un-bg-opacity));}
-      .bg-gradient-from-yellow-400,
-      .from-yellow-400{--un-gradient-from:rgba(250,204,21,var(--un-from-opacity, 1));--un-gradient-to:rgba(250,204,21,0);--un-gradient-stops:var(--un-gradient-from), var(--un-gradient-to);}
-      .bg-gradient-via-red-500,
-      .via-red-500{--un-gradient-to:rgba(239,68,68,0);--un-gradient-stops:var(--un-gradient-from), rgba(239,68,68,var(--un-via-opacity, 1)), var(--un-gradient-to);}
-      .bg-gradient-to-pink-500,
-      .to-pink-500{--un-gradient-to:rgba(236,72,153,var(--un-to-opacity, 1));}
-      .bg-gradient-to-r{--un-gradient-shape:to right;--un-gradient:var(--un-gradient-shape), var(--un-gradient-stops);background-image:linear-gradient(var(--un-gradient));}
+      .bg-blue-200{--un-bg-opacity:1;background-color:rgba(191,219,254,var(--un-bg-opacity));}
+      .hover\\\\:bg-green:hover{--un-bg-opacity:1;background-color:rgba(74,222,128,var(--un-bg-opacity));}
+      .bg-\\\\[url\\\\(https\\\\:\\\\/\\\\/static\\\\.runoob\\\\.com\\\\/images\\\\/demo\\\\/demo2\\\\.jpg\\\\)\\\\]{--un-url:url(https://static.runoob.com/images/demo/demo2.jpg);background-image:var(--un-url);}
+      .bg-cover{background-size:cover;}
+      .bg-center{background-position:center;}
       .p-1{padding:0.25rem;}
-      .p-10{padding:2.5rem;}
-      .px-4{padding-left:1rem;padding-right:1rem;}
-      .pt-4{padding-top:1rem;}
+      .p-2{padding:0.5rem;}
+      .p-2\\\\.5{padding:0.625rem;}
+      .p-4{padding:1rem;}
+      .px-2\\\\.5{padding-left:0.625rem;padding-right:0.625rem;}
       .text-center{text-align:center;}
-      .text-4xl,
-      [peer=\\"\\"]:checked~.peer-checked-text-4xl{font-size:2.25rem;line-height:2.5rem;}
-      .text-5xl{font-size:3rem;line-height:1;}
-      .font-100{font-weight:100;}
-      .font-200{font-weight:200;}
-      .leading-1rem{line-height:1rem;}
-      .tracking-wider{letter-spacing:0.05em;}
-      .color-blue{--un-text-opacity:1;color:rgba(96,165,250,var(--un-text-opacity));}
-      .text-gray-7{--un-text-opacity:1;color:rgba(55,65,81,var(--un-text-opacity));}
-      .text-green-500,
-      [peer=\\"\\"]:focus~.peer-focus-text-green-500,
-      [peer=\\"\\"]:not(:placeholder-shown)~.peer-not-placeholder-shown-text-green-500{--un-text-opacity:1;color:rgba(34,197,94,var(--un-text-opacity));}
+      .text-right{text-align:right;}
+      .text-2xl{font-size:1.5rem;line-height:2rem;}
+      .text-4xl{font-size:2.25rem;line-height:2.5rem;}
+      .text-sm{font-size:0.875rem;line-height:1.25rem;}
+      .text-xl{font-size:1.25rem;line-height:1.75rem;}
+      .color-blue,
+      .text-blue{--un-text-opacity:1;color:rgba(96,165,250,var(--un-text-opacity));}
+      .color-white,
+      .text-\\\\#fff,
+      .text-white{--un-text-opacity:1;color:rgba(255,255,255,var(--un-text-opacity));}
       .text-red{--un-text-opacity:1;color:rgba(248,113,113,var(--un-text-opacity));}
-      .text-teal-400,
-      [group=\\"\\"]:hover .group-hover-text-teal-400{--un-text-opacity:1;color:rgba(45,212,191,var(--un-text-opacity));}
-      .text-true-gray-800{--un-text-opacity:1;color:rgba(38,38,38,var(--un-text-opacity));}
-      .text-yellow-500{--un-text-opacity:1;color:rgba(234,179,8,var(--un-text-opacity));}
-      .op-20{opacity:0.2;}
-      .op-50,
-      [group=\\"\\"]:hover .group-hover-op-50{opacity:0.5;}
-      .all\\\\:transition-400 *{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:400ms;}
-      .transition{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms;}
-      .transition-200{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:200ms;}
-      .after-content-\\\\[\\\\!\\\\]::after,
-      .content-\\\\[\\\\!\\\\]{content:\\"!\\";}
-      .m-0{margin:0rem;}
-      @media (min-width: 640px){
-      .sm-bg-blue-600{--un-bg-opacity:1;background-color:rgba(37,99,235,var(--un-bg-opacity));}
-      }",
+      .text-yellow-500{--un-text-opacity:1;color:rgba(234,179,8,var(--un-text-opacity));}",
       }
     `)
   })

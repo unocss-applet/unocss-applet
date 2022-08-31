@@ -3,7 +3,7 @@ import MagicString from 'magic-string'
 import type { TransformerAppletOptions } from './types'
 import { compileApplet } from './compile'
 
-const elementRE = /<\w(?=.*>)[\w:\.$-]*\s(((\&>)|.*?)*?)\/?>/gs
+const elementRE = /<\w(?=.*>)[\w:\.$-]*\s(((".*?>?.*?")|.*?)*?)\/?>/gs
 const valuedAttributeRE = /([?]|(?!\d|-{2}|-\d)[a-zA-Z0-9\u00A0-\uFFFF-_:!%-]+)(?:={?(["'])([^\2]*?)\2}?)?/g
 
 // Regular expression of characters to be escaped
@@ -33,14 +33,19 @@ export default function transformerApplet(options: TransformerAppletOptions = {}
 
           if (!content)
             continue
+
           if (['class', 'className', 'hover-class'].includes(name)) {
-            if (!name.includes(':')) {
+            if (name.includes(':'))
+              continue
+
+            if (charReg.test(content)) {
               const replacements = await compileApplet(content, ctx, options)
               matchStrTemp = matchStrTemp.replace(content, replacements.join(' '))
             }
           }
         }
-        code.overwrite(start, start + eleMatch[0].length, matchStrTemp)
+        if (eleMatch[0] !== matchStrTemp)
+          code.overwrite(start, start + eleMatch[0].length, matchStrTemp)
       }
       code = new MagicString(code.toString())
 

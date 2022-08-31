@@ -10,7 +10,7 @@ const strippedPrefixes = [
 
 const splitterRE = /[\s'"`;]+/g
 // const elementRE = /<\w(?=.*>)[\w:\.$-]*\s((?:['"`\{].*?['"`\}]|.*?)*?)>/gs
-const elementRE = /<\w(?=.*>)[\w:\.$-]*\s(((\&>)|.*?)*?)\/?>/gs
+const elementRE = /<\w(?=.*>)[\w:\.$-]*\s(((".*?>?.*?")|.*?)*?)\/?>/gs
 const valuedAttributeRE = /([?]|(?!\d|-{2}|-\d)[a-zA-Z0-9\u00A0-\uFFFF-_:!%-]+)(?:={?(["'])([^\2]*?)\2}?)?/g
 
 export const defaultIgnoreAttributes = ['placeholder', 'setup', 'lang', 'scoped']
@@ -40,6 +40,7 @@ export default function transformerAttributify(options: TransformerAttributifyOp
           const matchStr = attribute[0]
           const name = attribute[1]
           const content = attribute[3]
+          // console.log('name', name, 'content', content)
           let _name = prefixedOnly ? name.replace(prefix, '') : name
 
           if (!ignoreAttributes.includes(_name)) {
@@ -80,7 +81,7 @@ export default function transformerAttributify(options: TransformerAttributifyOp
             matchStrTemp = `${matchStrTemp.slice(0, sliceNum)} class="${attrSelectors.join(' ')}"${matchStrTemp.slice(sliceNum)}`
           }
           else {
-            matchStrTemp = matchStrTemp.replace(existsClass, `${existsClass} ${attrSelectors.join(' ')}`)
+            matchStrTemp = matchStrTemp.replace(`"${existsClass}"`, `"${existsClass} ${attrSelectors.join(' ')}"`)
           }
           code.overwrite(start, start + eleMatch[0].length, matchStrTemp)
         }
