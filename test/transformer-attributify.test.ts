@@ -50,6 +50,7 @@ describe('transformer-attributify', () => {
         "code": "<script setup lang=\\"ts\\">
       import { ref } from 'vue'
       const bg = 'bg-[hsl(2.7,81.9%,69.6%)]'
+      const bgIgnore = 'applet-ignore: bg-[hsl(2.7,81.9%,69.6%)]'
       const index = 1
       const customClass = 'text-red'
       const bool = ref<boolean>()
@@ -59,34 +60,33 @@ describe('transformer-attributify', () => {
         <div class=\\"text-center aaa p-4\\" p=\\"4\\">
           <div text=\\"4xl\\" class=\\"rotate-180 i-carbon-campsite text-4xl\\" :class=\\"bg\\" />
           <div class=\\"border bg-blue-200 font-(light mono) \\">
-            <div class=\\"hover:(!bg-gray-600 text-white font-medium) text-#fff\\" text=\\"#fff\\">
-              0123456789
+            <div class=\\"hover:(!bg-gray-600 text-red font-bold) text-#fff\\" text=\\"#fff\\">
+              {{ 'applet-ignore: hover:(!bg-gray-600 text-red font-bold)' }}
             </div>
           </div>
-          <div :class=\\"{ 'bg-blue': bool }\\" p-2 :hover-class=\\"['!bg-green']\\" class=\\"p-2\\">
+          <div :class=\\"\`p-2.5 \${bool ? 'p-0.5' : ''}\`\\" m-2 :hover-class=\\"['!bg-green']\\" class=\\"m-2\\">
             class=\\"hover:bg-green\\"
           </div>
           <div flex=\\"~ col gap-1\\" class=\\"p-1 flex flex-col flex-gap-1 items-center\\" items-center :class=\\"bool ? 'text-yellow-500 px-2.5' : ''\\">
             <div i-carbon-campsite inline-block color=\\"blue\\" text=\\"xl\\"  class=\\"inline-block color-blue text-xl\\"/>
-            {{ \`index\${index + 1}\` }}
+            {{ \`index\${index + 1}\` }}{{ \`index\` }}
           </div>
           <div flex=\\"~ col\\" border=\\"2 blue\\" class=\\"flex flex-col border-2 border-blue\\">
             <div text-right h-10 flex=\\"1\\" text=\\"red\\" :class=\\"{ 'text-sm': index > 0 }\\" class=\\"text-right h-10 flex-1 text-red\\">
               0123456789
             </div>
             <div h-10 flex=\\"1\\" text-blue :class=\\"[index > 1 ? 'text' : '']\\" :style=\\"[index > 1 ? '' : '']\\" :type=\\"index > 1\\" class=\\"h-10 flex-1 text-blue\\">
-              0123456789
+              {{ bgIgnore }}
             </div>
           </div>
           <div class=\\"bg-[url(https://static.runoob.com/images/demo/demo2.jpg)] w-40 h-20 ma color-white bg-center bg-cover\\" w-40 h-20 ma color=\\"white\\" bg=\\"center cover\\">
-            bg-img
+            {{ 'applet-ignore: bg-[url(https://static.runoob.com/images/demo/demo2.jpg)]' }}
           </div>
           <div class=\\"m-0.5 p-1 text-2xl\\" :class=\\"bool ? '' : 'text-yellow-500 p-2.5'\\">
             abckefghijklmnopqrstuvwxyz
           </div>
         </div>
       </template>
-
       ",
         "css": "/* layer: default */
       .m-0\\\\.5{margin:0.125rem;}
@@ -107,14 +107,13 @@ describe('transformer-attributify', () => {
       .border-blue{--un-border-opacity:1;border-color:rgba(96,165,250,var(--un-border-opacity));}
       .\\\\!bg-green{--un-bg-opacity:1 !important;background-color:rgba(74,222,128,var(--un-bg-opacity)) !important;}
       .bg-\\\\[hsl\\\\(2\\\\.7\\\\,81\\\\.9\\\\%\\\\,69\\\\.6\\\\%\\\\)\\\\]{--un-bg-opacity:1;background-color:hsla(2.7,81.9%,69.6%,var(--un-bg-opacity));}
-      .bg-blue{--un-bg-opacity:1;background-color:rgba(96,165,250,var(--un-bg-opacity));}
       .bg-blue-200{--un-bg-opacity:1;background-color:rgba(191,219,254,var(--un-bg-opacity));}
       .hover\\\\:bg-green:hover{--un-bg-opacity:1;background-color:rgba(74,222,128,var(--un-bg-opacity));}
       .bg-\\\\[url\\\\(https\\\\:\\\\/\\\\/static\\\\.runoob\\\\.com\\\\/images\\\\/demo\\\\/demo2\\\\.jpg\\\\)\\\\]{--un-url:url(https://static.runoob.com/images/demo/demo2.jpg);background-image:var(--un-url);}
       .bg-cover{background-size:cover;}
       .bg-center{background-position:center;}
+      .p-0\\\\.5{padding:0.125rem;}
       .p-1{padding:0.25rem;}
-      .p-2{padding:0.5rem;}
       .p-2\\\\.5{padding:0.625rem;}
       .p-4{padding:1rem;}
       .px-2\\\\.5{padding-left:0.625rem;padding-right:0.625rem;}
@@ -127,10 +126,10 @@ describe('transformer-attributify', () => {
       .color-blue,
       .text-blue{--un-text-opacity:1;color:rgba(96,165,250,var(--un-text-opacity));}
       .color-white,
-      .text-\\\\#fff,
-      .text-white{--un-text-opacity:1;color:rgba(255,255,255,var(--un-text-opacity));}
+      .text-\\\\#fff{--un-text-opacity:1;color:rgba(255,255,255,var(--un-text-opacity));}
       .text-red{--un-text-opacity:1;color:rgba(248,113,113,var(--un-text-opacity));}
-      .text-yellow-500{--un-text-opacity:1;color:rgba(234,179,8,var(--un-text-opacity));}",
+      .text-yellow-500{--un-text-opacity:1;color:rgba(234,179,8,var(--un-text-opacity));}
+      .m-2{margin:0.5rem;}",
       }
     `)
   })

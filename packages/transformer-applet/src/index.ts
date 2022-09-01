@@ -3,16 +3,16 @@ import MagicString from 'magic-string'
 import type { TransformerAppletOptions } from './types'
 import { compileApplet } from './compile'
 
-const elementRE = /<\w(?=.*>)[\w:\.$-]*\s(((".*?>?.*?")|.*?)*?)\/?>/gs
-const valuedAttributeRE = /([?]|(?!\d|-{2}|-\d)[a-zA-Z0-9\u00A0-\uFFFF-_:!%-]+)(?:={?(["'])([^\2]*?)\2}?)?/g
-
 // Regular expression of characters to be escaped
 const charReg = /[.:%!#()[\/\],]/
 
-const string1RE = /([']).*?(['])/g
-const string2RE = /([\`]).*?([\`])/g
+const elementRE = /<\w(?=.*>)[\w:\.$-]*\s(((".*?>?.*?")|.*?)*?)\/?>/gs
+const valuedAttributeRE = /([?]|(?!\d|-{2}|-\d)[a-zA-Z0-9\u00A0-\uFFFF-_:!%-]+)(?:={?(["'])([^\2]*?)\2}?)?/g
+const stringRE = /'(.*?)'|/g
+// TODO: support (\`(.*?)\`)
 
 export default function transformerApplet(options: TransformerAppletOptions = {}): SourceCodeTransformer {
+  const ignorePrefix = options.ignorePrefix || 'applet-ignore:'
   return {
     name: 'transformer-applet',
     enforce: 'pre',
@@ -49,38 +49,34 @@ export default function transformerApplet(options: TransformerAppletOptions = {}
       }
       code = new MagicString(code.toString())
 
-      // process string1
-      const string1Matches = [...code.original.matchAll(string1RE)]
-      for (const match of string1Matches) {
+      // process string, only effective with ''
+      const stringMatches = code.original.matchAll(stringRE)
+      for (const match of stringMatches) {
+        // ignore empty string
+        if (!match[1])
+          continue
+
+        const start = match.index!
+        let content = match[1]
+
+        if (content.startsWith(ignorePrefix)) {
+          content = content.substring(ignorePrefix.length).trim()
+          code.overwrite(start, start + match[0].length, match[0].replace(match[1], content))
+        }
+        else {
         // There may be no need
         // https://tailwindcss.com/docs/background-image#arbitrary-values
         // skip all the image formats in HTML for bg-[url('...')]
-        if (/\.(png|jpg|jpeg|gif|svg)/g.test(match[0]))
-          continue
-        // skip http(s)://
-        if (/http(s)?:\/\//g.test(match[0]))
-          continue
+          if (/\.(png|jpg|jpeg|gif|svg)/g.test(content))
+            continue
+          // skip http(s)://
+          if (/http(s)?:\/\//g.test(content))
+            continue
 
-        const start = match.index!
-        const body = match[0].slice(1, -1)
-        if (charReg.test(body)) {
-          const replacements = await compileApplet(body, ctx, options)
-          code.overwrite(start, start + match[0].length, `'${replacements.join(' ')}'`)
-        }
-      }
-
-      // process string2
-      const string2Matches = [...code.original.matchAll(string2RE)]
-      for (const match of string2Matches) {
-        // skip `${...}`
-        if (/\$\{.*\}/g.test(match[0]))
-          continue
-
-        const start = match.index!
-        const body = match[0].slice(1, -1)
-        if (charReg.test(body)) {
-          const replacements = await compileApplet(body, ctx, options)
-          code.overwrite(start, start + match[0].length, `'${replacements.join(' ')}'`)
+          if (charReg.test(content)) {
+            const replacements = await compileApplet(content, ctx, options)
+            code.overwrite(start, start + match[0].length, `'${replacements.join(' ')}'`)
+          }
         }
       }
       s.overwrite(0, s.original.length, code.toString())
