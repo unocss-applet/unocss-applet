@@ -1,7 +1,7 @@
 {
   "name": "unocss-applet",
   "type": "module",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "packageManager": "pnpm@7.2.1",
   "description": "",
   "author": "Neil Lee <zguolee@foxmail.com>",
