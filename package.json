@@ -31,7 +31,7 @@
     "rimraf": "^3.0.2",
     "typescript": "^4.7.4",
     "unbuild": "^0.8.8",
-    "unocss": "^0.45.13",
+    "unocss": "^0.45.14",
     "unocss-applet": "workspace:*",
     "vite": "^2.9.15",
     "vitest": "^0.21.1"

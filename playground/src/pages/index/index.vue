@@ -19,8 +19,10 @@ const bool = ref<boolean>()
       class="hover:bg-green"
     </div>
     <div flex="~ col gap-1" class="p-1" items-center :class="bool ? 'text-yellow-500 px-2.5' : ''">
-      <div i-carbon-campsite inline-block color="blue" text="xl" />
-      {{ `index${index + 1}` }}{{ `index` }}
+      <div i-carbon-campsite inline-block text="xl !red" />
+      <div color="blue">
+        {{ `index${index + 1}` }}
+      </div>
     </div>
     <div flex="~ col" border="2 blue">
       <div text-right h-10 flex="1" text="red" :class="{ 'text-sm': index > 0 }">

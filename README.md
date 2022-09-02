@@ -42,7 +42,6 @@ const transformers: SourceCodeTransformer[] = []
 
 if (process.env.UNI_PLATFORM === 'h5') {
   presets.push(presetUno())
-  // you can add `presetAttributify()` in `unocss.config.ts` instead of here to enable unocss attributify mode prompt although preset is not working for applet
   presets.push(presetAttributify())
 }
 else {
@@ -57,6 +56,9 @@ else {
 export default defineConfig({
   presets: [
     presetIcons(),
+    // you can add `presetAttributify()` here to enable unocss attributify mode prompt
+    // although preset is not working for applet
+    // presetAttributify(),
     ...presets,
   ],
   transformers: [

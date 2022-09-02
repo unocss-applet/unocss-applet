@@ -40,7 +40,6 @@ export default function transformerAttributify(options: TransformerAttributifyOp
           const matchStr = attribute[0]
           const name = attribute[1]
           const content = attribute[3]
-          // console.log('name', name, 'content', content)
           let _name = prefixedOnly ? name.replace(prefix, '') : name
 
           if (!ignoreAttributes.includes(_name)) {
@@ -66,8 +65,10 @@ export default function transformerAttributify(options: TransformerAttributifyOp
               }
               else {
                 const attrs = await Promise.all(content.split(splitterRE).filter(Boolean)
-                  .map(async v =>
-                    [v === '~' ? _name : `${_name}-${v}`, !!await uno.parseToken(v === '~' ? _name : `${_name}-${v}`)] as const))
+                  .map(async (v) => {
+                    const token = v === '~' ? _name : v.startsWith('!') ? `!${_name}-${v.slice(1)}` : `${_name}-${v}`
+                    return [token, !!await uno.parseToken(token)] as const
+                  }))
                 const result = attrs.filter(([, v]) => v).map(([v]) => v)
                 attrSelectors.push(...result)
                 deleteClass && (matchStrTemp = matchStrTemp.replace(` ${matchStr}`, ''))

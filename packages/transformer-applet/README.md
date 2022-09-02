@@ -87,13 +87,15 @@ export interface TransformerAppletOptions {
 ```
 ### Using with string
 
-If you want to use string(`const bg = 'bg-green-100/50'`) in `<script></script>` and `JS/TS` files, please use single quotes instead of double quotes.
+If you want to use UnoCSS rule string(`const bg = 'bg-green-100/50'`) in `<script></script>` or `JS/TS` files, please use single quotes instead of double quotes. 
+But if you want to ignore a string, add a prefix(default `applet-ignore:`), and the plugin will automatically ignore the string and delete the prefix.
 
 #### without
 
 ```html
 <script setup lang="ts">
   const bg = 'bg-[hsl(2.7,81.9%,69.6%)]'
+  const bg2 = 'applet-ignore: bg-[hsl(2.7,81.9%,69.6%)]'
 </script>
 ```
 
@@ -102,6 +104,7 @@ If you want to use string(`const bg = 'bg-green-100/50'`) in `<script></script>`
 ```html
 <script setup lang="ts">
   const bg = 'uno-98db2v'
+  const bg2 = 'bg-[hsl(2.7,81.9%,69.6%)]'
 </script>
 
 <style>

@@ -54,7 +54,7 @@ describe('transformer-applet', () => {
             class=\\"hover:bg-green\\"
           </div>
           <div flex=\\"~ col gap-1\\" class=\\"p-1\\" items-center :class=\\"bool ? 'uno-2z589z' : ''\\">
-            <div i-carbon-campsite inline-block color=\\"blue\\" text=\\"xl\\" />
+            <div i-carbon-campsite inline-block color=\\"blue\\" text=\\"xl !red\\" />
             {{ \`index\${index + 1}\` }}{{ \`index\` }}
           </div>
           <div flex=\\"~ col\\" border=\\"2 blue\\">

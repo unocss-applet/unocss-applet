@@ -68,7 +68,7 @@ describe('transformer-attributify', () => {
             class=\\"hover:bg-green\\"
           </div>
           <div flex=\\"~ col gap-1\\" class=\\"p-1 flex flex-col flex-gap-1 items-center\\" items-center :class=\\"bool ? 'text-yellow-500 px-2.5' : ''\\">
-            <div i-carbon-campsite inline-block color=\\"blue\\" text=\\"xl\\"  class=\\"inline-block color-blue text-xl\\"/>
+            <div i-carbon-campsite inline-block color=\\"blue\\" text=\\"xl !red\\"  class=\\"inline-block color-blue text-xl !text-red\\"/>
             {{ \`index\${index + 1}\` }}{{ \`index\` }}
           </div>
           <div flex=\\"~ col\\" border=\\"2 blue\\" class=\\"flex flex-col border-2 border-blue\\">
@@ -127,6 +127,7 @@ describe('transformer-attributify', () => {
       .text-blue{--un-text-opacity:1;color:rgba(96,165,250,var(--un-text-opacity));}
       .color-white,
       .text-\\\\#fff{--un-text-opacity:1;color:rgba(255,255,255,var(--un-text-opacity));}
+      .\\\\!text-red{--un-text-opacity:1 !important;color:rgba(248,113,113,var(--un-text-opacity)) !important;}
       .text-red{--un-text-opacity:1;color:rgba(248,113,113,var(--un-text-opacity));}
       .text-yellow-500{--un-text-opacity:1;color:rgba(234,179,8,var(--un-text-opacity));}
       .m-2{margin:0.5rem;}",
