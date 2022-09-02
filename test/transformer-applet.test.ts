@@ -6,11 +6,16 @@ import { createGenerator } from '@unocss/core'
 import MagicString from 'magic-string'
 import transformerApplet from '@unocss-applet/transformer-applet'
 import presetUno from '@unocss/preset-uno'
+import { transformerDirectives, transformerVariantGroup } from 'unocss'
 
 describe('transformer-applet', () => {
   const uno = createGenerator({
     presets: [
       presetUno(),
+    ],
+    transformers: [
+      transformerDirectives(),
+      transformerVariantGroup(),
     ],
   })
   const transformer = transformerApplet()
@@ -55,13 +60,19 @@ describe('transformer-applet', () => {
           </div>
           <div flex=\\"~ col gap-1\\" class=\\"p-1\\" items-center :class=\\"bool ? 'uno-2z589z' : ''\\">
             <div i-carbon-campsite inline-block color=\\"blue\\" text=\\"xl !red\\" />
-            {{ \`index\${index + 1}\` }}{{ \`index\` }}
+            <div bg=\\"green-(!200 800)\\">
+              {{ \`index\${index + 1}\` }}{{ \`index\` }}
+            </div>
           </div>
-          <div flex=\\"~ col\\" border=\\"2 blue\\">
+          <div flex=\\"~ col\\" b=\\"~ green dark:(red 2)\\">
             <div text-right h-10 flex=\\"1\\" text=\\"red\\" :class=\\"{ 'text-sm': index > 0 }\\">
               0123456789
             </div>
-            <div h-10 flex=\\"1\\" text-blue :class=\\"[index > 1 ? 'text' : '']\\" :style=\\"[index > 1 ? '' : '']\\" :type=\\"index > 1\\">
+            <div
+              h-10 flex=\\"1\\" :class=\\"[index > 1 ? 'text' : '']\\"
+              text=\\"blue dark:(red !bold)\\" :style=\\"[index > 1 ? '' : '']\\"
+              :type=\\"index > 1\\"
+            >
               {{ bgIgnore }}
             </div>
           </div>
@@ -95,7 +106,7 @@ describe('transformer-applet', () => {
       .rotate-180{--un-rotate-x:0;--un-rotate-y:0;--un-rotate-z:0;--un-rotate:180deg;transform:translateX(var(--un-translate-x)) translateY(var(--un-translate-y)) translateZ(var(--un-translate-z)) rotate(var(--un-rotate)) rotateX(var(--un-rotate-x)) rotateY(var(--un-rotate-y)) rotateZ(var(--un-rotate-z)) skewX(var(--un-skew-x)) skewY(var(--un-skew-y)) scaleX(var(--un-scale-x)) scaleY(var(--un-scale-y)) scaleZ(var(--un-scale-z));}
       .items-center{align-items:center;}
       .gap-1{grid-gap:0.25rem;gap:0.25rem;}
-      .border{border-width:1px;border-style:solid;}
+      .b{border-width:1px;border-style:solid;}
       .bg-\\\\[hsl\\\\(2\\\\.7\\\\,81\\\\.9\\\\%\\\\,69\\\\.6\\\\%\\\\)\\\\]{--un-bg-opacity:1;background-color:hsla(2.7,81.9%,69.6%,var(--un-bg-opacity));}
       .hover\\\\:bg-green:hover{--un-bg-opacity:1;background-color:rgba(74,222,128,var(--un-bg-opacity));}
       .bg-\\\\[url\\\\(https\\\\:\\\\/\\\\/static\\\\.runoob\\\\.com\\\\/images\\\\/demo\\\\/demo2\\\\.jpg\\\\)\\\\]{--un-url:url(https://static.runoob.com/images/demo/demo2.jpg);background-image:var(--un-url);}
@@ -104,7 +115,6 @@ describe('transformer-applet', () => {
       .text-center{text-align:center;}
       .text-right{text-align:right;}
       .text-sm{font-size:0.875rem;line-height:1.25rem;}
-      .text-blue{--un-text-opacity:1;color:rgba(96,165,250,var(--un-text-opacity));}
       .text-red{--un-text-opacity:1;color:rgba(248,113,113,var(--un-text-opacity));}",
       }
     `)

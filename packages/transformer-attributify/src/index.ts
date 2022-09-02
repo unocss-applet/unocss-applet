@@ -66,7 +66,16 @@ export default function transformerAttributify(options: TransformerAttributifyOp
               else {
                 const attrs = await Promise.all(content.split(splitterRE).filter(Boolean)
                   .map(async (v) => {
-                    const token = v === '~' ? _name : v.startsWith('!') ? `!${_name}-${v.slice(1)}` : `${_name}-${v}`
+                    let token = v
+                    // b="~ green dark:(red 2)"
+                    if (v === '~') { token = _name }
+                    else if (v.includes(':')) {
+                      const splitV = v.split(':')
+                      token = `${splitV[0]}:${splitV[1]}`
+                    }
+                    else if (v.startsWith('!')) { token = `!${_name}-${v.slice(1)}` }
+                    else { token = `${_name}-${v}` }
+
                     return [token, !!await uno.parseToken(token)] as const
                   }))
                 const result = attrs.filter(([, v]) => v).map(([v]) => v)

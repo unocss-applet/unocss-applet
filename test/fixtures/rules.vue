@@ -20,13 +20,19 @@ const bool = ref<boolean>()
     </div>
     <div flex="~ col gap-1" class="p-1" items-center :class="bool ? 'text-yellow-500 px-2.5' : ''">
       <div i-carbon-campsite inline-block color="blue" text="xl !red" />
-      {{ `index${index + 1}` }}{{ `index` }}
+      <div bg="green-(!200 800)">
+        {{ `index${index + 1}` }}{{ `index` }}
+      </div>
     </div>
-    <div flex="~ col" border="2 blue">
+    <div flex="~ col" b="~ green dark:(red 2)">
       <div text-right h-10 flex="1" text="red" :class="{ 'text-sm': index > 0 }">
         0123456789
       </div>
-      <div h-10 flex="1" text-blue :class="[index > 1 ? 'text' : '']" :style="[index > 1 ? '' : '']" :type="index > 1">
+      <div
+        h-10 flex="1" :class="[index > 1 ? 'text' : '']"
+        text="blue dark:(red !bold)" :style="[index > 1 ? '' : '']"
+        :type="index > 1"
+      >
         {{ bgIgnore }}
       </div>
     </div>
