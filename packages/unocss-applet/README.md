@@ -56,8 +56,10 @@ else {
 export default defineConfig({
   presets: [
     presetIcons(),
-    // you can add `presetAttributify()` here to enable unocss attributify mode prompt
-    // although preset is not working for applet
+    /**
+     * you can add `presetAttributify()` here to enable unocss attributify mode prompt
+     * although preset is not working for applet
+     */
     // presetAttributify(),
     ...presets,
   ],

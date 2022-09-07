@@ -9,16 +9,16 @@ const bool = ref<boolean>()
 
 <template>
   <div class="text-center aaa" p="4">
-    <div text="4xl" class="rotate-180 i-carbon-campsite" :class="bg" />
+    <div text="4xl" class="rotate-180 i-carbon-campsite" :class="bg" @click="bool = !bool" />
     <div class="border bg-blue-200 font-(light mono) ">
       <div class="hover:(!bg-gray-600 text-red font-bold)" text="#fff">
         {{ 'applet-ignore: hover:(!bg-gray-600 text-red font-bold)' }}
       </div>
     </div>
-    <div :class="`p-2.5 ${bool ? 'p-0.5' : ''}`" m-2 :hover-class="['!bg-green']">
+    <div b="~" :class="`p-2.5 ${bool ? '!p-0.5' : ''}`" m-2 :hover-class="['!bg-green']">
       class="hover:bg-green"
     </div>
-    <div flex="~ col gap-1" class="p-1" items-center :class="bool ? 'text-yellow-500 px-2.5' : ''">
+    <div flex="~ col gap-1" class="p-1" items-center :class="bool ? 'text-yellow-500 underline' : ''">
       <div i-carbon-campsite inline-block color="blue" text="xl !red" />
       <div bg="green-(!200 800)">
         {{ `index${index + 1}` }}{{ `index` }}

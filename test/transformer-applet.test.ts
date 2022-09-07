@@ -55,7 +55,7 @@ describe('transformer-applet', () => {
               {{ 'hover:(!bg-gray-600 text-red font-bold)' }}
             </div>
           </div>
-          <div :class=\\"\`p-2.5 \${bool ? 'uno-kl65hf' : ''}\`\\" m-2 :hover-class=\\"['uno-y5ng0p']\\">
+          <div :class=\\"\`uno-vrauvt \${bool ? 'uno-kl65hf' : ''}\`\\" m-2 :hover-class=\\"['uno-y5ng0p']\\">
             class=\\"hover:bg-green\\"
           </div>
           <div flex=\\"~ col gap-1\\" class=\\"p-1\\" items-center :class=\\"bool ? 'uno-2z589z' : ''\\">
@@ -93,6 +93,7 @@ describe('transformer-applet', () => {
       .uno-w33epq{--un-url:url(https://static.runoob.com/images/demo/demo2.jpg);background-image:var(--un-url);}
       .uno-kl65hf{padding:0.125rem;}
       .uno-qju0i9{padding:0.625rem;--un-text-opacity:1;color:rgba(234,179,8,var(--un-text-opacity));}
+      .uno-vrauvt{padding:0.625rem;}
       .uno-2z589z{padding-left:0.625rem;padding-right:0.625rem;--un-text-opacity:1;color:rgba(234,179,8,var(--un-text-opacity));}
       .uno-jw3na0{--un-text-opacity:1;color:rgba(248,113,113,var(--un-text-opacity));}
       /* layer: default */
@@ -111,7 +112,6 @@ describe('transformer-applet', () => {
       .hover\\\\:bg-green:hover{--un-bg-opacity:1;background-color:rgba(74,222,128,var(--un-bg-opacity));}
       .bg-\\\\[url\\\\(https\\\\:\\\\/\\\\/static\\\\.runoob\\\\.com\\\\/images\\\\/demo\\\\/demo2\\\\.jpg\\\\)\\\\]{--un-url:url(https://static.runoob.com/images/demo/demo2.jpg);background-image:var(--un-url);}
       .p-1{padding:0.25rem;}
-      .p-2\\\\.5{padding:0.625rem;}
       .text-center{text-align:center;}
       .text-right{text-align:right;}
       .text-sm{font-size:0.875rem;line-height:1.25rem;}

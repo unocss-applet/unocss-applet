@@ -9,7 +9,7 @@ const charReg = /[.:%!#()[\/\],]/
 const elementRE = /<\w(?=.*>)[\w:\.$-]*\s(((".*?>?.*?")|.*?)*?)\/?>/gs
 const valuedAttributeRE = /([?]|(?!\d|-{2}|-\d)[a-zA-Z0-9\u00A0-\uFFFF-_:!%-]+)(?:={?(["'])([^\2]*?)\2}?)?/g
 const stringRE = /'(.*?)'|/g
-// TODO: support (\`(.*?)\`)
+const templateLiteralsRE = /`([\s\S]*?)`/g
 
 export default function transformerApplet(options: TransformerAppletOptions = {}): SourceCodeTransformer {
   const ignorePrefix = options.ignorePrefix || 'applet-ignore:'
@@ -77,6 +77,19 @@ export default function transformerApplet(options: TransformerAppletOptions = {}
             const replacements = await compileApplet(content, ctx, options)
             code.overwrite(start, start + match[0].length, `'${replacements.join(' ')}'`)
           }
+        }
+      }
+
+      // process template literals, only effective with ``
+      code = new MagicString(code.toString())
+      const templateLiteralsMatches = code.original.matchAll(templateLiteralsRE)
+      for (const match of templateLiteralsMatches) {
+        const start = match.index!
+        const content = match[1]
+        // split content
+        if (charReg.test(content)) {
+          const replacements = await compileApplet(content, ctx, options)
+          code.overwrite(start, start + match[0].length, `\`${replacements.join(' ')}\``)
         }
       }
       s.overwrite(0, s.original.length, code.toString())
