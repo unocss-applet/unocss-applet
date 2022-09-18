@@ -12,7 +12,7 @@ pnpm add @unocss-applet/transformer-applet -D # with pnpm
 
 ## Usage
 
-> Only effect when class selector name include `[.:%!#()[\/\],]`. 
+> Only effect when class selector name include `[.:%!#()[\/\],]`.
 
 ```ts
 import { defineConfig } from 'unocss'
@@ -28,6 +28,7 @@ export default defineConfig({
 ```
 
 ## Type Declarations
+
 ```ts
 export interface TransformerAppletOptions {
   /**
@@ -59,7 +60,9 @@ export interface TransformerAppletOptions {
 ```
 
 ## Example
+
 ### Using in with `class`
+
 #### without
 
 ```html
@@ -67,8 +70,6 @@ export interface TransformerAppletOptions {
   py-3
 </div>
 ```
-
-</td><td width="500px" valign="top">
 
 #### with
 
@@ -85,9 +86,10 @@ export interface TransformerAppletOptions {
 }
 </style>
 ```
+
 ### Using with string
 
-If you want to use UnoCSS rule string(`const bg = 'bg-green-100/50'`) in `<script></script>` or `JS/TS` files, please use single quotes instead of double quotes. 
+If you want to use UnoCSS rule string(`const bg = 'bg-green-100/50'`) in `<script></script>` or `JS/TS` files, please use single quotes instead of double quotes.
 But if you want to ignore a string, add a prefix(default `applet-ignore:`), and the plugin will automatically ignore the string and delete the prefix.
 
 #### without
@@ -114,7 +116,6 @@ But if you want to ignore a string, add a prefix(default `applet-ignore:`), and 
 }
 </style>
 ```
-
 
 ## License
 

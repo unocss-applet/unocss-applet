@@ -26,6 +26,7 @@ export default defineConfig({
 ```
 
 ## Type Declarations
+
 ```ts
 export interface RemToRpxOptions {
   /**

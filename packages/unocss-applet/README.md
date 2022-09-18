@@ -1,12 +1,15 @@
 # unocss-applet
 
-Using [UnoCSS](https://github.com/unocss/unocss) in Applet(UniApp...).
+Using [UnoCSS](https://github.com/unocss/unocss) in applet(for [UniApp](https://github.com/dcloudio/uni-app) and [Taro(WIP)](https://github.com/NervJS/taro)) to be compatible with unsupported syntax.
 
 ## Presets and Plugins
-- [@unocss-applet/preset-applet](./packages/preset-applet) - The default preset  (right now it's equivalent to `@unocss/preset-uno`)
-- [@unocss-applet/preset-rem-to-rpx](./packages/preset-rem-to-rpx) - Coverts rem to rpx for utils.
-- [@unocss-applet/transformer-applet](./packages/transformer-applet) - Compile classes that do not support applets into one class.
-- [@unocss-applet/transformer-attributify](./packages/transformer-attributify) - Enables Attributify Mode for applet.
+
+- [unocss-applet](https://github.com/unocss-applet/unocss-applet/tree/main/packages/unocss-applet) - The default package with common presets and plugins
+
+- [@unocss-applet/preset-applet](https://github.com/unocss-applet/unocss-applet/tree/main/packages/preset-applet) - The default preset (right now it's equivalent to `@unocss/preset-uno`)
+- [@unocss-applet/preset-rem-to-rpx](https://github.com/unocss-applet/unocss-applet/tree/main/packages/preset-rem-to-rpx) - Coverts rem to rpx for utils.
+- [@unocss-applet/transformer-applet](https://github.com/unocss-applet/unocss-applet/tree/main/packages/transformer-applet) - Compile classes that do not support applets into one class.
+- [@unocss-applet/transformer-attributify](https://github.com/unocss-applet/unocss-applet/tree/main/packages/transformer-attributify) - Enables Attributify Mode for applet.
 
 ## Instal
 
@@ -17,6 +20,9 @@ pnpm add unocss-applet -D # with pnpm
 ```
 
 ## Usage
+
+<details>
+<summary>For UniApp</summary><br>
 
 ```ts
 // unocss.config.ts
@@ -71,12 +77,20 @@ export default defineConfig({
 })
 ```
 
+<br></details>
+
+<details>
+<summary>For Taro(WIP)</summary><br>
+
+<br></details>
+
 ## Example
 
 - [starter-uni](https://github.com/zguolee/starter-uni)
 - [ColorTimetable](https://github.com/zguolee/ColorTimetable)
 
 ## Acknowledgement
+
 - [UnoCSS](https://github.com/unocss/unocss)
 
 ## License

@@ -10,7 +10,6 @@ yarn add @unocss-applet/transformer-attributify -D # with yarn
 pnpm add @unocss-applet/transformer-attributify -D # with pnpm
 ```
 
-
 ## Usage
 
 ```ts
@@ -27,6 +26,7 @@ export default defineConfig({
 ```
 
 ## Type Declarations
+
 ```ts
 export interface TransformerAttributifyOptions {
 
@@ -68,9 +68,11 @@ export interface TransformerAttributifyOptions {
 ```
 
 ## Example
+
 > Attributes will be retained unless `deleteClass` is set to `true`, but deletion is not recommended.
 
 #### without
+
 ```html
 <div h-80 text-center flex flex-col align-center select-none all:transition-400>
   py-3

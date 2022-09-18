@@ -23,6 +23,7 @@ export default defineConfig({
 ```
 
 ## Type Declarations
+
 ```ts
 // PresetMiniOptions https://github.com/unocss/unocss/blob/main/packages/preset-mini/src/index.ts#L30-L55
 export interface PresetAppletOptions extends PresetMiniOptions {
