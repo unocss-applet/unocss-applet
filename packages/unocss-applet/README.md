@@ -5,7 +5,6 @@ Using [UnoCSS](https://github.com/unocss/unocss) in applet(for [UniApp](https://
 ## Presets and Plugins
 
 - [unocss-applet](https://github.com/unocss-applet/unocss-applet/tree/main/packages/unocss-applet) - The default package with common presets and plugins
-
 - [@unocss-applet/preset-applet](https://github.com/unocss-applet/unocss-applet/tree/main/packages/preset-applet) - The default preset (right now it's equivalent to `@unocss/preset-uno`)
 - [@unocss-applet/preset-rem-to-rpx](https://github.com/unocss-applet/unocss-applet/tree/main/packages/preset-rem-to-rpx) - Coverts rem to rpx for utils.
 - [@unocss-applet/transformer-applet](https://github.com/unocss-applet/unocss-applet/tree/main/packages/transformer-applet) - Compile classes that do not support applets into one class.
@@ -26,55 +25,40 @@ pnpm add unocss-applet -D # with pnpm
 
 ```ts
 // unocss.config.ts
-import type { Preset, SourceCodeTransformer } from 'unocss'
 import {
   defineConfig,
   presetAttributify,
-  presetIcons,
-  presetUno,
   transformerDirectives,
   transformerVariantGroup,
-} from 'unocss'
+} from "unocss";
 
 import {
   presetApplet,
   presetRemToRpx,
   transformerApplet,
   transformerAttributify,
-} from 'unocss-applet'
+} from "unocss-applet";
 
-const presets: Preset[] = []
-const transformers: SourceCodeTransformer[] = []
-
-if (process.env.UNI_PLATFORM === 'h5') {
-  presets.push(presetUno())
-  presets.push(presetAttributify())
-}
-else {
-  presets.push(presetApplet())
-  presets.push(presetRemToRpx())
-
-  // don't change the order
-  transformers.push(transformerAttributify())
-  transformers.push(transformerApplet())
-}
+const isH5 = process.env.UNI_PLATFORM === "h5";
 
 export default defineConfig({
   presets: [
-    presetIcons(),
     /**
      * you can add `presetAttributify()` here to enable unocss attributify mode prompt
-     * although preset is not working for applet
+     * although preset is not working for applet, but will generate useless css
      */
-    // presetAttributify(),
-    ...presets,
+    presetApplet({ enable: !isH5 }),
+    presetAttributify(),
+    presetRemToRpx({ enable: !isH5 }),
   ],
   transformers: [
     transformerDirectives(),
     transformerVariantGroup(),
-    ...transformers,
+    // Don't change the following order
+    transformerAttributify(),
+    transformerApplet(),
   ],
-})
+});
 ```
 
 <br></details>

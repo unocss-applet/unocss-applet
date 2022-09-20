@@ -19,8 +19,8 @@
     "test:update": "vitest -u"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^0.26.3",
-    "@types/node": "^18.7.17",
+    "@antfu/eslint-config": "^0.27.0",
+    "@types/node": "^18.7.18",
     "@unocss-applet/preset-applet": "workspace:*",
     "@unocss-applet/preset-rem-to-rpx": "workspace:*",
     "@unocss-applet/transformer-applet": "workspace:*",
@@ -31,9 +31,9 @@
     "rimraf": "^3.0.2",
     "typescript": "^4.8.3",
     "unbuild": "^0.8.11",
-    "unocss": "^0.45.21",
+    "unocss": "^0.45.22",
     "unocss-applet": "workspace:*",
-    "vite": "^3.1.0",
-    "vitest": "^0.23.2"
+    "vite": "^3.1.3",
+    "vitest": "^0.23.4"
   }
 }

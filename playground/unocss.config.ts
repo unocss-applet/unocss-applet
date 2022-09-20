@@ -2,32 +2,18 @@ import {
   defineConfig,
   presetAttributify,
   presetIcons,
-  presetUno,
   transformerDirectives,
   transformerVariantGroup,
-} from 'unocss'
+} from "unocss";
 
 import {
   presetApplet,
   presetRemToRpx,
   transformerApplet,
   transformerAttributify,
-} from 'unocss-applet'
+} from "unocss-applet";
 
-const presets = []
-const transformers = []
-
-if (process.env.UNI_PLATFORM === 'h5') {
-  presets.push(presetUno())
-  presets.push(presetAttributify())
-}
-else {
-  presets.push(presetApplet())
-  presets.push(presetRemToRpx())
-
-  transformers.push(transformerAttributify())
-  transformers.push(transformerApplet())
-}
+const isH5 = process.env.UNI_PLATFORM === "h5";
 
 export default defineConfig({
   presets: [
@@ -35,15 +21,23 @@ export default defineConfig({
       scale: 1.2,
       warn: true,
       extraProperties: {
-        'display': 'inline-block',
-        'vertical-align': 'middle',
+        display: "inline-block",
+        "vertical-align": "middle",
       },
     }),
-    ...presets,
+    /**
+     * you can add `presetAttributify()` here to enable unocss attributify mode prompt
+     * although preset is not working for applet, but will generate useless css
+     */
+    presetApplet({ enable: !isH5 }),
+    presetAttributify(),
+    presetRemToRpx({ enable: !isH5 }),
   ],
   transformers: [
     transformerDirectives(),
     transformerVariantGroup(),
-    ...transformers,
+    // Don't change the following order
+    transformerAttributify(),
+    transformerApplet(),
   ],
-})
+});

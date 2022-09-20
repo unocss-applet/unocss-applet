@@ -29,10 +29,10 @@ export default defineConfig({
 export interface PresetAppletOptions extends PresetMiniOptions {
   /**
    * Enable applet, only build applet should be true
-   * e.g. In uniapp `enableApplet: !(process.env.UNI_PLATFORM === 'h5')` to disable rename class in h5
+   * e.g. In uniapp `enableApplet: !(process.env.UNI_PLATFORM === 'h5')` to disable for h5
    * @default true
    */
-  enableApplet?: boolean
+  enable?: boolean
 }
 ```
 
