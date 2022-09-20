@@ -12,7 +12,7 @@ export type { Theme }
 export interface PresetAppletOptions extends PresetMiniOptions {
   /**
    * Enable applet, only build applet should be true
-   * e.g. In uniapp `enableApplet: !(process.env.UNI_PLATFORM === 'h5')` to disable for h5
+   * e.g. In uniapp set `enable: !(process.env.UNI_PLATFORM === 'h5')` to disable for h5
    * @default true
    */
   enable?: boolean

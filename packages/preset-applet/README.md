@@ -29,7 +29,7 @@ export default defineConfig({
 export interface PresetAppletOptions extends PresetMiniOptions {
   /**
    * Enable applet, only build applet should be true
-   * e.g. In uniapp `enableApplet: !(process.env.UNI_PLATFORM === 'h5')` to disable for h5
+   * e.g. In uniapp set `enable: !(process.env.UNI_PLATFORM === 'h5')` to disable for h5
    * @default true
    */
   enable?: boolean
@@ -46,7 +46,7 @@ export interface PresetAppletOptions extends PresetMiniOptions {
 
 ## More
 
-> Default enabled because for [issue#2](https://github.com/unocss-applet/unocss-applet/issues/2) in applet, to disable just set `enableApplet: false`
+> Default enabled because for [issue#2](https://github.com/unocss-applet/unocss-applet/issues/2) in applet, to disable just set `enable: false`
 
 | form | to      | sample                 |
 | ---- | ------- | ---------------------- |
