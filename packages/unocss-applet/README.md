@@ -68,8 +68,6 @@ export default defineConfig({
 
 <br></details>
 
-<br>
-
 ### For Platform
 
 <details>
