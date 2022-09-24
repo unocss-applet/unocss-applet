@@ -4,16 +4,16 @@ import {
   presetIcons,
   transformerDirectives,
   transformerVariantGroup,
-} from "unocss";
+} from 'unocss'
 
 import {
   presetApplet,
   presetRemToRpx,
   transformerApplet,
   transformerAttributify,
-} from "unocss-applet";
+} from 'unocss-applet'
 
-const isH5 = process.env.UNI_PLATFORM === "h5";
+const isH5 = process.env.UNI_PLATFORM === 'h5'
 
 export default defineConfig({
   presets: [
@@ -21,8 +21,8 @@ export default defineConfig({
       scale: 1.2,
       warn: true,
       extraProperties: {
-        display: "inline-block",
-        "vertical-align": "middle",
+        'display': 'inline-block',
+        'vertical-align': 'middle',
       },
     }),
     /**
@@ -40,4 +40,4 @@ export default defineConfig({
     transformerAttributify(),
     transformerApplet(),
   ],
-});
+})

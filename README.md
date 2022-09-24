@@ -1,6 +1,6 @@
 # unocss-applet
 
-Using [UnoCSS](https://github.com/unocss/unocss) in applet(for [UniApp](https://github.com/dcloudio/uni-app) and [Taro(WIP)](https://github.com/NervJS/taro)) to be compatible with unsupported syntax.
+Using [UnoCSS](https://github.com/unocss/unocss) in applet(for [UniApp](https://github.com/dcloudio/uni-app) and [Taro](https://github.com/NervJS/taro)) to be compatible with unsupported syntax.
 
 ## Presets and Plugins
 
@@ -10,7 +10,7 @@ Using [UnoCSS](https://github.com/unocss/unocss) in applet(for [UniApp](https://
 - [@unocss-applet/transformer-applet](https://github.com/unocss-applet/unocss-applet/tree/main/packages/transformer-applet) - Compile classes that do not support applets into one class.
 - [@unocss-applet/transformer-attributify](https://github.com/unocss-applet/unocss-applet/tree/main/packages/transformer-attributify) - Enables Attributify Mode for applet.
 
-## Instal
+## Installation
 
 ```bash
 npm i unocss-applet --save-dev # with npm
@@ -20,26 +20,31 @@ pnpm add unocss-applet -D # with pnpm
 
 ## Usage
 
+### UnoCSS config
+
 <details>
-<summary>For UniApp</summary><br>
+<summary>unocss.config.ts</summary><br>
 
 ```ts
-// unocss.config.ts
 import {
   defineConfig,
   presetAttributify,
   transformerDirectives,
   transformerVariantGroup,
-} from "unocss";
+} from 'unocss'
 
 import {
   presetApplet,
   presetRemToRpx,
   transformerApplet,
   transformerAttributify,
-} from "unocss-applet";
+} from 'unocss-applet'
 
-const isH5 = process.env.UNI_PLATFORM === "h5";
+// UniApp
+const isH5 = process.env.UNI_PLATFORM === 'h5'
+
+// Taro
+// const isH5 = process.env.TARO_ENV === 'h5'
 
 export default defineConfig({
   presets: [
@@ -58,13 +63,66 @@ export default defineConfig({
     transformerAttributify(),
     transformerApplet(),
   ],
-});
+})
+```
+
+<br></details>
+
+<br>
+
+### For Platform
+
+<details>
+<summary>For UniApp with Vue3 and Vite</summary><br>
+
+`vite.config.ts`
+
+```ts
+import UnoCSS from 'unocss/vite'
+
+export default {
+  plugins: [
+    UnoCSS(),
+  ],
+}
+```
+
+`main.ts`
+
+```ts
+import 'uno.css'
 ```
 
 <br></details>
 
 <details>
-<summary>For Taro(WIP)</summary><br>
+<summary>For Taro(v3.5.6) with Vue3 and Webpack5</summary><br>
+
+`config/index.js`
+
+```js
+import UnoCSS from 'unocss/webpack'
+const config = {
+  mini: {
+    // ...
+    webpackChain(chain, _webpack) {
+      chain.plugin('unocss').use(UnoCSS())
+    },
+  },
+  h5: {
+    // ...
+    webpackChain(chain, _webpack) {
+      chain.plugin('unocss').use(UnoCSS())
+    },
+  },
+}
+```
+
+`app.ts`
+
+```ts
+import 'uno.css'
+```
 
 <br></details>
 
