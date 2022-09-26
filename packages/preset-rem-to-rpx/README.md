@@ -34,19 +34,19 @@ export interface RemToRpxOptions {
    * e.g. In uniapp set `enable: !(process.env.UNI_PLATFORM === 'h5')` to disable for h5
    * @default true
    */
-  enable?: boolean;
+  enable?: boolean
 
   /**
    * 1rem = n px
    * @default 16
    */
-  baseFontSize?: number;
+  baseFontSize?: number
 
   /**
    * screen width in px
    * @default 375
    */
-  screenWidth?: number;
+  screenWidth?: number
 }
 ```
 

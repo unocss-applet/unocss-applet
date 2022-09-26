@@ -54,8 +54,8 @@
     "stub": "unbuild --stub"
   },
   "dependencies": {
-    "@unocss/core": "^0.45.22",
-    "@unocss/preset-mini": "^0.45.22",
-    "@unocss/preset-wind": "^0.45.22"
+    "@unocss/core": "^0.45.23",
+    "@unocss/preset-mini": "^0.45.23",
+    "@unocss/preset-wind": "^0.45.23"
   }
 }

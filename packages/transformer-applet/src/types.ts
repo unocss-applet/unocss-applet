@@ -4,14 +4,14 @@ export interface TransformerAppletOptions {
    * e.g. In uniapp set `enable: !(process.env.UNI_PLATFORM === 'h5')` to disable for h5
    * @default true
    */
-  enable?: boolean;
+  enable?: boolean
 
   /**
    * Prefix for compile class name
    * @default 'uno-'
    * e.g. bg-[hsl(2.7,81.9%,69.6%)] to uno-98db2v
    */
-  classPrefix?: string;
+  classPrefix?: string
 
   /**
    * Prefix for ignore compile string
@@ -19,16 +19,16 @@ export interface TransformerAppletOptions {
    * e.g. 'applet-ignore: bg-[hsl(2.7,81.9%,69.6%)]' to 'bg-[hsl(2.7,81.9%,69.6%)]'
    * @default 'applet-ignore:'
    */
-  ignorePrefix?: string;
+  ignorePrefix?: string
 
   /**
    * Hash function
    */
-  hashFn?: (str: string) => string;
+  hashFn?: (str: string) => string
 
   /**
    * The layer name of generated rules
    * @default 'applet_shortcuts'
    */
-  layer?: string;
+  layer?: string
 }

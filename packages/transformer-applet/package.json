@@ -35,9 +35,9 @@
     "stub": "unbuild --stub"
   },
   "dependencies": {
-    "@unocss/core": "^0.45.22"
+    "@unocss/core": "^0.45.23"
   },
   "devDependencies": {
-    "magic-string": "^0.26.3"
+    "magic-string": "^0.26.4"
   }
 }

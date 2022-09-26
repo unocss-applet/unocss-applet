@@ -36,7 +36,7 @@ export interface TransformerAppletOptions {
    * e.g. In uniapp set `enable: !(process.env.UNI_PLATFORM === 'h5')` to disable for h5
    * @default true
    */
-  enable?: boolean;
+  enable?: boolean
 
   /**
    * Prefix for compile class name
