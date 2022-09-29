@@ -13,18 +13,18 @@
     "lint:fix": "nr lint --fix",
     "test": "vitest",
     "test:update": "vitest -u",
-    "play:uni:mp-weixin": "npm -C playground/uni-app run dev:mp-weixin",
+    "play:uni:mp-weixin": "pnpm dev && npm -C playground/uni-app run dev:mp-weixin",
     "build:uni:mp-weixin": "npm -C playground/uni-app run build:mp-weixin",
-    "play:uni:h5": "npm -C playground/uni-app run dev:h5",
+    "play:uni:h5": "pnpm dev && npm -C playground/uni-app run dev:h5",
     "build:uni:h5": "npm -C playground/uni-app run build:h5",
-    "play:taro:weapp": "npm -C playground/tarojs run dev:weapp",
+    "play:taro:weapp": "pnpm dev && npm -C playground/tarojs run dev:weapp",
     "build:taro:weapp": "npm -C playground/tarojs run build:weapp",
-    "play:taro:h5": "npm -C playground/tarojs run dev:h5",
+    "play:taro:h5": "pnpm dev && npm -C playground/tarojs run dev:h5",
     "build:taro:h5": "npm -C playground/tarojs run build:h5"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.27.0",
-    "@types/node": "^18.7.22",
+    "@types/node": "^18.7.23",
     "@unocss-applet/preset-applet": "workspace:*",
     "@unocss-applet/preset-rem-to-rpx": "workspace:*",
     "@unocss-applet/transformer-applet": "workspace:*",
@@ -33,11 +33,11 @@
     "eslint": "^8.24.0",
     "esno": "^0.16.3",
     "rimraf": "^3.0.2",
-    "typescript": "^4.8.3",
+    "typescript": "^4.8.4",
     "unbuild": "^0.8.11",
-    "unocss": "^0.45.23",
+    "unocss": "^0.45.26",
     "unocss-applet": "workspace:*",
-    "vite": "^3.1.3",
+    "vite": "^3.1.0",
     "vitest": "^0.23.4"
   }
 }

@@ -27,8 +27,16 @@ export function unoCSSToAppletProcess(str: string) {
     str = str.replace(/\\\[/g, 'l-')
   if (str.includes('\]'))
     str = str.replace(/\\\]/g, '-r')
+    // curly
+  if (str.includes('\{'))
+    str = str.replace(/\\\{/g, 'c-')
+  if (str.includes('\}'))
+    str = str.replace(/\\\}/g, '-c')
+
   // x,x to x-comma-x
   if (str.includes('\,'))
     str = str.replace(/\\\,/g, '-comma-')
+  if (str.includes('\$'))
+    str = str.replace(/\\\$/g, '-d-')
   return str
 }

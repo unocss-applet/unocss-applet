@@ -88,6 +88,9 @@ export default function transformerApplet(options: TransformerAppletOptions = {}
         const content = match[1]
         // split content
         if (charReg.test(content)) {
+          // skip contain ${}
+          if (content.includes('${'))
+            continue
           const replacements = await compileApplet(content, ctx, options)
           code.overwrite(start, start + match[0].length, `\`${replacements.join(' ')}\``)
         }
