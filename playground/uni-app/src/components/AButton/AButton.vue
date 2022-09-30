@@ -22,7 +22,7 @@ const isDisabled = computed(() => props.loading || props.disabled)
 </script>
 
 <template>
-  <button class="a-button-base" :class="[cc, `bg-${props.type}`]" hover-class="a-button-hover">
+  <button class="a-button-base" :class="[cc, `!bg-red bg-${props.type}`]" hover-class="a-button-hover">
     <div v-if="icon" :class="icon" />
     <slot />
   </button>

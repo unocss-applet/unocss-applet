@@ -78,7 +78,7 @@ describe('transformer-attributify', () => {
               {{ \`index\${index + 1}\` }}{{ \`index\` }}
             </div>
           </div>
-          <div flex=\\"~ col\\" b=\\"~ green dark:(red 2)\\" class=\\"flex flex-col b b-green\\">
+          <div flex=\\"~ col\\" b=\\"~ green dark:(red 2)\\" :class=\\"\`bg-\${bg}\`\\" class=\\"flex flex-col b b-green\\">
             <div text-right h-10 flex=\\"1\\" text=\\"red\\" :class=\\"{ 'text-sm': index > 0 }\\" class=\\"text-right h-10 flex-1 text-red\\">
               0123456789
             </div>

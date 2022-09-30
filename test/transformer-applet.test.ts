@@ -64,7 +64,7 @@ describe('transformer-applet', () => {
               {{ \`index\${index + 1}\` }}{{ \`index\` }}
             </div>
           </div>
-          <div flex=\\"~ col\\" b=\\"~ green dark:(red 2)\\">
+          <div flex=\\"~ col\\" b=\\"~ green dark:(red 2)\\" :class=\\"\`bg-\${bg}\`\\">
             <div text-right h-10 flex=\\"1\\" text=\\"red\\" :class=\\"{ 'text-sm': index > 0 }\\">
               0123456789
             </div>

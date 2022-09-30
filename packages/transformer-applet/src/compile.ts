@@ -10,7 +10,9 @@ export async function compileApplet(body: string, ctx: UnocssPluginContext, opti
 
   const { uno, tokens } = ctx
   const replacements = []
-  const result = await Promise.all(body.split(/\s+/).filter(Boolean).map(async i => [i, !!await uno.parseToken(i)] as const))
+  // token contain ${} should set false
+  const result = await Promise.all(body.split(/\s+/).filter(Boolean)
+    .map(async i => [i, i.includes('${') ? false : !!await uno.parseToken(i)] as const))
   const known = result.filter(([, matched]) => matched).map(([i]) => i)
   const unknown = result.filter(([, matched]) => !matched).map(([i]) => i)
   replacements.push(...unknown)
