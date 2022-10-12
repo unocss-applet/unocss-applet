@@ -16,7 +16,7 @@ export default function transformerApplet(options: TransformerAppletOptions = {}
   return {
     name: 'transformer-applet',
     enforce: 'pre',
-    async transform(s, _, ctx) {
+    async transform(s, id, ctx) {
       let code = new MagicString(s.toString())
 
       // process class attribute
@@ -60,13 +60,16 @@ export default function transformerApplet(options: TransformerAppletOptions = {}
         let content = match[1]
 
         if (content.startsWith(ignorePrefix)) {
-          content = content.substring(ignorePrefix.length).trim()
-          code.overwrite(start, start + match[0].length, match[0].replace(match[1], content))
+          // UniApp will replace string with a variable, so we need to ignore it when vue file is compiled
+          if (!/\.vue$/.test(id)) {
+            content = content.substring(ignorePrefix.length).trim()
+            code.overwrite(start, start + match[0].length, match[0].replace(match[1], content))
+          }
         }
         else {
-        // There may be no need
-        // https://tailwindcss.com/docs/background-image#arbitrary-values
-        // skip all the image formats in HTML for bg-[url('...')]
+          // There may be no need
+          // https://tailwindcss.com/docs/background-image#arbitrary-values
+          // skip all the image formats in HTML for bg-[url('...')]
           if (/\.(png|jpg|jpeg|gif|svg)/g.test(content))
             continue
           // skip http(s)://

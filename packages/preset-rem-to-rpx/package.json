@@ -37,6 +37,6 @@
     "stub": "unbuild --stub"
   },
   "dependencies": {
-    "@unocss/core": "^0.45.26"
+    "@unocss/core": "^0.45.29"
   }
 }

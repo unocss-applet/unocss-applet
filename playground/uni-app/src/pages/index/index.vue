@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import AButton from '../../components/AButton/AButton.vue'
 const bg = 'bg-[hsl(2.7,81.9%,69.6%)]'
 const bgIgnore = 'applet-ignore: bg-[hsl(2.7,81.9%,69.6%)]'
 const index = 1
@@ -43,10 +42,6 @@ const bool = ref<boolean>()
     <div class="m-0.5 p-1 text-2xl" :class="bool ? '' : 'text-yellow-500 p-2.5'">
       abckefghijklmnopqrstuvwxyz
     </div>
-    <AButton>primary</AButton>
-    <AButton type="success">
-      success
-    </AButton>
   </div>
 </template>
 
