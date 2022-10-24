@@ -16,6 +16,7 @@ const valuedAttributeRE = /([?]|(?!\d|-{2}|-\d)[a-zA-Z0-9\u00A0-\uFFFF-_:!%-]+)(
 export const defaultIgnoreAttributes = ['placeholder', 'setup', 'lang', 'scoped']
 
 export default function transformerAttributify(options: TransformerAttributifyOptions = {}): SourceCodeTransformer {
+  const enable = options.enable ?? true
   const ignoreAttributes = options?.ignoreAttributes ?? defaultIgnoreAttributes
   const nonValuedAttribute = options?.nonValuedAttribute ?? true
   const prefix = options.prefix ?? 'un-'
@@ -26,6 +27,8 @@ export default function transformerAttributify(options: TransformerAttributifyOp
     name: 'transformer-attributify',
     enforce: 'pre',
     async transform(s, _, { uno }) {
+      if (!enable)
+        return
       const code = new MagicString(s.toString())
 
       const elementMatches = code.original.matchAll(elementRE)

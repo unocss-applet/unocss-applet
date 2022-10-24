@@ -1,4 +1,10 @@
 export interface TransformerAttributifyOptions {
+  /**
+   * Enable attributify, only build applet should be true
+   * e.g. In uniapp set `enable: !(process.env.UNI_PLATFORM === 'h5')` to disable for h5
+   * @default true
+   */
+  enable?: boolean
 
   /**
     * @default 'un-'

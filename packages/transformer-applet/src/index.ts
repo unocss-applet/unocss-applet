@@ -12,11 +12,14 @@ const stringRE = /'(.*?)'|/g
 const templateLiteralsRE = /`([\s\S]*?)`/g
 
 export default function transformerApplet(options: TransformerAppletOptions = {}): SourceCodeTransformer {
+  const enable = options.enable ?? true
   const ignorePrefix = options.ignorePrefix || 'applet-ignore:'
   return {
     name: 'transformer-applet',
     enforce: 'pre',
     async transform(s, id, ctx) {
+      if (!enable)
+        return
       let code = new MagicString(s.toString())
 
       // process class attribute
