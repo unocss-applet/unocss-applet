@@ -35,8 +35,5 @@
   "scripts": {
     "build": "unbuild",
     "stub": "unbuild --stub"
-  },
-  "dependencies": {
-    "@unocss/core": "^0.46.5"
   }
 }

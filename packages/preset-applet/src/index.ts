@@ -18,7 +18,7 @@ export interface PresetAppletOptions extends PresetMiniOptions {
   enable?: boolean
 }
 
-const presetApplet = (options: PresetAppletOptions = {}): Preset<Theme> => {
+export default function presetApplet(options: PresetAppletOptions = {}): Preset<Theme> {
   options.dark = options.dark ?? 'class'
   options.attributifyPseudo = options.attributifyPseudo ?? false
   options.preflight = options.preflight ?? true
@@ -43,6 +43,4 @@ const presetApplet = (options: PresetAppletOptions = {}): Preset<Theme> => {
     prefix: options.prefix,
   }
 }
-
-export default presetApplet
 

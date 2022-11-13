@@ -3,6 +3,8 @@ import MagicString from 'magic-string'
 import type { TransformerAppletOptions } from './types'
 import { compileApplet } from './compile'
 
+export * from './types'
+
 // Regular expression of characters to be escaped
 const charReg = /[.:%!#()[\/\],]/
 
@@ -14,6 +16,7 @@ const templateLiteralsRE = /`([\s\S]*?)`/g
 export default function transformerApplet(options: TransformerAppletOptions = {}): SourceCodeTransformer {
   const enable = options.enable ?? true
   const ignorePrefix = options.ignorePrefix || 'applet-ignore:'
+
   return {
     name: 'transformer-applet',
     enforce: 'pre',

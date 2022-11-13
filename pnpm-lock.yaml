@@ -13,6 +13,7 @@ importers:
       bumpp: ^8.2.1
       eslint: ^8.27.0
       esno: ^0.16.3
+      magic-string: ^0.26.7
       rimraf: ^3.0.2
       typescript: ^4.8.4
       unbuild: ^0.9.4
@@ -30,6 +31,7 @@ importers:
       bumpp: 8.2.1
       eslint: 8.27.0
       esno: 0.16.3
+      magic-string: 0.26.7
       rimraf: 3.0.2
       typescript: 4.8.4
       unbuild: 0.9.4
@@ -49,28 +51,13 @@ importers:
       '@unocss/preset-wind': 0.46.5
 
   packages/preset-rem-to-rpx:
-    specifiers:
-      '@unocss/core': ^0.46.5
-    dependencies:
-      '@unocss/core': 0.46.5
+    specifiers: {}
 
   packages/transformer-applet:
-    specifiers:
-      '@unocss/core': ^0.46.5
-      magic-string: ^0.26.7
-    dependencies:
-      '@unocss/core': 0.46.5
-    devDependencies:
-      magic-string: 0.26.7
+    specifiers: {}
 
   packages/transformer-attributify:
-    specifiers:
-      '@unocss/core': ^0.46.5
-      magic-string: ^0.26.7
-    dependencies:
-      '@unocss/core': 0.46.5
-    devDependencies:
-      magic-string: 0.26.7
+    specifiers: {}
 
   packages/unocss-applet:
     specifiers:

@@ -3,6 +3,8 @@ import type { SourceCodeTransformer } from 'unocss'
 import { isValidSelector } from 'unocss'
 import type { TransformerAttributifyOptions } from './types'
 
+export * from './types'
+
 const strippedPrefixes = [
   'v-bind:',
   ':',
@@ -13,7 +15,7 @@ const splitterRE = /[\s'"`;]+/g
 const elementRE = /<\w(?=.*>)[\w:\.$-]*\s(((".*?>?.*?")|.*?)*?)\/?>/gs
 const valuedAttributeRE = /([?]|(?!\d|-{2}|-\d)[a-zA-Z0-9\u00A0-\uFFFF-_:!%-]+)(?:={?(["'])([^\2]*?)\2}?)?/g
 
-export const defaultIgnoreAttributes = ['placeholder', 'setup', 'lang', 'scoped']
+const defaultIgnoreAttributes = ['placeholder', 'setup', 'lang', 'scoped']
 
 export default function transformerAttributify(options: TransformerAttributifyOptions = {}): SourceCodeTransformer {
   const enable = options.enable ?? true
