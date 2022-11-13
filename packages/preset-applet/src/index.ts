@@ -21,6 +21,7 @@ export interface PresetAppletOptions extends PresetMiniOptions {
 const presetApplet = (options: PresetAppletOptions = {}): Preset<Theme> => {
   options.dark = options.dark ?? 'class'
   options.attributifyPseudo = options.attributifyPseudo ?? false
+  options.preflight = options.preflight ?? true
   const enable = options.enable ?? true
 
   return {
@@ -33,7 +34,7 @@ const presetApplet = (options: PresetAppletOptions = {}): Preset<Theme> => {
       variantColorMix,
     ],
     options,
-    preflights: enable ? preflightsApplet : defaultApplet,
+    preflights: options.preflight ? enable ? preflightsApplet : defaultApplet : [],
     postprocess: [
       (util) => {
         enable && (util.selector = unoCSSToAppletProcess(util.selector))
