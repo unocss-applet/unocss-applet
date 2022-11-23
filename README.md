@@ -60,8 +60,8 @@ export default defineConfig({
     transformerDirectives(),
     transformerVariantGroup(),
     // Don't change the following order
-    transformerAttributify(),
-    transformerApplet(),
+    transformerAttributify({ enable: !isH5 }),
+    transformerApplet({ enable: !isH5 }),
   ],
 })
 ```
