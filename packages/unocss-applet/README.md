@@ -1,6 +1,10 @@
-# unocss-applet
-
-Using [UnoCSS](https://github.com/unocss/unocss) in applet(for [UniApp](https://github.com/dcloudio/uni-app) and [Taro](https://github.com/NervJS/taro)) to be compatible with unsupported syntax.
+<p align="center">
+<img src="../../public/logo.svg" style="width:100px;" />
+<h1 align="center">UnoCSS Applet</h1>
+<p align="center">Using <a href="https://github.com/unocss/unocss">UnoCSS</a> in applet(for <a href="https://github.com/dcloudio/uni-app">UniApp</a> and <a href="https://github.com/NervJS/taro">Taro</a>) to be compatible with unsupported syntax.</p>
+</p>
+<p align="center">
+<a href="https://www.npmjs.com/package/ano-ui"><img src="https://img.shields.io/npm/v/unocss-applet?color=333333&amp;label=" alt="NPM version"></a></p>
 
 ## Presets and Plugins
 
@@ -41,10 +45,10 @@ import {
 } from 'unocss-applet'
 
 // UniApp
-const isH5 = process.env.UNI_PLATFORM === 'h5'
+const isApplet = process.env?.UNI_PLATFORM?.startWith('mp-')
 
 // Taro
-// const isH5 = process.env.TARO_ENV === 'h5'
+// const isApplet = process.env.TARO_ENV !== 'h5'
 
 export default defineConfig({
   presets: [
@@ -52,16 +56,16 @@ export default defineConfig({
      * you can add `presetAttributify()` here to enable unocss attributify mode prompt
      * although preset is not working for applet, but will generate useless css
      */
-    presetApplet({ enable: !isH5 }),
+    presetApplet({ enable: isApplet }),
     presetAttributify(),
-    presetRemToRpx({ enable: !isH5 }),
+    presetRemToRpx({ enable: isApplet }),
   ],
   transformers: [
     transformerDirectives(),
     transformerVariantGroup(),
     // Don't change the following order
-    transformerAttributify({ enable: !isH5 }),
-    transformerApplet({ enable: !isH5 }),
+    transformerAttributify({ enable: isApplet }),
+    transformerApplet({ enable: isApplet }),
   ],
 })
 ```
