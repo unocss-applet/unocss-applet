@@ -45,7 +45,7 @@ import {
 } from 'unocss-applet'
 
 // UniApp
-const isApplet = process.env?.UNI_PLATFORM?.startWith('mp-')
+const isApplet = process.env?.UNI_PLATFORM?.startsWith('mp-')
 
 // Taro
 // const isApplet = process.env.TARO_ENV !== 'h5'
