@@ -1,5 +1,5 @@
 <p align="center">
-<img src="./public/logo.svg" style="width:100px;" />
+<img src="https://github.com/unocss-applet/unocss-applet/raw/main/public/logo.svg" style="width:100px;" />
 <h1 align="center">UnoCSS Applet</h1>
 <p align="center">Using <a href="https://github.com/unocss/unocss">UnoCSS</a> in applet(for <a href="https://github.com/dcloudio/uni-app">UniApp</a> and <a href="https://github.com/NervJS/taro">Taro</a>) to be compatible with unsupported syntax.</p>
 </p>
