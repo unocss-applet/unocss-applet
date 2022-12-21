@@ -32,28 +32,28 @@
     "build:quickapp-webview-union": "uni build -p quickapp-webview-union"
   },
   "dependencies": {
-    "@dcloudio/uni-app": "3.0.0-alpha-3060920221111002",
-    "@dcloudio/uni-app-plus": "3.0.0-alpha-3060920221111002",
-    "@dcloudio/uni-components": "3.0.0-alpha-3060920221111002",
-    "@dcloudio/uni-h5": "3.0.0-alpha-3060920221111002",
-    "@dcloudio/uni-mp-alipay": "3.0.0-alpha-3060920221111002",
-    "@dcloudio/uni-mp-baidu": "3.0.0-alpha-3060920221111002",
-    "@dcloudio/uni-mp-kuaishou": "3.0.0-alpha-3060920221111002",
-    "@dcloudio/uni-mp-lark": "3.0.0-alpha-3060920221111002",
-    "@dcloudio/uni-mp-qq": "3.0.0-alpha-3060920221111002",
-    "@dcloudio/uni-mp-toutiao": "3.0.0-alpha-3060920221111002",
-    "@dcloudio/uni-mp-weixin": "3.0.0-alpha-3060920221111002",
-    "@dcloudio/uni-quickapp-webview": "3.0.0-alpha-3060920221111002",
+    "@dcloudio/uni-app": "3.0.0-alpha-3061420221216001",
+    "@dcloudio/uni-app-plus": "3.0.0-alpha-3061420221216001",
+    "@dcloudio/uni-components": "3.0.0-alpha-3061420221216001",
+    "@dcloudio/uni-h5": "3.0.0-alpha-3061420221216001",
+    "@dcloudio/uni-mp-alipay": "3.0.0-alpha-3061420221216001",
+    "@dcloudio/uni-mp-baidu": "3.0.0-alpha-3061420221216001",
+    "@dcloudio/uni-mp-kuaishou": "3.0.0-alpha-3061420221216001",
+    "@dcloudio/uni-mp-lark": "3.0.0-alpha-3061420221216001",
+    "@dcloudio/uni-mp-qq": "3.0.0-alpha-3061420221216001",
+    "@dcloudio/uni-mp-toutiao": "3.0.0-alpha-3061420221216001",
+    "@dcloudio/uni-mp-weixin": "3.0.0-alpha-3061420221216001",
+    "@dcloudio/uni-quickapp-webview": "3.0.0-alpha-3061420221216001",
     "vue": "^3.2.45",
     "vue-i18n": "^9.2.2"
   },
   "devDependencies": {
-    "@dcloudio/types": "^3.0.19",
-    "@dcloudio/uni-automator": "3.0.0-alpha-3060920221111002",
-    "@dcloudio/uni-cli-shared": "3.0.0-alpha-3060920221111002",
-    "@dcloudio/vite-plugin-uni": "3.0.0-alpha-3060920221111002",
-    "@iconify-json/carbon": "^1.1.9",
-    "postcss": "^8.4.19",
-    "sass": "^1.56.1"
+    "@dcloudio/types": "^3.2.3",
+    "@dcloudio/uni-automator": "3.0.0-alpha-3061420221216001",
+    "@dcloudio/uni-cli-shared": "3.0.0-alpha-3061420221216001",
+    "@dcloudio/vite-plugin-uni": "3.0.0-alpha-3061420221216001",
+    "@iconify-json/carbon": "^1.1.11",
+    "postcss": "^8.4.20",
+    "sass": "^1.57.0"
   }
 }

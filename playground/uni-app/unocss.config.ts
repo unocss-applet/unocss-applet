@@ -13,7 +13,7 @@ import {
   transformerAttributify,
 } from 'unocss-applet'
 
-const isH5 = process.env.UNI_PLATFORM === 'h5'
+const isApplet = process.env?.UNI_PLATFORM?.startsWith('mp-')
 
 export default defineConfig({
   theme: {
@@ -42,16 +42,16 @@ export default defineConfig({
      * you can add `presetAttributify()` here to enable unocss attributify mode prompt
      * although preset is not working for applet, but will generate useless css
      */
-    presetApplet({ enable: !isH5 }),
+    presetApplet({ enable: isApplet }),
     presetAttributify(),
-    presetRemToRpx({ enable: !isH5 }),
+    presetRemToRpx({ enable: isApplet }),
   ],
   transformers: [
     transformerDirectives(),
     transformerVariantGroup(),
     // Don't change the following order
-    transformerAttributify({ enable: !isH5 }),
-    transformerApplet(),
+    transformerAttributify({ enable: isApplet }),
+    transformerApplet({ enable: isApplet }),
   ],
 
 })
