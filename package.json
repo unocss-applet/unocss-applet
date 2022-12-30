@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.34.0",
-    "@types/node": "^18.11.16",
+    "@types/node": "^18.11.18",
     "@unocss-applet/preset-applet": "workspace:*",
     "@unocss-applet/preset-rem-to-rpx": "workspace:*",
     "@unocss-applet/transformer-applet": "workspace:*",
@@ -36,9 +36,9 @@
     "rimraf": "^3.0.2",
     "typescript": "^4.9.4",
     "unbuild": "^1.0.2",
-    "unocss": "^0.47.6",
+    "unocss": "^0.48.0",
     "unocss-applet": "workspace:*",
-    "vite": "^4.0.1",
-    "vitest": "^0.25.8"
+    "vite": "^4.0.3",
+    "vitest": "^0.26.2"
   }
 }

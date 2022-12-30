@@ -43,4 +43,3 @@ export default function presetApplet(options: PresetAppletOptions = {}): Preset<
     prefix: options.prefix,
   }
 }
-
