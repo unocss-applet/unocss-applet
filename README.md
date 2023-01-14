@@ -44,28 +44,22 @@ import {
   transformerAttributify,
 } from 'unocss-applet'
 
-// UniApp
-const isApplet = process.env?.UNI_PLATFORM?.startsWith('mp-')
-
-// Taro
-// const isApplet = process.env.TARO_ENV !== 'h5'
-
 export default defineConfig({
   presets: [
+    presetApplet(),
     /**
      * you can add `presetAttributify()` here to enable unocss attributify mode prompt
      * although preset is not working for applet, but will generate useless css
      */
-    presetApplet({ enable: isApplet }),
     presetAttributify(),
-    presetRemToRpx({ enable: isApplet }),
+    presetRemToRpx(),
   ],
   transformers: [
     transformerDirectives(),
     transformerVariantGroup(),
     // Don't change the following order
-    transformerAttributify({ enable: isApplet }),
-    transformerApplet({ enable: isApplet }),
+    transformerAttributify(),
+    transformerApplet(),
   ],
 })
 ```

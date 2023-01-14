@@ -13,8 +13,6 @@ import {
   transformerAttributify,
 } from 'unocss-applet'
 
-const isApplet = process.env?.UNI_PLATFORM?.startsWith('mp-')
-
 export default defineConfig({
   theme: {
     colors: {
@@ -42,16 +40,16 @@ export default defineConfig({
      * you can add `presetAttributify()` here to enable unocss attributify mode prompt
      * although preset is not working for applet, but will generate useless css
      */
-    presetApplet({ enable: isApplet }),
+    presetApplet(),
     presetAttributify(),
-    presetRemToRpx({ enable: isApplet }),
+    presetRemToRpx(),
   ],
   transformers: [
     transformerDirectives(),
     transformerVariantGroup(),
     // Don't change the following order
-    transformerAttributify({ enable: isApplet }),
-    transformerApplet({ enable: isApplet }),
+    transformerAttributify(),
+    transformerApplet(),
   ],
 
 })
