@@ -11,8 +11,7 @@ export type { Theme }
 // PresetMiniOptions https://github.com/unocss/unocss/blob/main/packages/preset-mini/src/index.ts#L30-L55
 export interface PresetAppletOptions extends PresetMiniOptions {
   /**
-   * Enable applet, only build applet should be true
-   * e.g. In uniapp set `enable: !(process.env.UNI_PLATFORM === 'h5')` to disable for h5
+   * Enable applet
    * @default true
    */
   enable?: boolean

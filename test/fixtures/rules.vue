@@ -10,7 +10,7 @@ const bool = ref<boolean>()
 <template>
   <div class="text-center aaa" p="4">
     <div text="4xl" class="rotate-180 i-carbon-campsite" :class="bg" />
-    <div class="border bg-blue-200 font-(light mono) ">
+    <div class="border bg-blue-200 font-(light mono) " :cc="customClass">
       <div class="hover:(!bg-gray-600 text-red font-bold)" text="#fff">
         {{ 'applet-ignore: hover:(!bg-gray-600 text-red font-bold)' }}
       </div>

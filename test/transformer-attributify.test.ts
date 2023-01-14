@@ -32,7 +32,7 @@ describe('transformer-attributify', () => {
       transformerVariantGroup(),
     ],
   })
-  const transformer = transformerAttributify()
+  const transformer = transformerAttributify({ deleteClass: true })
 
   async function transform(code: string, _uno: UnoGenerator = uno) {
     const s = new MagicString(code)
@@ -62,35 +62,35 @@ describe('transformer-attributify', () => {
       </script>
 
       <template>
-        <div class=\\"text-center aaa p-4\\" p=\\"4\\">
-          <div text=\\"4xl\\" class=\\"rotate-180 i-carbon-campsite text-4xl\\" :class=\\"bg\\" />
-          <div class=\\"border bg-blue-200 font-(light mono) \\">
-            <div class=\\"hover:(!bg-gray-600 text-red font-bold) text-#fff\\" text=\\"#fff\\">
+        <div class=\\"text-center aaa p-4\\">
+          <div class=\\"rotate-180 i-carbon-campsite text-4xl\\" :class=\\"bg\\" />
+          <div class=\\"border bg-blue-200 font-(light mono) \\" :cc=\\"customClass\\">
+            <div class=\\"hover:(!bg-gray-600 text-red font-bold) text-#fff\\">
               {{ 'applet-ignore: hover:(!bg-gray-600 text-red font-bold)' }}
             </div>
           </div>
-          <div :class=\\"\`p-2.5 \${bool ? 'p-0.5' : ''}\`\\" m-2 :hover-class=\\"['!bg-green']\\" class=\\"m-2\\">
+          <div :class=\\"\`p-2.5 \${bool ? 'p-0.5' : ''}\`\\" :hover-class=\\"['!bg-green']\\" class=\\"m-2\\">
             class=\\"hover:bg-green\\"
           </div>
-          <div flex=\\"~ col gap-1\\" class=\\"p-1 flex flex-col flex-gap-1 items-center\\" items-center :class=\\"bool ? 'text-yellow-500 px-2.5' : ''\\">
-            <div i-carbon-campsite inline-block color=\\"blue\\" text=\\"xl !red\\"  class=\\"inline-block color-blue text-xl !text-red\\"/>
+          <div class=\\"p-1 flex flex-col flex-gap-1 items-center\\" :class=\\"bool ? 'text-yellow-500 px-2.5' : ''\\">
+            <div i-carbon-campsite  class=\\"inline-block color-blue text-xl !text-red\\"/>
             <div bg=\\"green-(!200 800)\\">
               {{ \`index\${index + 1}\` }}{{ \`index\` }}
             </div>
           </div>
-          <div flex=\\"~ col\\" b=\\"~ green dark:(red 2)\\" :class=\\"\`bg-\${bg}\`\\" class=\\"flex flex-col b b-green\\">
-            <div text-right h-10 flex=\\"1\\" text=\\"red\\" :class=\\"{ 'text-sm': index > 0 }\\" class=\\"text-right h-10 flex-1 text-red\\">
+          <div :class=\\"\`bg-\${bg}\`\\" class=\\"flex flex-col b b-green\\">
+            <div :class=\\"{ 'text-sm': index > 0 }\\" class=\\"text-right h-10 flex-1 text-red\\">
               0123456789
             </div>
             <div
-              h-10 flex=\\"1\\" :class=\\"[index > 1 ? 'text' : '']\\"
-              text=\\"blue dark:(red !bold)\\" :style=\\"[index > 1 ? '' : '']\\"
+              :class=\\"[index > 1 ? 'text' : '']\\"
+              :style=\\"[index > 1 ? '' : '']\\"
               :type=\\"index > 1\\"
              class=\\"h-10 flex-1 text-blue\\">
               {{ bgIgnore }}
             </div>
           </div>
-          <div class=\\"bg-[url(https://static.runoob.com/images/demo/demo2.jpg)] w-40 h-20 ma color-white bg-center bg-cover\\" w-40 h-20 ma color=\\"white\\" bg=\\"center cover\\">
+          <div class=\\"bg-[url(https://static.runoob.com/images/demo/demo2.jpg)] w-40 h-20 ma color-white bg-center bg-cover\\">
             {{ 'applet-ignore: bg-[url(https://static.runoob.com/images/demo/demo2.jpg)]' }}
           </div>
           <div class=\\"m-0.5 p-1 text-2xl\\" :class=\\"bool ? '' : 'text-yellow-500 p-2.5'\\">
@@ -111,10 +111,9 @@ describe('transformer-attributify', () => {
       .flex-col{flex-direction:column;}
       .rotate-180{--un-rotate-x:0;--un-rotate-y:0;--un-rotate-z:0;--un-rotate:180deg;transform:translateX(var(--un-translate-x)) translateY(var(--un-translate-y)) translateZ(var(--un-translate-z)) rotate(var(--un-rotate)) rotateX(var(--un-rotate-x)) rotateY(var(--un-rotate-y)) rotateZ(var(--un-rotate-z)) skewX(var(--un-skew-x)) skewY(var(--un-skew-y)) scaleX(var(--un-scale-x)) scaleY(var(--un-scale-y)) scaleZ(var(--un-scale-z));}
       .items-center{align-items:center;}
-      .flex-gap-1,
-      .gap-1{grid-gap:0.25rem;gap:0.25rem;}
+      .flex-gap-1{grid-gap:0.25rem;gap:0.25rem;}
       .b,
-      .border{border-width:1px;border-style:solid;}
+      .border{border-width:1px;}
       .b-green{--un-border-opacity:1;border-color:rgba(74,222,128,var(--un-border-opacity));}
       .\\\\!bg-green{--un-bg-opacity:1 !important;background-color:rgba(74,222,128,var(--un-bg-opacity)) !important;}
       .bg-\\\\[hsl\\\\(2\\\\.7\\\\,81\\\\.9\\\\%\\\\,69\\\\.6\\\\%\\\\)\\\\]{--un-bg-opacity:1;background-color:hsla(2.7,81.9%,69.6%,var(--un-bg-opacity));}

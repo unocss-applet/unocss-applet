@@ -50,7 +50,7 @@ describe('transformer-applet', () => {
       <template>
         <div class=\\"text-center aaa\\" p=\\"4\\">
           <div text=\\"4xl\\" class=\\"rotate-180 i-carbon-campsite\\" :class=\\"bg\\" />
-          <div class=\\"uno-1lreki font-(light mono)\\">
+          <div class=\\"uno-1lreki font-(light mono)\\" :cc=\\"customClass\\">
             <div class=\\"uno-jw3na0 hover:(!bg-gray-600 font-bold)\\" text=\\"#fff\\">
               {{ 'hover:(!bg-gray-600 text-red font-bold)' }}
             </div>
@@ -87,7 +87,7 @@ describe('transformer-applet', () => {
       ",
         "css": "/* layer: applet_shortcuts */
       .uno-tw4biu{margin:0.125rem;padding:0.25rem;font-size:1.5rem;line-height:2rem;}
-      .uno-1lreki{border-width:1px;border-style:solid;--un-bg-opacity:1;background-color:rgba(191,219,254,var(--un-bg-opacity));}
+      .uno-1lreki{border-width:1px;--un-bg-opacity:1;background-color:rgba(191,219,254,var(--un-bg-opacity));}
       .uno-98db2v{--un-bg-opacity:1;background-color:hsla(2.7,81.9%,69.6%,var(--un-bg-opacity));}
       .uno-y5ng0p{--un-bg-opacity:1 !important;background-color:rgba(74,222,128,var(--un-bg-opacity)) !important;}
       .uno-w33epq{--un-url:url(https://static.runoob.com/images/demo/demo2.jpg);background-image:var(--un-url);}

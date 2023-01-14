@@ -30,8 +30,7 @@ export default defineConfig({
 ```ts
 export interface TransformerAttributifyOptions {
   /**
-   * Enable attributify, only build applet should be true
-   * e.g. In uniapp set `enable: !(process.env.UNI_PLATFORM === 'h5')` to disable for h5
+   * Enable attributify
    * @default true
    */
   enable?: boolean
@@ -67,7 +66,7 @@ export interface TransformerAttributifyOptions {
 
   /**
    * Delete attributes that added in `class=""`
-   * @default false
+   * @default true
    */
   deleteClass?: boolean
 }

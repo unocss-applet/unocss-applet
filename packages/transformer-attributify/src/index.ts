@@ -23,7 +23,7 @@ export default function transformerAttributify(options: TransformerAttributifyOp
   const nonValuedAttribute = options?.nonValuedAttribute ?? true
   const prefix = options.prefix ?? 'un-'
   const prefixedOnly = options.prefixedOnly ?? false
-  const deleteClass = options.deleteClass ?? false
+  const deleteClass = options.deleteClass ?? true
 
   return {
     name: 'transformer-attributify',
@@ -51,7 +51,7 @@ export default function transformerAttributify(options: TransformerAttributifyOp
             for (const prefix of strippedPrefixes) {
               if (_name.startsWith(prefix)) {
                 _name = _name.slice(prefix.length)
-                break
+                continue
               }
             }
 
@@ -89,7 +89,7 @@ export default function transformerAttributify(options: TransformerAttributifyOp
                   }))
                 const result = attrs.filter(([, v]) => v).map(([v]) => v)
                 attrSelectors.push(...result)
-                deleteClass && (matchStrTemp = matchStrTemp.replace(` ${matchStr}`, ''))
+                result.length && deleteClass && (matchStrTemp = matchStrTemp.replace(` ${matchStr}`, ''))
               }
             }
           }

@@ -30,8 +30,7 @@ export default defineConfig({
 ```ts
 export interface RemToRpxOptions {
   /**
-   * Enable applet, only build applet should be true
-   * e.g. In uniapp set `enable: !(process.env.UNI_PLATFORM === 'h5')` to disable for h5
+   * Enable rem to rpx
    * @default true
    */
   enable?: boolean

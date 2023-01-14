@@ -1,7 +1,6 @@
 export interface TransformerAppletOptions {
   /**
-   * Enable applet, only build applet should be true
-   * e.g. In uniapp set `enable: !(process.env.UNI_PLATFORM === 'h5')` to disable for h5
+   * Enable transformer applet
    * @default true
    */
   enable?: boolean
