@@ -73,12 +73,16 @@ export default function transformerAttributify(options: TransformerAttributifyOp
                   .map(async (v) => {
                     let token = v
                     // b="~ green dark:(red 2)"
-                    if (v === '~') { token = _name }
+                    if (v === '~') {
+                      token = _name
+                    }
                     else if (v.includes(':')) {
                       const splitV = v.split(':')
                       token = `${splitV[0]}:${splitV[1]}`
                     }
-                    else if (v.startsWith('!')) { token = `!${_name}-${v.slice(1)}` }
+                    else if (v.startsWith('!')) {
+                      token = `!${_name}-${v.slice(1)}`
+                    }
                     else { token = `${_name}-${v}` }
 
                     return [token, !!await uno.parseToken(token)] as const

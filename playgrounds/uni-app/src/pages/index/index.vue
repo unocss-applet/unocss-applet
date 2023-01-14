@@ -44,4 +44,3 @@ const bool = ref<boolean>()
     </div>
   </div>
 </template>
-
