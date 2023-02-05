@@ -74,9 +74,9 @@ export interface TransformerAttributifyOptions {
 
 ## Example
 
-> Attributes will be retained unless `deleteClass` is set to `true`, but deletion is not recommended.
+> Attributes will be deleted unless `deleteClass` is set to `true`.
 
-#### without
+### without
 
 ```html
 <div h-80 text-center flex flex-col align-center select-none all:transition-400>
@@ -86,10 +86,10 @@ export interface TransformerAttributifyOptions {
 
 </td><td width="500px" valign="top">
 
-#### with
+### with
 
 ```html
-<div h-80 text-center flex flex-col align-center select-none all:transition-400 class="h-80 text-center flex flex-col select-none all:transition-400">
+<div class="h-80 text-center flex flex-col select-none all:transition-400">
   py-3
 </div>
 ```
