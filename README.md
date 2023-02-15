@@ -10,7 +10,7 @@
 
 - [unocss-applet](https://github.com/unocss-applet/unocss-applet/tree/main/packages/unocss-applet) - The default package with common presets and plugins
 - [@unocss-applet/preset-applet](https://github.com/unocss-applet/unocss-applet/tree/main/packages/preset-applet) - The default preset (right now it's equivalent to `@unocss/preset-uno`)
-- [@unocss-applet/preset-rem-to-rpx](https://github.com/unocss-applet/unocss-applet/tree/main/packages/preset-rem-to-rpx) - Coverts rem to rpx for utils.
+- [@unocss-applet/preset-rem-to-rpx](https://github.com/unocss-applet/unocss-applet/tree/main/packages/preset-rem-to-rpx) - Coverts rem <=> rpx for utils.
 - [@unocss-applet/transformer-applet](https://github.com/unocss-applet/unocss-applet/tree/main/packages/transformer-applet) - Compile classes that do not support applets into one class.
 - [@unocss-applet/transformer-attributify](https://github.com/unocss-applet/unocss-applet/tree/main/packages/transformer-attributify) - Enables Attributify Mode for applet.
 
@@ -44,6 +44,11 @@ import {
   transformerAttributify,
 } from 'unocss-applet'
 
+// UniApp
+const isApplet = process.env?.UNI_PLATFORM?.startsWith('mp-')
+// Taro
+// const isApplet = process.env.TARO_ENV !== 'h5'
+
 export default defineConfig({
   presets: [
     presetApplet(),
@@ -52,7 +57,7 @@ export default defineConfig({
      * although preset is not working for applet, but will generate useless css
      */
     presetAttributify(),
-    presetRemToRpx(),
+    presetRemToRpx({ enable: isApplet }),
   ],
   transformers: [
     transformerDirectives(),

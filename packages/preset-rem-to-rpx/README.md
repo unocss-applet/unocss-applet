@@ -30,7 +30,7 @@ export default defineConfig({
 ```ts
 export interface RemToRpxOptions {
   /**
-   * Enable rem to rpx
+   * Enable rem to rpx, disable rpx to rem
    * @default true
    */
   enable?: boolean

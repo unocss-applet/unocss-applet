@@ -9,7 +9,7 @@ const bool = ref<boolean>()
 
 <template>
   <div class="text-center aaa" p="4">
-    <div text="4xl" class="rotate-180 i-carbon-campsite" :class="bg" />
+    <div text="4xl" class="rotate-180 i-carbon-campsite uno-class" :class="bg" />
     <div class="border bg-blue-200 font-(light mono) ">
       <div class="hover:(!bg-gray-600 text-red font-bold)" text="#fff">
         {{ 'applet-ignore: hover:(!bg-gray-600 text-red font-bold)' }}
@@ -29,8 +29,7 @@ const bool = ref<boolean>()
         0123456789
       </div>
       <div
-        h-10 flex="1" :class="[index > 1 ? 'text' : '']"
-        text="blue dark:(red !bold)" :style="[index > 1 ? '' : '']"
+        h-10 flex="1" :class="[index > 1 ? 'text' : '']" text="blue dark:(red !bold)" :style="[index > 1 ? '' : '']"
         :type="index > 1"
       >
         {{ bgIgnore }}
@@ -44,3 +43,9 @@ const bool = ref<boolean>()
     </div>
   </div>
 </template>
+
+<style scoped>
+.uno-class {
+  @apply w-128rpx h-128rpx;
+}
+</style>

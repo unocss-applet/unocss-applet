@@ -13,6 +13,8 @@ import {
   transformerAttributify,
 } from 'unocss-applet'
 
+const isApplet = process.env?.UNI_PLATFORM?.startsWith('mp-')
+
 export default defineConfig({
   theme: {
     colors: {
@@ -42,7 +44,7 @@ export default defineConfig({
      */
     presetApplet(),
     presetAttributify(),
-    presetRemToRpx(),
+    presetRemToRpx({ enable: isApplet }),
   ],
   transformers: [
     transformerDirectives(),

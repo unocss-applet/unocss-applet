@@ -1,10 +1,11 @@
 import type { Preset } from 'unocss'
 
 const remRE = /^-?[\.\d]+rem$/
+const rpxRE = /^-?[\.\d]+rpx$/
 
 export interface RemToRpxOptions {
   /**
-   * Enable rem to rpx
+   * Enable rem to rpx, disable rpx to rem
    * @default true
    */
   enable?: boolean
@@ -33,13 +34,16 @@ export default function remToRpxPreset(options: RemToRpxOptions = {}): Preset {
       ? (util) => {
           util.entries.forEach((i) => {
             const value = i[1]
-            if (value && typeof value === 'string' && remRE.test(value)) {
-              i[1] = `${
-                +value.slice(0, -3) * baseFontSize * (750 / screenWidth)
-              }rpx`
-            }
+            if (value && typeof value === 'string' && remRE.test(value))
+              i[1] = `${+value.slice(0, -3) * baseFontSize * (750 / screenWidth)}rpx`
           })
         }
-      : undefined,
+      : (util) => {
+          util.entries.forEach((i) => {
+            const value = i[1]
+            if (value && typeof value === 'string' && rpxRE.test(value))
+              i[1] = `${+value.slice(0, -3) / baseFontSize * (screenWidth / 750)}rem`
+          })
+        },
   }
 }
