@@ -1,16 +1,16 @@
 {
-  "name": "@unocss-applet/preset-rem-to-rpx",
+  "name": "@unocss-applet/preset-rem-rpx",
   "type": "module",
   "version": "0.3.0",
   "packageManager": "pnpm@7.2.1",
   "description": "",
   "author": "Neil Lee <zguolee@foxmail.com>",
   "license": "MIT",
-  "homepage": "https://github.com/unocss-applet/unocss-applet/tree/main/packages/preset-rem-to-rpx#readme",
+  "homepage": "https://github.com/unocss-applet/unocss-applet/tree/main/packages/preset-rem-rpx#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/unocss-applet/unocss-applet.git",
-    "directory": "packages/preset-rem-to-rpx"
+    "directory": "packages/preset-rem-rpx"
   },
   "bugs": "https://github.com/unocss-applet/unocss-applet/issues",
   "keywords": [
@@ -26,7 +26,7 @@
       "import": "./dist/index.mjs"
     }
   },
-  "main": "./dist/index.mjs",
+  "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "files": [

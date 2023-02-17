@@ -4,7 +4,7 @@ export default defineBuildConfig({
   entries: [
     'src/index',
     'src/preset-applet',
-    'src/preset-rem-to-rpx',
+    'src/preset-rem-rpx',
     'src/transformer-applet',
     'src/transformer-attributify',
   ],

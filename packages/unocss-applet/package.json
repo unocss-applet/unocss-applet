@@ -33,10 +33,10 @@
       "require": "./dist/preset-applet.cjs",
       "import": "./dist/preset-applet.mjs"
     },
-    "./preset-rem-to-rpx": {
-      "types": "./dist/preset-rem-to-rpx.d.ts",
-      "require": "./dist/preset-rem-to-rpx.cjs",
-      "import": "./dist/preset-rem-to-rpx.mjs"
+    "./preset-rem-rpx": {
+      "types": "./dist/preset-rem-rpx.d.ts",
+      "require": "./dist/preset-rem-rpx.cjs",
+      "import": "./dist/preset-rem-rpx.mjs"
     },
     "./transformer-applet": {
       "types": "./dist/transformer-applet.d.ts",
@@ -44,7 +44,7 @@
       "import": "./dist/transformer-applet.mjs"
     }
   },
-  "main": "./dist/index.mjs",
+  "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "files": [
@@ -56,8 +56,7 @@
   },
   "dependencies": {
     "@unocss-applet/preset-applet": "workspace:*",
-    "@unocss-applet/preset-rem-to-rpx": "workspace:*",
-    "@unocss-applet/preset-rpx-to-rem": "workspace:*",
+    "@unocss-applet/preset-rem-rpx": "workspace:*",
     "@unocss-applet/transformer-applet": "workspace:*",
     "@unocss-applet/transformer-attributify": "workspace:*"
   }

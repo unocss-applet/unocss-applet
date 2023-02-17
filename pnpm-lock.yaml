@@ -7,8 +7,7 @@ importers:
       '@antfu/eslint-config': ^0.35.1
       '@types/node': ^18.11.19
       '@unocss-applet/preset-applet': workspace:*
-      '@unocss-applet/preset-rem-to-rpx': workspace:*
-      '@unocss-applet/preset-rpx-to-rem': workspace:*
+      '@unocss-applet/preset-rem-rpx': workspace:*
       '@unocss-applet/transformer-applet': workspace:*
       '@unocss-applet/transformer-attributify': workspace:*
       bumpp: ^8.2.1
@@ -26,8 +25,7 @@ importers:
       '@antfu/eslint-config': 0.35.1_4vsywjlpuriuw3tl5oq6zy5a64
       '@types/node': 18.11.19
       '@unocss-applet/preset-applet': link:packages/preset-applet
-      '@unocss-applet/preset-rem-to-rpx': link:packages/preset-rem-to-rpx
-      '@unocss-applet/preset-rpx-to-rem': link:packages/preset-rpx-to-rem
+      '@unocss-applet/preset-rem-rpx': link:packages/preset-rem-rpx
       '@unocss-applet/transformer-applet': link:packages/transformer-applet
       '@unocss-applet/transformer-attributify': link:packages/transformer-attributify
       bumpp: 8.2.1
@@ -52,10 +50,7 @@ importers:
       '@unocss/preset-mini': 0.49.4
       '@unocss/preset-wind': 0.49.4
 
-  packages/preset-rem-to-rpx:
-    specifiers: {}
-
-  packages/preset-rpx-to-rem:
+  packages/preset-rem-rpx:
     specifiers: {}
 
   packages/transformer-applet:
@@ -67,14 +62,12 @@ importers:
   packages/unocss-applet:
     specifiers:
       '@unocss-applet/preset-applet': workspace:*
-      '@unocss-applet/preset-rem-to-rpx': workspace:*
-      '@unocss-applet/preset-rpx-to-rem': workspace:*
+      '@unocss-applet/preset-rem-rpx': workspace:*
       '@unocss-applet/transformer-applet': workspace:*
       '@unocss-applet/transformer-attributify': workspace:*
     dependencies:
       '@unocss-applet/preset-applet': link:../preset-applet
-      '@unocss-applet/preset-rem-to-rpx': link:../preset-rem-to-rpx
-      '@unocss-applet/preset-rpx-to-rem': link:../preset-rpx-to-rem
+      '@unocss-applet/preset-rem-rpx': link:../preset-rem-rpx
       '@unocss-applet/transformer-applet': link:../transformer-applet
       '@unocss-applet/transformer-attributify': link:../transformer-attributify
 
