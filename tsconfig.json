@@ -16,8 +16,9 @@
       "vite/client"
     ],
     "paths": {
-      "@unocss-applet/preset-rem-to-rpx": ["./packages/preset-rem-to-rpx/src/index.ts"],
       "@unocss-applet/preset-applet": ["./packages/preset-applet/src/index.ts"],
+      "@unocss-applet/preset-rem-to-rpx": ["./packages/preset-rem-to-rpx/src/index.ts"],
+      "@unocss-applet/preset-rpx-to-rem": ["./packages/preset-rpx-to-rem/src/index.ts"],
       "@unocss-applet/transformer-applet": ["./packages/transformer-applet/src/index.ts"],
       "@unocss-applet/transformer-attributify": ["./packages/transformer-attributify/src/index.ts"],
       "unocss-applet": ["./packages/unocss-applet/src/index.ts"]

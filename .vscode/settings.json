@@ -8,5 +8,8 @@
     "**/Thumbs.db": true,
     "**/node_modules": false
   },
-  "unocss.root": "./playground"
+  "unocss.root": "./playground",
+  "cSpell.words": [
+    "unocss"
+  ]
 }

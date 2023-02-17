@@ -57,6 +57,7 @@
   "dependencies": {
     "@unocss-applet/preset-applet": "workspace:*",
     "@unocss-applet/preset-rem-to-rpx": "workspace:*",
+    "@unocss-applet/preset-rpx-to-rem": "workspace:*",
     "@unocss-applet/transformer-applet": "workspace:*",
     "@unocss-applet/transformer-attributify": "workspace:*"
   }

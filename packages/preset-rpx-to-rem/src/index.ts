@@ -1,8 +1,8 @@
 import type { Preset } from 'unocss'
 
-const remRE = /^-?[\.\d]+rem$/
+const rpxRE = /^-?[\.\d]+rpx$/
 
-export interface RemToRpxOptions {
+export interface RpxToRemOptions {
   /**
    * 1rem = n px
    * @default 16
@@ -16,16 +16,16 @@ export interface RemToRpxOptions {
   screenWidth?: number
 }
 
-export default function remToRpxPreset(options: RemToRpxOptions = {}): Preset {
+export default function rpxToRemPreset(options: RpxToRemOptions = {}): Preset {
   const { baseFontSize = 16, screenWidth = 375 } = options
 
   return {
-    name: 'unocss-preset-rem-to-rpx',
+    name: 'unocss-preset-rpx-to-rem',
     postprocess: (util) => {
       util.entries.forEach((i) => {
         const value = i[1]
-        if (value && typeof value === 'string' && remRE.test(value))
-          i[1] = `${+value.slice(0, -3) * baseFontSize * (750 / screenWidth)}rpx`
+        if (value && typeof value === 'string' && rpxRE.test(value))
+          i[1] = `${(+value.slice(0, -3) / (750 / screenWidth) / baseFontSize)}rem`
       })
     },
   }

@@ -11,6 +11,7 @@
 - [unocss-applet](https://github.com/unocss-applet/unocss-applet/tree/main/packages/unocss-applet) - The default package with common presets and plugins
 - [@unocss-applet/preset-applet](https://github.com/unocss-applet/unocss-applet/tree/main/packages/preset-applet) - The default preset (right now it's equivalent to `@unocss/preset-uno`)
 - [@unocss-applet/preset-rem-to-rpx](https://github.com/unocss-applet/unocss-applet/tree/main/packages/preset-rem-to-rpx) - Coverts rem to rpx for utils.
+- [@unocss-applet/preset-rpx-to-rem](https://github.com/unocss-applet/unocss-applet/tree/main/packages/preset-rpx-to-rem) - Coverts rpx to rem for utils.
 - [@unocss-applet/transformer-applet](https://github.com/unocss-applet/unocss-applet/tree/main/packages/transformer-applet) - Compile classes that do not support applets into one class.
 - [@unocss-applet/transformer-attributify](https://github.com/unocss-applet/unocss-applet/tree/main/packages/transformer-attributify) - Enables Attributify Mode for applet.
 
@@ -30,16 +31,10 @@ pnpm add unocss-applet -D # with pnpm
 <summary>unocss.config.ts</summary><br>
 
 ```ts
-import {
-  defineConfig,
-  presetAttributify,
-  transformerDirectives,
-  transformerVariantGroup,
-} from 'unocss'
+import { defineConfig } from 'unocss'
 
 import {
   presetApplet,
-  presetRemToRpx,
   transformerApplet,
   transformerAttributify,
 } from 'unocss-applet'
@@ -47,16 +42,8 @@ import {
 export default defineConfig({
   presets: [
     presetApplet(),
-    /**
-     * you can add `presetAttributify()` here to enable unocss attributify mode prompt
-     * although preset is not working for applet, but will generate useless css
-     */
-    presetAttributify(),
-    presetRemToRpx(),
   ],
   transformers: [
-    transformerDirectives(),
-    transformerVariantGroup(),
     // Don't change the following order
     transformerAttributify(),
     transformerApplet(),

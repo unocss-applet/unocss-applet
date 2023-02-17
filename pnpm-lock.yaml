@@ -8,6 +8,7 @@ importers:
       '@types/node': ^18.11.19
       '@unocss-applet/preset-applet': workspace:*
       '@unocss-applet/preset-rem-to-rpx': workspace:*
+      '@unocss-applet/preset-rpx-to-rem': workspace:*
       '@unocss-applet/transformer-applet': workspace:*
       '@unocss-applet/transformer-attributify': workspace:*
       bumpp: ^8.2.1
@@ -26,6 +27,7 @@ importers:
       '@types/node': 18.11.19
       '@unocss-applet/preset-applet': link:packages/preset-applet
       '@unocss-applet/preset-rem-to-rpx': link:packages/preset-rem-to-rpx
+      '@unocss-applet/preset-rpx-to-rem': link:packages/preset-rpx-to-rem
       '@unocss-applet/transformer-applet': link:packages/transformer-applet
       '@unocss-applet/transformer-attributify': link:packages/transformer-attributify
       bumpp: 8.2.1
@@ -53,6 +55,9 @@ importers:
   packages/preset-rem-to-rpx:
     specifiers: {}
 
+  packages/preset-rpx-to-rem:
+    specifiers: {}
+
   packages/transformer-applet:
     specifiers: {}
 
@@ -63,11 +68,13 @@ importers:
     specifiers:
       '@unocss-applet/preset-applet': workspace:*
       '@unocss-applet/preset-rem-to-rpx': workspace:*
+      '@unocss-applet/preset-rpx-to-rem': workspace:*
       '@unocss-applet/transformer-applet': workspace:*
       '@unocss-applet/transformer-attributify': workspace:*
     dependencies:
       '@unocss-applet/preset-applet': link:../preset-applet
       '@unocss-applet/preset-rem-to-rpx': link:../preset-rem-to-rpx
+      '@unocss-applet/preset-rpx-to-rem': link:../preset-rpx-to-rem
       '@unocss-applet/transformer-applet': link:../transformer-applet
       '@unocss-applet/transformer-attributify': link:../transformer-attributify
 

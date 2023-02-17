@@ -9,11 +9,12 @@ import {
 import {
   presetApplet,
   presetRemToRpx,
+  presetRpxToRem,
   transformerApplet,
   transformerAttributify,
 } from 'unocss-applet'
 
-const isH5 = process.env.TARO_ENV === 'h5'
+const isApplet = process.env.TARO_ENV !== 'h5'
 
 export default defineConfig({
   presets: [
@@ -29,15 +30,15 @@ export default defineConfig({
      * you can add `presetAttributify()` here to enable unocss attributify mode prompt
      * although preset is not working for applet, but will generate useless css
      */
-    presetApplet({ enable: !isH5 }),
+    presetApplet(),
     presetAttributify(),
-    presetRemToRpx({ enable: !isH5 }),
+    isApplet ? presetRemToRpx() : presetRpxToRem(),
   ],
   transformers: [
     transformerDirectives(),
     transformerVariantGroup(),
     // Don't change the following order
-    transformerAttributify({ enable: !isH5 }),
-    transformerApplet({ enable: !isH5 }),
+    transformerAttributify(),
+    transformerApplet(),
   ],
 })

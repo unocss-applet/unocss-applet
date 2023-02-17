@@ -1,13 +1,13 @@
-# @unocss-applet/preset-rem-to-rpx
+# @unocss-applet/preset-rpx-to-rem
 
 Coverts rem to rpx for utils.
 
 ## Instal
 
 ```bash
-npm i @unocss-applet/preset-rem-to-rpx --save-dev # with npm
-yarn add @unocss-applet/preset-rem-to-rpx -D # with yarn
-pnpm add @unocss-applet/preset-rem-to-rpx -D # with pnpm
+npm i @unocss-applet/preset-rpx-to-rem --save-dev # with npm
+yarn add @unocss-applet/preset-rpx-to-rem -D # with yarn
+pnpm add @unocss-applet/preset-rpx-to-rem -D # with pnpm
 ```
   
 ## Usage
@@ -15,12 +15,12 @@ pnpm add @unocss-applet/preset-rem-to-rpx -D # with pnpm
 ```ts
 import { defineConfig } from 'unocss'
 
-import presetRemToRpx from '@unocss-applet/preset-rem-to-rpx'
+import presetRpxToRem from '@unocss-applet/preset-rpx-to-rem'
 
 export default defineConfig({
   presets: [
     // ...
-    presetRemToRpx({ baseFontSize: 16, screenWidth: 375 }),
+    presetRpxToRem({ baseFontSize: 16, screenWidth: 375 }),
   ],
 })
 ```
@@ -28,7 +28,7 @@ export default defineConfig({
 ## Type Declarations
 
 ```ts
-export interface RemToRpxOptions {
+export interface RpxToRemOptions {
   /**
    * 1rem = n px
    * @default 16
@@ -44,7 +44,7 @@ export interface RemToRpxOptions {
 ```
 
 ```html
-<div class="m-1rem"></div>
+<div class="p-32rpx"></div>
 ```
 
 <table><tr><td width="500px" valign="top">
@@ -52,8 +52,8 @@ export interface RemToRpxOptions {
 ### without
 
 ```css
-.m-1rem {
-  margin: 1rem;
+.p-32rpx {
+  padding: 32rpx;
 }
 ```
 
@@ -62,8 +62,8 @@ export interface RemToRpxOptions {
 ### with
 
 ```css
-.m-1rem {
-  margin: 32rpx;
+.p-32rpx {
+  padding: 1rem;
 }
 ```
 
