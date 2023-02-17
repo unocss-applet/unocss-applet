@@ -1,6 +1,6 @@
 # @unocss-applet/preset-rem-to-rpx
 
-Coverts rem to rpx for utils.
+Coverts rem <=> rpx for utils.
 
 ## Instal
 
@@ -50,26 +50,32 @@ export interface RemToRpxOptions {
 ```
 
 ```html
-<div class="m-2"></div>
+<div class="m-1rem p-32rpx"></div>
 ```
 
 <table><tr><td width="500px" valign="top">
 
-### without
+### enabled
 
 ```css
-.m-2 {
-  margin: 0.5rem;
+.m-1rem {
+  margin: 32rpx;
+}
+.p-32rpx {
+  padding: 32rpx;
 }
 ```
 
 </td><td width="500px" valign="top">
 
-### with
+### disabled
 
 ```css
-.m-2 {
-  margin: 16rpx;
+.m-1rem {
+  margin: 1rem;
+}
+.p-32rpx {
+  padding: 1rem;
 }
 ```
 
