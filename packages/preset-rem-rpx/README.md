@@ -25,6 +25,8 @@ export default defineConfig({
 })
 ```
 
+⚠️If you change `baseFontSize` other than `16` and use `rpx2rem` mode, you need to set the corresponding root `font-size` in H5.
+
 ## Type Declarations
 
 ```ts
@@ -94,7 +96,7 @@ export interface RemRpxOptions {
   margin: 1rem;
 }
 .p-32rpx {
-  padding: 1rem
+  padding: 1rem;
 }
 ```
 

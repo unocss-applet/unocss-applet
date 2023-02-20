@@ -29,7 +29,7 @@ export interface RemRpxOptions {
   mode?: 'rem2rpx' | 'rpx2rem'
 }
 
-export default function remRpxPreset(options: RemRpxOptions = {}): Preset {
+export default function presetRemRpx(options: RemRpxOptions = {}): Preset {
   const { baseFontSize = 16, screenWidth = 375 } = options
   const enable = options.enable ?? true
   const mode = options.mode ?? 'rem2rpx'
