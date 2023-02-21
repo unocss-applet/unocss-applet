@@ -45,6 +45,8 @@ export default defineConfig({
     presetApplet(),
     presetAttributify(),
     presetRemRpx({ mode: isApplet ? 'rem2rpx' : 'rpx2rem' }),
+    // deprecated from v0.3.0
+    // presetRemToRpx({ enable: isApplet }),
   ],
   transformers: [
     transformerDirectives(),

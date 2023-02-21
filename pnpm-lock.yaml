@@ -63,11 +63,13 @@ importers:
     specifiers:
       '@unocss-applet/preset-applet': workspace:*
       '@unocss-applet/preset-rem-rpx': workspace:*
+      '@unocss-applet/preset-rem-to-rpx': ^0.2.22
       '@unocss-applet/transformer-applet': workspace:*
       '@unocss-applet/transformer-attributify': workspace:*
     dependencies:
       '@unocss-applet/preset-applet': link:../preset-applet
       '@unocss-applet/preset-rem-rpx': link:../preset-rem-rpx
+      '@unocss-applet/preset-rem-to-rpx': 0.2.22
       '@unocss-applet/transformer-applet': link:../transformer-applet
       '@unocss-applet/transformer-attributify': link:../transformer-attributify
 
@@ -5008,6 +5010,10 @@ packages:
       '@typescript-eslint/types': 5.50.0
       eslint-visitor-keys: 3.3.0
     dev: true
+
+  /@unocss-applet/preset-rem-to-rpx/0.2.22:
+    resolution: {integrity: sha512-WqF3hW8lKOOEn8viWm6otWwiEpg4R1Ng6OR8zYrjzV6QaPvoPWyV11dJeFQe+7+7Cj9Nf8II/ZkMiX+xHaZkHw==}
+    dev: false
 
   /@unocss/astro/0.49.4_rollup@3.14.0+vite@4.1.1:
     resolution: {integrity: sha512-kA+9tsP0r3n+2v0iGcKfXuVLBd69zNfNx52pk5UG/OhDHimEA5FYv4vhnDl41IC/CIlKqy/eOrK85heVYAYunQ==}
