@@ -35,7 +35,7 @@ const bool = ref<boolean>()
         {{ bgIgnore }}
       </div>
     </div>
-    <div class="bg-[url(https://static.runoob.com/images/demo/demo2.jpg)]" w-40 h-20 ma color="white" bg="center cover">
+    <div class="bg-[url(https://static.runoob.com/images/demo/demo2.jpg)]" w-40 h-20 ma un-color="red" bg="center cover">
       {{ 'applet-ignore: bg-[url(https://static.runoob.com/images/demo/demo2.jpg)]' }}
     </div>
     <div class="m-0.5 p-1 text-2xl" :class="bool ? '' : 'text-yellow-500 p-2.5'">

@@ -45,45 +45,47 @@ export default function transformerAttributify(options: TransformerAttributifyOp
           const matchStr = attribute[0]
           const name = attribute[1]
           const content = attribute[3]
-          let _name = prefixedOnly ? name.replace(prefix, '') : name
 
-          if (!ignoreAttributes.includes(_name)) {
-            for (const prefix of strippedPrefixes) {
-              if (_name.startsWith(prefix)) {
-                _name = _name.slice(prefix.length)
-                continue
-              }
-            }
+          const nonPrefixed = name.replace(prefix, '')
 
+          if (!ignoreAttributes.includes(nonPrefixed)) {
             if (!content) {
-              if (isValidSelector(_name) && nonValuedAttribute !== false) {
-                if (await uno.parseToken(_name)) {
-                  attrSelectors.push(_name)
-                  deleteClass && (matchStrTemp = matchStrTemp.replace(` ${_name}`, ''))
+              // non-valued attributes
+              if (prefixedOnly && prefix && !name.startsWith(prefix))
+                continue
+
+              if (isValidSelector(nonPrefixed) && nonValuedAttribute) {
+                if (await uno.parseToken(nonPrefixed)) {
+                  attrSelectors.push(nonPrefixed)
+                  deleteClass && (matchStrTemp = matchStrTemp.replace(` ${name}`, ''))
                 }
               }
             }
             else {
-              if (['class', 'className'].includes(_name)) {
+              // valued attributes
+              if (['class', 'className'].includes(name)) {
                 if (!name.includes(':'))
                   existsClass = content
               }
               else {
+                if (prefixedOnly && prefix && !name.startsWith(prefix))
+                  continue
+
                 const attrs = await Promise.all(content.split(splitterRE).filter(Boolean)
                   .map(async (v) => {
                     let token = v
                     // b="~ green dark:(red 2)"
                     if (v === '~') {
-                      token = _name
+                      token = nonPrefixed
                     }
                     else if (v.includes(':')) {
                       const splitV = v.split(':')
                       token = `${splitV[0]}:${splitV[1]}`
                     }
                     else if (v.startsWith('!')) {
-                      token = `!${_name}-${v.slice(1)}`
+                      token = `!${nonPrefixed}-${v.slice(1)}`
                     }
-                    else { token = `${_name}-${v}` }
+                    else { token = `${nonPrefixed}-${v}` }
 
                     return [token, !!await uno.parseToken(token)] as const
                   }))

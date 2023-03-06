@@ -10,6 +10,8 @@
   },
   "unocss.root": "./playground",
   "cSpell.words": [
-    "unocss"
+    "attributify",
+    "unocss",
+    "Vitest"
   ]
 }
