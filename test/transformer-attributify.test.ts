@@ -6,6 +6,7 @@ import { createGenerator } from '@unocss/core'
 import MagicString from 'magic-string'
 import transformerAttributify from '@unocss-applet/transformer-attributify'
 import presetUno from '@unocss/preset-uno'
+import { presetIcons } from 'unocss'
 
 describe('transformer-attributify', async () => {
   const content = await fs.readFile(
@@ -18,6 +19,10 @@ describe('transformer-attributify', async () => {
     const uno = createGenerator({
       presets: [
         presetUno(),
+        presetIcons({
+          scale: 1.2,
+          cdn: 'https://esm.sh/',
+        }),
       ],
       transformers: [
         transformer,

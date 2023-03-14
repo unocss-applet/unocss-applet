@@ -13,13 +13,13 @@
     "lint:fix": "nr lint --fix",
     "test": "vitest",
     "test:update": "vitest -u",
-    "play:uni:mp-weixin": "pnpm dev && npm -C playgrounds/uni-app run dev:mp-weixin",
+    "play:uni:mp-weixin": "npm -C playgrounds/uni-app run dev:mp-weixin",
     "build:uni:mp-weixin": "npm -C playgrounds/uni-app run build:mp-weixin",
-    "play:uni:h5": "pnpm dev && npm -C playgrounds/uni-app run dev:h5",
+    "play:uni:h5": "npm -C playgrounds/uni-app run dev:h5",
     "build:uni:h5": "npm -C playgrounds/uni-app run build:h5",
-    "play:taro:weapp": "pnpm dev && npm -C playgrounds/tarojs run dev:weapp",
+    "play:taro:weapp": "npm -C playgrounds/tarojs run dev:weapp",
     "build:taro:weapp": "npm -C playgrounds/tarojs run build:weapp",
-    "play:taro:h5": "pnpm dev && npm -C playgrounds/tarojs run dev:h5",
+    "play:taro:h5": "npm -C playgrounds/tarojs run dev:h5",
     "build:taro:h5": "npm -C playgrounds/tarojs run build:h5"
   },
   "devDependencies": {

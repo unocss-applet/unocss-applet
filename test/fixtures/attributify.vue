@@ -14,5 +14,7 @@ const bool = ref<boolean>()
     <div un-b="~ green" class="text-purple">
       123456789
     </div>
+    <div i-carbon:logo-twitter dark:i-carbon:logo-github />
+    <div i-carbon-logo-twitter dark:i-carbon-logo-github />
   </div>
 </template>

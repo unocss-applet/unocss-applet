@@ -13,7 +13,10 @@ const strippedPrefixes = [
 const splitterRE = /[\s'"`;]+/g
 // const elementRE = /<\w(?=.*>)[\w:\.$-]*\s((?:['"`\{].*?['"`\}]|.*?)*?)>/gs
 const elementRE = /<\w(?=.*>)[\w:\.$-]*\s(((".*?>?.*?")|.*?)*?)\/?>/gs
-const valuedAttributeRE = /([?]|(?!\d|-{2}|-\d)[a-zA-Z0-9\u00A0-\uFFFF-_:!%-]+)(?:={?(["'])([^\2]*?)\2}?)?/g
+const attributeRE = /([a-zA-Z()#][\[?a-zA-Z0-9-_:()#%\]?]*)(?:\s*=\s*((?:'[^']*')|(?:"[^"]*")|\S+))?/g
+
+// const valuedAttributeRE = /([?]|(?!\d|-{2}|-\d)[a-zA-Z0-9\u00A0-\uFFFF-_:!%-]+)(?:={?(["'])([^\2]*?)\2}?)?/g
+// const valuedAttributeRE = /((?!\d|-{2}|-\d)[a-zA-Z0-9\u00A0-\uFFFF-_:!%-.~<]+)=(?:["]([^"]*)["]|[']([^']*)[']|[{]((?:[`(](?:[^`)]*)[`)]|[^}])+)[}])/gms
 
 const defaultIgnoreAttributes = ['placeholder', 'setup', 'lang', 'scoped']
 
@@ -39,12 +42,12 @@ export default function transformerAttributify(options: TransformerAttributifyOp
         let matchStrTemp = eleMatch[0]
         let existsClass = ''
         const attrSelectors: string[] = []
-        const valuedAttributes = Array.from((eleMatch[1] || '').matchAll(valuedAttributeRE))
+        const attributes = Array.from((eleMatch[1] || '').matchAll(attributeRE))
 
-        for (const attribute of valuedAttributes) {
+        for (const attribute of attributes) {
           const matchStr = attribute[0]
           const name = attribute[1]
-          const content = attribute[3]
+          const content = attribute[2]
 
           const nonPrefixed = name.replace(prefix, '')
 
@@ -53,7 +56,6 @@ export default function transformerAttributify(options: TransformerAttributifyOp
               // non-valued attributes
               if (prefixedOnly && prefix && !name.startsWith(prefix))
                 continue
-
               if (isValidSelector(nonPrefixed) && nonValuedAttribute) {
                 if (await uno.parseToken(nonPrefixed)) {
                   attrSelectors.push(nonPrefixed)
