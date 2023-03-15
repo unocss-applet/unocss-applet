@@ -3,7 +3,6 @@ import { ref } from 'vue'
 const bg = 'bg-[hsl(2.7,81.9%,69.6%)]'
 const bgIgnore = 'applet-ignore: bg-[hsl(2.7,81.9%,69.6%)]'
 const index = 1
-const customClass = 'text-red'
 const bool = ref<boolean>()
 </script>
 
@@ -24,12 +23,12 @@ const bool = ref<boolean>()
         {{ `index${index + 1}` }}{{ `index` }}
       </div>
     </div>
-    <div flex="~ col" b="~ green dark:(red 2)" :class="`bg-${bgIgnore}`">
+    <div flex="~ col" b="~ solid green dark:(red 2)">
       <div text-right h-10 flex="1" text="red" :class="{ 'text-sm': index > 0 }">
         0123456789
       </div>
       <div
-        h-10 flex="1" :class="[index > 1 ? 'text' : '']" text="blue dark:(red !bold)" :style="[index > 1 ? '' : '']"
+        h-10 flex="1" :class="[index > 1 ? '' : '']" text="blue dark:(red !bold)" :style="[index > 1 ? '' : '']"
         :type="index > 1"
       >
         {{ bgIgnore }}
@@ -38,9 +37,11 @@ const bool = ref<boolean>()
     <div class="bg-[url(https://static.runoob.com/images/demo/demo2.jpg)]" w-40 h-20 ma un-color="red" bg="center cover">
       {{ 'applet-ignore: bg-[url(https://static.runoob.com/images/demo/demo2.jpg)]' }}
     </div>
-    <div class="m-0.5 p-1 text-2xl" :class="bool ? '' : 'text-yellow-500 p-2.5'">
+    <div class="p-1 text-2xl" m-2 :class="bool ? '' : 'text-yellow-500 p-2.5'">
       abckefghijklmnopqrstuvwxyz
     </div>
+    <div i-carbon:logo-twitter dark:i-carbon:logo-github />
+    <div i-carbon-logo-twitter dark:i-carbon-logo-github />
   </div>
 </template>
 

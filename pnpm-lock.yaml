@@ -159,6 +159,7 @@ importers:
       '@iconify-json/carbon': ^1.1.14
       postcss: ^8.4.21
       sass: ^1.58.0
+      vite-plugin-inspect: ^0.7.15
       vue: ^3.2.47
       vue-i18n: ^9.2.2
     dependencies:
@@ -184,6 +185,7 @@ importers:
       '@iconify-json/carbon': 1.1.14
       postcss: 8.4.21
       sass: 1.58.0
+      vite-plugin-inspect: 0.7.16_vite@4.1.1
 
 packages:
 
@@ -2882,7 +2884,7 @@ packages:
       '@antfu/utils': 0.7.2
       '@iconify/types': 2.0.0
       debug: 4.3.4
-      kolorist: 1.6.0
+      kolorist: 1.7.0
       local-pkg: 0.4.3
     transitivePeerDependencies:
       - supports-color
@@ -12102,8 +12104,8 @@ packages:
     engines: {node: '>= 8'}
     dev: true
 
-  /kolorist/1.6.0:
-    resolution: {integrity: sha512-dLkz37Ab97HWMx9KTes3Tbi3D1ln9fCAy2zr2YVExJasDRPGRaKcoE4fycWNtnCAJfjFqe0cnY+f8KT2JePEXQ==}
+  /kolorist/1.7.0:
+    resolution: {integrity: sha512-ymToLHqL02udwVdbkowNpzjFd6UzozMtshPQKVi5k1EjKRqKqBrOnE9QbLEb0/pV76SAiIT13hdL8R6suc+f3g==}
     dev: true
 
   /latest-version/5.1.0:
@@ -12921,7 +12923,7 @@ packages:
       acorn: 8.8.1
       pathe: 1.1.0
       pkg-types: 1.0.1
-      ufo: 1.0.1
+      ufo: 1.1.1
     dev: true
 
   /mobile-detect/1.4.5:
@@ -13286,7 +13288,7 @@ packages:
     dependencies:
       destr: 1.2.2
       node-fetch-native: 1.0.1
-      ufo: 1.0.1
+      ufo: 1.1.1
       undici: 5.12.0
     dev: true
 
@@ -16322,8 +16324,8 @@ packages:
     hasBin: true
     dev: true
 
-  /ufo/1.0.1:
-    resolution: {integrity: sha512-boAm74ubXHY7KJQZLlXrtMz52qFvpsbOxDcZOnw/Wf+LS4Mmyu7JxmzD4tDLtUQtmZECypJ0FrCz4QIe6dvKRA==}
+  /ufo/1.1.1:
+    resolution: {integrity: sha512-MvlCc4GHrmZdAllBc0iUDowff36Q9Ndw/UzqmEKyrfSzokTd9ZCy1i+IIk5hrYKkjoYVQyNbrw7/F8XJ2rEwTg==}
     dev: true
 
   /uglify-js/3.17.1:
@@ -16722,6 +16724,25 @@ packages:
       - sugarss
       - supports-color
       - terser
+    dev: true
+
+  /vite-plugin-inspect/0.7.16_vite@4.1.1:
+    resolution: {integrity: sha512-WnyoicZ+mSQgrWoQdwrGydvlbfmlTKDVlMtub8RYCld3oXbC5kset3WmtgisrLmiDPobDvx2v7zUtPNQSySWXA==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      vite: ^3.1.0 || ^4.0.0
+    dependencies:
+      '@antfu/utils': 0.7.2
+      '@rollup/pluginutils': 5.0.2
+      debug: 4.3.4
+      fs-extra: 11.1.0
+      kolorist: 1.7.0
+      sirv: 2.0.2
+      ufo: 1.1.1
+      vite: 4.1.1_sass@1.58.0+terser@5.15.0
+    transitivePeerDependencies:
+      - rollup
+      - supports-color
     dev: true
 
   /vite/4.1.1_@types+node@18.11.19:

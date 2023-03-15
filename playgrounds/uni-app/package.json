@@ -54,6 +54,7 @@
     "@dcloudio/vite-plugin-uni": "3.0.0-alpha-3070120230203001",
     "@iconify-json/carbon": "^1.1.14",
     "postcss": "^8.4.21",
-    "sass": "^1.58.0"
+    "sass": "^1.58.0",
+    "vite-plugin-inspect": "^0.7.15"
   }
 }

@@ -5,18 +5,9 @@ import type { TransformerAttributifyOptions } from './types'
 
 export * from './types'
 
-const strippedPrefixes = [
-  'v-bind:',
-  ':',
-]
-
 const splitterRE = /[\s'"`;]+/g
-// const elementRE = /<\w(?=.*>)[\w:\.$-]*\s((?:['"`\{].*?['"`\}]|.*?)*?)>/gs
 const elementRE = /<\w(?=.*>)[\w:\.$-]*\s(((".*?>?.*?")|.*?)*?)\/?>/gs
-const attributeRE = /([a-zA-Z()#][\[?a-zA-Z0-9-_:()#%\]?]*)(?:\s*=\s*((?:'[^']*')|(?:"[^"]*")|\S+))?/g
-
-// const valuedAttributeRE = /([?]|(?!\d|-{2}|-\d)[a-zA-Z0-9\u00A0-\uFFFF-_:!%-]+)(?:={?(["'])([^\2]*?)\2}?)?/g
-// const valuedAttributeRE = /((?!\d|-{2}|-\d)[a-zA-Z0-9\u00A0-\uFFFF-_:!%-.~<]+)=(?:["]([^"]*)["]|[']([^']*)[']|[{]((?:[`(](?:[^`)]*)[`)]|[^}])+)[}])/gms
+const attributeRE = /([\[?a-zA-Z0-9\u00A0-\uFFFF-_:()#%.\]?]*)(?:\s*=\s*((?:'[^']*')|(?:"[^"]*")|\S+))?/g
 
 const defaultIgnoreAttributes = ['placeholder', 'setup', 'lang', 'scoped']
 
@@ -50,7 +41,6 @@ export default function transformerAttributify(options: TransformerAttributifyOp
           const content = attribute[2]
 
           const nonPrefixed = name.replace(prefix, '')
-
           if (!ignoreAttributes.includes(nonPrefixed)) {
             if (!content) {
               // non-valued attributes
@@ -67,7 +57,7 @@ export default function transformerAttributify(options: TransformerAttributifyOp
               // valued attributes
               if (['class', 'className'].includes(name)) {
                 if (!name.includes(':'))
-                  existsClass = content
+                  existsClass = content.replace(/['"`]/g, '')
               }
               else {
                 if (prefixedOnly && prefix && !name.startsWith(prefix))

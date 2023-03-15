@@ -8,7 +8,7 @@
     "**/Thumbs.db": true,
     "**/node_modules": false
   },
-  "unocss.root": "./playground",
+  "unocss.root": "./playgrounds/uni-app",
   "cSpell.words": [
     "attributify",
     "unocss",

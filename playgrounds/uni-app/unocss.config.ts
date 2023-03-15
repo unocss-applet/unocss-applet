@@ -42,7 +42,7 @@ export default defineConfig({
      * you can add `presetAttributify()` here to enable unocss attributify mode prompt
      * although preset is not working for applet, but will generate useless css
      */
-    presetApplet(),
+    presetApplet({ enable: isApplet }),
     presetAttributify(),
     presetRemRpx({ mode: isApplet ? 'rem2rpx' : 'rpx2rem' }),
     // deprecated from v0.3.0
@@ -52,8 +52,8 @@ export default defineConfig({
     transformerDirectives(),
     transformerVariantGroup(),
     // Don't change the following order
-    transformerAttributify(),
-    transformerApplet(),
+    transformerAttributify({ enable: isApplet }),
+    transformerApplet({ enable: isApplet }),
   ],
 
 })
