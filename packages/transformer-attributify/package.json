@@ -1,7 +1,7 @@
 {
   "name": "@unocss-applet/transformer-attributify",
   "type": "module",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "packageManager": "pnpm@8.1.0",
   "description": "",
   "author": "Neil Lee <zguolee@foxmail.com>",

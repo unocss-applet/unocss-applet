@@ -1,6 +1,6 @@
 {
   "name": "@unocss-applet/monorepo",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "private": true,
   "packageManager": "pnpm@8.1.0",
   "scripts": {
