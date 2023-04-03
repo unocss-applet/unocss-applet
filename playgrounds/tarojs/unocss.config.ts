@@ -13,7 +13,7 @@ import {
   transformerAttributify,
 } from 'unocss-applet'
 
-const isApplet = process.env.TARO_ENV !== 'h5'
+const isApplet = process.env.TARO_ENV !== 'h5' ?? false
 
 export default defineConfig({
   presets: [

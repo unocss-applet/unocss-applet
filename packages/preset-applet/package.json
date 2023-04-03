@@ -2,7 +2,7 @@
   "name": "@unocss-applet/preset-applet",
   "type": "module",
   "version": "0.3.4",
-  "packageManager": "pnpm@7.2.1",
+  "packageManager": "pnpm@8.1.0",
   "description": "",
   "author": "Neil Lee <zguolee@foxmail.com>",
   "license": "MIT",
@@ -54,8 +54,8 @@
     "stub": "unbuild --stub"
   },
   "dependencies": {
-    "@unocss/core": "^0.49.4",
-    "@unocss/preset-mini": "^0.49.4",
-    "@unocss/preset-wind": "^0.49.4"
+    "@unocss/core": "^0.50.6",
+    "@unocss/preset-mini": "^0.50.6",
+    "@unocss/preset-wind": "^0.50.6"
   }
 }

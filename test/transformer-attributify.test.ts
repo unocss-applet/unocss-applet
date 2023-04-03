@@ -59,7 +59,7 @@ describe('transformer-attributify', async () => {
             <div block class=\\"text-left\\">
               1
             </div>
-            <div class=\\"text-center\\">
+            <div class=\\"color-[#233] text-center\\">
               2
             </div>
             <div class=\\"text-right\\">
@@ -99,7 +99,7 @@ describe('transformer-attributify', async () => {
             <div text-left block>
               1
             </div>
-            <div text-center>
+            <div text-center class=\\"color-[#233]\\">
               2
             </div>
             <div text-right>

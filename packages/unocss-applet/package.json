@@ -2,7 +2,7 @@
   "name": "unocss-applet",
   "type": "module",
   "version": "0.3.4",
-  "packageManager": "pnpm@7.2.1",
+  "packageManager": "pnpm@8.1.0",
   "description": "",
   "author": "Neil Lee <zguolee@foxmail.com>",
   "license": "MIT",
@@ -57,7 +57,7 @@
   "dependencies": {
     "@unocss-applet/preset-applet": "workspace:*",
     "@unocss-applet/preset-rem-rpx": "workspace:*",
-    "@unocss-applet/preset-rem-to-rpx": "^0.2.22",
+    "@unocss-applet/preset-rem-to-rpx": "^0.3.0",
     "@unocss-applet/transformer-applet": "workspace:*",
     "@unocss-applet/transformer-attributify": "workspace:*"
   }

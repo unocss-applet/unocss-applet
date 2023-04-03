@@ -39,18 +39,25 @@ import { defineConfig } from 'unocss'
 
 import {
   presetApplet,
+  presetRemRpx,
   transformerApplet,
   transformerAttributify,
 } from 'unocss-applet'
 
+// uni-app
+const isApplet = process.env?.UNI_PLATFORM?.startsWith('mp-') ?? false
+// taro
+// const isApplet = process.env.TARO_ENV !== 'h5' ?? false
+
 export default defineConfig({
   presets: [
-    presetApplet(),
+    presetApplet({ enable: isApplet }),
+    presetRemRpx({ mode: isApplet ? 'rem2rpx' : 'rpx2rem' }),
   ],
   transformers: [
     // Don't change the following order
-    transformerAttributify(),
-    transformerApplet(),
+    transformerAttributify({ enable: isApplet }),
+    transformerApplet({ enable: isApplet }),
   ],
 })
 ```

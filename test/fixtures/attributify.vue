@@ -21,7 +21,7 @@ const c = 'text-red'
       <div text-left block>
         1
       </div>
-      <div text-center>
+      <div text-center class="color-[#233]">
         2
       </div>
       <div text-right>
