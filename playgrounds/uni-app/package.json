@@ -1,6 +1,7 @@
 {
   "name": "playground-uni",
   "version": "0.0.0",
+  "private": true,
   "scripts": {
     "dev:app": "uni -p app",
     "dev:custom": "uni -p",
