@@ -10,20 +10,24 @@ const charReg = /[.:%!#()[\/\],]/
 
 const elementRE = /<\w(?=.*>)[\w:\.$-]*\s(((".*?>?.*?")|.*?)*?)\/?>/gs
 const valuedAttributeRE = /([?]|(?!\d|-{2}|-\d)[a-zA-Z0-9\u00A0-\uFFFF-_:!%-]+)(?:={?(["'])([^\2]*?)\2}?)?/g
-const stringRE = /'(.*?)'|/g
+const stringRE = /"([\s\S]*?)"|'([\s\S]*?)'/g
 const templateLiteralsRE = /`([\s\S]*?)`/g
 
 export default function transformerApplet(options: TransformerAppletOptions = {}): SourceCodeTransformer {
   const enable = options.enable ?? true
-  const ignorePrefix = options.ignorePrefix || 'applet-ignore:'
+  const ignorePrefix = options.ignorePrefix || 'applet-ignore'
+  const ignorePrefixRE = new RegExp(`${ignorePrefix}:*\\s*`, 'g')
 
   return {
     name: 'transformer-applet',
     enforce: 'pre',
     async transform(s, id, ctx) {
-      if (!enable)
-        return
       let code = new MagicString(s.toString())
+      if (!enable) {
+        code.overwrite(0, code.toString().length, code.toString().replaceAll(ignorePrefixRE, ''))
+        s.overwrite(0, s.original.length, code.toString())
+        return
+      }
 
       // process class attribute
       const elementMatches = code.original.matchAll(elementRE)
@@ -46,6 +50,8 @@ export default function transformerApplet(options: TransformerAppletOptions = {}
 
             if (charReg.test(content)) {
               const replacements = await compileApplet(content, ctx, options)
+              if (!replacements.length)
+                continue
               matchStrTemp = matchStrTemp.replace(content, replacements.join(' '))
             }
           }
@@ -55,37 +61,24 @@ export default function transformerApplet(options: TransformerAppletOptions = {}
       }
       code = new MagicString(code.toString())
 
-      // process string, only effective with ''
+      // process string, only effective with '' or ""
       const stringMatches = code.original.matchAll(stringRE)
       for (const match of stringMatches) {
+        const content = match[1] ?? match[2]
+
         // ignore empty string
-        if (!match[1])
+        if (!content || content.startsWith(ignorePrefix))
+          continue
+        const start = match.index!
+
+        if (/`/g.test(content))
           continue
 
-        const start = match.index!
-        let content = match[1]
-
-        if (content.startsWith(ignorePrefix)) {
-          // UniApp will replace string with a variable, so we need to ignore it when vue file is compiled
-          if (!/\.vue$/.test(id)) {
-            content = content.substring(ignorePrefix.length).trim()
-            code.overwrite(start, start + match[0].length, match[0].replace(match[1], content))
-          }
-        }
-        else {
-          // There may be no need
-          // https://tailwindcss.com/docs/background-image#arbitrary-values
-          // skip all the image formats in HTML for bg-[url('...')]
-          if (/\.(png|jpg|jpeg|gif|svg)/g.test(content))
+        if (charReg.test(content)) {
+          const replacements = await compileApplet(content, ctx, options)
+          if (!replacements.length)
             continue
-          // skip http(s)://
-          if (/http(s)?:\/\//g.test(content))
-            continue
-
-          if (charReg.test(content)) {
-            const replacements = await compileApplet(content, ctx, options)
-            code.overwrite(start, start + match[0].length, `'${replacements.join(' ')}'`)
-          }
+          code.overwrite(start, start + match[0].length, `'${replacements.join(' ')}'`)
         }
       }
 
@@ -98,9 +91,16 @@ export default function transformerApplet(options: TransformerAppletOptions = {}
         // split content
         if (charReg.test(content)) {
           const replacements = await compileApplet(content, ctx, options)
+          if (!replacements.length)
+            continue
           code.overwrite(start, start + match[0].length, `\`${replacements.join(' ')}\``)
         }
       }
+
+      // UniApp will replace string with a variable, so we need to ignore it when vue file is compiled
+      if (!/\.vue$/.test(id))
+        code.overwrite(0, code.toString().length, code.toString().replaceAll(ignorePrefixRE, ''))
+
       s.overwrite(0, s.original.length, code.toString())
     },
   }

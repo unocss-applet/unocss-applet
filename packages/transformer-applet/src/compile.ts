@@ -15,6 +15,8 @@ export async function compileApplet(body: string, ctx: UnocssPluginContext, opti
     .map(async i => [i, i.includes('${') ? false : !!await uno.parseToken(i)] as const))
   const known = result.filter(([, matched]) => matched).map(([i]) => i)
   const unknown = result.filter(([, matched]) => !matched).map(([i]) => i)
+  if (!known.length)
+    return []
   replacements.push(...unknown)
   body = known.join(' ')
   if (body) {

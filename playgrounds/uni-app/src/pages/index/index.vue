@@ -1,7 +1,10 @@
+<!-- eslint-disable @typescript-eslint/quotes -->
 <script setup lang="ts">
 import { ref } from 'vue'
+import { menuList } from './data'
 const bg = 'bg-[hsl(2.7,81.9%,69.6%)]'
-const bgIgnore = 'applet-ignore: bg-[hsl(2.7,81.9%,69.6%)]'
+const icon = "i-carbon:campsite"
+const bgIgnore = 'applet-ignore bg-[hsl(2.7,81.9%,69.6%)]'
 const index = 1
 const bool = ref<boolean>()
 </script>
@@ -11,14 +14,14 @@ const bool = ref<boolean>()
     <div text="4xl" class="rotate-180 i-carbon-campsite" :class="bg" />
     <div class="border bg-blue-200 font-(light mono) ">
       <div class="hover:(!bg-gray-600 text-red font-bold)" text="#fff">
-        {{ 'applet-ignore: hover:(!bg-gray-600 text-red font-bold)' }}
+        {{ 'applet-ignore hover:(!bg-gray-600 text-red font-bold)' }}
       </div>
     </div>
-    <div :class="`p-2.5 ${bool ? 'p-0.5' : ''}`" m-2 :hover-class="['!bg-green']">
-      class="hover:bg-green"
+    <div :class="`p-2.5 ${bool ? 'p-0.5' : 'text-amber'}`" m-2 :hover-class="['!bg-green']">
+      class="applet-ignore hover:bg-green"
     </div>
     <div flex="~ col gap-1" class="p-1" items-center :class="bool ? 'text-yellow-500 px-2.5' : ''">
-      <div i-carbon-campsite inline-block color="blue" text="xl !red" />
+      <div :class="icon" inline-block color="blue" text="xl !red" />
       <div bg="green-(!200 800)">
         {{ `index${index + 1}` }}{{ `index` }}
       </div>
@@ -35,15 +38,20 @@ const bool = ref<boolean>()
       </div>
     </div>
     <div class="bg-[url(https://static.runoob.com/images/demo/demo2.jpg)]" w-40 h-20 ma un-color="red" bg="center cover">
-      {{ 'applet-ignore: bg-[url(https://static.runoob.com/images/demo/demo2.jpg)]' }}
+      {{ 'applet-ignore bg-[url(https://static.runoob.com/images/demo/demo2.jpg)]' }}
     </div>
     <div class="p-1 text-2xl" m-2 :class="bool ? '' : 'text-yellow-500 p-2.5'">
       abckefghijklmnopqrstuvwxyz
     </div>
     <div i-carbon:logo-twitter dark:i-carbon:logo-github />
     <div i-carbon-logo-twitter dark:i-carbon-logo-github />
+    <div>
+      <template v-for="menu, _idx of menuList" :key="_idx">
+        <div>{{ menu.name }}</div>
+        <div :class="menu.icon" />
+      </template>
+    </div>
   </div>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

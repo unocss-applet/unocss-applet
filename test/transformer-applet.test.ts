@@ -1,5 +1,5 @@
-import { promises as fs } from 'fs'
-import path from 'path'
+import { promises as fs } from 'node:fs'
+import path from 'node:path'
 import { describe, expect, test } from 'vitest'
 import type { UnoGenerator } from '@unocss/core'
 import { createGenerator } from '@unocss/core'
@@ -38,10 +38,13 @@ describe('transformer-applet', () => {
     const result = await transform(content.toString())
     expect(result).toMatchInlineSnapshot(`
       {
-        "code": "<script setup lang=\\"ts\\">
+        "code": "<!-- eslint-disable @typescript-eslint/quotes -->
+      <script setup lang=\\"ts\\">
       import { ref } from 'vue'
-      const bg = 'uno-98db2v'
-      const bgIgnore = 'bg-[hsl(2.7,81.9%,69.6%)]'
+      const bg = 'bg-[hsl(2.7,81.9%,69.6%)]'
+
+      const icon = \\"i-carbon:campsite\\"
+      const bgIgnore = 'applet-ignore: bg-[hsl(2.7,81.9%,69.6%)]'
       const index = 1
       const customClass = 'text-red'
       const bool = ref<boolean>()
@@ -52,14 +55,14 @@ describe('transformer-applet', () => {
           <div text=\\"4xl\\" class=\\"rotate-180 i-carbon-campsite\\" :class=\\"bg\\" />
           <div class=\\"uno-1lreki font-(light mono)\\" :cc=\\"customClass\\">
             <div class=\\"uno-jw3na0 hover:(!bg-gray-600 font-bold)\\" text=\\"#fff\\">
-              {{ 'hover:(!bg-gray-600 text-red font-bold)' }}
+              {{ 'applet-ignore: hover:(!bg-gray-600 text-red font-bold)' }}
             </div>
           </div>
-          <div :class=\\"\`uno-vrauvt \${bool ? 'uno-kl65hf' : ''}\`\\" m-2 :hover-class=\\"['uno-y5ng0p']\\">
+          <div :class=\\"\`uno-vrauvt \${bool ? 'p-0.5' : ''}\`\\" m-2 :hover-class=\\"['!bg-green']\\">
             class=\\"hover:bg-green\\"
           </div>
-          <div flex=\\"~ col gap-1\\" class=\\"p-1\\" items-center :class=\\"bool ? 'uno-2z589z' : ''\\">
-            <div i-carbon-campsite inline-block color=\\"blue\\" text=\\"xl !red\\" />
+          <div flex=\\"~ col gap-1\\" class=\\"p-1\\" items-center :class=\\"bool ? 'text-yellow-500 px-2.5' : ''\\">
+            <div :class=\\"icon\\" inline-block color=\\"blue\\" text=\\"xl !red\\" />
             <div bg=\\"green-(!200 800)\\">
               {{ \`index\${index + 1}\` }}{{ \`index\` }}
             </div>
@@ -77,9 +80,9 @@ describe('transformer-applet', () => {
             </div>
           </div>
           <div class=\\"uno-w33epq\\" w-40 h-20 ma color=\\"white\\" bg=\\"center cover\\">
-            {{ 'bg-[url(https://static.runoob.com/images/demo/demo2.jpg)]' }}
+            {{ 'applet-ignore: bg-[url(https://static.runoob.com/images/demo/demo2.jpg)]' }}
           </div>
-          <div class=\\"uno-tw4biu\\" :class=\\"bool ? '' : 'uno-qju0i9'\\">
+          <div class=\\"uno-tw4biu\\" :class=\\"bool ? '' : 'text-yellow-500 p-2.5'\\">
             abckefghijklmnopqrstuvwxyz
           </div>
         </div>
@@ -88,13 +91,8 @@ describe('transformer-applet', () => {
         "css": "/* layer: applet_shortcuts */
       .uno-tw4biu{margin:0.125rem;padding:0.25rem;font-size:1.5rem;line-height:2rem;}
       .uno-1lreki{border-width:1px;--un-bg-opacity:1;background-color:rgba(191,219,254,var(--un-bg-opacity));}
-      .uno-98db2v{--un-bg-opacity:1;background-color:hsla(2.7,81.9%,69.6%,var(--un-bg-opacity));}
-      .uno-y5ng0p{--un-bg-opacity:1 !important;background-color:rgba(74,222,128,var(--un-bg-opacity)) !important;}
       .uno-w33epq{--un-url:url(https://static.runoob.com/images/demo/demo2.jpg);background-image:var(--un-url);}
-      .uno-kl65hf{padding:0.125rem;}
-      .uno-qju0i9{padding:0.625rem;--un-text-opacity:1;color:rgba(234,179,8,var(--un-text-opacity));}
       .uno-vrauvt{padding:0.625rem;}
-      .uno-2z589z{padding-left:0.625rem;padding-right:0.625rem;--un-text-opacity:1;color:rgba(234,179,8,var(--un-text-opacity));}
       .uno-jw3na0{--un-text-opacity:1;color:rgba(248,113,113,var(--un-text-opacity));}
       /* layer: default */
       .m-2{margin:0.5rem;}
@@ -106,14 +104,19 @@ describe('transformer-applet', () => {
       .rotate-180{--un-rotate-x:0;--un-rotate-y:0;--un-rotate-z:0;--un-rotate:180deg;transform:translateX(var(--un-translate-x)) translateY(var(--un-translate-y)) translateZ(var(--un-translate-z)) rotate(var(--un-rotate)) rotateX(var(--un-rotate-x)) rotateY(var(--un-rotate-y)) rotateZ(var(--un-rotate-z)) skewX(var(--un-skew-x)) skewY(var(--un-skew-y)) scaleX(var(--un-scale-x)) scaleY(var(--un-scale-y)) scaleZ(var(--un-scale-z));}
       .items-center{align-items:center;}
       .gap-1{grid-gap:0.25rem;gap:0.25rem;}
+      .\\\\!bg-green{--un-bg-opacity:1 !important;background-color:rgba(74,222,128,var(--un-bg-opacity)) !important;}
       .bg-\\\\[hsl\\\\(2\\\\.7\\\\,81\\\\.9\\\\%\\\\,69\\\\.6\\\\%\\\\)\\\\]{--un-bg-opacity:1;background-color:hsla(2.7,81.9%,69.6%,var(--un-bg-opacity));}
       .hover\\\\:bg-green:hover{--un-bg-opacity:1;background-color:rgba(74,222,128,var(--un-bg-opacity));}
       .bg-\\\\[url\\\\(https\\\\:\\\\/\\\\/static\\\\.runoob\\\\.com\\\\/images\\\\/demo\\\\/demo2\\\\.jpg\\\\)\\\\]{--un-url:url(https://static.runoob.com/images/demo/demo2.jpg);background-image:var(--un-url);}
+      .p-0\\\\.5{padding:0.125rem;}
       .p-1{padding:0.25rem;}
+      .p-2\\\\.5{padding:0.625rem;}
+      .px-2\\\\.5{padding-left:0.625rem;padding-right:0.625rem;}
       .text-center{text-align:center;}
       .text-right{text-align:right;}
       .text-sm{font-size:0.875rem;line-height:1.25rem;}
-      .text-red{--un-text-opacity:1;color:rgba(248,113,113,var(--un-text-opacity));}",
+      .text-red{--un-text-opacity:1;color:rgba(248,113,113,var(--un-text-opacity));}
+      .text-yellow-500{--un-text-opacity:1;color:rgba(234,179,8,var(--un-text-opacity));}",
       }
     `)
   })

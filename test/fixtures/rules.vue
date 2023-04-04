@@ -1,6 +1,9 @@
+<!-- eslint-disable @typescript-eslint/quotes -->
 <script setup lang="ts">
 import { ref } from 'vue'
 const bg = 'bg-[hsl(2.7,81.9%,69.6%)]'
+
+const icon = "i-carbon:campsite"
 const bgIgnore = 'applet-ignore: bg-[hsl(2.7,81.9%,69.6%)]'
 const index = 1
 const customClass = 'text-red'
@@ -19,7 +22,7 @@ const bool = ref<boolean>()
       class="hover:bg-green"
     </div>
     <div flex="~ col gap-1" class="p-1" items-center :class="bool ? 'text-yellow-500 px-2.5' : ''">
-      <div i-carbon-campsite inline-block color="blue" text="xl !red" />
+      <div :class="icon" inline-block color="blue" text="xl !red" />
       <div bg="green-(!200 800)">
         {{ `index${index + 1}` }}{{ `index` }}
       </div>
