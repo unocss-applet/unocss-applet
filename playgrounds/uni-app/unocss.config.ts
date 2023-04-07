@@ -1,7 +1,9 @@
+import type { Preset, SourceCodeTransformer } from 'unocss'
 import {
   defineConfig,
   presetAttributify,
   presetIcons,
+  presetUno,
   transformerDirectives,
   transformerVariantGroup,
 } from 'unocss'
@@ -13,7 +15,20 @@ import {
   transformerAttributify,
 } from 'unocss-applet'
 
-const isApplet = process.env?.UNI_PLATFORM?.startsWith('mp-') ?? false
+const isApplet = process.env?.UNI_PLATFORM?.startsWith('mp') ?? false
+const presets: Preset[] = []
+const transformers: SourceCodeTransformer[] = []
+
+if (isApplet) {
+  presets.push(presetApplet())
+  presets.push(presetRemRpx())
+  transformers.push(transformerAttributify({ ignoreAttributes: ['block'] }))
+  transformers.push(transformerApplet())
+}
+else {
+  presets.push(presetUno())
+  presets.push(presetRemRpx({ mode: 'rpx2rem' }))
+}
 
 export default defineConfig({
   theme: {
@@ -42,18 +57,13 @@ export default defineConfig({
      * you can add `presetAttributify()` here to enable unocss attributify mode prompt
      * although preset is not working for applet, but will generate useless css
      */
-    presetApplet({ enable: isApplet }),
     presetAttributify(),
-    presetRemRpx({ mode: isApplet ? 'rem2rpx' : 'rpx2rem' }),
-    // deprecated from v0.3.0
-    // presetRemToRpx({ enable: isApplet }),
+    ...presets,
   ],
   transformers: [
     transformerDirectives(),
     transformerVariantGroup(),
-    // Don't change the following order
-    transformerAttributify({ enable: isApplet }),
-    transformerApplet({ enable: isApplet }),
+    ...transformers,
   ],
 
 })

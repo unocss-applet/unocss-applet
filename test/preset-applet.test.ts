@@ -3,6 +3,13 @@ import presetApplet from '@unocss-applet/preset-applet'
 import { expect, test } from 'vitest'
 
 const targets = [
+  // base
+  'p-2',
+  'p-2.5',
+  'p-2.5rem',
+  'p-2.5px',
+  'p-2.5em',
+
   // variants - mix
   'mix-tint-50-c-red-400',
   'mix-shade-50-c-red-400',

@@ -35,6 +35,7 @@ pnpm add unocss-applet -D # with pnpm
 <summary>unocss.config.ts</summary><br>
 
 ```ts
+import type { Preset, SourceCodeTransformer } from 'unocss'
 import { defineConfig } from 'unocss'
 
 import {
@@ -48,16 +49,28 @@ import {
 const isApplet = process.env?.UNI_PLATFORM?.startsWith('mp-') ?? false
 // taro
 // const isApplet = process.env.TARO_ENV !== 'h5' ?? false
+const presets: Preset[] = []
+const transformers: SourceCodeTransformer[] = []
+
+if (isApplet) {
+  presets.push(presetApplet())
+  presets.push(presetRemRpx())
+  transformers.push(transformerAttributify({ ignoreAttributes: ['block'] }))
+  transformers.push(transformerApplet())
+}
+else {
+  presets.push(presetApplet())
+  presets.push(presetRemRpx({ mode: 'rpx2rem' }))
+}
 
 export default defineConfig({
   presets: [
-    presetApplet({ enable: isApplet }),
-    presetRemRpx({ mode: isApplet ? 'rem2rpx' : 'rpx2rem' }),
+    // ...
+    ...presets,
   ],
   transformers: [
-    // Don't change the following order
-    transformerAttributify({ enable: isApplet }),
-    transformerApplet({ enable: isApplet }),
+    // ...
+    ...transformers,
   ],
 })
 ```

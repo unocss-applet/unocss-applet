@@ -8,11 +8,14 @@ const bgIgnore = 'applet-ignore: bg-[hsl(2.7,81.9%,69.6%)]'
 const index = 1
 const customClass = 'text-red'
 const bool = ref<boolean>()
+const border = ref(true)
+const fixed = ref(true)
 </script>
 
 <template>
   <div class="text-center aaa" p="4">
     <div text="4xl" class="rotate-180 i-carbon-campsite" :class="bg" />
+    <div :class="[border && 'u-border-top', fixed && 'u-tabbar--fixed']" />
     <div class="border bg-blue-200 font-(light mono) " :cc="customClass">
       <div class="hover:(!bg-gray-600 text-red font-bold)" text="#fff">
         {{ 'applet-ignore: hover:(!bg-gray-600 text-red font-bold)' }}
