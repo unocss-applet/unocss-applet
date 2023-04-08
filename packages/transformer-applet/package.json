@@ -1,7 +1,7 @@
 {
   "name": "@unocss-applet/transformer-applet",
   "type": "module",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "packageManager": "pnpm@8.1.0",
   "description": "",
   "author": "Neil Lee <zguolee@foxmail.com>",
