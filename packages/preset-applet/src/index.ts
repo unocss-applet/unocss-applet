@@ -3,7 +3,6 @@ import type { PresetMiniOptions, Theme } from '@unocss/preset-mini'
 import { rules, shortcuts, theme, variants } from '@unocss/preset-wind'
 import { preflights as defaultApplet } from '@unocss/preset-mini'
 import { preflights as preflightsApplet } from './preflights'
-import { unoCSSToAppletProcess } from './process'
 import { variantColorMix } from './variants/mix'
 
 export type { Theme }
@@ -15,13 +14,33 @@ export interface PresetAppletOptions extends PresetMiniOptions {
    * @default true
    */
   enable?: boolean
+
+  /**
+   * Unsupported characters in applet, will be added to the default value
+   * @default ['.', ':', '%', '!', '#', '(', ')', '[', '/', ']', ',', '$']
+   */
+  unsupportedChars?: string[]
 }
 
 export default function presetApplet(options: PresetAppletOptions = {}): Preset<Theme> {
   options.dark = options.dark ?? 'class'
   options.attributifyPseudo = options.attributifyPseudo ?? false
   options.preflight = options.preflight ?? true
+
   const enable = options.enable ?? true
+  const UNSUPPORTED_CHARS = ['.', ':', '%', '!', '#', '(', ')', '[', '/', ']', ',', '$']
+  if (options.unsupportedChars)
+    UNSUPPORTED_CHARS.push(...options.unsupportedChars)
+
+  const ESCAPED_ESCAPED_UNSUPPORTED_CHARS = UNSUPPORTED_CHARS.map(char => `\\\\\\${char}`)
+  const charTestReg = new RegExp(`${ESCAPED_ESCAPED_UNSUPPORTED_CHARS.join('|')}`)
+  const charReplaceReg = new RegExp(`${ESCAPED_ESCAPED_UNSUPPORTED_CHARS.join('|')}`, 'g')
+
+  function unoCSSToAppletProcess(str: string) {
+    if (charTestReg.test(str))
+      str = str.replace(charReplaceReg, '_a_')
+    return str
+  }
 
   return {
     name: 'unocss-preset-applet',

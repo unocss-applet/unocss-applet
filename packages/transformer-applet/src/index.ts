@@ -3,15 +3,17 @@ import type { TransformerAppletOptions } from './types'
 
 export * from './types'
 
-// . : % ! # ( ) [ / ] , $
-const UNSUPPORTED_CHARS = ['.', ':', '%', '!', '#', '(', ')', '[', '/', ']', ',', '$']
-const ESCAPED_UNSUPPORTED_CHARS = UNSUPPORTED_CHARS.map(char => `\\${char}`)
-const charTestReg = new RegExp(`[${ESCAPED_UNSUPPORTED_CHARS.join('')}]`)
-const charReplaceReg = new RegExp(`[${ESCAPED_UNSUPPORTED_CHARS.join('')}]`, 'g')
-
 export default function transformerApplet(options: TransformerAppletOptions = {}): SourceCodeTransformer {
   const enable = options.enable ?? true
   const layer = options.layer || 'applet_shortcuts'
+
+  const UNSUPPORTED_CHARS = ['.', ':', '%', '!', '#', '(', ')', '[', '/', ']', ',', '$']
+  if (options.unsupportedChars)
+    UNSUPPORTED_CHARS.push(...options.unsupportedChars)
+
+  const ESCAPED_UNSUPPORTED_CHARS = UNSUPPORTED_CHARS.map(char => `\\${char}`)
+  const charTestReg = new RegExp(`[${ESCAPED_UNSUPPORTED_CHARS.join('')}]`)
+  const charReplaceReg = new RegExp(`[${ESCAPED_UNSUPPORTED_CHARS.join('')}]`, 'g')
 
   return {
     name: 'transformer-applet',

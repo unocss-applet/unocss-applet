@@ -32,34 +32,23 @@ export interface PresetAppletOptions extends PresetMiniOptions {
    * @default true
    */
   enable?: boolean
+
+  /**
+   * Unsupported characters in applet, will be added to the default value
+   * @default ['.', ':', '%', '!', '#', '(', ')', '[', '/', ']', ',', '$']
+   */
+  unsupportedChars?: string[]
 }
 ```
 
 ## Change
 
-| form | to      | sample                 |
-| ---- | ------- | ---------------------- |
-| [`*`](https://github.com/unocss/unocss/blob/main/packages/preset-mini/src/preflights.ts) | [`page`](./src/preflights.ts) | - |
-
-> If you need to use a class selector that contains `[.:%!#()[\/\],]`, it needs to be used with [@unocss-applet/transformer-rename-class](../unocss-applet/)
+- The `*` selector will be replaced with `page` in the generated class name.
+- the unsupported characters in applet will be replaced with `_a_` in the generated class name.
 
 ## More
 
-> Default enabled because for [issue#2](https://github.com/unocss-applet/unocss-applet/issues/2) in applet, to disable just set `enable: false`
-
-| form | to      | sample                 |
-| ---- | ------- | ---------------------- |
-| `\.` | `-point-` | `p-0.5` -> `p-0-point-5` |
-| `\/` | `-div-` | `p-1/2` -> `p-1-div-2` |
-| `\:` | `-c-` | `dark:text-green-500` -> `dark-c-text-green-500` |
-| `\%` | `-pct` | `opacity-10%` -> `opacity-10-pct` |
-| `\!` | `i-` | `!bg-black` -> `i-bg-black` |
-| `\#` | `-h-` | `bg-#121212` -> `bg--h-121212` |
-| `\(` | `p-` | `bg-[hsl(2.7,81.9%,69.6%)]` -> `bg-[hslp-2.7,81.9%,69.6%)]` |
-| `\)` | `-q` | `bg-[hsl(2.7,81.9%,69.6%)]` -> `bg-[hsl(2.7,81.9%,69.6%-q]` |
-| `\[` | `l-` | `bg-[hsl(2.7,81.9%,69.6%)]` -> `bg-l-hsl(2.7,81.9%,69.6%)]` |
-| `\]` | `-r` | `bg-[hsl(2.7,81.9%,69.6%)]` -> `bg-[hsl(2.7,81.9%,69.6%)-r` |
-| `\,` | `-comma-` | `bg-[hsl(2.7,81.9%,69.6%)]` -> `bg-[hsl(2.7-comma-81.9%-comma-69.6%)]` |
+Default enabled because for [issue#2](https://github.com/unocss-applet/unocss-applet/issues/2) in applet, to disable just set `enable: false`
 
 ## License
 
