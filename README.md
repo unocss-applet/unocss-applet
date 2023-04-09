@@ -60,6 +60,7 @@ if (isApplet) {
 }
 else {
   presets.push(presetApplet())
+  presets.push(presetAttributify())
   presets.push(presetRemRpx({ mode: 'rpx2rem' }))
 }
 
