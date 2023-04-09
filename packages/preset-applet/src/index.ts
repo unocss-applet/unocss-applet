@@ -28,7 +28,7 @@ export default function presetApplet(options: PresetAppletOptions = {}): Preset<
   options.preflight = options.preflight ?? true
 
   const enable = options.enable ?? true
-  const UNSUPPORTED_CHARS = ['.', ':', '%', '!', '#', '(', ')', '[', '/', ']', ',', '$']
+  const UNSUPPORTED_CHARS = ['.', ':', '%', '!', '#', '(', ')', '[', '/', ']', ',', '$', '{', '}']
   if (options.unsupportedChars)
     UNSUPPORTED_CHARS.push(...options.unsupportedChars)
 

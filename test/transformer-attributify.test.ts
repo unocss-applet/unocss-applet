@@ -1,12 +1,13 @@
-import { promises as fs } from 'fs'
-import path from 'path'
+import { promises as fs } from 'node:fs'
+import path from 'node:path'
 import { describe, expect, test } from 'vitest'
 import type { SourceCodeTransformer } from '@unocss/core'
 import { createGenerator } from '@unocss/core'
 import MagicString from 'magic-string'
 import transformerAttributify from '@unocss-applet/transformer-attributify'
 import presetUno from '@unocss/preset-uno'
-import { presetIcons } from 'unocss'
+import { presetAttributify, presetIcons } from 'unocss'
+import { presetExtra } from 'unocss-preset-extra'
 
 describe('transformer-attributify', async () => {
   const content = await fs.readFile(
@@ -23,6 +24,8 @@ describe('transformer-attributify', async () => {
           scale: 1.2,
           cdn: 'https://esm.sh/',
         }),
+        presetAttributify(),
+        presetExtra(),
       ],
       transformers: [
         transformer,
@@ -66,6 +69,7 @@ describe('transformer-attributify', async () => {
               3
             </div>
           </div>
+          <div class=\\"size-10 size-20\\" />
         </div>
       </template>
       "
@@ -106,6 +110,7 @@ describe('transformer-attributify', async () => {
               3
             </div>
           </div>
+          <div class=\\"size-10\\" size=\\"20\\" />
         </div>
       </template>
       "

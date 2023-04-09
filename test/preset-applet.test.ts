@@ -1,6 +1,7 @@
 import { createGenerator } from '@unocss/core'
 import presetApplet from '@unocss-applet/preset-applet'
 import { expect, test } from 'vitest'
+import { presetExtra } from 'unocss-preset-extra'
 
 const targets = [
   // base
@@ -122,11 +123,53 @@ const nonTargets = [
   'bg-blend-plus-lighter', // only added in mix-blend
 ]
 
+const presetExtras = [
+  'size-0',
+  'size-1',
+  'size-2',
+  'size-0.5',
+  'size-1.5',
+  'size-1/2',
+  'size-auto',
+  'size-sm',
+  'size-prose',
+  'size-screen',
+  'size-full',
+
+  'min-size-0',
+  'min-size-1',
+  'min-size-2',
+  'min-size-0.5',
+  'min-size-1.5',
+  'min-size-1/2',
+  'min-size-auto',
+  'min-size-sm',
+  'min-size-prose',
+  'min-size-screen',
+  'min-size-full',
+
+  'max-size-0',
+  'max-size-1',
+  'max-size-2',
+  'max-size-0.5',
+  'max-size-1.5',
+  'max-size-1/2',
+  'max-size-auto',
+  'max-size-sm',
+  'max-size-prose',
+  'max-size-screen',
+  'max-size-full',
+
+  '[size~="\\30 20"]',
+]
+
 const uno = createGenerator({
   presets: [
     presetApplet({
       dark: 'media',
+      unsupportedChars: ['~', ' '],
     }),
+    presetExtra(),
   ],
   theme: {
     colors: {
@@ -167,4 +210,11 @@ test('non-targets', async () => {
 
   expect(Array.from(matched)).toEqual([])
   expect(css).toBe('')
+})
+
+test('preset extras', async () => {
+  const code = presetExtras.join(' ')
+  const { css } = await uno.generate(code, { preflights: false })
+
+  expect(css).toMatchSnapshot()
 })

@@ -48,7 +48,7 @@ const fixed = ref(true)
     </div>
     <div i-carbon:logo-twitter dark:i-carbon:logo-github />
     <div i-carbon-logo-twitter dark:i-carbon-logo-github />
-    <div>
+    <div size="10" size-20 block>
       <template v-for="menu, _idx of menuList" :key="_idx">
         <div>{{ menu.name }}</div>
         <div :class="menu.icon" />

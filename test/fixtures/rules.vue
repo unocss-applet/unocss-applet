@@ -30,7 +30,7 @@ const fixed = ref(true)
         {{ `index${index + 1}` }}{{ `index` }}
       </div>
     </div>
-    <div flex="~ col" un-b="~ green" :class="`bg-${bg}`">
+    <div flex="~ col" un-b="~ green" :class="`bg-color-${bg}`">
       <div text-right h-10 flex="1" text="red" :class="{ 'text-sm': index > 0 }">
         0123456789
       </div>
@@ -48,5 +48,6 @@ const fixed = ref(true)
     <div class="m-0.5 p-1 text-2xl" :class="bool ? '' : 'text-yellow-500 p-2.5'">
       abckefghijklmnopqrstuvwxyz
     </div>
+    <div block class="size-10" size="20" />
   </div>
 </template>

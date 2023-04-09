@@ -28,5 +28,6 @@ const c = 'text-red'
         3
       </div>
     </div>
+    <div class="size-10" size="20" />
   </div>
 </template>

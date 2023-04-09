@@ -1,5 +1,42 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`preset extras 1`] = `
+"/* layer: default */
+.max-size-0{max-width:0;max-height:0;}
+.max-size-0_a_5{max-width:0.125rem;max-height:0.125rem;}
+.max-size-1{max-width:0.25rem;max-height:0.25rem;}
+.max-size-1_a_2{max-width:50%;max-height:50%;}
+.max-size-1_a_5{max-width:0.375rem;max-height:0.375rem;}
+.max-size-2{max-width:0.5rem;max-height:0.5rem;}
+.max-size-auto{max-width:auto;max-height:auto;}
+.max-size-full{max-width:100%;max-height:100%;}
+.max-size-prose{max-width:65ch;max-height:65ch;}
+.max-size-screen{max-width:100vw;max-height:100vh;}
+.max-size-sm{max-width:24rem;max-height:24rem;}
+.min-size-0{min-width:0;min-height:0;}
+.min-size-0_a_5{min-width:0.125rem;min-height:0.125rem;}
+.min-size-1{min-width:0.25rem;min-height:0.25rem;}
+.min-size-1_a_2{min-width:50%;min-height:50%;}
+.min-size-1_a_5{min-width:0.375rem;min-height:0.375rem;}
+.min-size-2{min-width:0.5rem;min-height:0.5rem;}
+.min-size-auto{min-width:auto;min-height:auto;}
+.min-size-full{min-width:100%;min-height:100%;}
+.min-size-prose{min-width:65ch;min-height:65ch;}
+.min-size-screen{min-width:100vw;min-height:100vh;}
+.min-size-sm{min-width:24rem;min-height:24rem;}
+.size-0{width:0;height:0;}
+.size-0_a_5{width:0.125rem;height:0.125rem;}
+.size-1{width:0.25rem;height:0.25rem;}
+.size-1_a_2{width:50%;height:50%;}
+.size-1_a_5{width:0.375rem;height:0.375rem;}
+.size-2{width:0.5rem;height:0.5rem;}
+.size-auto{width:auto;height:auto;}
+.size-full{width:100%;height:100%;}
+.size-prose{width:65ch;height:65ch;}
+.size-screen{width:100vw;height:100vh;}
+.size-sm{width:24rem;height:24rem;}"
+`;
+
 exports[`targets 1`] = `
 "/* layer: default */
 .border-custom-b{border-color:rgba(var(--custom), 1);}

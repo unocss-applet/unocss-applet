@@ -7,7 +7,7 @@ export default function transformerApplet(options: TransformerAppletOptions = {}
   const enable = options.enable ?? true
   const layer = options.layer || 'applet_shortcuts'
 
-  const UNSUPPORTED_CHARS = ['.', ':', '%', '!', '#', '(', ')', '[', '/', ']', ',', '$']
+  const UNSUPPORTED_CHARS = ['.', ':', '%', '!', '#', '(', ')', '[', '/', ']', ',', '$', '{', '}']
   if (options.unsupportedChars)
     UNSUPPORTED_CHARS.push(...options.unsupportedChars)
 
@@ -25,7 +25,7 @@ export default function transformerApplet(options: TransformerAppletOptions = {}
 
       const { uno, tokens } = ctx
       const { matched } = await uno.generate(code.toString(), { preflights: false })
-      const replacements = Array.from(matched).filter(i => charTestReg.test(i))
+      const replacements = Array.from(matched).filter(i => charTestReg.test(i)).filter(i => !i.startsWith('['))
       for (const replace of replacements) {
         const replaced = replace.replace(charReplaceReg, '_a_')
         uno.config.shortcuts.push([replaced, replace, { layer }])
