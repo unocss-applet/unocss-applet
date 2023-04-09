@@ -13,7 +13,7 @@ const fixed = ref(true)
 </script>
 
 <template>
-  <div class="text-center aaa" p="4">
+  <div class="text-center aaa bg-${var}" p="4">
     <div text="4xl" class="rotate-180 i-carbon-campsite" :class="bg" />
     <div :class="[border && 'u-border-top', fixed && 'u-tabbar--fixed']" />
     <div class="border bg-blue-200 font-(light mono) " :cc="customClass">
@@ -49,5 +49,6 @@ const fixed = ref(true)
       abckefghijklmnopqrstuvwxyz
     </div>
     <div block class="size-10" size="20" />
+    <div class="[&_*]:after:right-4 [&>div]:bg-red [&+*]:text-xl" />
   </div>
 </template>

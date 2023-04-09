@@ -1,13 +1,30 @@
 import type { SourceCodeTransformer } from 'unocss'
-import type { TransformerAppletOptions } from './types'
 
-export * from './types'
+export interface TransformerAppletOptions {
+  /**
+   * Enable transformer applet
+   * @default true
+   */
+  enable?: boolean
+
+  /**
+   * The layer name of generated rules
+   * @default 'applet_shortcuts'
+   */
+  layer?: string
+
+  /**
+   * Unsupported characters in applet, will be added to the default value
+   * @default ['.', ':', '%', '!', '#', '(', ')', '[', '/', ']', ',', '$', '{', '}', '@', '+', '^', '&', '<', '>']
+   */
+  unsupportedChars?: string[]
+}
 
 export default function transformerApplet(options: TransformerAppletOptions = {}): SourceCodeTransformer {
   const enable = options.enable ?? true
   const layer = options.layer || 'applet_shortcuts'
 
-  const UNSUPPORTED_CHARS = ['.', ':', '%', '!', '#', '(', ')', '[', '/', ']', ',', '$', '{', '}']
+  const UNSUPPORTED_CHARS = ['.', ':', '%', '!', '#', '(', ')', '[', '/', ']', ',', '$', '{', '}', '@', '+', '^', '&', '<', '>']
   if (options.unsupportedChars)
     UNSUPPORTED_CHARS.push(...options.unsupportedChars)
 
@@ -25,7 +42,9 @@ export default function transformerApplet(options: TransformerAppletOptions = {}
 
       const { uno, tokens } = ctx
       const { matched } = await uno.generate(code.toString(), { preflights: false })
-      const replacements = Array.from(matched).filter(i => charTestReg.test(i)).filter(i => !i.startsWith('['))
+      // skip attributify
+      const replacements = Array.from(matched).filter(i => charTestReg.test(i))
+        .filter(i => !i.includes('='))
       for (const replace of replacements) {
         const replaced = replace.replace(charReplaceReg, '_a_')
         uno.config.shortcuts.push([replaced, replace, { layer }])

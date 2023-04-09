@@ -48,11 +48,14 @@ const fixed = ref(true)
     </div>
     <div i-carbon:logo-twitter dark:i-carbon:logo-github />
     <div i-carbon-logo-twitter dark:i-carbon-logo-github />
-    <div size="10" size-20 block>
+    <div flex="~" gap-2>
       <template v-for="menu, _idx of menuList" :key="_idx">
-        <div>{{ menu.name }}</div>
-        <div :class="menu.icon" />
+        <div class="[&>view]:last:text-red [&>view]:first:text-green [&+view]:text-2xl">
+          <div>{{ menu.name }}</div>
+          <div :class="menu.icon" />
+        </div>
       </template>
+      <div size="100" size-20 block bg-blue />
     </div>
   </div>
 </template>
