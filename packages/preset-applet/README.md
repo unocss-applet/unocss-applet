@@ -25,8 +25,9 @@ export default defineConfig({
 ## Type Declarations
 
 ```ts
+// PresetUnoOptions https://github.com/unocss/unocss/blob/main/packages/preset-uno/src/index.ts#L9
 // PresetMiniOptions https://github.com/unocss/unocss/blob/main/packages/preset-mini/src/index.ts#L30-L55
-export interface PresetAppletOptions extends PresetMiniOptions {
+export interface PresetAppletOptions extends PresetUnoOptions {
   /**
    * Enable applet
    * @default true

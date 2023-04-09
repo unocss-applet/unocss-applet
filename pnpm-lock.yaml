@@ -67,6 +67,9 @@ importers:
       '@unocss/preset-mini':
         specifier: ^0.50.6
         version: 0.50.6
+      '@unocss/preset-uno':
+        specifier: ^0.50.6
+        version: 0.50.6
       '@unocss/preset-wind':
         specifier: ^0.50.6
         version: 0.50.6
@@ -4798,7 +4801,6 @@ packages:
       '@unocss/core': 0.50.6
       '@unocss/preset-mini': 0.50.6
       '@unocss/preset-wind': 0.50.6
-    dev: true
 
   /@unocss/preset-web-fonts@0.50.6:
     resolution: {integrity: sha512-81meQMAq2lOy7k5qHQZ2EGWN5iJQUJOLl8dc9dxIo1eZPgiZQruxTVr4AkNVH5LRFcjHs/1sDb2CYxAiakwTVg==}

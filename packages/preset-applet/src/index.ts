@@ -1,14 +1,14 @@
 import type { Preset } from 'unocss'
-import type { PresetMiniOptions, Theme } from '@unocss/preset-mini'
-import { rules, shortcuts, theme, variants } from '@unocss/preset-wind'
-import { preflights as defaultApplet } from '@unocss/preset-mini'
-import { preflights as preflightsApplet } from './preflights'
-import { variantColorMix } from './variants/mix'
+import { presetUno } from '@unocss/preset-uno'
+import type { PresetUnoOptions, Theme } from '@unocss/preset-uno'
+import { normalizePreflights } from '@unocss/preset-mini'
+import { appletPreflights, defaultPreflights } from './preflights'
 
 export type { Theme }
 
+// PresetUnoOptions https://github.com/unocss/unocss/blob/main/packages/preset-uno/src/index.ts#L9
 // PresetMiniOptions https://github.com/unocss/unocss/blob/main/packages/preset-mini/src/index.ts#L30-L55
-export interface PresetAppletOptions extends PresetMiniOptions {
+export interface PresetAppletOptions extends PresetUnoOptions {
   /**
    * Enable applet
    * @default true
@@ -23,11 +23,15 @@ export interface PresetAppletOptions extends PresetMiniOptions {
 }
 
 export default function presetApplet(options: PresetAppletOptions = {}): Preset<Theme> {
+  const enable = options.enable ?? true
+  if (!enable)
+    return presetUno(options)
+
   options.dark = options.dark ?? 'class'
   options.attributifyPseudo = options.attributifyPseudo ?? false
   options.preflight = options.preflight ?? true
+  options.variablePrefix = options.variablePrefix ?? 'un-'
 
-  const enable = options.enable ?? true
   const UNSUPPORTED_CHARS = ['.', ':', '%', '!', '#', '(', ')', '[', '/', ']', ',', '$', '{', '}']
   if (options.unsupportedChars)
     UNSUPPORTED_CHARS.push(...options.unsupportedChars)
@@ -43,21 +47,16 @@ export default function presetApplet(options: PresetAppletOptions = {}): Preset<
   }
 
   return {
+    ...presetUno({ ...options, preflight: false }),
     name: 'unocss-preset-applet',
-    theme,
-    rules,
-    shortcuts,
-    variants: [
-      ...variants(options),
-      variantColorMix,
-    ],
-    options,
-    preflights: options.preflight ? enable ? preflightsApplet : defaultApplet : [],
+    preflights: options.preflight
+      ? normalizePreflights(enable ? appletPreflights : defaultPreflights, options.variablePrefix)
+      : [],
     postprocess: [
       (util) => {
         enable && (util.selector = unoCSSToAppletProcess(util.selector))
         return util
-      }],
-    prefix: options.prefix,
+      },
+    ],
   }
 }

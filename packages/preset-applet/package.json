@@ -25,21 +25,6 @@
       "require": "./dist/index.cjs",
       "import": "./dist/index.mjs"
     },
-    "./theme": {
-      "types": "./dist/theme.d.ts",
-      "require": "./dist/theme.cjs",
-      "import": "./dist/theme.mjs"
-    },
-    "./colors": {
-      "types": "./dist/colors.d.ts",
-      "require": "./dist/colors.cjs",
-      "import": "./dist/colors.mjs"
-    },
-    "./utils": {
-      "types": "./dist/utils.d.ts",
-      "require": "./dist/utils.cjs",
-      "import": "./dist/utils.mjs"
-    },
     "./*": "./*"
   },
   "main": "dist/index.cjs",
@@ -56,6 +41,6 @@
   "dependencies": {
     "@unocss/core": "^0.50.6",
     "@unocss/preset-mini": "^0.50.6",
-    "@unocss/preset-wind": "^0.50.6"
+    "@unocss/preset-uno": "^0.50.6"
   }
 }
