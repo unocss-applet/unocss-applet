@@ -70,9 +70,6 @@ importers:
       '@unocss/preset-uno':
         specifier: ^0.50.6
         version: 0.50.6
-      '@unocss/preset-wind':
-        specifier: ^0.50.6
-        version: 0.50.6
 
   packages/preset-rem-rpx: {}
 
