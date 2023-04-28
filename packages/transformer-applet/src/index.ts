@@ -41,7 +41,7 @@ export default function transformerApplet(options: TransformerAppletOptions = {}
         return
 
       const { uno, tokens } = ctx
-      const { matched } = await uno.generate(code.toString(), { preflights: false })
+      const { matched } = await uno.generate(code, { preflights: false })
       // skip attributify
       const replacements = Array.from(matched).filter(i => charTestReg.test(i))
         .filter(i => !i.includes('='))
@@ -49,10 +49,16 @@ export default function transformerApplet(options: TransformerAppletOptions = {}
         const replaced = replace.replace(charReplaceReg, '_a_')
         uno.config.shortcuts.push([replaced, replace, { layer }])
         tokens.add(replaced)
-        code = code.replaceAll(replace, replaced)
+
+        // escapeRegExp replace, node v14 not support replaceAll
+        code = code.replace(new RegExp(escapeRegExp(replace), 'g'), replaced)
       }
 
       s.overwrite(0, s.original.length, code)
     },
   }
+}
+
+function escapeRegExp(string: string) {
+  return string.replace(/[.:%!#()[\]/,${}@+^&<>]/g, '\\$&')
 }
