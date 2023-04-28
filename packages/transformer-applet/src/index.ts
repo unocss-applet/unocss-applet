@@ -49,7 +49,9 @@ export default function transformerApplet(options: TransformerAppletOptions = {}
         const replaced = replace.replace(charReplaceReg, '_a_')
         uno.config.shortcuts.push([replaced, replace, { layer }])
         tokens.add(replaced)
-        code = code.replaceAll(replace, replaced)
+        // escapeRegExp replace
+        const regex = new RegExp(replace, 'g')
+        code = code.replace(regex, replaced)
       }
 
       s.overwrite(0, s.original.length, code)
