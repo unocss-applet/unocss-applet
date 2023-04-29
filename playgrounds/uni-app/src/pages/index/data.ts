@@ -10,3 +10,5 @@ export const menuList = [
     icon: 'i-carbon:user',
   },
 ]
+
+export const a = '-translate-50%'

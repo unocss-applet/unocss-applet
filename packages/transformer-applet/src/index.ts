@@ -22,7 +22,7 @@ export interface TransformerAppletOptions {
 
 export default function transformerApplet(options: TransformerAppletOptions = {}): SourceCodeTransformer {
   const enable = options.enable ?? true
-  const layer = options.layer || 'applet_shortcuts'
+  const layer = options.layer ?? 'applet_shortcuts'
 
   const UNSUPPORTED_CHARS = ['.', ':', '%', '!', '#', '(', ')', '[', '/', ']', ',', '$', '{', '}', '@', '+', '^', '&', '<', '>']
   if (options.unsupportedChars)
@@ -46,7 +46,12 @@ export default function transformerApplet(options: TransformerAppletOptions = {}
       const replacements = Array.from(matched).filter(i => charTestReg.test(i))
         .filter(i => !i.includes('='))
       for (const replace of replacements) {
-        const replaced = replace.replace(charReplaceReg, '_a_')
+        let replaced = replace.replace(charReplaceReg, '_a_')
+
+        // delete all - prefix
+        while (replaced.startsWith('-'))
+          replaced = replaced.slice(1)
+
         uno.config.shortcuts.push([replaced, replace, { layer }])
         tokens.add(replaced)
 

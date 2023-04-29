@@ -2,7 +2,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import AButton from 'ano-ui/components/AButton/AButton.vue'
-import { menuList } from './data'
+import { a, menuList } from './data'
 const bg = 'bg-[hsl(2.7,81.9%,69.6%)]'
 const icon = "i-carbon:campsite"
 const bgIgnore = 'applet-ignore bg-[hsl(2.7,81.9%,69.6%)]'
@@ -13,7 +13,7 @@ const fixed = ref(true)
 </script>
 
 <template>
-  <div class="text-center aaa" p="4">
+  <div class="text-center aaa" p="4" :class="a">
     <div text="4xl" class="rotate-180 i-carbon-campsite" :class="bg" :hover-class="bool ? '' : '!bg-teal'" />
     <div :class="[border && 'u-border-top', fixed && 'u-tabbar--fixed']" />
     <div class="border bg-blue-200 font-(light mono) ">
