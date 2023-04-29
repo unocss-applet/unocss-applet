@@ -12,7 +12,7 @@ const c = 'text-red'
     <div un-b="~ green" text-right h-10 text="!pink">
       123456789
     </div>
-    <div un-b="~ green" class="text-purple">
+    <div un-b="~ green" class="text-purple" :hover-class="['!bg-green', bool ? '' : 'text-red']">
       123456789
     </div>
     <div i-carbon:logo-twitter dark:i-carbon:logo-github />

@@ -5,61 +5,61 @@ exports[`transformer-applet > basic 1`] = `
   "code": "<!-- eslint-disable @typescript-eslint/quotes -->
 <script setup lang=\\"ts\\">
 import { ref } from 'vue'
-const bg = 'bg_a__a_hsl_a_2_a_7_a_81_a_9_a__a_69_a_6_a__a__a_'
+const bg = 'bg-_a_hsl_a_2_a_7_a_81_a_9_a__a_69_a_6_a__a__a_'
 
 const icon = \\"i-carbon:campsite\\"
-const bgIgnore = 'applet-ignore: bg_a__a_hsl_a_2_a_7_a_81_a_9_a__a_69_a_6_a__a__a_'
+const bgIgnore = 'applet-ignore: bg-_a_hsl_a_2_a_7_a_81_a_9_a__a_69_a_6_a__a__a_'
 const index = 1
-const customClass = 'text_a_red'
+const customClass = 'text-red'
 const bool = ref<boolean>()
 const border = ref(true)
 const fixed = ref(true)
 </script>
 
 <template>
-  <div class=\\"text_a_center aaa bg_a__a__a_var_a_ p_a_4\\">
-    <div class=\\"rotate_a_180 i-carbon-campsite text_a_4xl\\" :class=\\"bg\\" />
+  <div class=\\"text-center aaa bg-_a__a_var_a_ p-4\\">
+    <div class=\\"rotate-180 i-carbon-campsite text-4xl\\" :class=\\"bg\\" />
     <div :class=\\"[border && 'u-border-top', fixed && 'u-tabbar--fixed']\\" />
-    <div class=\\"border bg_a_blue_a_200 font-(light mono) \\" :cc=\\"customClass\\">
-      <div class=\\"hover:(!bg-gray-600 text_a_red font-bold) text_a__a_fff\\">
-        {{ 'applet-ignore: hover:(!bg-gray-600 text_a_red font-bold)' }}
+    <div class=\\"border bg-blue-200 font-(light mono) \\" :cc=\\"customClass\\">
+      <div class=\\"hover:(!bg-gray-600 text-red font-bold) text-_a_fff\\">
+        {{ 'applet-ignore: hover:(!bg-gray-600 text-red font-bold)' }}
       </div>
     </div>
-    <div :class=\\"\`p_a_2_a_5 \${bool ? 'p_a_0_a_5' : ''}\`\\" :hover-class=\\"['_a_bg_a_green']\\" class=\\"m_a_2\\">
-      class=\\"hover_a_bg_a_green\\"
+    <div :class=\\"\`p-2_a_5 \${bool ? 'p-0_a_5' : ''}\`\\" :hover-class=\\"['_a_bg-green', bool ? '' : 'text-red']\\" class=\\"m-2\\">
+      class=\\"hover_a_bg-green\\"
     </div>
-    <div class=\\"p_a_1 flex flex_a_col flex-gap_a_1 items_a_center\\" :class=\\"bool ? 'text_a_yellow_a_500 px_a_2_a_5' : ''\\">
-      <div :class=\\"icon\\"  class=\\"inline_a_block color_a_blue text_a_xl !text_a_red\\"/>
+    <div class=\\"p-1 flex flex-col flex-gap-1 items-center\\" :class=\\"bool ? 'text-yellow-500 px-2_a_5' : ''\\">
+      <div :class=\\"icon\\"  class=\\"inline-block color-blue text-xl _a_text-red\\"/>
       <div bg=\\"green-(!200 800)\\">
         {{ \`index\${index + 1}\` }}{{ \`index\` }}
       </div>
     </div>
-    <div :class=\\"\`bg-color-\${bg}\`\\" class=\\"flex flex_a_col b b_a_green\\">
-      <div :class=\\"{ 'text_a_sm': index > 0 }\\" class=\\"text_a_right h_a_10 flex_a_1 text_a_red\\">
+    <div :class=\\"\`bg-color-\${bg}\`\\" class=\\"flex flex-col b b-green\\">
+      <div :class=\\"{ 'text-sm': index > 0 }\\" class=\\"text-right h-10 flex-1 text-red\\">
         0123456789
       </div>
       <div
         :class=\\"[index > 1 ? 'text' : '']\\"
         :style=\\"[index > 1 ? '' : '']\\"
         :type=\\"index > 1\\"
-       class=\\"h_a_10 flex_a_1 text_a_blue\\">
+       class=\\"h-10 flex-1 text-blue\\">
         {{ bgIgnore }}
       </div>
     </div>
-    <div class=\\"bg_a__a_url_a_https_a__a__a_static_a_runoob_a_com_a_images_a_demo_a_demo2_a_jpg_a__a_ w_a_40 h_a_20 ma color_a_white bg_a_center bg_a_cover\\">
-      {{ 'applet-ignore: bg_a__a_url_a_https_a__a__a_static_a_runoob_a_com_a_images_a_demo_a_demo2_a_jpg_a__a_' }}
+    <div class=\\"bg-_a_url_a_https_a__a__a_static_a_runoob_a_com_a_images_a_demo_a_demo2_a_jpg_a__a_ w-40 h-20 ma color-white bg-center bg-cover\\">
+      {{ 'applet-ignore: bg-_a_url_a_https_a__a__a_static_a_runoob_a_com_a_images_a_demo_a_demo2_a_jpg_a__a_' }}
     </div>
-    <div class=\\"m_a_0_a_5 p_a_1 text_a_2xl\\" :class=\\"bool ? '' : 'text_a_yellow_a_500 p_a_2_a_5'\\">
+    <div class=\\"m-0_a_5 p-1 text-2xl\\" :class=\\"bool ? '' : 'text-yellow-500 p-2_a_5'\\">
       abckefghijklmnopqrstuvwxyz
     </div>
-    <div block class=\\"size_a_10 size_a_20\\" />
-    <div class=\\"_a__a___a__a__a_after_a_right_a_4 _a__a__a_div_a__a_bg_a_red [&+*]:text_a_xl\\" />
+    <div block class=\\"size-10 size-20\\" />
+    <div class=\\"[&_*]:after:right-4 _a__a__a_div_a__a_bg-red [&+*]:text-xl\\" />
   </div>
 </template>
 ",
   "css": "/* layer: default */
 .fixed{position:fixed;}
-._a__a___a__a__a_after_a_right-4 *::after{right:1rem;}
+._a__a__\\\\*_a__a_after_a_right-4 *::after{right:1rem;}
 .m-0_a_5{margin:0.125rem;}
 .m-2,
 [m-2=\\"\\"]{margin:0.5rem;}
@@ -75,7 +75,7 @@ const fixed = ref(true)
 [h-20=\\"\\"]{height:5rem;}
 .w-40,
 [w-40=\\"\\"]{width:10rem;}
-[flex~=\\"_a_\\"]{display:flex;}
+[flex~=\\"\\\\~\\"]{display:flex;}
 [flex~=\\"\\\\31 \\"]{flex:1 1 0%;}
 [flex~=\\"col\\"]{flex-direction:column;}
 .rotate-180{--un-rotate-x:0;--un-rotate-y:0;--un-rotate-z:0;--un-rotate:180deg;transform:translateX(var(--un-translate-x)) translateY(var(--un-translate-y)) translateZ(var(--un-translate-z)) rotate(var(--un-rotate)) rotateX(var(--un-rotate-x)) rotateY(var(--un-rotate-y)) rotateZ(var(--un-rotate-z)) skewX(var(--un-skew-x)) skewY(var(--un-skew-y)) scaleX(var(--un-scale-x)) scaleY(var(--un-scale-y)) scaleZ(var(--un-scale-z));}
@@ -84,7 +84,7 @@ const fixed = ref(true)
 .gap-1,
 [flex~=\\"gap-1\\"]{grid-gap:0.25rem;gap:0.25rem;}
 .border,
-[un-b~=\\"_a_\\"]{border-width:1px;}
+[un-b~=\\"\\\\~\\"]{border-width:1px;}
 [un-b~=\\"green\\"]{--un-border-opacity:1;border-color:rgba(74,222,128,var(--un-border-opacity));}
 ._a__a__a_div_a__a_bg-red>div{--un-bg-opacity:1;background-color:rgba(248,113,113,var(--un-bg-opacity));}
 ._a_bg-green{--un-bg-opacity:1 !important;background-color:rgba(74,222,128,var(--un-bg-opacity)) !important;}
@@ -103,7 +103,7 @@ const fixed = ref(true)
 .text-center{text-align:center;}
 .text-right,
 [text-right=\\"\\"]{text-align:right;}
-._a__a__a__a__a__a_text-xl+*,
+._a__a__a_\\\\*_a__a_text-xl+*,
 [text~=\\"xl\\"]{font-size:1.25rem;line-height:1.75rem;}
 .text-2xl{font-size:1.5rem;line-height:2rem;}
 .text-sm{font-size:0.875rem;line-height:1.25rem;}

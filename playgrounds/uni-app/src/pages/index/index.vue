@@ -1,6 +1,7 @@
 <!-- eslint-disable @typescript-eslint/quotes -->
 <script setup lang="ts">
 import { ref } from 'vue'
+import AButton from 'ano-ui/components/AButton/AButton.vue'
 import { menuList } from './data'
 const bg = 'bg-[hsl(2.7,81.9%,69.6%)]'
 const icon = "i-carbon:campsite"
@@ -13,7 +14,7 @@ const fixed = ref(true)
 
 <template>
   <div class="text-center aaa" p="4">
-    <div text="4xl" class="rotate-180 i-carbon-campsite" :class="bg" />
+    <div text="4xl" class="rotate-180 i-carbon-campsite" :class="bg" :hover-class="bool ? '' : '!bg-teal'" />
     <div :class="[border && 'u-border-top', fixed && 'u-tabbar--fixed']" />
     <div class="border bg-blue-200 font-(light mono) ">
       <div class="hover:(!bg-gray-600 text-red font-bold)" text="#fff">
@@ -23,6 +24,7 @@ const fixed = ref(true)
     <div :class="`p-2.5 ${bool ? 'p-0.5' : 'text-amber'}`" m-2 :hover-class="['!bg-green']">
       class="applet-ignore hover:bg-green"
     </div>
+    <AButton>Button</AButton>
     <div flex="~ col gap-1" class="p-1" items-center :class="bool ? 'text-yellow-500 px-2.5' : ''">
       <div :class="icon" inline-block color="blue" text="xl !red" />
       <div bg="green-(!200 800)">

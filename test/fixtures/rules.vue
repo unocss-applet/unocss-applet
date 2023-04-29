@@ -21,7 +21,7 @@ const fixed = ref(true)
         {{ 'applet-ignore: hover:(!bg-gray-600 text-red font-bold)' }}
       </div>
     </div>
-    <div :class="`p-2.5 ${bool ? 'p-0.5' : ''}`" m-2 :hover-class="['!bg-green']">
+    <div :class="`p-2.5 ${bool ? 'p-0.5' : ''}`" m-2 :hover-class="['!bg-green', bool ? '' : 'text-red']">
       class="hover:bg-green"
     </div>
     <div flex="~ col gap-1" class="p-1" items-center :class="bool ? 'text-yellow-500 px-2.5' : ''">

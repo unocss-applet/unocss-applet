@@ -55,6 +55,8 @@ export default function transformerAttributify(options: TransformerAttributifyOp
             }
             else {
               // valued attributes
+              if (name.includes('hover-class'))
+                continue
               if (['class', 'className'].includes(name)) {
                 if (!name.includes(':'))
                   existsClass = content.replace(/['"`]/g, '')

@@ -53,7 +53,7 @@ describe('transformer-attributify', async () => {
           <div class=\\"b b-green text-right h-10 !text-pink\\">
             123456789
           </div>
-          <div class=\\"text-purple b b-green\\">
+          <div class=\\"text-purple b b-green\\" :hover-class=\\"['!bg-green', bool ? '' : 'text-red']\\">
             123456789
           </div>
           <div  class=\\"i-carbon:logo-twitter dark:i-carbon:logo-github\\"/>
@@ -94,7 +94,7 @@ describe('transformer-attributify', async () => {
           <div text-right h-10 text=\\"!pink\\" class=\\"b b-green\\">
             123456789
           </div>
-          <div class=\\"text-purple b b-green\\">
+          <div class=\\"text-purple b b-green\\" :hover-class=\\"['!bg-green', bool ? '' : 'text-red']\\">
             123456789
           </div>
           <div i-carbon:logo-twitter dark:i-carbon:logo-github />
