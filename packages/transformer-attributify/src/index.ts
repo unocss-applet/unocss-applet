@@ -7,7 +7,7 @@ export * from './types'
 
 const splitterRE = /[\s'"`;]+/g
 const elementRE = /<\w(?=.*>)[\w:\.$-]*\s(((".*?>?.*?")|.*?)*?)\/?>/gs
-const attributeRE = /([\[?a-zA-Z0-9\u00A0-\uFFFF-_:()#%.\]?]*)(?:\s*=\s*((?:'[^']*')|(?:"[^"]*")|\S+))?/g
+const attributeRE = /([\[?a-zA-Z0-9\u00A0-\uFFFF-_:()#%.\]?]+)(?:\s*=\s*((?:'[^']*')|(?:"[^"]*")|\S+))?/g
 
 const defaultIgnoreAttributes = ['placeholder', 'setup', 'lang', 'scoped']
 
@@ -22,9 +22,10 @@ export default function transformerAttributify(options: TransformerAttributifyOp
   return {
     name: 'transformer-attributify',
     enforce: 'pre',
-    async transform(s, _, { uno }) {
-      if (!enable)
+    async transform(s, id, { uno }) {
+      if (!/\.vue$/.test(id) || !enable)
         return
+
       const code = new MagicString(s.toString())
 
       const elementMatches = code.original.matchAll(elementRE)
@@ -38,6 +39,9 @@ export default function transformerAttributify(options: TransformerAttributifyOp
         for (const attribute of attributes) {
           const matchStr = attribute[0]
           const name = attribute[1]
+          if (name.startsWith(':'))
+            continue
+
           const content = attribute[2]
 
           const nonPrefixed = name.replace(prefix, '')

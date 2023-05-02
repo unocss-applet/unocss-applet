@@ -17,42 +17,42 @@ const fixed = ref(true)
 </script>
 
 <template>
-  <div class=\\"text-center aaa bg-_a__a_var_a_ p-4\\">
-    <div class=\\"rotate-180 i-carbon-campsite text-4xl\\" :class=\\"bg\\" />
+  <div class=\\"text-center aaa bg-_a__a_var_a_\\" p=\\"4\\">
+    <div text=\\"4xl\\" class=\\"rotate-180 i-carbon-campsite\\" :class=\\"bg\\" />
     <div :class=\\"[border && 'u-border-top', fixed && 'u-tabbar--fixed']\\" />
     <div class=\\"border bg-blue-200 font-(light mono) \\" :cc=\\"customClass\\">
-      <div class=\\"hover:(!bg-gray-600 text-red font-bold) text-_a_fff\\">
+      <div class=\\"hover:(!bg-gray-600 text-red font-bold)\\" text=\\"#fff\\">
         {{ 'applet-ignore: hover:(!bg-gray-600 text-red font-bold)' }}
       </div>
     </div>
-    <div :class=\\"\`p-2_a_5 \${bool ? 'p-0_a_5' : ''}\`\\" :hover-class=\\"['_a_bg-green', bool ? '' : 'text-red']\\" class=\\"m-2\\">
+    <div :class=\\"\`p-2_a_5 \${bool ? 'p-0_a_5' : ''}\`\\" m-2 :hover-class=\\"['_a_bg-green', bool ? '' : 'text-red']\\">
       class=\\"hover_a_bg-green\\"
     </div>
-    <div class=\\"p-1 flex flex-col flex-gap-1 items-center\\" :class=\\"bool ? 'text-yellow-500 px-2_a_5' : ''\\">
-      <div :class=\\"icon\\"  class=\\"inline-block color-blue text-xl _a_text-red\\"/>
+    <div flex=\\"~ col gap-1\\" class=\\"p-1\\" items-center :class=\\"bool ? 'text-yellow-500 px-2_a_5' : ''\\">
+      <div :class=\\"icon\\" inline-block color=\\"blue\\" text=\\"xl !red\\" />
       <div bg=\\"green-(!200 800)\\">
         {{ \`index\${index + 1}\` }}{{ \`index\` }}
       </div>
     </div>
-    <div :class=\\"\`bg-color-\${bg}\`\\" class=\\"flex flex-col b b-green\\">
-      <div :class=\\"{ 'text-sm': index > 0 }\\" class=\\"text-right h-10 flex-1 text-red\\">
+    <div flex=\\"~ col\\" un-b=\\"~ green\\" :class=\\"\`bg-color-\${bg}\`\\">
+      <div text-right h-10 flex=\\"1\\" text=\\"red\\" :class=\\"{ 'text-sm': index > 0 }\\">
         0123456789
       </div>
       <div
-        :class=\\"[index > 1 ? 'text' : '']\\"
-        :style=\\"[index > 1 ? '' : '']\\"
+        h-10 flex=\\"1\\" :class=\\"[index > 1 ? 'text' : '']\\"
+        text=\\"blue dark:(red !bold)\\" :style=\\"[index > 1 ? '' : '']\\"
         :type=\\"index > 1\\"
-       class=\\"h-10 flex-1 text-blue\\">
+      >
         {{ bgIgnore }}
       </div>
     </div>
-    <div class=\\"bg-_a_url_a_https_a__a__a_static_a_runoob_a_com_a_images_a_demo_a_demo2_a_jpg_a__a_ w-40 h-20 ma color-white bg-center bg-cover\\">
+    <div class=\\"bg-_a_url_a_https_a__a__a_static_a_runoob_a_com_a_images_a_demo_a_demo2_a_jpg_a__a_\\" w-40 h-20 ma color=\\"white\\" bg=\\"center cover\\">
       {{ 'applet-ignore: bg-_a_url_a_https_a__a__a_static_a_runoob_a_com_a_images_a_demo_a_demo2_a_jpg_a__a_' }}
     </div>
     <div class=\\"m-0_a_5 p-1 text-2xl\\" :class=\\"bool ? '' : 'text-yellow-500 p-2_a_5'\\">
       abckefghijklmnopqrstuvwxyz
     </div>
-    <div block class=\\"size-10 size-20\\" />
+    <div block class=\\"size-10\\" size=\\"20\\" />
     <div class=\\"[&_*]:after:right-4 _a__a__a_div_a__a_bg-red [&+*]:text-xl\\" />
   </div>
 </template>

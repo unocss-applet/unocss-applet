@@ -7,7 +7,7 @@ const c = 'text-red'
 <template>
   <div class="text-center aaa" p="2.5" text-blue :class="c">
     <div text="4xl" text-green un-p-2 ma />
-    <div :class="`p-2.5 ${bool ? 'p-0.5' : ''}`" m-2 :hover-class="['!bg-green']" />
+    <div :class="`p-2.5 ${bool ? 'p-0.5 m-0.5' : ''}`" m-2 :hover-class="['!bg-green']" />
     <div flex="~ col gap-1" class="p-1" items-center />
     <div un-b="~ green" text-right h-10 text="!pink">
       123456789

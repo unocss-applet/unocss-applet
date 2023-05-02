@@ -2,6 +2,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import AButton from 'ano-ui/components/AButton/AButton.vue'
+import ASwitch from 'ano-ui/components/ASwitch/ASwitch.vue'
 import { a, menuList } from './data'
 const bg = 'bg-[hsl(2.7,81.9%,69.6%)]'
 const icon = "i-carbon:campsite"
@@ -25,6 +26,7 @@ const fixed = ref(true)
       class="applet-ignore hover:bg-green"
     </div>
     <AButton>Button</AButton>
+    <ASwitch v-model="bool" />
     <div flex="~ col gap-1" class="p-1" items-center :class="bool ? 'text-yellow-500 px-2.5' : ''">
       <div :class="icon" inline-block color="blue" text="xl !red" />
       <div bg="green-(!200 800)">
