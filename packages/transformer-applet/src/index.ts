@@ -15,7 +15,7 @@ export interface TransformerAppletOptions {
 
   /**
    * Unsupported characters in applet, will be added to the default value
-   * @default ['.', ':', '%', '!', '#', '(', ')', '[', '/', ']', ',', '$', '{', '}', '@', '+', '^', '&', '<', '>']
+   * @default ['.', ':', '%', '!', '#', '(', ')', '[', '/', ']', ',', '$', '{', '}', '@', '+', '^', '&', '<', '>', '\'']
    */
   unsupportedChars?: string[]
 }
@@ -24,7 +24,7 @@ export default function transformerApplet(options: TransformerAppletOptions = {}
   const enable = options.enable ?? true
   const layer = options.layer ?? 'applet_shortcuts'
 
-  const UNSUPPORTED_CHARS = ['.', ':', '%', '!', '#', '(', ')', '[', '/', ']', ',', '$', '{', '}', '@', '+', '^', '&', '<', '>']
+  const UNSUPPORTED_CHARS = ['.', ':', '%', '!', '#', '(', ')', '[', '/', ']', ',', '$', '{', '}', '@', '+', '^', '&', '<', '>', '\'']
   if (options.unsupportedChars)
     UNSUPPORTED_CHARS.push(...options.unsupportedChars)
 

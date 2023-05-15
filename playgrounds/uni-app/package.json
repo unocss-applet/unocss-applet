@@ -45,7 +45,7 @@
     "@dcloudio/uni-mp-toutiao": "3.0.0-alpha-3071220230331002",
     "@dcloudio/uni-mp-weixin": "3.0.0-alpha-3071220230331002",
     "@dcloudio/uni-quickapp-webview": "3.0.0-alpha-3071220230331002",
-    "ano-ui": "^0.7.0",
+    "ano-ui": "^0.7.6",
     "vue": "^3.2.47",
     "vue-i18n": "^9.2.2"
   },
