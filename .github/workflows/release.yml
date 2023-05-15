@@ -15,6 +15,8 @@ jobs:
 
       - name: Install pnpm
         uses: pnpm/action-setup@v2
+        with:
+          version: 8.3.0
 
       - name: Set node
         uses: actions/setup-node@v3
@@ -26,7 +28,7 @@ jobs:
       - run: npx changelogithub
         continue-on-error: true
         env:
-          GITHUB_TOKEN: ${{secrets.GH_TOKEN}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
       - name: Install Dependencies
         run: pnpm i
