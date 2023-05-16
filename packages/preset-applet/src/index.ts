@@ -1,5 +1,5 @@
 import type { Preset } from 'unocss'
-import { presetUno } from '@unocss/preset-uno'
+import { presetUno } from 'unocss'
 import type { PresetUnoOptions, Theme } from '@unocss/preset-uno'
 import { normalizePreflights } from '@unocss/preset-mini'
 import { appletPreflights, defaultPreflights } from './preflights'
