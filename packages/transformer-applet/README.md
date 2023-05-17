@@ -1,6 +1,6 @@
 # @unocss-applet/transformer-applet
 
-Coverts class selector name to hash.
+Convert selectors not supported by the applet.
 
 ## Instal
 
@@ -66,23 +66,24 @@ export interface TransformerAppletOptions {
 #### with
 
 ```html
-<div class="uno-0tr0xg">
+<div class="py-3_a_5 grid-cols-_a_0_a_7fr_repeat_a_7_a_1fr_a__a_">
   py-3
 </div>
 
 <style>
-.uno-0tr0xg {
-  grid-template-columns:0.7fr repeat(7,1fr);
-  padding-top:0.875rem;
-  padding-bottom:0.875rem;
+.grid-cols-_a_0_a_7fr_repeat_a_7_a_1fr_a__a_ {
+  grid-template-columns: 0.7fr repeat(7,1fr);
+}
+
+.py-3_a_5 {
+  padding-top:0.875rem;padding-bottom: 0.875rem;
 }
 </style>
 ```
 
 ### Using with string
 
-If you want to use UnoCSS rule string(`const bg = 'bg-green-100/50'`) in `<script></script>` or `JS/TS` files, please use single quotes instead of double quotes.
-But if you want to ignore a string, add a prefix(default `applet-ignore:`), and the plugin will automatically ignore the string and delete the prefix.
+If you want to ignore a string, add a prefix(default `applet-ignore:`), and the plugin will automatically ignore the string and delete the prefix.
 
 #### without
 
@@ -97,12 +98,12 @@ But if you want to ignore a string, add a prefix(default `applet-ignore:`), and 
 
 ```html
 <script setup lang="ts">
-  const bg = 'uno-98db2v'
+  const bg = 'bg-_a_hsl_a_2_a_7_a_81_a_9_a__a_69_a_6_a__a__a_'
   const bg2 = 'bg-[hsl(2.7,81.9%,69.6%)]'
 </script>
 
 <style>
-.uno-98db2v {
+.bg-_a_hsl_a_2_a_7_a_81_a_9_a__a_69_a_6_a__a__a_ {
   --un-bg-opacity: 1;
   background-color: hsla(2.7, 81.9%, 69.6%, var(--un-bg-opacity));
 }

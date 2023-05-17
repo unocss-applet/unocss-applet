@@ -16,7 +16,7 @@
 - [unocss-applet](https://github.com/unocss-applet/unocss-applet/tree/main/packages/unocss-applet) - 主包，包含所有预设和插件。
 - [@unocss-applet/preset-applet](https://github.com/unocss-applet/unocss-applet/tree/main/packages/preset-applet) - 默认预设（等同于`@unocss/preset-uno`）。
 - [@unocss-applet/preset-rem-rpx](https://github.com/unocss-applet/unocss-applet/tree/main/packages/preset-rem-rpx) - 转换rem <=> rpx的工具。
-- [@unocss-applet/transformer-applet](https://github.com/unocss-applet/unocss-applet/tree/main/packages/transformer-applet) - 将不支持小程序的类编译成一个类。
+- [@unocss-applet/transformer-applet](https://github.com/unocss-applet/unocss-applet/tree/main/packages/transformer-applet) - 转换小程序不支持的选择器。
 - [@unocss-applet/transformer-attributify](https://github.com/unocss-applet/unocss-applet/tree/main/packages/transformer-attributify) - 为小程序启用 Attributify 模式。
 
 ## 安装

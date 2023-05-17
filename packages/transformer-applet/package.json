@@ -2,7 +2,7 @@
   "name": "@unocss-applet/transformer-applet",
   "type": "module",
   "version": "0.5.0",
-  "description": "Coverts class selector name to hash.",
+  "description": "Convert selectors not supported by the applet.",
   "author": "Neil Lee <zguolee@foxmail.com>",
   "license": "MIT",
   "homepage": "https://github.com/unocss-applet/unocss-applet/tree/main/packages/transformer-applet#readme",
