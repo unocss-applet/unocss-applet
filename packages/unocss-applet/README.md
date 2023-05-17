@@ -110,6 +110,7 @@ import 'uno.css'
 
 ```js
 import UnoCSS from 'unocss/webpack'
+
 const config = {
   mini: {
     // ...

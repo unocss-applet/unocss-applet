@@ -2,7 +2,6 @@
   "name": "@unocss-applet/monorepo",
   "version": "0.4.13",
   "private": true,
-  "packageManager": "pnpm@8.5.1",
   "scripts": {
     "dev": "pnpm stub",
     "build": "rimraf packages/*/dist && pnpm -r --filter=./packages/* run build && pnpm -r run build-post",
@@ -24,11 +23,13 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.38.6",
+    "@iconify-json/tabler": "^1.1.74",
     "@types/node": "^18.16.10",
     "@unocss-applet/preset-applet": "workspace:*",
     "@unocss-applet/preset-rem-rpx": "workspace:*",
     "@unocss-applet/transformer-applet": "workspace:*",
     "@unocss-applet/transformer-attributify": "workspace:*",
+    "@unocss-applet/utils": "workspace:*",
     "bumpp": "^9.1.0",
     "eslint": "^8.40.0",
     "esno": "^0.16.3",

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+
 const bool = ref<boolean>()
 const c = 'text-red'
 </script>

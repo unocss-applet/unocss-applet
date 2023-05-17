@@ -9,7 +9,7 @@ npm i @unocss-applet/preset-rem-rpx --save-dev # with npm
 yarn add @unocss-applet/preset-rem-rpx -D # with yarn
 pnpm add @unocss-applet/preset-rem-rpx -D # with pnpm
 ```
-  
+
 ## Usage
 
 ```ts

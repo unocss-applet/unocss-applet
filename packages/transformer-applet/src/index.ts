@@ -1,4 +1,5 @@
 import type { SourceCodeTransformer } from 'unocss'
+import { encodeNonLatin } from '@unocss-applet/utils'
 
 export interface TransformerAppletOptions {
   /**
@@ -47,6 +48,7 @@ export default function transformerApplet(options: TransformerAppletOptions = {}
         .filter(i => !i.includes('='))
       for (const replace of replacements) {
         let replaced = replace.replace(charReplaceReg, '_a_')
+        replaced = encodeNonLatin(replaced)
 
         // delete all - prefix
         while (replaced.startsWith('-'))

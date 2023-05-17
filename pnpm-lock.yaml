@@ -7,6 +7,9 @@ importers:
       '@antfu/eslint-config':
         specifier: ^0.38.6
         version: 0.38.6(eslint@8.40.0)(typescript@5.0.4)
+      '@iconify-json/tabler':
+        specifier: ^1.1.74
+        version: 1.1.74
       '@types/node':
         specifier: ^18.16.10
         version: 18.16.10
@@ -22,6 +25,9 @@ importers:
       '@unocss-applet/transformer-attributify':
         specifier: workspace:*
         version: link:packages/transformer-attributify
+      '@unocss-applet/utils':
+        specifier: workspace:*
+        version: link:packages/utils
       bumpp:
         specifier: ^9.1.0
         version: 9.1.0
@@ -61,6 +67,9 @@ importers:
 
   packages/preset-applet:
     dependencies:
+      '@unocss-applet/utils':
+        specifier: workspace:*
+        version: link:../utils
       '@unocss/core':
         specifier: ^0.51.13
         version: 0.51.13
@@ -73,7 +82,11 @@ importers:
 
   packages/preset-rem-rpx: {}
 
-  packages/transformer-applet: {}
+  packages/transformer-applet:
+    dependencies:
+      '@unocss-applet/utils':
+        specifier: workspace:*
+        version: link:../utils
 
   packages/transformer-attributify: {}
 
@@ -91,6 +104,8 @@ importers:
       '@unocss-applet/transformer-attributify':
         specifier: workspace:*
         version: link:../transformer-attributify
+
+  packages/utils: {}
 
   playgrounds/tarojs:
     dependencies:
@@ -2739,6 +2754,12 @@ packages:
 
   /@iconify-json/carbon@1.1.16:
     resolution: {integrity: sha512-AD8bcnRSGA0WfcGEass2FbA0sagrUzrpFx5WchuDy3uf7yKBWumdypdQK121DH321fQDl5+zZQ26T6gC9knwUQ==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
+  /@iconify-json/tabler@1.1.74:
+    resolution: {integrity: sha512-dDlEXoTrSBH5+mV2IT/BUKisvxletRIW43aHs6cL4uCZSfk8HTNtXohbbxzEOdbw+wS+9JPGVIM9j8BLTpXWug==}
     dependencies:
       '@iconify/types': 2.0.0
     dev: true

@@ -3,6 +3,7 @@
 exports[`transformer-attributify > basic 1`] = `
 "<script setup lang=\\"ts\\">
 import { ref } from 'vue'
+
 const bool = ref<boolean>()
 const c = 'text-red'
 </script>
@@ -32,11 +33,6 @@ const c = 'text-red'
       </div>
     </div>
     <div class=\\"size-10 size-20\\" />
-    <div
-      class=\\"relative rounded-full bg-context text-white a-transition dark:bg-op80 dark:text-op80\\"
-      :class=\\"[\`a-switch-\${size}\`, bool ? \`a-\${type}\` : 'text-gray3', { '!text-gray2 dark:!text-gray4': disabled }, cc]\\"
-      :style=\\"cs\\" @click=\\"toggle\\"
-    />
   </div>
 </template>
 "
@@ -45,6 +41,7 @@ const c = 'text-red'
 exports[`transformer-attributify > prefixedOnly 1`] = `
 "<script setup lang=\\"ts\\">
 import { ref } from 'vue'
+
 const bool = ref<boolean>()
 const c = 'text-red'
 </script>
@@ -74,11 +71,6 @@ const c = 'text-red'
       </div>
     </div>
     <div class=\\"size-10\\" size=\\"20\\" />
-    <div
-      class=\\"relative rounded-full bg-context text-white a-transition dark:bg-op80 dark:text-op80\\"
-      :class=\\"[\`a-switch-\${size}\`, bool ? \`a-\${type}\` : 'text-gray3', { '!text-gray2 dark:!text-gray4': disabled }, cc]\\"
-      :style=\\"cs\\" @click=\\"toggle\\"
-    />
   </div>
 </template>
 "

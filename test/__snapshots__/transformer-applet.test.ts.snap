@@ -5,6 +5,7 @@ exports[`transformer-applet > basic 1`] = `
   "code": "<!-- eslint-disable @typescript-eslint/quotes -->
 <script setup lang=\\"ts\\">
 import { ref } from 'vue'
+
 const bg = 'bg-_a_hsl_a_2_a_7_a_81_a_9_a__a_69_a_6_a__a__a_'
 
 const icon = \\"i-carbon:campsite\\"
@@ -59,7 +60,7 @@ const fixed = ref(true)
 ",
   "css": "/* layer: default */
 .fixed{position:fixed;}
-._a__a__\\\\*_a__a_after_a_right-4 *::after{right:1rem;}
+._a__a__\\\\*_a__a_after_a_right-432*::after{right:1rem;}
 .m-0_a_5{margin:0.125rem;}
 .m-2,
 [m-2=\\"\\"]{margin:0.5rem;}
@@ -76,7 +77,7 @@ const fixed = ref(true)
 .w-40,
 [w-40=\\"\\"]{width:10rem;}
 [flex~=\\"\\\\~\\"]{display:flex;}
-[flex~=\\"\\\\31 \\"]{flex:1 1 0%;}
+[flex~=\\"\\\\3132\\"]{flex:1 1 0%;}
 [flex~=\\"col\\"]{flex-direction:column;}
 .rotate-180{--un-rotate-x:0;--un-rotate-y:0;--un-rotate-z:0;--un-rotate:180deg;transform:translateX(var(--un-translate-x)) translateY(var(--un-translate-y)) translateZ(var(--un-translate-z)) rotate(var(--un-rotate)) rotateX(var(--un-rotate-x)) rotateY(var(--un-rotate-y)) rotateZ(var(--un-rotate-z)) skewX(var(--un-skew-x)) skewY(var(--un-skew-y)) scaleX(var(--un-scale-x)) scaleY(var(--un-scale-y)) scaleZ(var(--un-scale-z));}
 .items-center,
@@ -98,7 +99,7 @@ const fixed = ref(true)
 .p-0_a_5{padding:0.125rem;}
 .p-1{padding:0.25rem;}
 .p-2_a_5{padding:0.625rem;}
-[p~=\\"\\\\34 \\"]{padding:1rem;}
+[p~=\\"\\\\3432\\"]{padding:1rem;}
 .px-2_a_5{padding-left:0.625rem;padding-right:0.625rem;}
 .text-center{text-align:center;}
 .text-right,
@@ -107,7 +108,7 @@ const fixed = ref(true)
 [text~=\\"xl\\"]{font-size:1.25rem;line-height:1.75rem;}
 .text-2xl{font-size:1.5rem;line-height:2rem;}
 .text-sm{font-size:0.875rem;line-height:1.25rem;}
-[text~=\\"\\\\34 xl\\"]{font-size:2.25rem;line-height:2.5rem;}
+[text~=\\"\\\\3432xl\\"]{font-size:2.25rem;line-height:2.5rem;}
 [color~=\\"blue\\"],
 [text~=\\"blue\\"]{--un-text-opacity:1;color:rgba(96,165,250,var(--un-text-opacity));}
 [color~=\\"white\\"],
@@ -117,6 +118,6 @@ const fixed = ref(true)
 .text-yellow-500{--un-text-opacity:1;color:rgba(234,179,8,var(--un-text-opacity));}
 [text~=\\"_a_red\\"]{--un-text-opacity:1 !important;color:rgba(248,113,113,var(--un-text-opacity)) !important;}
 .size-10{width:2.5rem;height:2.5rem;}
-[size~=\\"\\\\32 0\\"]{width:5rem;height:5rem;}",
+[size~=\\"\\\\32320\\"]{width:5rem;height:5rem;}",
 }
 `;

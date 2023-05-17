@@ -1,6 +1,7 @@
 <!-- eslint-disable @typescript-eslint/quotes -->
 <script setup lang="ts">
 import { ref } from 'vue'
+
 const bg = 'bg-[hsl(2.7,81.9%,69.6%)]'
 
 const icon = "i-carbon:campsite"
