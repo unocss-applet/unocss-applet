@@ -4,6 +4,7 @@ import { ref } from 'vue'
 import AButton from 'ano-ui/components/AButton/AButton.vue'
 import ASwitch from 'ano-ui/components/ASwitch/ASwitch.vue'
 import { menuList } from './data'
+
 const bg = 'bg-[hsl(2.7,81.9%,69.6%)]'
 const icon = "i-carbon:campsite"
 const bgIgnore = 'applet-ignore bg-[hsl(2.7,81.9%,69.6%)]'
@@ -14,7 +15,7 @@ const fixed = ref(true)
 </script>
 
 <template>
-  <div class="text-center aaa before:content-['test']" p="4">
+  <div class="text-center aaa" p="4">
     <div text="4xl" class="rotate-180 i-carbon-campsite" :class="bg" :hover-class="bool ? '' : '!bg-teal'" />
     <div :class="[border && 'u-border-top', fixed && 'u-tabbar--fixed']" />
     <div class="border bg-blue-200 font-(light mono) ">
@@ -61,6 +62,11 @@ const fixed = ref(true)
           <div :class="menu.icon" />
         </div>
       </template>
+    </div>
+    <div>
+      before:content-test
+      <div class="before:content-['english']" />
+      <div class="before:content-['中文']" />
     </div>
   </div>
 </template>

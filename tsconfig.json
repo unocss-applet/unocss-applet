@@ -20,6 +20,7 @@
       "@unocss-applet/preset-rem-rpx": ["./packages/preset-rem-rpx/src/index.ts"],
       "@unocss-applet/transformer-applet": ["./packages/transformer-applet/src/index.ts"],
       "@unocss-applet/transformer-attributify": ["./packages/transformer-attributify/src/index.ts"],
+      "@unocss-applet/utils": ["./packages/utils/src/index.ts"],
       "unocss-applet": ["./packages/unocss-applet/src/index.ts"]
     }
   },

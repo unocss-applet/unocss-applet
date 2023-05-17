@@ -2,12 +2,12 @@ import type { Preset } from 'unocss'
 import { presetUno } from 'unocss'
 import type { PresetUnoOptions, Theme } from '@unocss/preset-uno'
 import { normalizePreflights } from '@unocss/preset-mini'
+import { encodeNonLatin } from '@unocss-applet/utils'
 import { appletPreflights, defaultPreflights } from './preflights'
 
 export type { Theme }
 
 // PresetUnoOptions https://github.com/unocss/unocss/blob/main/packages/preset-uno/src/index.ts#L9
-// PresetMiniOptions https://github.com/unocss/unocss/blob/main/packages/preset-mini/src/index.ts#L30-L55
 export interface PresetAppletOptions extends PresetUnoOptions {
   /**
    * Enable applet
@@ -54,7 +54,10 @@ export default function presetApplet(options: PresetAppletOptions = {}): Preset<
       : [],
     postprocess: [
       (util) => {
-        enable && (util.selector = unoCSSToAppletProcess(util.selector))
+        if (enable && util.selector) {
+          util.selector = unoCSSToAppletProcess(util.selector)
+          util.selector = encodeNonLatin(util.selector)
+        }
         return util
       },
     ],

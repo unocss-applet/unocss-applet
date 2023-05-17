@@ -2,8 +2,7 @@
   "name": "@unocss-applet/transformer-applet",
   "type": "module",
   "version": "0.4.13",
-  "packageManager": "pnpm@8.5.1",
-  "description": "",
+  "description": "Coverts class selector name to hash.",
   "author": "Neil Lee <zguolee@foxmail.com>",
   "license": "MIT",
   "homepage": "https://github.com/unocss-applet/unocss-applet/tree/main/packages/transformer-applet#readme",
@@ -34,5 +33,8 @@
   "scripts": {
     "build": "unbuild",
     "stub": "unbuild --stub"
+  },
+  "dependencies": {
+    "@unocss-applet/utils": "workspace:*"
   }
 }
