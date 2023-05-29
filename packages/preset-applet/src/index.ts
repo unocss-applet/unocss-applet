@@ -1,4 +1,4 @@
-import type { Preset } from 'unocss'
+import type { Preset, Variant } from 'unocss'
 import { presetUno } from 'unocss'
 import type { PresetUnoOptions, Theme } from '@unocss/preset-uno'
 import { normalizePreflights } from '@unocss/preset-mini'
@@ -20,6 +20,33 @@ export interface PresetAppletOptions extends PresetUnoOptions {
    * @default ['.', ':', '%', '!', '#', '(', ')', '[', '/', ']', ',', '$', '{', '}', '@', '+', '^', '&', '<', '>', '\'']
    */
   unsupportedChars?: string[]
+
+  /**
+   * Space Between and Divide Width Elements
+   * @default ['view', 'button', 'text', 'image']
+   */
+  betweenElements?: string[]
+}
+
+function variantSpaceAndDivide(options: PresetAppletOptions): Variant<Theme>[] {
+  const betweenElements = options?.betweenElements ?? ['view', 'button', 'text', 'image']
+
+  return [
+    (matcher) => {
+      if (matcher.startsWith('_'))
+        return
+
+      if (/space-?([xy])-?(-?.+)$/.test(matcher) || /divide-/.test(matcher)) {
+        return {
+          matcher,
+          selector: (input) => {
+            const selectors = betweenElements.map(el => `${input}>${el}+${el}`)
+            return selectors.join(',')
+          },
+        }
+      }
+    },
+  ]
 }
 
 export default function presetApplet(options: PresetAppletOptions = {}): Preset<Theme> {
@@ -60,6 +87,9 @@ export default function presetApplet(options: PresetAppletOptions = {}): Preset<
         }
         return util
       },
+    ],
+    variants: [
+      ...variantSpaceAndDivide(options),
     ],
   }
 }

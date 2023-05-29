@@ -49,6 +49,37 @@ const targets = [
   // mini + wind - placeholder
   'focus:placeholder-red-300',
   'hover:placeholder-op90',
+
+  // space
+  'space-y-none',
+  'space-x-2',
+  'space-y-4',
+  'space-x-reverse',
+  'space-x-$space',
+  'space-inline-2',
+  'space-block-4',
+  'space-block-none',
+  'space-inline-reverse',
+  'space-inline-$space',
+
+  // divide
+  'divide',
+  'divide-y-4',
+  'divide-x-4',
+  'divide-x-reverse',
+  'divide-block-4',
+  'divide-inline-4',
+  'divide-inline-reverse',
+  'divide-green-500',
+  'divide-opacity-50',
+  'divide-dashed',
+  'divide-dotted',
+  'divide-ridge',
+  'divide-transparent',
+  'divide-current',
+  'divide-none',
+  'divide-x-none',
+  'divide-inline-none',
 ]
 
 const targets2 = [

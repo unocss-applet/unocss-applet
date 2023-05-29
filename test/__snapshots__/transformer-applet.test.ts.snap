@@ -26,8 +26,8 @@ const fixed = ref(true)
         {{ 'applet-ignore: hover:(!bg-gray-600 text-red font-bold)' }}
       </div>
     </div>
-    <div :class=\\"\`p-2_a_5 \${bool ? 'p-0_a_5' : ''}\`\\" m-2 :hover-class=\\"['_a_bg-green', bool ? '' : 'text-red']\\">
-      class=\\"hover_a_bg-green\\"
+    <div :class=\\"\`p-2_a_5 \${bool ? 'p-0_a_5' : ''}\`\\" m-2 :hover-class=\\"['!bg-green', bool ? '' : 'text-red']\\">
+      class=\\"hover:bg-green\\"
     </div>
     <div flex=\\"~ col gap-1\\" class=\\"p-1\\" items-center :class=\\"bool ? 'text-yellow-500 px-2_a_5' : ''\\">
       <div :class=\\"icon\\" inline-block color=\\"blue\\" text=\\"xl !red\\" />
@@ -54,13 +54,12 @@ const fixed = ref(true)
       abckefghijklmnopqrstuvwxyz
     </div>
     <div block class=\\"size-10\\" size=\\"20\\" />
-    <div class=\\"[&_*]:after:right-4 _a__a__a_div_a__a_bg-red [&+*]:text-xl\\" />
+    <div class=\\"[&_*]:after:right-4 [&>div]:bg-red [&+*]:text-xl\\" />
   </div>
 </template>
 ",
   "css": "/* layer: default */
 .fixed{position:fixed;}
-._a__a__\\\\*_a__a_after_a_right-432*::after{right:1rem;}
 .m-0_a_5{margin:0.125rem;}
 .m-2,
 [m-2=\\"\\"]{margin:0.5rem;}
@@ -87,12 +86,9 @@ const fixed = ref(true)
 .border,
 [un-b~=\\"\\\\~\\"]{border-width:1px;}
 [un-b~=\\"green\\"]{--un-border-opacity:1;border-color:rgba(74,222,128,var(--un-border-opacity));}
-._a__a__a_div_a__a_bg-red>div{--un-bg-opacity:1;background-color:rgba(248,113,113,var(--un-bg-opacity));}
-._a_bg-green{--un-bg-opacity:1 !important;background-color:rgba(74,222,128,var(--un-bg-opacity)) !important;}
 .bg-_a__a_var_a_{background-color:var(--\\\\{var\\\\});}
 .bg-_a_hsl_a_2_a_7_a_81_a_9_a__a_69_a_6_a__a__a_{--un-bg-opacity:1;background-color:hsla(2.7,81.9%,69.6%,var(--un-bg-opacity));}
 .bg-blue-200{--un-bg-opacity:1;background-color:rgba(191,219,254,var(--un-bg-opacity));}
-.hover_a_bg-green:hover{--un-bg-opacity:1;background-color:rgba(74,222,128,var(--un-bg-opacity));}
 .bg-_a_url_a_https_a__a__a_static_a_runoob_a_com_a_images_a_demo_a_demo2_a_jpg_a__a_{--un-url:url(https://static.runoob.com/images/demo/demo2.jpg);background-image:var(--un-url);}
 [bg~=\\"cover\\"]{background-size:cover;}
 [bg~=\\"center\\"]{background-position:center;}
@@ -104,11 +100,10 @@ const fixed = ref(true)
 .text-center{text-align:center;}
 .text-right,
 [text-right=\\"\\"]{text-align:right;}
-._a__a__a_\\\\*_a__a_text-xl+*,
-[text~=\\"xl\\"]{font-size:1.25rem;line-height:1.75rem;}
 .text-2xl{font-size:1.5rem;line-height:2rem;}
 .text-sm{font-size:0.875rem;line-height:1.25rem;}
 [text~=\\"\\\\3432xl\\"]{font-size:2.25rem;line-height:2.5rem;}
+[text~=\\"xl\\"]{font-size:1.25rem;line-height:1.75rem;}
 [color~=\\"blue\\"],
 [text~=\\"blue\\"]{--un-text-opacity:1;color:rgba(96,165,250,var(--un-text-opacity));}
 [color~=\\"white\\"],
@@ -116,7 +111,6 @@ const fixed = ref(true)
 .text-red,
 [text~=\\"red\\"]{--un-text-opacity:1;color:rgba(248,113,113,var(--un-text-opacity));}
 .text-yellow-500{--un-text-opacity:1;color:rgba(234,179,8,var(--un-text-opacity));}
-[text~=\\"_a_red\\"]{--un-text-opacity:1 !important;color:rgba(248,113,113,var(--un-text-opacity)) !important;}
 .size-10{width:2.5rem;height:2.5rem;}
 [size~=\\"\\\\32320\\"]{width:5rem;height:5rem;}",
 }

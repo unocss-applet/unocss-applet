@@ -38,8 +38,8 @@
   },
   "dependencies": {
     "@unocss-applet/utils": "workspace:*",
-    "@unocss/core": "^0.51.13",
-    "@unocss/preset-mini": "^0.51.13",
-    "@unocss/preset-uno": "^0.51.13"
+    "@unocss/core": "^0.52.4",
+    "@unocss/preset-mini": "^0.52.4",
+    "@unocss/preset-uno": "^0.52.4"
   }
 }

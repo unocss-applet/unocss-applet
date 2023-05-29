@@ -39,6 +39,32 @@ exports[`preset extras 1`] = `
 
 exports[`targets 1`] = `
 "/* layer: default */
+.space-x-_a_space>view+view,.space-x-_a_space>button+button,.space-x-_a_space>text+text,.space-x-_a_space>image+image{--un-space-x-reverse:0;margin-left:calc(var(--space) * calc(1 - var(--un-space-x-reverse)));margin-right:calc(var(--space) * var(--un-space-x-reverse));}
+.space-x-2>view+view,.space-x-2>button+button,.space-x-2>text+text,.space-x-2>image+image{--un-space-x-reverse:0;margin-left:calc(0.5rem * calc(1 - var(--un-space-x-reverse)));margin-right:calc(0.5rem * var(--un-space-x-reverse));}
+.space-y-4>view+view,.space-y-4>button+button,.space-y-4>text+text,.space-y-4>image+image{--un-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--un-space-y-reverse)));margin-bottom:calc(1rem * var(--un-space-y-reverse));}
+.space-y-none>view+view,.space-y-none>button+button,.space-y-none>text+text,.space-y-none>image+image{--un-space-y-reverse:0;margin-top:calc(0px * calc(1 - var(--un-space-y-reverse)));margin-bottom:calc(0px * var(--un-space-y-reverse));}
+.space-x-reverse>view+view,.space-x-reverse>button+button,.space-x-reverse>text+text,.space-x-reverse>image+image{--un-space-x-reverse:1;}
+.space-block-4{--un-space-block-reverse:0;margin-block-start:calc(1rem * calc(1 - var(--un-space-block-reverse)));margin-block-end:calc(1rem * calc(1 - var(--un-space-block-reverse)));}
+.space-block-none{--un-space-block-reverse:0;margin-block-start:calc(0px * calc(1 - var(--un-space-block-reverse)));margin-block-end:calc(0px * calc(1 - var(--un-space-block-reverse)));}
+.space-inline-_a_space{--un-space-inline-reverse:0;margin-inline-start:calc(var(--space) * calc(1 - var(--un-space-inline-reverse)));margin-inline-end:calc(var(--space) * calc(1 - var(--un-space-inline-reverse)));}
+.space-inline-2{--un-space-inline-reverse:0;margin-inline-start:calc(0.5rem * calc(1 - var(--un-space-inline-reverse)));margin-inline-end:calc(0.5rem * calc(1 - var(--un-space-inline-reverse)));}
+.space-inline-reverse{--un-space-inline-reverse:1;}
+.divide-x-4>view+view,.divide-x-4>button+button,.divide-x-4>text+text,.divide-x-4>image+image{--un-divide-x-reverse:0;border-left-width:calc(4px * calc(1 - var(--un-divide-x-reverse)));border-right-width:calc(4px * var(--un-divide-x-reverse));}
+.divide-x-none>view+view,.divide-x-none>button+button,.divide-x-none>text+text,.divide-x-none>image+image{--un-divide-x-reverse:0;border-left-width:calc(0px * calc(1 - var(--un-divide-x-reverse)));border-right-width:calc(0px * var(--un-divide-x-reverse));}
+.divide-y-4>view+view,.divide-y-4>button+button,.divide-y-4>text+text,.divide-y-4>image+image{--un-divide-y-reverse:0;border-top-width:calc(4px * calc(1 - var(--un-divide-y-reverse)));border-bottom-width:calc(4px * var(--un-divide-y-reverse));}
+.divide-x-reverse>view+view,.divide-x-reverse>button+button,.divide-x-reverse>text+text,.divide-x-reverse>image+image{--un-divide-x-reverse:1;}
+.divide-block-4>view+view,.divide-block-4>button+button,.divide-block-4>text+text,.divide-block-4>image+image{--un-divide-block-reverse:0;border-block-start-width:calc(4px * calc(1 - var(--un-divide-block-reverse)));border-block-end-width:calc(4px * calc(1 - var(--un-divide-block-reverse)));}
+.divide-inline-4>view+view,.divide-inline-4>button+button,.divide-inline-4>text+text,.divide-inline-4>image+image{--un-divide-inline-reverse:0;border-inline-start-width:calc(4px * calc(1 - var(--un-divide-inline-reverse)));border-inline-end-width:calc(4px * calc(1 - var(--un-divide-inline-reverse)));}
+.divide-inline-none>view+view,.divide-inline-none>button+button,.divide-inline-none>text+text,.divide-inline-none>image+image{--un-divide-inline-reverse:0;border-inline-start-width:calc(0px * calc(1 - var(--un-divide-inline-reverse)));border-inline-end-width:calc(0px * calc(1 - var(--un-divide-inline-reverse)));}
+.divide-inline-reverse>view+view,.divide-inline-reverse>button+button,.divide-inline-reverse>text+text,.divide-inline-reverse>image+image{--un-divide-inline-reverse:1;}
+.divide-current>view+view,.divide-current>button+button,.divide-current>text+text,.divide-current>image+image{border-color:currentColor;}
+.divide-green-500>view+view,.divide-green-500>button+button,.divide-green-500>text+text,.divide-green-500>image+image{--un-divide-opacity:1;border-color:rgba(34,197,94,var(--un-divide-opacity));}
+.divide-transparent>view+view,.divide-transparent>button+button,.divide-transparent>text+text,.divide-transparent>image+image{border-color:transparent;}
+.divide-opacity-50>view+view,.divide-opacity-50>button+button,.divide-opacity-50>text+text,.divide-opacity-50>image+image{--un-divide-opacity:0.5;}
+.divide-dashed>view+view,.divide-dashed>button+button,.divide-dashed>text+text,.divide-dashed>image+image{border-style:dashed;}
+.divide-dotted>view+view,.divide-dotted>button+button,.divide-dotted>text+text,.divide-dotted>image+image{border-style:dotted;}
+.divide-none>view+view,.divide-none>button+button,.divide-none>text+text,.divide-none>image+image{border-style:none;}
+.divide-ridge>view+view,.divide-ridge>button+button,.divide-ridge>text+text,.divide-ridge>image+image{border-style:ridge;}
 .border-custom-b{border-color:rgba(var(--custom), 1);}
 .border-custom-b_a_0{border-color:rgba(var(--custom), 0);}
 .border-custom-b_a_10{border-color:rgba(var(--custom), 0.1);}
@@ -60,33 +86,7 @@ exports[`targets 1`] = `
 .p-2_a_5em{padding:2.5em;}
 .p-2_a_5px{padding:2.5px;}
 .p-2_a_5rem{padding:2.5rem;}
-.mix-shade-50-c-red-400{--un-text-opacity:1;color:rgba(calc(248 + (0 - 248) * 50 / 100),calc(113 + (0 - 113) * 50 / 100),calc(113 + (0 - 113) * 50 / 100),calc(var(--un-text-opacity) + (1 - var(--un-text-opacity)) * 50 / 100));}
-.mix-shift--50-c-red-600{--un-text-opacity:1;color:rgba(calc(220 + (255 - 220) * 50 / 100),calc(38 + (255 - 38) * 50 / 100),calc(38 + (255 - 38) * 50 / 100),calc(var(--un-text-opacity) + (1 - var(--un-text-opacity)) * 50 / 100));}
-.mix-shift-50-c-red-600{--un-text-opacity:1;color:rgba(calc(220 + (0 - 220) * 50 / 100),calc(38 + (0 - 38) * 50 / 100),calc(38 + (0 - 38) * 50 / 100),calc(var(--un-text-opacity) + (1 - var(--un-text-opacity)) * 50 / 100));}
-.mix-tint-50-c-red-400{--un-text-opacity:1;color:rgba(calc(248 + (255 - 248) * 50 / 100),calc(113 + (255 - 113) * 50 / 100),calc(113 + (255 - 113) * 50 / 100),calc(var(--un-text-opacity) + (1 - var(--un-text-opacity)) * 50 / 100));}
-.text-custom-a{color:var(--custom);}
-.placeholder-inherit::placeholder{color:inherit;}
-.placeholder-red-400::placeholder{--un-placeholder-opacity:1;color:rgba(248,113,113,var(--un-placeholder-opacity));}
-.focus_a_placeholder-red-300:focus::placeholder{--un-placeholder-opacity:1;color:rgba(252,165,165,var(--un-placeholder-opacity));}
-.hover_a_placeholder-op90:hover::placeholder,
-.placeholder-op90::placeholder{--un-placeholder-opacity:0.9;}
-.placeholder-opacity-10::placeholder{--un-placeholder-opacity:0.1;}
-@media (hover: none) and (pointer: coarse){
-.media-touch_a_p-4{padding:1rem;}
-}
-@media (prefers-reduced-transparency: reduce){
-.media-opacity_not_ok_a_opacity-0{opacity:0;}
-}"
+.text-custom-a{color:var(--custom);}"
 `;
 
-exports[`targets 2`] = `
-"/* layer: default */
-.cls.multi,
-section{--un-text-opacity:1;color:rgba(156,163,175,var(--un-text-opacity));}
-@media (prefers-color-scheme: dark){
-.body32main{--un-bg-opacity:1;background-color:rgba(255,255,255,var(--un-bg-opacity));}
-}
-@media (min-width: 768px){
-aside{--un-shadow:var(--un-shadow-inset) 0 20px 25px -5px var(--un-shadow-color, rgba(0,0,0,0.1)),var(--un-shadow-inset) 0 8px 10px -6px var(--un-shadow-color, rgba(0,0,0,0.1));box-shadow:var(--un-ring-offset-shadow), var(--un-ring-shadow), var(--un-shadow);}
-}"
-`;
+exports[`targets 2`] = `""`;

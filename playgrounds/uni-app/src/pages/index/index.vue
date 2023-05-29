@@ -63,10 +63,14 @@ const fixed = ref(true)
         </div>
       </template>
     </div>
-    <div>
+    <div >
       before:content-test
       <div class="before:content-['english']" />
       <div class="before:content-['中文']" />
+    </div>
+    <div class="divide-y-4 space-y-2 divide-red divide-solid">
+      <div>1</div>
+      <div>2</div>
     </div>
   </div>
 </template>
