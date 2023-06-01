@@ -73,8 +73,10 @@ export default function presetApplet(options: PresetAppletOptions = {}): Preset<
     return str
   }
 
+  const _presetUno = presetUno({ ...options, preflight: false })
+
   return {
-    ...presetUno({ ...options, preflight: false }),
+    ..._presetUno,
     name: 'unocss-preset-applet',
     preflights: options.preflight
       ? normalizePreflights(enable ? appletPreflights : defaultPreflights, options.variablePrefix)
@@ -88,8 +90,6 @@ export default function presetApplet(options: PresetAppletOptions = {}): Preset<
         return util
       },
     ],
-    variants: [
-      ...variantSpaceAndDivide(options),
-    ],
+    variants: _presetUno.variants?.concat(variantSpaceAndDivide(options)),
   }
 }
