@@ -43,9 +43,12 @@
       "import": "./dist/transformer-applet.mjs"
     }
   },
-  "main": "dist/index.cjs",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
+  "main": "src/index.ts",
+  "publishConfig": {
+    "main": "dist/index.cjs",
+    "module": "dist/index.mjs",
+    "types": "dist/index.d.ts"
+  },
   "files": [
     "dist"
   ],
