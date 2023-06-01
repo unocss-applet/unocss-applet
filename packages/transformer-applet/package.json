@@ -1,7 +1,7 @@
 {
   "name": "@unocss-applet/transformer-applet",
   "type": "module",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Convert selectors not supported by the applet.",
   "author": "Neil Lee <zguolee@foxmail.com>",
   "license": "MIT",
