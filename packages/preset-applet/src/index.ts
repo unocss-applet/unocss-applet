@@ -74,6 +74,8 @@ export default function presetApplet(options: PresetAppletOptions = {}): Preset<
   }
 
   const _presetUno = presetUno({ ...options, preflight: false })
+  // remove the internal space and divide variant
+  _presetUno.variants?.splice(1, 1, ...variantSpaceAndDivide(options))
 
   return {
     ..._presetUno,
@@ -90,6 +92,5 @@ export default function presetApplet(options: PresetAppletOptions = {}): Preset<
         return util
       },
     ],
-    variants: _presetUno.variants?.concat(variantSpaceAndDivide(options)),
   }
 }
