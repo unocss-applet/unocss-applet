@@ -1,7 +1,7 @@
 {
   "name": "@unocss-applet/preset-applet",
   "type": "module",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "The Applet preset for [UnoCSS](https://github.com/unocss/unocss).",
   "author": "Neil Lee <zguolee@foxmail.com>",
   "license": "MIT",

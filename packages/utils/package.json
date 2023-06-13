@@ -1,7 +1,7 @@
 {
   "name": "@unocss-applet/utils",
   "type": "module",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "unocss-applet utils.",
   "author": "Neil Lee <zguolee@foxmail.com>",
   "license": "MIT",
