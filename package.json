@@ -2,6 +2,7 @@
   "name": "@unocss-applet/monorepo",
   "version": "0.5.3",
   "private": true,
+  "packageManager": "pnpm@8.6.0",
   "scripts": {
     "dev": "pnpm stub",
     "build": "rimraf packages/*/dist && pnpm -r --filter=./packages/* run build && pnpm -r run build-post",
