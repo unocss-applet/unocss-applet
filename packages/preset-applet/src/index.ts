@@ -2,7 +2,7 @@ import type { Preset, Variant } from 'unocss'
 import { presetUno } from 'unocss'
 import type { PresetUnoOptions, Theme } from '@unocss/preset-uno'
 import { normalizePreflights } from '@unocss/preset-mini'
-import { encodeNonLatin } from '@unocss-applet/utils'
+import { UNSUPPORTED_CHARS, encodeNonLatin } from '@unocss-applet/shared'
 import { appletPreflights, defaultPreflights } from './preflights'
 
 export type { Theme }
@@ -59,7 +59,6 @@ export default function presetApplet(options: PresetAppletOptions = {}): Preset<
   options.preflight = options.preflight ?? true
   options.variablePrefix = options.variablePrefix ?? 'un-'
 
-  const UNSUPPORTED_CHARS = ['.', ':', '%', '!', '#', '(', ')', '[', '/', ']', ',', '$', '{', '}', '@', '+', '^', '&', '<', '>', '\'']
   if (options.unsupportedChars)
     UNSUPPORTED_CHARS.push(...options.unsupportedChars)
 

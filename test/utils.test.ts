@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import { encodeNonLatin } from '@unocss-applet/utils'
+import { encodeNonLatin } from '@unocss-applet/shared'
 
 test('encodeNonLatin', () => {
   expect(encodeNonLatin('你好，谢谢，再见(Hello, thank you, goodbye)'))

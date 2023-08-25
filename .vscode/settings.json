@@ -8,7 +8,14 @@
     "**/Thumbs.db": true,
     "**/node_modules": false
   },
-  "unocss.root": "./playgrounds/uni-app",
+  "editor.codeActionsOnSave": {
+    "source.fixAll": false,
+    "source.fixAll.eslint": true
+  },
+  "unocss.root": [
+    "playgrounds/uni-app",
+    "playgrounds/tarojs"
+  ],
   "cSpell.words": [
     "attributify",
     "preflights",

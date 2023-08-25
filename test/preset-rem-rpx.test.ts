@@ -35,7 +35,7 @@ describe('rem-rpx', () => {
         .-p2{padding:-16rpx;}
         .m4{margin:32rpx;}
         .mx2{margin-left:16rpx;margin-right:16rpx;}
-        .gap2{grid-gap:16rpx;gap:16rpx;}"
+        .gap2{gap:16rpx;}"
       `)
   })
 
@@ -47,7 +47,7 @@ describe('rem-rpx', () => {
         "/* layer: default */
         .m-32rpx{margin:1rem;}
         .mx-16rpx{margin-left:0.5rem;margin-right:0.5rem;}
-        .gap-2rpx{grid-gap:0.0625rem;gap:0.0625rem;}"
+        .gap-2rpx{gap:0.0625rem;}"
       `)
   })
 })

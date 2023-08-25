@@ -24,23 +24,23 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs"
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
     },
     "./preset-applet": {
       "types": "./dist/preset-applet.d.ts",
-      "require": "./dist/preset-applet.cjs",
-      "import": "./dist/preset-applet.mjs"
+      "import": "./dist/preset-applet.mjs",
+      "require": "./dist/preset-applet.cjs"
     },
     "./preset-rem-rpx": {
       "types": "./dist/preset-rem-rpx.d.ts",
-      "require": "./dist/preset-rem-rpx.cjs",
-      "import": "./dist/preset-rem-rpx.mjs"
+      "import": "./dist/preset-rem-rpx.mjs",
+      "require": "./dist/preset-rem-rpx.cjs"
     },
     "./transformer-applet": {
       "types": "./dist/transformer-applet.d.ts",
-      "require": "./dist/transformer-applet.cjs",
-      "import": "./dist/transformer-applet.mjs"
+      "import": "./dist/transformer-applet.mjs",
+      "require": "./dist/transformer-applet.cjs"
     }
   },
   "main": "src/index.ts",

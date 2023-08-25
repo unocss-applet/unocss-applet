@@ -20,8 +20,8 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs"
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
     }
   },
   "main": "src/index.ts",
@@ -38,6 +38,6 @@
     "stub": "unbuild --stub"
   },
   "dependencies": {
-    "@unocss-applet/utils": "workspace:*"
+    "@unocss-applet/shared": "workspace:*"
   }
 }

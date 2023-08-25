@@ -67,9 +67,9 @@ export default defineConfig({
     presetAno(),
   ],
   transformers: [
-    ...transformers,
     transformerDirectives(),
     transformerVariantGroup(),
+    ...transformers,
   ],
 
 })

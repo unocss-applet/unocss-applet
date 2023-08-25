@@ -23,15 +23,18 @@ importers:
       '@unocss-applet/preset-rem-rpx':
         specifier: workspace:*
         version: link:packages/preset-rem-rpx
+      '@unocss-applet/shared':
+        specifier: workspace:*
+        version: link:packages/shared
       '@unocss-applet/transformer-applet':
         specifier: workspace:*
         version: link:packages/transformer-applet
       '@unocss-applet/transformer-attributify':
         specifier: workspace:*
         version: link:packages/transformer-attributify
-      '@unocss-applet/utils':
-        specifier: workspace:*
-        version: link:packages/utils
+      '@unocss/eslint-config':
+        specifier: ^0.55.2
+        version: 0.55.2(eslint@8.47.0)(typescript@5.1.6)
       bumpp:
         specifier: ^9.2.0
         version: 9.2.0
@@ -71,9 +74,9 @@ importers:
 
   packages/preset-applet:
     dependencies:
-      '@unocss-applet/utils':
+      '@unocss-applet/shared':
         specifier: workspace:*
-        version: link:../utils
+        version: link:../shared
       '@unocss/core':
         specifier: ^0.55.2
         version: 0.55.2
@@ -86,11 +89,13 @@ importers:
 
   packages/preset-rem-rpx: {}
 
+  packages/shared: {}
+
   packages/transformer-applet:
     dependencies:
-      '@unocss-applet/utils':
+      '@unocss-applet/shared':
         specifier: workspace:*
-        version: link:../utils
+        version: link:../shared
 
   packages/transformer-attributify: {}
 
@@ -108,8 +113,6 @@ importers:
       '@unocss-applet/transformer-attributify':
         specifier: workspace:*
         version: link:../transformer-attributify
-
-  packages/utils: {}
 
   playgrounds/tarojs:
     dependencies:
@@ -4556,6 +4559,18 @@ packages:
     dev: true
     optional: true
 
+  /@pkgr/utils@2.4.2:
+    resolution: {integrity: sha512-POgTXhjrTfbTV63DiFXav4lBHiICLKKwDeaKn9Nphwj7WH6m0hMMCaJkMyRWjgtPFyRKRVoMXXjczsTQRDEhYw==}
+    engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
+    dependencies:
+      cross-spawn: 7.0.3
+      fast-glob: 3.3.1
+      is-glob: 4.0.3
+      open: 9.1.0
+      picocolors: 1.0.0
+      tslib: 2.6.2
+    dev: true
+
   /@polka/url@1.0.0-next.21:
     resolution: {integrity: sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==}
     dev: true
@@ -6146,6 +6161,32 @@ packages:
 
   /@unocss/core@0.55.2:
     resolution: {integrity: sha512-ZLEES8RDgWoK/vttUzl3PM2bZqL3HvhLgj8xdDa09Xw+JiTlR4c66s+hLn52oCoJTnT9lGsD2j7tTGN9ToSiTA==}
+
+  /@unocss/eslint-config@0.55.2(eslint@8.47.0)(typescript@5.1.6):
+    resolution: {integrity: sha512-oBf4/3aozTrWDqGADV+/sfj6g2muQ+WJEpUIuL/zBgGmodVbA58/kopTh/9sscil4ciVmrLvkWHUxHmf4xM/dA==}
+    engines: {node: '>=14'}
+    dependencies:
+      '@unocss/eslint-plugin': 0.55.2(eslint@8.47.0)(typescript@5.1.6)
+    transitivePeerDependencies:
+      - eslint
+      - supports-color
+      - typescript
+    dev: true
+
+  /@unocss/eslint-plugin@0.55.2(eslint@8.47.0)(typescript@5.1.6):
+    resolution: {integrity: sha512-CKCyjbfvQTybhezR9z4gST3257Lh07FyYFLy5QGyIgMb3CnNONFLnqU/332m7wyD5twoPHl6NXHgBprzm1FVDQ==}
+    engines: {node: '>=14'}
+    dependencies:
+      '@typescript-eslint/utils': 6.4.1(eslint@8.47.0)(typescript@5.1.6)
+      '@unocss/config': 0.55.2
+      '@unocss/core': 0.55.2
+      magic-string: 0.30.3
+      synckit: 0.8.5
+    transitivePeerDependencies:
+      - eslint
+      - supports-color
+      - typescript
+    dev: true
 
   /@unocss/extractor-arbitrary-variants@0.51.13:
     resolution: {integrity: sha512-lF7p0ea/MeNf4IsjzNhRNYP8u+f1h5JjhTzcvFpQo/vpBvuM5ZCyqp4mkXxYnLNLFfTLsc+MxXaU34IXxpw1QA==}
@@ -9512,7 +9553,7 @@ packages:
     resolution: {integrity: sha512-gozW2blMLJCeFpBwugLTGyvVjNoeo1knonXAcatC6bjPBZitotxdWf7Gimr25N4c0AAOo4eOUfaG82IJPDpqCA==}
     dependencies:
       debug: 3.2.7
-      is-core-module: 2.12.1
+      is-core-module: 2.13.0
       resolve: 1.22.4
     transitivePeerDependencies:
       - supports-color
@@ -11253,6 +11294,7 @@ packages:
     resolution: {integrity: sha512-Q4ZuBAe2FUsKtyQJoQHlvP8OvBERxO3jEmy1I7hcRXcJBGGHFh/aJBswbXuS9sgrDH2QUO8ilkwNPHvHMd8clg==}
     dependencies:
       has: 1.0.3
+    dev: true
 
   /is-core-module@2.13.0:
     resolution: {integrity: sha512-Z7dk6Qo8pOCp3l4tsX2C5ZVas4V+UxwQodwZhLopL91TX8UyyHEXafPcyoeeWuLrwzHcr3igO78wNLwHJHsMCQ==}
@@ -13963,7 +14005,7 @@ packages:
       postcss: 8.4.28
       postcss-value-parser: 4.2.0
       read-cache: 1.0.0
-      resolve: 1.22.2
+      resolve: 1.22.4
 
   /postcss-load-config@3.1.4(postcss@8.4.28):
     resolution: {integrity: sha512-6DiM4E7v4coTE4uzA8U//WhtPwyhiim3eyjEMFCnUpzbrkK9wJHgKDT2mR+HbtSrd/NubVaYTOpSpjUl8NQeRg==}
@@ -14897,7 +14939,7 @@ packages:
     resolution: {integrity: sha512-Sb+mjNHOULsBv818T40qSPeRiuWLyaGMa5ewydRLFimneixmVy2zdivRl+AF6jaYPC8ERxGDmFSiqui6SfPd+g==}
     hasBin: true
     dependencies:
-      is-core-module: 2.12.1
+      is-core-module: 2.13.0
       path-parse: 1.0.7
       supports-preserve-symlinks-flag: 1.0.0
 
@@ -15771,6 +15813,14 @@ packages:
     resolution: {integrity: sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==}
     dev: true
 
+  /synckit@0.8.5:
+    resolution: {integrity: sha512-L1dapNV6vu2s/4Sputv8xGsCdAVlb5nRDMFU/E27D44l5U6cw1g0dGd45uLc+OXjNMmF4ntiMdCimzcjFKQI8Q==}
+    engines: {node: ^14.18.0 || >=16.0.0}
+    dependencies:
+      '@pkgr/utils': 2.4.2
+      tslib: 2.6.2
+    dev: true
+
   /systemjs@6.14.1:
     resolution: {integrity: sha512-8ftwWd+XnQtZ/aGbatrN4QFNGrKJzmbtixW+ODpci7pyoTajg4sonPP8aFLESAcuVxaC1FyDESt+SpfFCH9rZQ==}
     dev: true
@@ -16033,6 +16083,10 @@ packages:
 
   /tslib@2.4.0:
     resolution: {integrity: sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==}
+    dev: true
+
+  /tslib@2.6.2:
+    resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
     dev: true
 
   /tsutils@3.21.0(typescript@5.1.6):

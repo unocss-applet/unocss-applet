@@ -1,5 +1,5 @@
 import type { SourceCodeTransformer } from 'unocss'
-import { encodeNonLatin } from '@unocss-applet/utils'
+import { UNSUPPORTED_CHARS, encodeNonLatin } from '@unocss-applet/shared'
 
 export interface TransformerAppletOptions {
   /**
@@ -25,7 +25,6 @@ export default function transformerApplet(options: TransformerAppletOptions = {}
   const enable = options.enable ?? true
   const layer = options.layer ?? 'applet_shortcuts'
 
-  const UNSUPPORTED_CHARS = ['.', ':', '%', '!', '#', '(', ')', '[', '/', ']', ',', '$', '{', '}', '@', '+', '^', '&', '<', '>', '\'']
   if (options.unsupportedChars)
     UNSUPPORTED_CHARS.push(...options.unsupportedChars)
 
