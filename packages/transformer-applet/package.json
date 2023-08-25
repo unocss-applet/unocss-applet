@@ -36,8 +36,5 @@
   "scripts": {
     "build": "unbuild",
     "stub": "unbuild --stub"
-  },
-  "dependencies": {
-    "@unocss-applet/shared": "workspace:*"
   }
 }

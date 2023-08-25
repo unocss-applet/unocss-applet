@@ -15,8 +15,8 @@ const fixed = ref(true)
   <div class="text-center aaa" p="4">
     <div text="4xl" class="rotate-180 i-carbon-campsite" :class="bg" :hover-class="bool ? '' : '!bg-teal'" />
     <div :class="[border && 'u-border-top', fixed && 'u-tabbar--fixed']" />
-    <div class="border bg-blue-200 font-(light mono) ">
-      <div class="hover:(!bg-gray-600 text-red font-bold)" text="#fff">
+    <div class="border bg-blue-200 font-light font-mono">
+      <div class="!hover:bg-gray-600 hover:text-red hover:font-bold" text="#fff">
         hover bg-gray-600 text-red font-bold
       </div>
     </div>
@@ -57,8 +57,8 @@ const fixed = ref(true)
         <div class="before:text-sm before:content-['中文']" />
       </div>
     </div>
-    <div class="flex gap-2">
-      <div class="flex-1 divide-y-1 divide-red divide-dashed border-red border-solid border-1 box-border">
+    <div class="gap-2 flex">
+      <div class="flex-1 divide-y-1 divide-red divide-dashed border-red border-solid border-1">
         <div class="custom-div border-0">
           1
         </div>
@@ -67,7 +67,7 @@ const fixed = ref(true)
         </div>
       </div>
       <div class="flex-1 flex space-x-1">
-        <div class="custom-div border-blue border-solid border-1 w-20">
+        <div class="custom-div border-solid border-1 border-blue w-20">
           1
         </div>
         <div border-blue border-solid border-1 w-20>

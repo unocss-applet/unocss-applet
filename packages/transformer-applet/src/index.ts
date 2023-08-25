@@ -1,5 +1,5 @@
 import type { SourceCodeTransformer } from 'unocss'
-import { UNSUPPORTED_CHARS, encodeNonLatin } from '@unocss-applet/shared'
+import { UNSUPPORTED_CHARS, encodeNonLatin } from '../../shared/src'
 
 export interface TransformerAppletOptions {
   /**
@@ -25,10 +25,8 @@ export default function transformerApplet(options: TransformerAppletOptions = {}
   const enable = options.enable ?? true
   const layer = options.layer ?? 'applet_shortcuts'
 
-  if (options.unsupportedChars)
-    UNSUPPORTED_CHARS.push(...options.unsupportedChars)
-
-  const ESCAPED_UNSUPPORTED_CHARS = UNSUPPORTED_CHARS.map(char => `\\${char}`)
+  const _UNSUPPORTED_CHARS = [...UNSUPPORTED_CHARS, ...(options.unsupportedChars ?? [])]
+  const ESCAPED_UNSUPPORTED_CHARS = _UNSUPPORTED_CHARS.map(char => `\\${char}`)
   const charTestReg = new RegExp(`[${ESCAPED_UNSUPPORTED_CHARS.join('')}]`)
   const charReplaceReg = new RegExp(`[${ESCAPED_UNSUPPORTED_CHARS.join('')}]`, 'g')
 

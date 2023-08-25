@@ -15,10 +15,6 @@ import {
   transformerAttributify,
 } from 'unocss-applet'
 
-import { presetAno } from 'ano-ui'
-
-import { presetExtra } from 'unocss-preset-extra'
-
 const isApplet = process.env?.UNI_PLATFORM?.startsWith('mp') ?? false
 const presets: Preset[] = []
 const transformers: SourceCodeTransformer[] = []
@@ -63,8 +59,6 @@ export default defineConfig({
      */
     presetAttributify(),
     ...presets,
-    presetExtra(),
-    presetAno(),
   ],
   transformers: [
     transformerDirectives(),

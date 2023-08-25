@@ -40,9 +40,8 @@
     "stub": "unbuild --stub"
   },
   "dependencies": {
-    "@unocss-applet/shared": "workspace:*",
-    "@unocss/core": "^0.55.2",
-    "@unocss/preset-mini": "^0.55.2",
-    "@unocss/preset-uno": "^0.55.2"
+    "@unocss/core": "^0.55.3",
+    "@unocss/preset-mini": "^0.55.3",
+    "@unocss/preset-uno": "^0.55.3"
   }
 }

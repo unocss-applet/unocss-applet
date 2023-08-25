@@ -1,26 +1,5 @@
 {
   "name": "@unocss-applet/shared",
   "version": "0.5.4",
-  "private": true,
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs"
-    },
-    "./*": "./*"
-  },
-  "main": "src/index.ts",
-  "publishConfig": {
-    "main": "dist/index.cjs",
-    "module": "dist/index.mjs",
-    "types": "dist/index.d.ts"
-  },
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "build": "unbuild",
-    "stub": "unbuild --stub"
-  }
+  "private": true
 }

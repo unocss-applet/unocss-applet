@@ -2,7 +2,7 @@ import type { Preset, Variant } from 'unocss'
 import { presetUno } from 'unocss'
 import type { PresetUnoOptions, Theme } from '@unocss/preset-uno'
 import { normalizePreflights } from '@unocss/preset-mini'
-import { UNSUPPORTED_CHARS, encodeNonLatin } from '@unocss-applet/shared'
+import { UNSUPPORTED_CHARS, encodeNonLatin } from '../../shared/src'
 import { appletPreflights, defaultPreflights } from './preflights'
 
 export type { Theme }
@@ -59,10 +59,9 @@ export default function presetApplet(options: PresetAppletOptions = {}): Preset<
   options.preflight = options.preflight ?? true
   options.variablePrefix = options.variablePrefix ?? 'un-'
 
-  if (options.unsupportedChars)
-    UNSUPPORTED_CHARS.push(...options.unsupportedChars)
+  const _UNSUPPORTED_CHARS = [...UNSUPPORTED_CHARS, ...(options.unsupportedChars ?? [])]
 
-  const ESCAPED_ESCAPED_UNSUPPORTED_CHARS = UNSUPPORTED_CHARS.map(char => `\\\\\\${char}`)
+  const ESCAPED_ESCAPED_UNSUPPORTED_CHARS = _UNSUPPORTED_CHARS.map(char => `\\\\\\${char}`)
   const charTestReg = new RegExp(`${ESCAPED_ESCAPED_UNSUPPORTED_CHARS.join('|')}`)
   const charReplaceReg = new RegExp(`${ESCAPED_ESCAPED_UNSUPPORTED_CHARS.join('|')}`, 'g')
 
@@ -73,6 +72,10 @@ export default function presetApplet(options: PresetAppletOptions = {}): Preset<
   }
 
   const _presetUno = presetUno({ ...options, preflight: false })
+  // remove the last rule
+  // https://github.com/unocss/unocss/blob/main/packages/preset-mini/src/_rules/default.ts#L86
+  // https://github.com/unocss/unocss/blob/main/packages/preset-mini/src/_rules/question-mark.ts
+  _presetUno.rules?.pop()
   // remove the internal space and divide variant
   _presetUno.variants?.splice(1, 1, ...variantSpaceAndDivide(options))
 
