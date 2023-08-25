@@ -1,13 +1,10 @@
 <!-- eslint-disable @typescript-eslint/quotes -->
 <script setup lang="ts">
 import { ref } from 'vue'
-import AButton from 'ano-ui/components/AButton/AButton.vue'
-import ASwitch from 'ano-ui/components/ASwitch/ASwitch.vue'
 import { menuList } from './data'
 
 const bg = 'bg-[hsl(2.7,81.9%,69.6%)]'
 const icon = "i-carbon:campsite"
-const bgIgnore = 'applet-ignore bg-[hsl(2.7,81.9%,69.6%)]'
 const index = 1
 const bool = ref<boolean>()
 const border = ref(true)
@@ -20,15 +17,11 @@ const fixed = ref(true)
     <div :class="[border && 'u-border-top', fixed && 'u-tabbar--fixed']" />
     <div class="border bg-blue-200 font-(light mono) ">
       <div class="hover:(!bg-gray-600 text-red font-bold)" text="#fff">
-        {{ 'applet-ignore hover:(!bg-gray-600 text-red font-bold)' }}
+        hover bg-gray-600 text-red font-bold
       </div>
     </div>
     <div :class="`p-2.5 ${bool ? 'p-0.5' : 'text-amber'}`" m-2 :hover-class="['!bg-green']">
-      class="applet-ignore hover:bg-green"
-    </div>
-    <div class="flex gap-2">
-      <AButton>Button</AButton>
-      <ASwitch v-model="bool" />
+      hover bg-green
     </div>
     <div flex="~ col gap-1" class="p-1" items-center :class="bool ? 'text-yellow-500 px-2.5' : ''">
       <div :class="icon" inline-block color="blue" text="xl !red" />
@@ -43,36 +36,50 @@ const fixed = ref(true)
       <div
         h-10 flex="1" :class="[index > 1 ? '' : '']" text="blue dark:(red !bold)" :style="[index > 1 ? '' : '']"
         :type="index > 1"
-      >
-        {{ bgIgnore }}
-      </div>
+      />
     </div>
-    <div class="bg-[url(https://static.runoob.com/images/demo/demo2.jpg)]" w-40 h-20 ma un-color="red" bg="center cover">
-      {{ 'applet-ignore bg-[url(https://static.runoob.com/images/demo/demo2.jpg)]' }}
-    </div>
+    <div
+      class="bg-[url(https://static.runoob.com/images/demo/demo2.jpg)]" w-40 h-20 ma un-color="red"
+      bg="center cover"
+    />
     <div class="p-1 text-2xl" m-2 :class="bool ? '' : 'text-yellow-500 p-2.5'">
       abckefghijklmnopqrstuvwxyz
     </div>
-    <div i-carbon:logo-twitter dark:i-carbon:logo-github />
-    <div i-carbon-logo-twitter dark:i-carbon-logo-github />
     <div flex="~" gap-2>
       <template v-for="menu, _idx of menuList" :key="_idx">
-        <div class="[&>view]:last:text-red [&>view]:first:text-green [&+view]:text-2xl [&>div]:last:text-red [&>div]:first:text-green [&+div]:text-2xl">
+        <div class="[&>view]:last:text-red [&>view]:first:text-green [&>div]:last:text-red [&>div]:first:text-green">
           <div>{{ menu.name }}</div>
           <div :class="menu.icon" />
         </div>
       </template>
+      <div>
+        <div class="before:text-sm before:content-['english']" />
+        <div class="before:text-sm before:content-['中文']" />
+      </div>
     </div>
-    <div >
-      before:content-test
-      <div class="before:content-['english']" />
-      <div class="before:content-['中文']" />
-    </div>
-    <div class="divide-y-4 space-y-2 divide-red divide-solid">
-      <div>1</div>
-      <div>2</div>
+    <div class="flex gap-2">
+      <div class="flex-1 divide-y-1 divide-red divide-dashed border-red border-solid border-1 box-border">
+        <div class="custom-div border-0">
+          1
+        </div>
+        <div border-0>
+          2
+        </div>
+      </div>
+      <div class="flex-1 flex space-x-1">
+        <div class="custom-div border-blue border-solid border-1 w-20">
+          1
+        </div>
+        <div border-blue border-solid border-1 w-20>
+          2
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.custom-div {
+  --at-apply: text-right text-red
+}
+</style>

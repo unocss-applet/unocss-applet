@@ -2,7 +2,7 @@
   "name": "@unocss-applet/monorepo",
   "version": "0.5.3",
   "private": true,
-  "packageManager": "pnpm@8.6.0",
+  "packageManager": "pnpm@8.6.12",
   "scripts": {
     "dev": "pnpm stub",
     "build": "rimraf packages/*/dist && pnpm -r --filter=./packages/* run build && pnpm -r run build-post",
@@ -23,25 +23,25 @@
     "build:taro:h5": "npm -C playgrounds/tarojs run build:h5"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^0.39.3",
-    "@iconify-json/tabler": "^1.1.77",
-    "@types/node": "^18.16.16",
+    "@antfu/eslint-config": "^0.41.0",
+    "@iconify-json/tabler": "^1.1.89",
+    "@types/node": "^18.17.9",
     "@unocss-applet/preset-applet": "workspace:*",
     "@unocss-applet/preset-rem-rpx": "workspace:*",
     "@unocss-applet/transformer-applet": "workspace:*",
     "@unocss-applet/transformer-attributify": "workspace:*",
     "@unocss-applet/utils": "workspace:*",
-    "bumpp": "^9.1.0",
-    "eslint": "^8.41.0",
-    "esno": "^0.16.3",
-    "magic-string": "^0.30.0",
+    "bumpp": "^9.2.0",
+    "eslint": "^8.47.0",
+    "esno": "^0.17.0",
+    "magic-string": "^0.30.3",
     "rimraf": "^5.0.1",
-    "typescript": "^5.0.4",
-    "unbuild": "^1.2.1",
-    "unocss": "^0.52.4",
+    "typescript": "^5.1.6",
+    "unbuild": "^2.0.0",
+    "unocss": "^0.55.2",
     "unocss-applet": "workspace:*",
     "unocss-preset-extra": "^0.5.2",
-    "vite": "^4.3.9",
-    "vitest": "^0.31.1"
+    "vite": "^4.4.9",
+    "vitest": "^0.34.2"
   }
 }
