@@ -98,7 +98,7 @@ export default {
 `main.ts`
 
 ```ts
-import 'uno.css'
+import 'virtual:uno.css'
 ```
 
 <br></details>
