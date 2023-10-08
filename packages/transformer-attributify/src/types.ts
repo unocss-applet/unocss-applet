@@ -6,32 +6,32 @@ export interface TransformerAttributifyOptions {
   enable?: boolean
 
   /**
-    * @default 'un-'
-    */
+   * @default 'un-'
+   */
   prefix?: string
 
   /**
-    * Only match for prefixed attributes
-    *
-    * @default false
-    */
+   * Only match for prefixed attributes
+   *
+   * @default false
+   */
   prefixedOnly?: boolean
 
   /**
-    * Support matching non-valued attributes
-    *
-    * For example
-    * ```html
-    * <div mt-2 />
-    * ```
-    *
-    * @default true
-    */
+   * Support matching non-valued attributes
+   *
+   * For example
+   * ```html
+   * <div mt-2 />
+   * ```
+   *
+   * @default true
+   */
   nonValuedAttribute?: boolean
 
   /**
-    * A list of attributes to be ignored from extracting.
-    */
+   * A list of attributes to be ignored from extracting.
+   */
   ignoreAttributes?: string[]
 
   /**

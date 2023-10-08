@@ -11,8 +11,8 @@ const bool = ref<boolean>()
 <template>
   <div class="text-center aaa" p="4">
     <div text="4xl" class="rotate-180 i-carbon-campsite" :class="bg" @click="bool = !bool" />
-    <div class="border bg-blue-200 font-(light mono) ">
-      <div class="hover:(!bg-gray-600 text-red font-bold)" text="#fff">
+    <div class="border bg-blue-200 font-light font-mono">
+      <div class="!hover:bg-gray-600 hover:text-red hover:font-bold" text="#fff">
         {{ 'applet-ignore: hover:(!bg-gray-600 text-red font-bold)' }}
       </div>
     </div>
@@ -40,7 +40,7 @@ const bool = ref<boolean>()
     <div class="bg-[url(https://static.runoob.com/images/demo/demo2.jpg)]" w-40 h-20 ma color="white" bg="center cover">
       {{ 'applet-ignore: bg-[url(https://static.runoob.com/images/demo/demo2.jpg)]' }}
     </div>
-    <div class="m-0.5 p-1 text-2xl" :class="bool ? '' : 'text-yellow-500 p-2.5'">
+    <div class="p-1 m-0.5 text-2xl" :class="bool ? '' : 'text-yellow-500 p-2.5'">
       abckefghijklmnopqrstuvwxyz
     </div>
   </div>

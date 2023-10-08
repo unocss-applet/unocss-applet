@@ -17,8 +17,8 @@ const fixed = ref(true)
   <div class="text-center aaa bg-${var}" p="4">
     <div text="4xl" class="rotate-180 i-carbon-campsite" :class="bg" />
     <div :class="[border && 'u-border-top', fixed && 'u-tabbar--fixed']" />
-    <div class="border bg-blue-200 font-(light mono) " :cc="customClass">
-      <div class="hover:(!bg-gray-600 text-red font-bold)" text="#fff">
+    <div class="border bg-blue-200 font-light font-mono" :cc="customClass">
+      <div class="!hover:bg-gray-600 hover:text-red hover:font-bold" text="#fff">
         {{ 'applet-ignore: hover:(!bg-gray-600 text-red font-bold)' }}
       </div>
     </div>
