@@ -8,6 +8,7 @@ import { appletPreflights, defaultPreflights } from './preflights'
 export type { Theme }
 
 // PresetUnoOptions https://github.com/unocss/unocss/blob/main/packages/preset-uno/src/index.ts#L9
+// PresetMiniOptions https://github.com/unocss/unocss/blob/main/packages/preset-mini/src/index.ts#L33-L73
 export interface PresetAppletOptions extends PresetUnoOptions {
   /**
    * Enable applet
