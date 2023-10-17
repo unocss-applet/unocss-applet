@@ -16,7 +16,6 @@
 - [unocss-applet](https://github.com/unocss-applet/unocss-applet/tree/main/packages/unocss-applet) - The default package with common presets and plugins.
 - [@unocss-applet/preset-applet](https://github.com/unocss-applet/unocss-applet/tree/main/packages/preset-applet) - The default preset (right now it's equivalent to `@unocss/preset-uno`).
 - [@unocss-applet/preset-rem-rpx](https://github.com/unocss-applet/unocss-applet/tree/main/packages/preset-rem-rpx) - Coverts rem <=> rpx for utils.
-- [@unocss-applet/transformer-applet](https://github.com/unocss-applet/unocss-applet/tree/main/packages/transformer-applet) - Convert selectors not supported by the applet.
 - [@unocss-applet/transformer-attributify](https://github.com/unocss-applet/unocss-applet/tree/main/packages/transformer-attributify) - Enables Attributify Mode for applet.
 
 ## Installation
@@ -32,7 +31,7 @@ pnpm add unocss-applet -D # with pnpm
 ### UnoCSS config
 
 <details>
-<summary>unocss.config.ts</summary><br>
+<summary>uno.config.ts</summary><br>
 
 ```ts
 import type { Preset, SourceCodeTransformer } from 'unocss'
@@ -41,7 +40,6 @@ import { defineConfig } from 'unocss'
 import {
   presetApplet,
   presetRemRpx,
-  transformerApplet,
   transformerAttributify,
 } from 'unocss-applet'
 
@@ -56,7 +54,6 @@ if (isApplet) {
   presets.push(presetApplet())
   presets.push(presetRemRpx())
   transformers.push(transformerAttributify({ ignoreAttributes: ['block'] }))
-  transformers.push(transformerApplet())
 }
 else {
   presets.push(presetApplet())

@@ -30,7 +30,6 @@
     "@unocss-applet/preset-applet": "workspace:*",
     "@unocss-applet/preset-rem-rpx": "workspace:*",
     "@unocss-applet/shared": "workspace:*",
-    "@unocss-applet/transformer-applet": "workspace:*",
     "@unocss-applet/transformer-attributify": "workspace:*",
     "@unocss/eslint-config": "^0.56.5",
     "bumpp": "^9.2.0",

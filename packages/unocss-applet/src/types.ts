@@ -1,8 +1,12 @@
-import type { PresetUnoOptions } from '@unocss/preset-uno'
+import type { UserConfig } from 'unocss'
 
-// PresetUnoOptions https://github.com/unocss/unocss/blob/main/packages/preset-uno/src/index.ts#L9
-// PresetMiniOptions https://github.com/unocss/unocss/blob/main/packages/preset-mini/src/index.ts#L33-L73
-export interface PresetAppletOptions extends PresetUnoOptions {
+export interface AppletConfig {
+  /**
+   * Platform
+   * @default 'uniapp'
+   */
+  platform?: 'uniapp' | 'taro'
+
   /**
    * Unsupported characters in applet, will be added to the default value
    * @default ['.', ':', '%', '!', '#', '(', ')', '[', '/', ']', ',', '$', '{', '}', '@', '+', '^', '&', '<', '>', '\'']
@@ -15,3 +19,5 @@ export interface PresetAppletOptions extends PresetUnoOptions {
    */
   betweenElements?: string[]
 }
+
+export type UserAppletConfig<Theme extends object = object> = UserConfig<Theme> & { applet?: AppletConfig }

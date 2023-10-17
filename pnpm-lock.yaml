@@ -26,9 +26,6 @@ importers:
       '@unocss-applet/shared':
         specifier: workspace:*
         version: link:packages/shared
-      '@unocss-applet/transformer-applet':
-        specifier: workspace:*
-        version: link:packages/transformer-applet
       '@unocss-applet/transformer-attributify':
         specifier: workspace:*
         version: link:packages/transformer-attributify
@@ -47,9 +44,6 @@ importers:
       magic-string:
         specifier: ^0.30.4
         version: 0.30.4
-      rimraf:
-        specifier: ^5.0.5
-        version: 5.0.5
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -88,8 +82,6 @@ importers:
 
   packages/shared: {}
 
-  packages/transformer-applet: {}
-
   packages/transformer-attributify: {}
 
   packages/unocss-applet:
@@ -101,11 +93,14 @@ importers:
         specifier: workspace:*
         version: link:../preset-rem-rpx
       '@unocss-applet/transformer-applet':
-        specifier: workspace:*
-        version: link:../transformer-applet
+        specifier: ^0.5.5
+        version: 0.5.5
       '@unocss-applet/transformer-attributify':
         specifier: workspace:*
         version: link:../transformer-attributify
+      '@unocss/preset-uno':
+        specifier: ^0.56.5
+        version: 0.56.5
 
   playgrounds/tarojs:
     dependencies:
@@ -5321,6 +5316,10 @@ packages:
       eslint-visitor-keys: 3.4.3
     dev: true
 
+  /@unocss-applet/transformer-applet@0.5.5:
+    resolution: {integrity: sha512-GDzZt0S+Jbr7yiD+cmkIQdnEroAzSiCPajXaTWbmkk8dio+7dW9cWPEGaFKa3laJI6yxDR3jJX44m82LhHdEpg==}
+    dev: false
+
   /@unocss/astro@0.56.5(rollup@3.28.1)(vite@4.4.11):
     resolution: {integrity: sha512-nkxyGV9mA7DZ5LEr4Gap/SggM60MFNUfn56ngpxCqjQHJOMRJrAcR99hCVn+78vZ9xuZl9HxdIwgZLzn41thMw==}
     peerDependencies:
@@ -9795,18 +9794,6 @@ packages:
       path-scurry: 1.10.1
     dev: true
 
-  /glob@10.3.10:
-    resolution: {integrity: sha512-fa46+tv1Ak0UPK1TOy/pZrIybNNt4HCv7SDzwyfiOZkvZLEbjsZkJBPtDHVshZjbecAoAGSC20MjLDG/qr679g==}
-    engines: {node: '>=16 || 14 >=14.17'}
-    hasBin: true
-    dependencies:
-      foreground-child: 3.1.1
-      jackspeak: 2.3.6
-      minimatch: 9.0.1
-      minipass: 6.0.2
-      path-scurry: 1.10.1
-    dev: true
-
   /glob@7.2.3:
     resolution: {integrity: sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==}
     dependencies:
@@ -14182,14 +14169,6 @@ packages:
     hasBin: true
     dependencies:
       glob: 7.2.3
-    dev: true
-
-  /rimraf@5.0.5:
-    resolution: {integrity: sha512-CqDakW+hMe/Bz202FPEymy68P+G50RfMQK+Qo5YUqc9SPipvbGjCGKd0RSKEelbsfQuw3g5NZDSrlZZAJurH1A==}
-    engines: {node: '>=14'}
-    hasBin: true
-    dependencies:
-      glob: 10.3.10
     dev: true
 
   /rollup-plugin-dts@6.0.0(rollup@3.28.1)(typescript@5.2.2):

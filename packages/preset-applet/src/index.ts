@@ -6,17 +6,17 @@ import { UNSUPPORTED_CHARS, encodeNonLatin } from '../../shared/src'
 import { appletPreflights } from './preflights'
 import type { PresetAppletOptions } from './types'
 import { variantSpaceAndDivide } from './variants'
+import { transformerApplet } from './transformers'
 
 export default function presetApplet(options: PresetAppletOptions = {}): Preset<Theme> {
   options.variablePrefix = options.variablePrefix ?? 'un-'
 
   const _UNSUPPORTED_CHARS = [...UNSUPPORTED_CHARS, ...(options.unsupportedChars ?? [])]
 
-  const ESCAPED_ESCAPED_UNSUPPORTED_CHARS = _UNSUPPORTED_CHARS.map(char => `\\\\\\${char}`)
-  const charTestReg = new RegExp(`${ESCAPED_ESCAPED_UNSUPPORTED_CHARS.join('|')}`)
-  const charReplaceReg = new RegExp(`${ESCAPED_ESCAPED_UNSUPPORTED_CHARS.join('|')}`, 'g')
-
   function unoCSSToAppletProcess(str: string) {
+    const ESCAPED_ESCAPED_UNSUPPORTED_CHARS = _UNSUPPORTED_CHARS.map(char => `\\\\\\${char}`)
+    const charTestReg = new RegExp(`${ESCAPED_ESCAPED_UNSUPPORTED_CHARS.join('|')}`)
+    const charReplaceReg = new RegExp(`${ESCAPED_ESCAPED_UNSUPPORTED_CHARS.join('|')}`, 'g')
     if (charTestReg.test(str))
       str = str.replace(charReplaceReg, '_a_')
     return str
@@ -34,10 +34,6 @@ export default function presetApplet(options: PresetAppletOptions = {}): Preset<
     ..._presetUno,
     name: 'unocss-preset-applet',
     preflights: options.preflight ? normalizePreflights(appletPreflights, options.variablePrefix) : [],
-    theme: {
-      ..._presetUno.theme,
-
-    },
     postprocess: [
       (util) => {
         if (util.selector) {
@@ -47,5 +43,10 @@ export default function presetApplet(options: PresetAppletOptions = {}): Preset<
         return util
       },
     ],
+    configResolved(config) {
+      if (!config.transformers)
+        config.transformers = []
+      config.transformers.push(transformerApplet(options))
+    },
   }
 }

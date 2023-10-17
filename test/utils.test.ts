@@ -1,7 +1,7 @@
-import { expect, test } from 'vitest'
-import { encodeNonLatin } from '@unocss-applet/shared'
+import { expect, it } from 'vitest'
+import { encodeNonLatin } from '../packages/shared/src'
 
-test('encodeNonLatin', () => {
+it('encodeNonLatin', () => {
   expect(encodeNonLatin('你好，谢谢，再见(Hello, thank you, goodbye)'))
     .toMatchInlineSnapshot('"2032022909652923587435874652922087735265(Hello,32thank32you,32goodbye)"')
   expect(encodeNonLatin('こんにちは、ありがとう、さようなら (Hello, thank you, goodbye)'))

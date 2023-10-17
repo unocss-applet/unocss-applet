@@ -11,7 +11,6 @@ import {
 import {
   presetApplet,
   presetRemRpx,
-  transformerApplet,
   transformerAttributify,
 } from 'unocss-applet'
 
@@ -23,7 +22,6 @@ if (isApplet) {
   presets.push(presetApplet())
   presets.push(presetRemRpx())
   transformers.push(transformerAttributify({ ignoreAttributes: ['block'] }))
-  transformers.push(transformerApplet())
 }
 else {
   presets.push(presetUno())
