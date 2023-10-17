@@ -23,7 +23,7 @@ export interface RemRpxOptions {
   mode?: 'rem2rpx' | 'rpx2rem'
 }
 
-export default function presetRemRpx(options: RemRpxOptions = {}): Preset {
+export function presetRemRpx(options: RemRpxOptions = {}): Preset {
   const { baseFontSize = 16, screenWidth = 375 } = options
   const mode = options.mode ?? 'rem2rpx'
 
@@ -50,3 +50,5 @@ function rem2rpx(value: string, baseFontSize: number, screenWidth: number) {
 function rpx2rem(value: string, baseFontSize: number, screenWidth: number) {
   return `${+value.slice(0, -3) / (750 / screenWidth) / baseFontSize}rem`
 }
+
+export default presetRemRpx

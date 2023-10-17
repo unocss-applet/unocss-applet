@@ -15,7 +15,7 @@ pnpm add @unocss-applet/preset-rem-rpx -D # with pnpm
 ```ts
 import { defineConfig } from 'unocss'
 
-import presetRemRpx from '@unocss-applet/preset-rem-rpx'
+import { presetRemRpx } from '@unocss-applet/preset-rem-rpx'
 
 export default defineConfig({
   presets: [

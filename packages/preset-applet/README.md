@@ -13,7 +13,7 @@ pnpm add @unocss-applet/preset-applet -D # with pnpm
 ## Usage
 
 ```ts
-import presetApplet from '@unocss-applet/preset-applet'
+import { presetApplet } from '@unocss-applet/preset-applet'
 
 export default defineConfig({
   presets: [

@@ -8,7 +8,9 @@ import type { PresetAppletOptions } from './types'
 import { variantSpaceAndDivide } from './variants'
 import { transformerApplet } from './transformers'
 
-export default function presetApplet(options: PresetAppletOptions = {}): Preset<Theme> {
+export * from './types'
+
+export function presetApplet(options: PresetAppletOptions = {}): Preset<Theme> {
   options.variablePrefix = options.variablePrefix ?? 'un-'
 
   const _UNSUPPORTED_CHARS = [...UNSUPPORTED_CHARS, ...(options.unsupportedChars ?? [])]
@@ -50,3 +52,5 @@ export default function presetApplet(options: PresetAppletOptions = {}): Preset<
     },
   }
 }
+
+export default presetApplet

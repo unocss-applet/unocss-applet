@@ -11,7 +11,7 @@ const attributeRE = /([\[?a-zA-Z0-9\u00A0-\uFFFF-_:()#%.\]?]+)(?:\s*=\s*((?:'[^'
 
 const defaultIgnoreAttributes = ['placeholder', 'setup', 'lang', 'scoped']
 
-export default function transformerAttributify(options: TransformerAttributifyOptions = {}): SourceCodeTransformer {
+export function transformerAttributify(options: TransformerAttributifyOptions = {}): SourceCodeTransformer {
   const ignoreAttributes = options?.ignoreAttributes ?? defaultIgnoreAttributes
   const nonValuedAttribute = options?.nonValuedAttribute ?? true
   const prefix = options.prefix ?? 'un-'
@@ -109,3 +109,5 @@ export default function transformerAttributify(options: TransformerAttributifyOp
     },
   }
 }
+
+export default transformerAttributify

@@ -27,21 +27,7 @@
       "import": "./dist/index.mjs",
       "require": "./dist/index.cjs"
     },
-    "./preset-applet": {
-      "types": "./dist/preset-applet.d.ts",
-      "import": "./dist/preset-applet.mjs",
-      "require": "./dist/preset-applet.cjs"
-    },
-    "./preset-rem-rpx": {
-      "types": "./dist/preset-rem-rpx.d.ts",
-      "import": "./dist/preset-rem-rpx.mjs",
-      "require": "./dist/preset-rem-rpx.cjs"
-    },
-    "./transformer-applet": {
-      "types": "./dist/transformer-applet.d.ts",
-      "import": "./dist/transformer-applet.mjs",
-      "require": "./dist/transformer-applet.cjs"
-    }
+    "./*": "./*"
   },
   "main": "src/index.ts",
   "publishConfig": {
