@@ -29,12 +29,6 @@ export default defineConfig({
 // PresetMiniOptions https://github.com/unocss/unocss/blob/main/packages/preset-mini/src/index.ts#L33-L73
 export interface PresetAppletOptions extends PresetUnoOptions {
   /**
-   * Enable applet
-   * @default true
-   */
-  enable?: boolean
-
-  /**
    * Unsupported characters in applet, will be added to the default value
    * @default ['.', ':', '%', '!', '#', '(', ')', '[', '/', ']', ',', '$', '{', '}', '@', '+', '^', '&', '<', '>', '\'']
    */
@@ -53,9 +47,64 @@ export interface PresetAppletOptions extends PresetUnoOptions {
 - The `*` selector will be replaced with `page` in the generated class name.
 - the unsupported characters in applet will be replaced with `_a_` in the generated class name.
 
-## More
+## Example
 
-Default enabled because for [issue#2](https://github.com/unocss-applet/unocss-applet/issues/2) in applet, to disable just set `enable: false`
+### Using in with `class`
+
+#### without
+
+```html
+<div class="py-3.5 grid-cols-[0.7fr_repeat(7,1fr)]">
+  py-3
+</div>
+```
+
+#### with
+
+```html
+<div class="py-3_a_5 grid-cols-_a_0_a_7fr_repeat_a_7_a_1fr_a__a_">
+  py-3
+</div>
+
+<style>
+.grid-cols-_a_0_a_7fr_repeat_a_7_a_1fr_a__a_ {
+  grid-template-columns: 0.7fr repeat(7,1fr);
+}
+
+.py-3_a_5 {
+  padding-top:0.875rem;padding-bottom: 0.875rem;
+}
+</style>
+```
+
+### Using with string
+
+If you want to ignore a string, add a prefix(default `applet-ignore:`), and the plugin will automatically ignore the string and delete the prefix.
+
+#### without
+
+```html
+<script setup lang="ts">
+  const bg = 'bg-[hsl(2.7,81.9%,69.6%)]'
+  const bg2 = 'applet-ignore: bg-[hsl(2.7,81.9%,69.6%)]'
+</script>
+```
+
+#### with
+
+```html
+<script setup lang="ts">
+  const bg = 'bg-_a_hsl_a_2_a_7_a_81_a_9_a__a_69_a_6_a__a__a_'
+  const bg2 = 'bg-[hsl(2.7,81.9%,69.6%)]'
+</script>
+
+<style>
+.bg-_a_hsl_a_2_a_7_a_81_a_9_a__a_69_a_6_a__a__a_ {
+  --un-bg-opacity: 1;
+  background-color: hsla(2.7, 81.9%, 69.6%, var(--un-bg-opacity));
+}
+</style>
+```
 
 ## License
 

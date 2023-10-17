@@ -3,12 +3,6 @@ import { UNSUPPORTED_CHARS, encodeNonLatin } from '../../shared/src'
 
 export interface TransformerAppletOptions {
   /**
-   * Enable transformer applet
-   * @default true
-   */
-  enable?: boolean
-
-  /**
    * The layer name of generated rules
    * @default 'applet_shortcuts'
    */
@@ -21,8 +15,7 @@ export interface TransformerAppletOptions {
   unsupportedChars?: string[]
 }
 
-export default function transformerApplet(options: TransformerAppletOptions = {}): SourceCodeTransformer {
-  const enable = options.enable ?? true
+export function transformerApplet(options: TransformerAppletOptions = {}): SourceCodeTransformer {
   const layer = options.layer ?? 'applet_shortcuts'
 
   const _UNSUPPORTED_CHARS = [...UNSUPPORTED_CHARS, ...(options.unsupportedChars ?? [])]
@@ -35,8 +28,6 @@ export default function transformerApplet(options: TransformerAppletOptions = {}
     enforce: 'pre',
     async transform(s, id, ctx) {
       let code = s.toString()
-      if (!enable)
-        return
 
       const { uno, tokens } = ctx
       const { matched } = await uno.generate(code, { preflights: false })
@@ -54,15 +45,10 @@ export default function transformerApplet(options: TransformerAppletOptions = {}
         uno.config.shortcuts.push([replaced, replace, { layer }])
         tokens.add(replaced)
 
-        // escapeRegExp replace, node v14 not support replaceAll
-        code = code.replace(new RegExp(escapeRegExp(replace), 'g'), replaced)
+        code = code.replaceAll(replace, replaced)
       }
 
       s.overwrite(0, s.original.length, code)
     },
   }
-}
-
-function escapeRegExp(string: string) {
-  return string.replace(/[.:%!#()[\]/,${}@+^&<>]/g, '\\$&')
 }

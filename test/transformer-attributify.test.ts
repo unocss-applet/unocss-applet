@@ -1,6 +1,6 @@
 import { promises as fs } from 'node:fs'
 import path from 'node:path'
-import { describe, expect, test } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import type { SourceCodeTransformer } from '@unocss/core'
 import { createGenerator } from '@unocss/core'
 import MagicString from 'magic-string'
@@ -35,13 +35,13 @@ describe('transformer-attributify', async () => {
     return s.toString()
   }
 
-  test('basic', async () => {
+  it('basic', async () => {
     const transformer = transformerAttributify({ ignoreAttributes: ['block'] })
     const result = await transform(content.toString(), transformer)
     expect(result).toMatchSnapshot()
   })
 
-  test('prefixedOnly', async () => {
+  it('prefixedOnly', async () => {
     const transformer = transformerAttributify({ prefixedOnly: true })
     const result = await transform(content.toString(), transformer)
     expect(result).toMatchSnapshot()

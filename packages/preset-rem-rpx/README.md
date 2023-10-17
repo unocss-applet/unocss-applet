@@ -32,12 +32,6 @@ export default defineConfig({
 ```ts
 export interface RemRpxOptions {
   /**
-   * enable rem <=> rpx
-   * @default true
-   */
-  enable?: boolean
-
-  /**
    * 1rem = n px
    * @default 16
    */

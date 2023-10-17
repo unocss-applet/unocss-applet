@@ -1,11 +1,5 @@
 export interface TransformerAttributifyOptions {
   /**
-   * Enable attributify
-   * @default true
-   */
-  enable?: boolean
-
-  /**
    * @default 'un-'
    */
   prefix?: string

@@ -16,7 +16,6 @@
 - [unocss-applet](https://github.com/unocss-applet/unocss-applet/tree/main/packages/unocss-applet) - 主包，包含所有预设和插件。
 - [@unocss-applet/preset-applet](https://github.com/unocss-applet/unocss-applet/tree/main/packages/preset-applet) - 默认预设（等同于`@unocss/preset-uno`）。
 - [@unocss-applet/preset-rem-rpx](https://github.com/unocss-applet/unocss-applet/tree/main/packages/preset-rem-rpx) - 转换rem <=> rpx的工具。
-- [@unocss-applet/transformer-applet](https://github.com/unocss-applet/unocss-applet/tree/main/packages/transformer-applet) - 转换小程序不支持的选择器。
 - [@unocss-applet/transformer-attributify](https://github.com/unocss-applet/unocss-applet/tree/main/packages/transformer-attributify) - 为小程序启用 Attributify 模式。
 
 ## 安装
@@ -32,7 +31,7 @@ pnpm add unocss-applet -D # with pnpm
 ### UnoCSS 配置
 
 <details>
-<summary>unocss.config.ts</summary><br>
+<summary>uno.config.ts</summary><br>
 
 ```ts
 import type { Preset, SourceCodeTransformer } from 'unocss'
@@ -41,7 +40,6 @@ import { defineConfig } from 'unocss'
 import {
   presetApplet,
   presetRemRpx,
-  transformerApplet,
   transformerAttributify,
 } from 'unocss-applet'
 
@@ -56,7 +54,6 @@ if (isApplet) {
   presets.push(presetApplet())
   presets.push(presetRemRpx())
   transformers.push(transformerAttributify({ ignoreAttributes: ['block'] }))
-  transformers.push(transformerApplet())
 }
 else {
   presets.push(presetApplet())

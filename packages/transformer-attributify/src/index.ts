@@ -12,18 +12,17 @@ const attributeRE = /([\[?a-zA-Z0-9\u00A0-\uFFFF-_:()#%.\]?]+)(?:\s*=\s*((?:'[^'
 const defaultIgnoreAttributes = ['placeholder', 'setup', 'lang', 'scoped']
 
 export default function transformerAttributify(options: TransformerAttributifyOptions = {}): SourceCodeTransformer {
-  const enable = options.enable ?? true
   const ignoreAttributes = options?.ignoreAttributes ?? defaultIgnoreAttributes
   const nonValuedAttribute = options?.nonValuedAttribute ?? true
   const prefix = options.prefix ?? 'un-'
   const prefixedOnly = options.prefixedOnly ?? false
-  const deleteClass = options.deleteClass ?? true
+  const deleteAttributes = options.deleteClass ?? true
 
   return {
     name: 'transformer-attributify',
     enforce: 'pre',
     async transform(s, id, { uno }) {
-      if (!/\.vue$/.test(id) || !enable)
+      if (!/\.vue$/.test(id))
         return
 
       const code = new MagicString(s.toString())
@@ -53,7 +52,7 @@ export default function transformerAttributify(options: TransformerAttributifyOp
               if (isValidSelector(nonPrefixed) && nonValuedAttribute) {
                 if (await uno.parseToken(nonPrefixed)) {
                   attrSelectors.push(nonPrefixed)
-                  deleteClass && (matchStrTemp = matchStrTemp.replace(` ${name}`, ''))
+                  deleteAttributes && (matchStrTemp = matchStrTemp.replace(` ${name}`, ''))
                 }
               }
             }
@@ -89,7 +88,7 @@ export default function transformerAttributify(options: TransformerAttributifyOp
                   }))
                 const result = attrs.filter(([, v]) => v).map(([v]) => v)
                 attrSelectors.push(...result)
-                result.length && deleteClass && (matchStrTemp = matchStrTemp.replace(` ${matchStr}`, ''))
+                result.length && deleteAttributes && (matchStrTemp = matchStrTemp.replace(` ${matchStr}`, ''))
               }
             }
           }
