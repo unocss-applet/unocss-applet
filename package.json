@@ -1,11 +1,12 @@
 {
   "name": "@unocss-applet/monorepo",
+  "type": "module",
   "version": "0.5.5",
   "private": true,
   "packageManager": "pnpm@8.8.0",
   "scripts": {
     "dev": "pnpm stub",
-    "build": "rimraf packages/*/dist && pnpm -r --filter=./packages/* run build && pnpm -r run build-post",
+    "build": "pnpm -r --filter=./packages/* run build && pnpm -r run build-post",
     "release": "bumpp package.json packages/**/package.json",
     "stub": "pnpm -r --filter=./packages/* --parallel run stub",
     "typecheck": "tsc --noEmit",
@@ -23,7 +24,7 @@
     "build:taro:h5": "npm -C playgrounds/tarojs run build:h5"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^0.43.1",
+    "@antfu/eslint-config": "^1.0.0-beta.18",
     "@iconify-json/tabler": "^1.1.94",
     "@types/node": "^18.18.4",
     "@unocss-applet/preset-applet": "workspace:*",
@@ -36,7 +37,6 @@
     "eslint": "^8.51.0",
     "esno": "^0.17.0",
     "magic-string": "^0.30.4",
-    "rimraf": "^5.0.5",
     "typescript": "^5.2.2",
     "unbuild": "^2.0.0",
     "unocss": "^0.56.5",

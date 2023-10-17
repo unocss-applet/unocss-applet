@@ -32,12 +32,6 @@ export default defineConfig({
 ```ts
 export interface TransformerAppletOptions {
   /**
-   * Enable transformer applet
-   * @default true
-   */
-  enable?: boolean
-
-  /**
    * The layer name of generated rules
    * @default 'applet_shortcuts'
    */

@@ -3,12 +3,6 @@ import { UNSUPPORTED_CHARS, encodeNonLatin } from '../../shared/src'
 
 export interface TransformerAppletOptions {
   /**
-   * Enable transformer applet
-   * @default true
-   */
-  enable?: boolean
-
-  /**
    * The layer name of generated rules
    * @default 'applet_shortcuts'
    */
@@ -22,7 +16,6 @@ export interface TransformerAppletOptions {
 }
 
 export default function transformerApplet(options: TransformerAppletOptions = {}): SourceCodeTransformer {
-  const enable = options.enable ?? true
   const layer = options.layer ?? 'applet_shortcuts'
 
   const _UNSUPPORTED_CHARS = [...UNSUPPORTED_CHARS, ...(options.unsupportedChars ?? [])]
@@ -32,11 +25,9 @@ export default function transformerApplet(options: TransformerAppletOptions = {}
 
   return {
     name: 'transformer-applet',
-    enforce: 'pre',
+    enforce: 'post',
     async transform(s, id, ctx) {
       let code = s.toString()
-      if (!enable)
-        return
 
       const { uno, tokens } = ctx
       const { matched } = await uno.generate(code, { preflights: false })

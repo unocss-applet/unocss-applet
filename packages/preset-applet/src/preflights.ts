@@ -1,9 +1,6 @@
 import type { Preflight, PreflightContext } from '@unocss/core'
 import { entriesToCss, toArray } from '@unocss/core'
-import type { Theme } from '@unocss/preset-mini'
-import { preflights } from '@unocss/preset-mini'
-
-export const defaultPreflights: Preflight[] = preflights
+import type { Theme } from '@unocss/preset-uno'
 
 export const appletPreflights: Preflight[] = [
   {

@@ -29,12 +29,6 @@ export default defineConfig({
 // PresetMiniOptions https://github.com/unocss/unocss/blob/main/packages/preset-mini/src/index.ts#L33-L73
 export interface PresetAppletOptions extends PresetUnoOptions {
   /**
-   * Enable applet
-   * @default true
-   */
-  enable?: boolean
-
-  /**
    * Unsupported characters in applet, will be added to the default value
    * @default ['.', ':', '%', '!', '#', '(', ')', '[', '/', ']', ',', '$', '{', '}', '@', '+', '^', '&', '<', '>', '\'']
    */
