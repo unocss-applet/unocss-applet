@@ -24,9 +24,10 @@ Preflight for `button::after`. Will remove all `button::after` styles.
 
 ```ts
 // uni-app
-import '@unocss-applet/reset/uni-app/button-after.css';
+import '@unocss-applet/reset/uni-app/button-after.css'
+
 // taro
-import '@unocss-applet/reset/taro/button-after.css';
+import '@unocss-applet/reset/taro/button-after.css'
 ```
 
 #### When to use it
@@ -43,9 +44,10 @@ Based on [Tailwind's preflight](https://tailwindcss.com/docs/preflight), in stat
 
 ```ts
 // uni-app
-import '@unocss-applet/reset/uni-app/tailwind.css';
+import '@unocss-applet/reset/uni-app/tailwind.css'
+
 // taro
-import '@unocss-applet/reset/taro/tailwind.css';
+import '@unocss-applet/reset/taro/tailwind.css'
 ```
 
 #### Changes

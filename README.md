@@ -144,4 +144,4 @@ import 'uno.css'
 
 ## License
 
-MIT License &copy; 2022-PRESENT [Neil Lee](https://github.com/zguolee)
+MIT License &copy; 2022-PRESENT [Neil Lee](https://github.com/zguolee) and all contributors.

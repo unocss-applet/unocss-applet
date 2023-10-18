@@ -29,6 +29,7 @@
     "@types/node": "^18.18.4",
     "@unocss-applet/preset-applet": "workspace:*",
     "@unocss-applet/preset-rem-rpx": "workspace:*",
+    "@unocss-applet/reset": "workspace:*",
     "@unocss-applet/shared": "workspace:*",
     "@unocss-applet/transformer-attributify": "workspace:*",
     "@unocss/eslint-config": "^0.56.5",

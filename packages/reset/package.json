@@ -2,10 +2,14 @@
   "name": "@unocss-applet/reset",
   "type": "module",
   "version": "0.6.1",
-  "description": "",
-  "author": "Neil Lee <zguolee@foxmail.com>",
+  "description": "collection of reset CSS stylesheets.",
+  "author": {
+    "name": "ModyQyW",
+    "email": "wurui-dev@foxmail.com",
+    "url": "https://modyqyw.github.io"
+  },
   "license": "MIT",
-  "homepage": "https://github.com/unocss-applet/unocss-applet#readme",
+  "homepage": "https://github.com/unocss-applet/unocss-applet/tree/main/packages/reset#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/unocss-applet/unocss-applet.git"

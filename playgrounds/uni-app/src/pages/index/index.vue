@@ -4,7 +4,7 @@ import { ref } from 'vue'
 import { menuList } from './data'
 
 const bg = 'bg-[hsl(2.7,81.9%,69.6%)]'
-const icon = "i-carbon:campsite"
+const icon = 'i-carbon:campsite'
 const index = 1
 const bool = ref<boolean>()
 const border = ref(true)
@@ -58,11 +58,11 @@ const fixed = ref(true)
       </div>
     </div>
     <div class="gap-2 flex">
-      <div class="flex-1 divide-y-1 divide-red divide-dashed border-red border-solid border-1">
-        <div class="custom-div border-0">
+      <div class="flex-1 divide-y-1 divide-red divide-dashed border-red border-solid">
+        <div class="custom-div">
           1
         </div>
-        <div border-0>
+        <div>
           2
         </div>
       </div>

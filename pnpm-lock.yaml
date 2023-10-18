@@ -1,4 +1,4 @@
-lockfileVersion: '6.0'
+lockfileVersion: '6.1'
 
 settings:
   autoInstallPeers: true
@@ -23,6 +23,9 @@ importers:
       '@unocss-applet/preset-rem-rpx':
         specifier: workspace:*
         version: link:packages/preset-rem-rpx
+      '@unocss-applet/reset':
+        specifier: workspace:*
+        version: link:packages/reset
       '@unocss-applet/shared':
         specifier: workspace:*
         version: link:packages/shared
@@ -79,6 +82,8 @@ importers:
         version: 0.56.5
 
   packages/preset-rem-rpx: {}
+
+  packages/reset: {}
 
   packages/shared: {}
 
