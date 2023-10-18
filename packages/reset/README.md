@@ -1,6 +1,6 @@
 # @unocss-applet/reset
 
-Collection of standard reset CSS stylesheets.
+Collection of reset CSS stylesheets.
 
 ## Install
 
