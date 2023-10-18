@@ -1,5 +1,4 @@
 import { defineConfig as defineUnoCSSConfig } from 'unocss'
-import type { Preset, UserConfig } from 'unocss'
 import type { Theme } from '@unocss/preset-uno'
 import type { UserAppletConfig } from './types'
 

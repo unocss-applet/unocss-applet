@@ -60,7 +60,7 @@ const c = 'text-red'
     <div i-carbon:logo-twitter dark:i-carbon:logo-github />
     <div i-carbon-logo-twitter dark:i-carbon-logo-github mt-2.5 />
     <div class=\\"[&>div]:w-10\\" text-red>
-      <div text-left block>
+      <div block text-left>
         1
       </div>
       <div text-center class=\\"color-[#233]\\">
