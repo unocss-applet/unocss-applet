@@ -1,0 +1,31 @@
+{
+  "name": "@unocss-applet/reset",
+  "type": "module",
+  "version": "0.6.1",
+  "description": "",
+  "author": "Neil Lee <zguolee@foxmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/unocss-applet/unocss-applet#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unocss-applet/unocss-applet.git"
+  },
+  "bugs": "https://github.com/unocss-applet/unocss-applet/issues",
+  "keywords": [
+    "unocss",
+    "uni-app",
+    "atomic-css",
+    "atomic-css-engine",
+    "css",
+    "tailwind",
+    "windicss"
+  ],
+  "sideEffects": false,
+  "exports": {
+    "./*": "./*"
+  },
+  "files": [
+    "taro",
+    "uni-app"
+  ]
+}
