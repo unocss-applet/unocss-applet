@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`preset extras 1`] = `
+exports[`preset-applet > preset extras 1`] = `
 "/* layer: default */
 .max-size-0{max-width:0;max-height:0;}
 .max-size-0_a_5{max-width:0.125rem;max-height:0.125rem;}
@@ -37,7 +37,7 @@ exports[`preset extras 1`] = `
 .size-sm{width:24rem;height:24rem;}"
 `;
 
-exports[`targets 1`] = `
+exports[`preset-applet > targets 1`] = `
 "/* layer: default */
 .space-x-_a_space>view+view,.space-x-_a_space>button+button,.space-x-_a_space>text+text,.space-x-_a_space>image+image{--un-space-x-reverse:0;margin-left:calc(var(--space) * calc(1 - var(--un-space-x-reverse)));margin-right:calc(var(--space) * var(--un-space-x-reverse));}
 .space-x-2>view+view,.space-x-2>button+button,.space-x-2>text+text,.space-x-2>image+image{--un-space-x-reverse:0;margin-left:calc(0.5rem * calc(1 - var(--un-space-x-reverse)));margin-right:calc(0.5rem * var(--un-space-x-reverse));}
@@ -105,7 +105,7 @@ exports[`targets 1`] = `
 }"
 `;
 
-exports[`targets 2`] = `
+exports[`preset-applet > targets2 1`] = `
 "/* layer: default */
 .cls.multi,
 section{--un-text-opacity:1;color:rgba(156,163,175,var(--un-text-opacity));}

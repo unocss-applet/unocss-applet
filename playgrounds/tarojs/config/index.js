@@ -1,3 +1,4 @@
+import process from 'node:process'
 import UnoCSS from 'unocss/webpack'
 
 const config = {

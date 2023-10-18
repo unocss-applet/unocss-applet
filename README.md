@@ -17,6 +17,7 @@
 - [@unocss-applet/preset-applet](https://github.com/unocss-applet/unocss-applet/tree/main/packages/preset-applet) - The default preset (right now it's equivalent to `@unocss/preset-uno`).
 - [@unocss-applet/preset-rem-rpx](https://github.com/unocss-applet/unocss-applet/tree/main/packages/preset-rem-rpx) - Coverts rem <=> rpx for utils.
 - [@unocss-applet/transformer-attributify](https://github.com/unocss-applet/unocss-applet/tree/main/packages/transformer-attributify) - Enables Attributify Mode for applet.
+- [@unocss-applet/reset](https://github.com/unocss-applet/unocss-applet/tree/main/packages/reset) - Collection of reset CSS stylesheets.
 
 ## Installation
 
@@ -143,4 +144,4 @@ import 'uno.css'
 
 ## License
 
-MIT License &copy; 2022-PRESENT [Neil Lee](https://github.com/zguolee)
+MIT License &copy; 2022-PRESENT [Neil Lee](https://github.com/zguolee) and all contributors.

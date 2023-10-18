@@ -4,7 +4,7 @@ import { ref } from 'vue'
 
 const bg = 'bg-[hsl(2.7,81.9%,69.6%)]'
 
-const icon = "i-carbon:campsite"
+const icon = 'i-carbon:campsite'
 const bgIgnore = 'applet-ignore: bg-[hsl(2.7,81.9%,69.6%)]'
 const index = 1
 const customClass = 'text-red'
@@ -43,10 +43,10 @@ const fixed = ref(true)
         {{ bgIgnore }}
       </div>
     </div>
-    <div class="bg-[url(https://static.runoob.com/images/demo/demo2.jpg)]" w-40 h-20 ma color="white" bg="center cover">
+    <div class="bg-[url(https://static.runoob.com/images/demo/demo2.jpg)]" ma w-40 h-20 color="white" bg="center cover">
       {{ 'applet-ignore: bg-[url(https://static.runoob.com/images/demo/demo2.jpg)]' }}
     </div>
-    <div class="m-0.5 p-1 text-2xl" :class="bool ? '' : 'text-yellow-500 p-2.5'">
+    <div class="p-1 m-0.5 text-2xl" :class="bool ? '' : 'text-yellow-500 p-2.5'">
       abckefghijklmnopqrstuvwxyz
     </div>
     <div block class="size-10" size="20" />

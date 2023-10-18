@@ -1,6 +1,6 @@
 import { createGenerator } from '@unocss/core'
 import presetApplet from '@unocss-applet/preset-applet'
-import { expect, test } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { presetExtra } from 'unocss-preset-extra'
 
 const targets = [
@@ -217,35 +217,37 @@ const uno = createGenerator({
   },
 })
 
-test('targets', async () => {
-  const code = targets.join(' ')
-  const { css } = await uno.generate(code, { preflights: false })
-  const { css: css2 } = await uno.generate(code, { preflights: false })
+describe('preset-applet', () => {
+  it('targets', async () => {
+    const code = targets.join(' ')
+    const { css } = await uno.generate(code, { preflights: false })
+    const { css: css2 } = await uno.generate(code, { preflights: false })
 
-  expect(css).toMatchSnapshot()
-  expect(css).toEqual(css2)
-})
+    expect(css).toMatchSnapshot()
+    expect(css).toEqual(css2)
+  })
 
-test('targets', async () => {
-  const code = targets2.join(' ')
-  const { css } = await uno.generate(code, { preflights: false })
-  const { css: css2 } = await uno.generate(code, { preflights: false })
+  it('targets2', async () => {
+    const code = targets2.join(' ')
+    const { css } = await uno.generate(code, { preflights: false })
+    const { css: css2 } = await uno.generate(code, { preflights: false })
 
-  expect(css).toMatchSnapshot()
-  expect(css).toEqual(css2)
-})
+    expect(css).toMatchSnapshot()
+    expect(css).toEqual(css2)
+  })
 
-test('non-targets', async () => {
-  const code = nonTargets.join(' ')
-  const { css, matched } = await uno.generate(code, { preflights: false })
+  it('non-targets', async () => {
+    const code = nonTargets.join(' ')
+    const { css, matched } = await uno.generate(code, { preflights: false })
 
-  expect(Array.from(matched)).toEqual([])
-  expect(css).toBe('')
-})
+    expect(Array.from(matched)).toEqual([])
+    expect(css).toBe('')
+  })
 
-test('preset extras', async () => {
-  const code = presetExtras.join(' ')
-  const { css } = await uno.generate(code, { preflights: false })
+  it('preset extras', async () => {
+    const code = presetExtras.join(' ')
+    const { css } = await uno.generate(code, { preflights: false })
 
-  expect(css).toMatchSnapshot()
+    expect(css).toMatchSnapshot()
+  })
 })
