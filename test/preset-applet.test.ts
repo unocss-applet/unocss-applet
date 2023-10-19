@@ -88,6 +88,7 @@ const targets2 = [
   'selector-[.cls.multi]:c-gray-400',
   'md:selector-[aside]:shadow-xl',
   'dark:selector-[.body_main]:bg-white',
+  '[&_.nut-button]:text-lg',
 ]
 
 const nonTargets = [
