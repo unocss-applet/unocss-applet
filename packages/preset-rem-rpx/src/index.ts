@@ -1,7 +1,7 @@
 import type { Preset } from 'unocss'
 
-const remRE = /^-?[\.\d]+rem$/
-const rpxRE = /^-?[\.\d]+rpx$/
+const remRE = /(-?[\.\d]+)rem/g
+const rpxRE = /(-?[\.\d]+)rpx/g
 
 export interface RemRpxOptions {
   /**
@@ -44,11 +44,11 @@ export function presetRemRpx(options: RemRpxOptions = {}): Preset {
 }
 
 function rem2rpx(value: string, baseFontSize: number, screenWidth: number) {
-  return `${+value.slice(0, -3) * baseFontSize * (750 / screenWidth)}rpx`
+  return value.replace(remRE, (_, p1) => `${p1 * baseFontSize * (750 / screenWidth)}rpx`)
 }
 
 function rpx2rem(value: string, baseFontSize: number, screenWidth: number) {
-  return `${+value.slice(0, -3) / (750 / screenWidth) / baseFontSize}rem`
+  return value.replace(rpxRE, (_, p1) => `${p1 / (750 / screenWidth) / baseFontSize}rem`)
 }
 
 export default presetRemRpx
