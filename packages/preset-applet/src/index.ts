@@ -2,7 +2,7 @@ import type { Preset } from 'unocss'
 import { presetUno } from 'unocss'
 import type { Theme } from '@unocss/preset-uno'
 import { normalizePreflights } from '@unocss/preset-mini'
-import { UNSUPPORTED_CHARS, encodeNonLatin } from '../../shared/src'
+import { UNSUPPORTED_CHARS, encodeNonSpaceLatin } from '../../shared/src'
 import { appletPreflights } from './preflights'
 import type { PresetAppletOptions } from './types'
 import { variantSpaceAndDivide } from './variants'
@@ -40,7 +40,7 @@ export function presetApplet(options: PresetAppletOptions = {}): Preset<Theme> {
       (util) => {
         if (util.selector) {
           util.selector = unoCSSToAppletProcess(util.selector)
-          util.selector = encodeNonLatin(util.selector)
+          util.selector = encodeNonSpaceLatin(util.selector)
         }
         return util
       },

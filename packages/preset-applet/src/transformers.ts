@@ -1,5 +1,5 @@
 import type { SourceCodeTransformer } from 'unocss'
-import { UNSUPPORTED_CHARS, encodeNonLatin } from '../../shared/src'
+import { UNSUPPORTED_CHARS, encodeNonSpaceLatin } from '../../shared/src'
 
 export interface TransformerAppletOptions {
   /**
@@ -36,7 +36,7 @@ export function transformerApplet(options: TransformerAppletOptions = {}): Sourc
         .filter(i => !i.includes('='))
       for (const replace of replacements) {
         let replaced = replace.replace(charReplaceReg, '_a_')
-        replaced = encodeNonLatin(replaced)
+        replaced = encodeNonSpaceLatin(replaced)
 
         // delete all - prefix
         while (replaced.startsWith('-'))
