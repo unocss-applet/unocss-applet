@@ -11,6 +11,7 @@ import { transformerApplet } from './transformers'
 export * from './types'
 
 export function presetApplet(options: PresetAppletOptions = {}): Preset<Theme> {
+  options.preflight = options.preflight ?? true
   options.variablePrefix = options.variablePrefix ?? 'un-'
 
   const _UNSUPPORTED_CHARS = [...UNSUPPORTED_CHARS, ...(options.unsupportedChars ?? [])]
