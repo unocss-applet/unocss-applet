@@ -40,6 +40,8 @@ It may bring conflicts with UI frameworks. Remove the import if you find button 
 
 ### normalize.css
 
+**NOT RECOMMEND** since `:where` is used which is not likely supported in many platforms.
+
 Source: <https://github.com/csstools/normalize.css>
 
 ```ts
