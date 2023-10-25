@@ -38,6 +38,61 @@ Import this file before other reset files if you want to customize button border
 
 It may bring conflicts with UI frameworks. Remove the import if you find button styles wrong.
 
+### normalize.css
+
+**NOT RECOMMEND** since `:where` is used which is not likely supported in many platforms.
+
+Source: <https://github.com/csstools/normalize.css>
+
+```ts
+// uni-app
+import '@unocss-applet/reset/uni-app/normalize.css'
+
+// taro
+import '@unocss-applet/reset/taro/normalize.css'
+```
+
+### modern-normalize
+
+Source: <https://github.com/sindresorhus/modern-normalize>
+
+```ts
+// uni-app
+import '@unocss-applet/reset/uni-app/modern-normalize.css'
+
+// taro
+import '@unocss-applet/reset/taro/modern-normalize.css'
+```
+
+### sanitize.css
+
+**NOT RECOMMEND** since `:where` is used which is not likely supported in many platforms.
+
+Source: <https://github.com/csstools/sanitize.css>
+
+```ts
+// uni-app
+import '@unocss-applet/reset/uni-app/sanitize/sanitize.css'
+import '@unocss-applet/reset/uni-app/sanitize/assets.css'
+
+// taro
+import '@unocss-applet/reset/taro/sanitize/sanitize.css'
+import '@unocss-applet/reset/taro/sanitize/assets.css'
+
+```
+
+### Eric Meyer
+
+Source: <https://meyerweb.com/eric/tools/css/reset/index.html>
+
+```ts
+// uni-app
+import '@unocss-applet/reset/uni-app/eric-meyer.css'
+
+// taro
+import '@unocss-applet/reset/taro/eric-meyer.css'
+```
+
 ### tailwind.css
 
 Based on [Tailwind's preflight](https://tailwindcss.com/docs/preflight), in static forms.
@@ -62,9 +117,9 @@ In Tailwind's preflight, the border color default border color is read from the 
 
 ```css
 /* uni-app */
-@import '@unocss-applet/reset/uni-app/tailwind.css';
+@import '@unocss-applet/reset/uni-app/tailwind.css'
 /* taro */
-@import '@unocss-applet/reset/taro/tailwind.css';
+@import '@unocss-applet/reset/taro/tailwind.css'
 
 :root {
   --un-default-border-color: #e5e7eb;
@@ -78,6 +133,14 @@ We add conditional compilation in style files to bring cross-platform compatibil
 ### tailwind-compat.css
 
 Based on [tailwind.css](./tailwind.css), with some styles clean up to avoid conflicts with UI frameworks.
+
+```ts
+// uni-app
+import '@unocss-applet/reset/uni-app/tailwind-compat.css'
+
+// taro
+import '@unocss-applet/reset/taro/tailwind-compat.css'
+```
 
 #### Changes
 
