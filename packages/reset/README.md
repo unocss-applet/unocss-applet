@@ -38,6 +38,18 @@ Import this file before other reset files if you want to customize button border
 
 It may bring conflicts with UI frameworks. Remove the import if you find button styles wrong.
 
+### normalize.css
+
+Source: <https://github.com/csstools/normalize.css>
+
+```ts
+// uni-app
+import '@unocss-applet/reset/uni-app/normalize.css'
+
+// taro
+import '@unocss-applet/reset/taro/normalize.css'
+```
+
 ### Eric Meyer
 
 Source: <https://meyerweb.com/eric/tools/css/reset/index.html>
