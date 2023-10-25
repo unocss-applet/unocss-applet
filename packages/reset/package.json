@@ -22,7 +22,9 @@
     "atomic-css-engine",
     "css",
     "tailwind",
-    "windicss"
+    "windicss",
+    "reset",
+    "preflight"
   ],
   "sideEffects": false,
   "exports": {
