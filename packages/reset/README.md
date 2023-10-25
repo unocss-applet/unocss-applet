@@ -38,6 +38,18 @@ Import this file before other reset files if you want to customize button border
 
 It may bring conflicts with UI frameworks. Remove the import if you find button styles wrong.
 
+### Eric Meyer
+
+Source: <https://meyerweb.com/eric/tools/css/reset/index.html>
+
+```ts
+// uni-app
+import '@unocss-applet/reset/uni-app/eric-meyer.css'
+
+// taro
+import '@unocss-applet/reset/taro/eric-meyer.css'
+```
+
 ### tailwind.css
 
 Based on [Tailwind's preflight](https://tailwindcss.com/docs/preflight), in static forms.
@@ -128,18 +140,6 @@ button,
 </tr>
 </tbody>
 </table>
-
-### eric-meyer.css
-
-Source: <https://meyerweb.com/eric/tools/css/reset/index.html>
-
-```ts
-// uni-app
-import '@unocss-applet/reset/uni-app/eric-meyer.css'
-
-// taro
-import '@unocss-applet/reset/taro/eric-meyer.css'
-```
 
 ## License
 
