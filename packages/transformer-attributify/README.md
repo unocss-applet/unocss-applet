@@ -62,13 +62,13 @@ export interface TransformerAttributifyOptions {
    * Delete attributes that added in `class=""`
    * @default true
    */
-  deleteClass?: boolean
+  deleteAttributes?: boolean
 }
 ```
 
 ## Example
 
-> Attributes will be deleted unless `deleteClass` is set to `true`.
+> Attributes will be deleted unless `deleteAttributes` is set to `true`.
 
 ### without
 

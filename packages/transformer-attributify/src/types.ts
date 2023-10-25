@@ -32,5 +32,5 @@ export interface TransformerAttributifyOptions {
    * Delete attributes that added in `class=""`
    * @default true
    */
-  deleteClass?: boolean
+  deleteAttributes?: boolean
 }
