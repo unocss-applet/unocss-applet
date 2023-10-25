@@ -11,6 +11,9 @@ const c = 'text-red'
 <template>
   <div class=\\"text-center aaa p-2.5 text-blue\\" :class=\\"c\\">
     <div  class=\\"text-4xl ma text-green p-2\\"/>
+    <div class=\\"bg-pink dark:bg-yellow hover:bg-green\\">
+      dark
+    </div>
     <div :class=\\"\`p-2.5 \${bool ? 'p-0.5 m-0.5' : ''}\`\\" :hover-class=\\"['!bg-green']\\"  class=\\"m-2\\"/>
     <div class=\\"p-1 flex flex-col flex-gap-1 items-center text-#fff\\" />
     <div class=\\"b b-green text-right h-10 !text-pink\\">
@@ -49,6 +52,9 @@ const c = 'text-red'
 <template>
   <div class=\\"text-center aaa\\" p=\\"2.5\\" text-blue :class=\\"c\\">
     <div text=\\"4xl\\" ma text-green  class=\\"p-2\\"/>
+    <div bg=\\"pink dark:yellow hover:green\\">
+      dark
+    </div>
     <div :class=\\"\`p-2.5 \${bool ? 'p-0.5 m-0.5' : ''}\`\\" m-2 :hover-class=\\"['!bg-green']\\" />
     <div flex=\\"~ col gap-1\\" class=\\"p-1\\" items-center text=\\"#fff\\" />
     <div text-right h-10 text=\\"!pink\\" class=\\"b b-green\\">
