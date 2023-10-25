@@ -64,6 +64,23 @@ import '@unocss-applet/reset/uni-app/modern-normalize.css'
 import '@unocss-applet/reset/taro/modern-normalize.css'
 ```
 
+### sanitize.css
+
+**NOT RECOMMEND** since `:where` is used which is not likely supported in many platforms.
+
+Source: <https://github.com/csstools/sanitize.css>
+
+```ts
+// uni-app
+import '@unocss-applet/reset/uni-app/sanitize/sanitize.css'
+import '@unocss-applet/reset/uni-app/sanitize/assets.css'
+
+// taro
+import '@unocss-applet/reset/taro/sanitize/sanitize.css'
+import '@unocss-applet/reset/taro/sanitize/assets.css'
+
+```
+
 ### Eric Meyer
 
 Source: <https://meyerweb.com/eric/tools/css/reset/index.html>
@@ -100,9 +117,9 @@ In Tailwind's preflight, the border color default border color is read from the 
 
 ```css
 /* uni-app */
-@import '@unocss-applet/reset/uni-app/tailwind.css';
+@import '@unocss-applet/reset/uni-app/tailwind.css'
 /* taro */
-@import '@unocss-applet/reset/taro/tailwind.css';
+@import '@unocss-applet/reset/taro/tailwind.css'
 
 :root {
   --un-default-border-color: #e5e7eb;
@@ -116,6 +133,14 @@ We add conditional compilation in style files to bring cross-platform compatibil
 ### tailwind-compat.css
 
 Based on [tailwind.css](./tailwind.css), with some styles clean up to avoid conflicts with UI frameworks.
+
+```ts
+// uni-app
+import '@unocss-applet/reset/uni-app/tailwind-compat.css'
+
+// taro
+import '@unocss-applet/reset/taro/tailwind-compat.css'
+```
 
 #### Changes
 
