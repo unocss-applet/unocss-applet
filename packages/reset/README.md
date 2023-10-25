@@ -50,6 +50,18 @@ import '@unocss-applet/reset/uni-app/normalize.css'
 import '@unocss-applet/reset/taro/normalize.css'
 ```
 
+### modern-normalize
+
+Source: <https://github.com/sindresorhus/modern-normalize>
+
+```ts
+// uni-app
+import '@unocss-applet/reset/uni-app/modern-normalize.css'
+
+// taro
+import '@unocss-applet/reset/taro/modern-normalize.css'
+```
+
 ### Eric Meyer
 
 Source: <https://meyerweb.com/eric/tools/css/reset/index.html>
