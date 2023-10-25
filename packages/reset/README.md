@@ -129,6 +129,18 @@ button,
 </tbody>
 </table>
 
+### eric-meyer.css
+
+Source: <https://meyerweb.com/eric/tools/css/reset/index.html>
+
+```ts
+// uni-app
+import '@unocss-applet/reset/uni-app/eric-meyer.css'
+
+// taro
+import '@unocss-applet/reset/taro/eric-meyer.css'
+```
+
 ## License
 
 MIT License &copy; 2022-PRESENT ModyQyW
