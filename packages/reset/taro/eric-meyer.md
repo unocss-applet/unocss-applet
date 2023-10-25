@@ -1,3 +1,3 @@
-# @unocss-applet/reset/uni-app/eric-meyer.css
+# @unocss-applet/reset/taro/eric-meyer.css
 
 Source: <https://meyerweb.com/eric/tools/css/reset/index.html>
