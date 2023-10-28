@@ -1,7 +1,9 @@
-import { createGenerator } from '@unocss/core'
+import { createGenerator, UnocssPluginContext } from '@unocss/core'
 import presetApplet from '@unocss-applet/preset-applet'
 import { describe, expect, it } from 'vitest'
 import { presetExtra } from 'unocss-preset-extra'
+import { transformerApplet } from '@unocss-applet/preset-applet/src/transformers'
+import MagicString from 'magic-string'
 
 const targets = [
   // base
@@ -250,5 +252,30 @@ describe('preset-applet', () => {
     const { css } = await uno.generate(code, { preflights: false })
 
     expect(css).toMatchSnapshot()
+  })
+})
+
+
+const transformer = transformerApplet()
+
+describe('transformer-applet', () => {
+  async function transform(code: string) {
+    const s = new MagicString(code)
+    await transformer.transform(s, '', {
+      tokens: new Set<string>(),
+      uno,
+    } as UnocssPluginContext)
+    return s.toString()
+  }
+
+  it('basic', async () => {
+    const caseAndSnapshotPairs = [
+      ['-ml-1.5 ml-1.5 -mt-2', '-ml-1_a_5 ml-1_a_5 -mt-2'],
+    ]
+
+    for (const [c, snapshot] of caseAndSnapshotPairs) {
+      const result = await transform(c)
+      expect(result).toMatchInlineSnapshot(`"${snapshot}"`)
+    }
   })
 })
