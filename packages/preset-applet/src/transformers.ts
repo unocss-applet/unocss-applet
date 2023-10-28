@@ -22,6 +22,7 @@ export function transformerApplet(options: TransformerAppletOptions = {}): Sourc
   const ESCAPED_UNSUPPORTED_CHARS = _UNSUPPORTED_CHARS.map(char => `\\${char}`)
   const charTestReg = new RegExp(`[${ESCAPED_UNSUPPORTED_CHARS.join('')}]`)
   const charReplaceReg = new RegExp(`[${ESCAPED_UNSUPPORTED_CHARS.join('')}]`, 'g')
+  const negativeReplaceReg = /^-+/
 
   return {
     name: 'transformer-applet',
@@ -34,13 +35,13 @@ export function transformerApplet(options: TransformerAppletOptions = {}): Sourc
       // skip attributify
       const replacements = Array.from(matched).filter(i => charTestReg.test(i))
         .filter(i => !i.includes('='))
-      for (const replace of replacements) {
+      for (let replace of replacements) {
         let replaced = replace.replace(charReplaceReg, '_a_')
         replaced = encodeNonSpaceLatin(replaced)
 
         // delete all - prefix
-        while (replaced.startsWith('-'))
-          replaced = replaced.slice(1)
+        replace = replace.replace(negativeReplaceReg, '')
+        replaced = replaced.replace(negativeReplaceReg, '')
 
         uno.config.shortcuts.push([replaced, replace, { layer }])
         tokens.add(replaced)
