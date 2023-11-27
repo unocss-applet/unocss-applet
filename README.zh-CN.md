@@ -107,7 +107,7 @@ import 'virtual:uno.css'
 `config/index.js`
 
 ```js
-import UnoCSS from 'unocss/webpack'
+import UnoCSS from '@unocss/webpack'
 
 const config = {
   mini: {
