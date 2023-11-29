@@ -47,6 +47,6 @@
     "@unocss-applet/preset-rem-rpx": "workspace:*",
     "@unocss-applet/transformer-applet": "^0.5.5",
     "@unocss-applet/transformer-attributify": "workspace:*",
-    "@unocss/preset-uno": "^0.56.5"
+    "@unocss/preset-uno": "^0.57.7"
   }
 }
