@@ -14,6 +14,7 @@
     "lint:fix": "nr lint --fix",
     "test": "vitest",
     "test:update": "vitest -u",
+    "play": "npm -C playground run dev",
     "play:uni:mp-weixin": "npm -C playgrounds/uni-app run dev:mp-weixin",
     "build:uni:mp-weixin": "npm -C playgrounds/uni-app run build:mp-weixin",
     "play:uni:h5": "npm -C playgrounds/uni-app run dev:h5",

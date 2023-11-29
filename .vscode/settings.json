@@ -1,7 +1,8 @@
 {
   "unocss.root": [
-    "playgrounds/uni-app",
-    "playgrounds/tarojs"
+    "playground",
+    "examples/uni-app",
+    "examples/tarojs"
   ],
 
   "cSpell.words": [
@@ -10,7 +11,7 @@
     "unocss",
     "Vitest"
   ],
-  
+
   // Enable the flat config support
   "eslint.experimental.useFlatConfig": true,
 
