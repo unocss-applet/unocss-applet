@@ -1,0 +1,28 @@
+{
+  "name": "playground",
+  "type": "module",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@unocss/autocomplete": "^0.57.7",
+    "@unocss/reset": "^0.57.7",
+    "@vueuse/core": "^10.7.0",
+    "vue": "^3.3.11"
+  },
+  "devDependencies": {
+    "@codemirror/lang-css": "^6.2.1",
+    "@codemirror/lang-html": "^6.4.7",
+    "@codemirror/lang-javascript": "^6.2.1",
+    "@codemirror/lang-xml": "^6.0.2",
+    "@iconify-json/tabler": "^1.1.100",
+    "@vitejs/plugin-vue": "^4.5.2",
+    "codemirror": "^6.0.1",
+    "codemirror-theme-vars": "^0.1.2",
+    "lz-string": "^1.5.0"
+  }
+}
