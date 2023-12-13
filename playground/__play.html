@@ -33,7 +33,7 @@ if (window.parent.document.body.parentElement.className.includes('dark'))
 
 window.addEventListener('message', ({ data }) => {
   const payload = typeof data === 'string' ? JSON.parse(data) : data
-  if (payload.source !== 'unocss-playground')
+  if (payload.source !== 'unocss-applet-playground')
     return
 
   container.innerHTML = payload.html

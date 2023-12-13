@@ -7,9 +7,12 @@
 
   "cSpell.words": [
     "attributify",
+    "composables",
     "preflights",
+    "tabler",
     "unocss",
-    "Vitest"
+    "Vitest",
+    "vueuse"
   ],
 
   // Enable the flat config support
@@ -21,8 +24,8 @@
 
   // Auto fix
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true,
-    "source.organizeImports": false
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "never"
   },
 
   // Silent the stylistic rules in you IDE, but still auto fix them

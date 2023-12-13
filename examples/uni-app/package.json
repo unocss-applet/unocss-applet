@@ -46,7 +46,7 @@
     "@dcloudio/uni-mp-weixin": "3.0.0-alpha-3090920231127001",
     "@dcloudio/uni-quickapp-webview": "3.0.0-alpha-3090920231127001",
     "ano-ui": "^0.8.1",
-    "vue": "^3.3.9",
+    "vue": "^3.3.11",
     "vue-i18n": "^9.8.0"
   },
   "devDependencies": {
@@ -54,9 +54,9 @@
     "@dcloudio/uni-automator": "3.0.0-alpha-3090920231127001",
     "@dcloudio/uni-cli-shared": "3.0.0-alpha-3090920231127001",
     "@dcloudio/vite-plugin-uni": "3.0.0-alpha-3090920231127001",
-    "@iconify-json/carbon": "^1.1.23",
-    "postcss": "^8.4.31",
+    "@iconify-json/carbon": "^1.1.25",
+    "postcss": "^8.4.32",
     "sass": "^1.69.5",
-    "vite-plugin-inspect": "^0.8.0"
+    "vite-plugin-inspect": "^0.8.1"
   }
 }

@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.7.8",
   "private": true,
-  "packageManager": "pnpm@8.11.0",
+  "packageManager": "pnpm@8.12.0",
   "scripts": {
     "dev": "pnpm stub",
     "build": "pnpm -r --filter=./packages/* run build && pnpm -r run build-post",
@@ -25,24 +25,24 @@
     "build:taro:h5": "npm -C playgrounds/tarojs run build:h5"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^2.1.1",
+    "@antfu/eslint-config": "^2.4.3",
     "@iconify-json/tabler": "^1.1.100",
-    "@types/node": "^20.10.0",
+    "@types/node": "^20.10.4",
     "@unocss-applet/preset-applet": "workspace:*",
     "@unocss-applet/preset-rem-rpx": "workspace:*",
     "@unocss-applet/reset": "workspace:*",
     "@unocss-applet/shared": "workspace:*",
     "@unocss-applet/transformer-attributify": "workspace:*",
     "@unocss/eslint-config": "^0.57.7",
-    "bumpp": "^9.2.0",
-    "eslint": "^8.54.0",
+    "bumpp": "^9.2.1",
+    "eslint": "^8.55.0",
     "magic-string": "^0.30.5",
-    "typescript": "^5.3.2",
+    "typescript": "^5.3.3",
     "unbuild": "^2.0.0",
     "unocss": "^0.57.7",
     "unocss-applet": "workspace:*",
     "unocss-preset-extra": "^0.5.3",
-    "vite": "^5.0.3",
+    "vite": "^5.0.7",
     "vitest": "^0.34.6"
   }
 }
