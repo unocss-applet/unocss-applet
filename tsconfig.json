@@ -8,7 +8,6 @@
     "paths": {
       "@unocss-applet/preset-applet": ["./packages/preset-applet/src/index.ts"],
       "@unocss-applet/preset-rem-rpx": ["./packages/preset-rem-rpx/src/index.ts"],
-      "@unocss-applet/transformer-applet": ["./packages/transformer-applet/src/index.ts"],
       "@unocss-applet/transformer-attributify": ["./packages/transformer-attributify/src/index.ts"],
       "@unocss-applet/shared": ["./packages/shared/src/index.ts"],
       "unocss-applet": ["./packages/unocss-applet/src/index.ts"]

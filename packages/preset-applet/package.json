@@ -20,9 +20,14 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs"
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
     },
     "./*": "./*"
   },
@@ -39,9 +44,27 @@
     "build": "unbuild",
     "stub": "unbuild --stub"
   },
-  "dependencies": {
+  "devDependencies": {
     "@unocss/core": "^0.56.5",
     "@unocss/preset-mini": "^0.56.5",
-    "@unocss/preset-uno": "^0.56.5"
+    "@unocss/preset-uno": "^0.56.5",
+    "unocss": "^0.56.5"
+  },
+  "peerDependencies": {
+    "@unocss/core": ">=0.56",
+    "@unocss/preset-mini": ">=0.56",
+    "@unocss/preset-uno": ">=0.56",
+    "unocss": ">=0.56"
+  },
+  "peerDependenciesMeta": {
+    "@unocss/core": {
+      "optional": true
+    },
+    "@unocss/preset-mini": {
+      "optional": true
+    },
+    "@unocss/preset-uno": {
+      "optional": true
+    }
   }
 }

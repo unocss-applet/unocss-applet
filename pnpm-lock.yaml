@@ -1,4 +1,4 @@
-lockfileVersion: '6.1'
+lockfileVersion: '6.0'
 
 settings:
   autoInstallPeers: true
@@ -70,7 +70,7 @@ importers:
         version: 0.34.6
 
   packages/preset-applet:
-    dependencies:
+    devDependencies:
       '@unocss/core':
         specifier: ^0.56.5
         version: 0.56.5
@@ -80,14 +80,28 @@ importers:
       '@unocss/preset-uno':
         specifier: ^0.56.5
         version: 0.56.5
+      unocss:
+        specifier: ^0.56.5
+        version: 0.56.5(postcss@8.4.31)(rollup@3.28.1)(vite@4.4.11)
 
-  packages/preset-rem-rpx: {}
+  packages/preset-rem-rpx:
+    devDependencies:
+      unocss:
+        specifier: ^0.56.5
+        version: 0.56.5(postcss@8.4.31)(rollup@3.28.1)(vite@4.4.11)
 
   packages/reset: {}
 
   packages/shared: {}
 
-  packages/transformer-attributify: {}
+  packages/transformer-attributify:
+    devDependencies:
+      magic-string:
+        specifier: ^0.30.4
+        version: 0.30.4
+      unocss:
+        specifier: ^0.56.5
+        version: 0.56.5(postcss@8.4.31)(rollup@3.28.1)(vite@4.4.11)
 
   packages/unocss-applet:
     dependencies:
@@ -97,15 +111,16 @@ importers:
       '@unocss-applet/preset-rem-rpx':
         specifier: workspace:*
         version: link:../preset-rem-rpx
-      '@unocss-applet/transformer-applet':
-        specifier: ^0.5.5
-        version: 0.5.5
       '@unocss-applet/transformer-attributify':
         specifier: workspace:*
         version: link:../transformer-attributify
+    devDependencies:
       '@unocss/preset-uno':
         specifier: ^0.56.5
         version: 0.56.5
+      unocss:
+        specifier: ^0.56.5
+        version: 0.56.5(postcss@8.4.31)(rollup@3.28.1)(vite@4.4.11)
 
   playgrounds/tarojs:
     dependencies:
@@ -3825,7 +3840,6 @@ packages:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.0
       '@jridgewell/sourcemap-codec': 1.4.15
-    dev: false
 
   /@jsdevtools/ez-spawn@3.0.4:
     resolution: {integrity: sha512-f5DRIOZf7wxogefH03RjMPMdBF7ADTWUMoOs9kaJo06EfwF+aFhMZMDZxHg/Xe12hptN9xoZjGso2fdjapBRIA==}
@@ -5321,10 +5335,6 @@ packages:
       eslint-visitor-keys: 3.4.3
     dev: true
 
-  /@unocss-applet/transformer-applet@0.5.5:
-    resolution: {integrity: sha512-GDzZt0S+Jbr7yiD+cmkIQdnEroAzSiCPajXaTWbmkk8dio+7dW9cWPEGaFKa3laJI6yxDR3jJX44m82LhHdEpg==}
-    dev: false
-
   /@unocss/astro@0.56.5(rollup@3.28.1)(vite@4.4.11):
     resolution: {integrity: sha512-nkxyGV9mA7DZ5LEr4Gap/SggM60MFNUfn56ngpxCqjQHJOMRJrAcR99hCVn+78vZ9xuZl9HxdIwgZLzn41thMw==}
     peerDependencies:
@@ -5377,6 +5387,7 @@ packages:
 
   /@unocss/core@0.56.5:
     resolution: {integrity: sha512-fx5VhOjSHn0HdV2D34pEwFMAHJcJQRTCp1xEE4GzxY1irXzaa+m2aYf5PZjmDxehiOC16IH7TO9FOWANXk1E0w==}
+    dev: true
 
   /@unocss/eslint-config@0.56.5(eslint@8.51.0)(typescript@5.2.2):
     resolution: {integrity: sha512-UP7EBTl4ORRO0yqptW7oUWxM0qNh1Nk+z4rufC0C2kI8vKc8yab+sWvlBSC8DeX3kzR7uJxvtUsHGcBcoqZujg==}
@@ -5414,6 +5425,7 @@ packages:
     resolution: {integrity: sha512-p2pyzz/ONvc5CGcaB9OZvWE8qkRSgyuhaQqFQLdBFeUhveHC0CGP0iSnXwBgAFHWM7DJo4/JpWeZ+mBt0ogVLA==}
     dependencies:
       '@unocss/core': 0.56.5
+    dev: true
 
   /@unocss/inspector@0.56.5:
     resolution: {integrity: sha512-UK/X2JyqxB1uueIFlffFsBioxMptanBbJYjrmOoLPdAFoOPp9o8IIFkFs3OKWc8imvyl3w+F0opncmdJnDMllw==}
@@ -5467,6 +5479,7 @@ packages:
       '@unocss/core': 0.56.5
       '@unocss/extractor-arbitrary-variants': 0.56.5
       '@unocss/rule-utils': 0.56.5
+    dev: true
 
   /@unocss/preset-tagify@0.56.5:
     resolution: {integrity: sha512-ANtI7E92fuzF40MD/3V72myNqrcGNXAD3TjXHIxAPQP2F+DcYIl2TBPHVsGUt2Rc5Kid2kvvsWan6sRAQVGPng==}
@@ -5488,6 +5501,7 @@ packages:
       '@unocss/preset-mini': 0.56.5
       '@unocss/preset-wind': 0.56.5
       '@unocss/rule-utils': 0.56.5
+    dev: true
 
   /@unocss/preset-web-fonts@0.56.5:
     resolution: {integrity: sha512-1YPbqpHK6NaXWHceNJTl2A+dNbliB6FeU5Tvkox1KOLTTwvzUF80uWHAE/l05Oc9EZyolZ8OsM37p2eJAb0wpw==}
@@ -5502,6 +5516,7 @@ packages:
       '@unocss/core': 0.56.5
       '@unocss/preset-mini': 0.56.5
       '@unocss/rule-utils': 0.56.5
+    dev: true
 
   /@unocss/reset@0.56.5:
     resolution: {integrity: sha512-//Pv2ITAdnpWB9FIr0JiQVl1rL1XgISR8mu3OikhCfi6d/4OH+o6/WyE7evF1pOmk1JjsQlznOABIZXQlcpbHQ==}
@@ -5512,6 +5527,7 @@ packages:
     engines: {node: '>=14'}
     dependencies:
       '@unocss/core': 0.56.5
+    dev: true
 
   /@unocss/scope@0.56.5:
     resolution: {integrity: sha512-q2eHYLuqF7RZEVGti205X2JOKSH6lBJGoQIjPtWgodNTg3S7qmUinHG0XzikI30L3EF3VljIh5TbtwGPcvbNsA==}
@@ -5747,7 +5763,7 @@ packages:
       '@vue/reactivity-transform': 3.3.4
       '@vue/shared': 3.3.4
       estree-walker: 2.0.2
-      magic-string: 0.30.0
+      magic-string: 0.30.4
       postcss: 8.4.24
       source-map-js: 1.0.2
 
@@ -8233,6 +8249,7 @@ packages:
   /domexception@2.0.1:
     resolution: {integrity: sha512-yxJ2mFy/sibVQlu5qHjOkf9J3K6zgmCxgJ94u2EdvDOV09H+32LtRswEcUsmUWN72pVLOEnTSRaIVVzVQgS0dg==}
     engines: {node: '>=8'}
+    deprecated: Use your platform's native DOMException instead
     dependencies:
       webidl-conversions: 5.0.0
     dev: true
@@ -11911,12 +11928,6 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
 
-  /magic-string@0.30.0:
-    resolution: {integrity: sha512-LA+31JYDJLs82r2ScLrlz1GjSgu66ZV518eyWT+S8VhyQn/JL0u9MeBOvQMGYiPk1DBiSN9DDMOcXvigJZaViQ==}
-    engines: {node: '>=12'}
-    dependencies:
-      '@jridgewell/sourcemap-codec': 1.4.14
-
   /magic-string@0.30.4:
     resolution: {integrity: sha512-Q/TKtsC5BPm0kGqgBIF9oXAs/xEf2vRKiIB4wCRQTJOQIByZ1d+NnUOotvJOvNpi5RNIgVOMC3pOuaP1ZTDlVg==}
     engines: {node: '>=12'}
@@ -12287,8 +12298,8 @@ packages:
     resolution: {integrity: sha512-xwK3PzhhxnfWqDfBikHLdAbj7Wy4F887nBcQrzwuF758Fw2qC4ivpKPL9t0uJZk5QYnU28+NqA7Q3lzYGMHQnA==}
     dev: true
 
-  /miniprogram-compiler@0.2.2:
-    resolution: {integrity: sha512-fiJXv/15jCcRAU8YKcO7S7fkPKLa5ZBgpLN+d6B3r3KMktM5tAkDEQ+zm6aTfNoHurYOHcRyPyGf26gqQXlFXg==}
+  /miniprogram-compiler@0.2.3:
+    resolution: {integrity: sha512-/MfFiXTBUwYxnrTbj1hgwk1+qGkMCTL1zi8IReOq/0SPVkUxpx19E89w+ohYCELFXkMfVbD+6ejrHh3Y1u5sVg==}
     dependencies:
       glob: 7.2.3
       unescape-js: 1.1.4
@@ -12304,7 +12315,7 @@ packages:
       csso: 3.5.1
       j-component: 1.4.6
       less: 3.13.1
-      miniprogram-compiler: 0.2.2
+      miniprogram-compiler: 0.2.3
       postcss: 7.0.39
     dev: true
 
@@ -13741,6 +13752,7 @@ packages:
 
   /prr@1.0.1:
     resolution: {integrity: sha512-yPw4Sng1gWghHQWj0B3ZggWUm4qVbPwPFcRG8KyxiU7J2OHFSoEHKS+EZ3fv5l1t9CyCiop6l/ZYeWbrgoQejw==}
+    requiresBuild: true
     dev: true
     optional: true
 
@@ -15056,7 +15068,7 @@ packages:
       uglify-js:
         optional: true
     dependencies:
-      '@jridgewell/trace-mapping': 0.3.17
+      '@jridgewell/trace-mapping': 0.3.19
       '@swc/core': 1.3.23
       esbuild: 0.14.54
       jest-worker: 27.5.1

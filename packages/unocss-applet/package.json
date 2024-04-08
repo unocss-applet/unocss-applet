@@ -45,8 +45,19 @@
   "dependencies": {
     "@unocss-applet/preset-applet": "workspace:*",
     "@unocss-applet/preset-rem-rpx": "workspace:*",
-    "@unocss-applet/transformer-applet": "^0.5.5",
-    "@unocss-applet/transformer-attributify": "workspace:*",
-    "@unocss/preset-uno": "^0.56.5"
+    "@unocss-applet/transformer-attributify": "workspace:*"
+  },
+  "devDependencies": {
+    "@unocss/preset-uno": "^0.56.5",
+    "unocss": "^0.56.5"
+  },
+  "peerDependencies": {
+    "@unocss/preset-uno": ">=0.56",
+    "unocss": ">=0.56"
+  },
+  "peerDependenciesMeta": {
+    "@unocss/preset-uno": {
+      "optional": true
+    }
   }
 }
