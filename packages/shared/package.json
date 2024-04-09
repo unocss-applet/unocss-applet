@@ -1,5 +1,6 @@
 {
   "name": "@unocss-applet/shared",
   "version": "0.7.8",
-  "private": true
+  "private": true,
+  "type": "module"
 }
