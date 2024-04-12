@@ -10,7 +10,6 @@ import {
 import {
   presetApplet,
   presetRemRpx,
-  transformerApplet,
   transformerAttributify,
 } from 'unocss-applet'
 
@@ -39,6 +38,5 @@ export default defineConfig({
     transformerVariantGroup(),
     // Don't change the following order
     transformerAttributify(),
-    transformerApplet(),
   ],
 })

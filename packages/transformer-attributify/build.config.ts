@@ -6,11 +6,4 @@ export default defineBuildConfig({
   ],
   clean: true,
   declaration: true,
-  externals: [
-    'magic-string',
-    'unocss',
-  ],
-  rollup: {
-    emitCJS: true,
-  },
 })
