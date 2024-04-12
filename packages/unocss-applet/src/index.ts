@@ -1,5 +1,4 @@
 export * from '@unocss-applet/preset-applet'
 export * from '@unocss-applet/preset-rem-rpx'
 export * from '@unocss-applet/transformer-attributify'
-export { default as transformerApplet } from '@unocss-applet/transformer-applet'
 export * from './types'
