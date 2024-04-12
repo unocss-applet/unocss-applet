@@ -17,4 +17,29 @@ export default defineConfig({
     Vue(),
     UnoCSS(),
   ],
+
+  optimizeDeps: {
+    exclude: [
+      '@iconify/utils/lib/loader/fs',
+      '@iconify/utils/lib/loader/install-pkg',
+      '@iconify/utils/lib/loader/node-loader',
+      '@iconify/utils/lib/loader/node-loaders',
+    ],
+  },
+  build: {
+    outDir: './dist',
+    emptyOutDir: true,
+    rollupOptions: {
+      external: [
+        '@iconify/utils/lib/loader/fs',
+        '@iconify/utils/lib/loader/install-pkg',
+        '@iconify/utils/lib/loader/node-loader',
+        '@iconify/utils/lib/loader/node-loaders',
+      ],
+      input: [
+        './index.html',
+        './__play.html',
+      ],
+    },
+  },
 })
