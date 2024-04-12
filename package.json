@@ -26,25 +26,25 @@
     "build:taro:h5": "npm -C playgrounds/tarojs run build:h5"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^2.13.0",
-    "@iconify-json/tabler": "^1.1.109",
-    "@types/node": "^20.12.5",
+    "@antfu/eslint-config": "^2.13.3",
+    "@iconify-json/tabler": "^1.1.110",
+    "@types/node": "^20.12.7",
     "@unocss-applet/preset-applet": "workspace:*",
     "@unocss-applet/preset-rem-rpx": "workspace:*",
     "@unocss-applet/reset": "workspace:*",
     "@unocss-applet/shared": "workspace:*",
     "@unocss-applet/transformer-attributify": "workspace:*",
-    "@unocss/eslint-config": "^0.59.0",
+    "@unocss/eslint-config": "^0.59.2",
     "bumpp": "^9.4.0",
-    "eslint": "^8.57.0",
+    "eslint": "^9.0.0",
     "esno": "^4.7.0",
     "magic-string": "^0.30.9",
-    "typescript": "^5.4.4",
+    "typescript": "^5.4.5",
     "unbuild": "^2.0.0",
-    "unocss": "^0.59.0",
+    "unocss": "^0.59.2",
     "unocss-applet": "workspace:*",
     "unocss-preset-extra": "^0.5.3",
-    "vite": "^4.5.3",
-    "vitest": "^0.34.6"
+    "vite": "^5.2.8",
+    "vitest": "^1.5.0"
   }
 }

@@ -35,11 +35,11 @@
     "ios >= 8"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.23.5",
+    "@babel/runtime": "^7.24.4",
     "@tarojs/components": "3.6.20",
     "@tarojs/helper": "3.6.20",
     "@tarojs/plugin-framework-vue3": "3.6.20",
-    "@tarojs/plugin-html": "^3.6.20",
+    "@tarojs/plugin-html": "^3.6.26",
     "@tarojs/plugin-platform-alipay": "3.6.20",
     "@tarojs/plugin-platform-jd": "3.6.20",
     "@tarojs/plugin-platform-qq": "3.6.20",
@@ -51,21 +51,21 @@
     "@tarojs/shared": "3.6.20",
     "@tarojs/taro": "3.6.20",
     "@tarojs/taro-h5": "3.6.20",
-    "vue": "^3.3.11"
+    "vue": "^3.4.21"
   },
   "devDependencies": {
-    "@babel/core": "^7.23.5",
+    "@babel/core": "^7.24.4",
     "@tarojs/cli": "3.6.20",
     "@tarojs/webpack5-runner": "3.6.20",
     "@types/webpack-env": "^1.18.4",
-    "@unocss/webpack": "^0.57.7",
-    "@vue/babel-plugin-jsx": "^1.1.5",
-    "@vue/compiler-sfc": "^3.3.11",
+    "@unocss/webpack": "^0.59.2",
+    "@vue/babel-plugin-jsx": "^1.2.2",
+    "@vue/compiler-sfc": "^3.4.21",
     "babel-preset-taro": "3.6.20",
     "css-loader": "6.8.1",
     "style-loader": "3.3.3",
-    "typescript": "^5.3.3",
-    "vue-loader": "^17.3.1",
+    "typescript": "^5.4.5",
+    "vue-loader": "^17.4.2",
     "webpack": "5.89.0"
   }
 }
