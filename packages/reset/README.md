@@ -78,7 +78,6 @@ import '@unocss-applet/reset/uni-app/sanitize/assets.css'
 // taro
 import '@unocss-applet/reset/taro/sanitize/sanitize.css'
 import '@unocss-applet/reset/taro/sanitize/assets.css'
-
 ```
 
 ### Eric Meyer

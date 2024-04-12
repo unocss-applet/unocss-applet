@@ -38,10 +38,10 @@
     "build": "unbuild",
     "stub": "unbuild --stub"
   },
-  "devDependencies": {
-    "unocss": "^0.59.0"
-  },
   "peerDependencies": {
     "unocss": ">=0.59"
+  },
+  "devDependencies": {
+    "unocss": "^0.59.0"
   }
 }

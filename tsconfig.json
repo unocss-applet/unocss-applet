@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "target": "es2018",
-    "lib": ["esnext"],
     "jsx": "preserve",
+    "lib": ["esnext"],
     "module": "esnext",
     "moduleResolution": "node",
     "paths": {
@@ -12,14 +12,14 @@
       "@unocss-applet/shared": ["./packages/shared/src/index.ts"],
       "unocss-applet": ["./packages/unocss-applet/src/index.ts"]
     },
+    "resolveJsonModule": true,
     "types": [
       "node",
       "vite/client"
     ],
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
     "strict": true,
     "strictNullChecks": true,
+    "esModuleInterop": true,
     "skipDefaultLibCheck": true,
     "skipLibCheck": true
   },

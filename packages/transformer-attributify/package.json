@@ -37,17 +37,17 @@
     "build": "unbuild",
     "stub": "unbuild --stub"
   },
-  "devDependencies": {
-    "unocss": "^0.59.0",
-    "magic-string": "^0.30.9"
-  },
   "peerDependencies": {
-    "unocss": ">=0.59",
-    "magic-string": "^0.30.9"
+    "magic-string": "^0.30.9",
+    "unocss": ">=0.59"
   },
   "peerDependenciesMeta": {
     "magic-string": {
       "optional": true
     }
+  },
+  "devDependencies": {
+    "magic-string": "^0.30.9",
+    "unocss": "^0.59.0"
   }
 }
