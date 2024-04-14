@@ -1,12 +1,15 @@
 import { defineConfig } from 'vite'
-import uni from '@dcloudio/vite-plugin-uni'
+import uniModule from '@dcloudio/vite-plugin-uni'
 import UnoCSS from 'unocss/vite'
 import Inspect from 'vite-plugin-inspect'
+
+// @ts-expect-error missing types
+const Uni = uniModule.default || uniModule
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    uni(),
+    Uni(),
     UnoCSS(),
     Inspect(),
   ],

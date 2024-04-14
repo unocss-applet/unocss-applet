@@ -1,7 +1,7 @@
 {
   "name": "unocss-applet",
   "type": "module",
-  "version": "0.7.8",
+  "version": "0.8.0",
   "description": "",
   "author": "Neil Lee <zguolee@foxmail.com>",
   "license": "MIT",
@@ -23,15 +23,14 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs"
+      "types": "./dist/index.d.mts",
+      "default": "./dist/index.mjs"
     },
     "./*": "./*"
   },
   "main": "src/index.ts",
   "publishConfig": {
-    "main": "dist/index.cjs",
+    "main": "dist/index.mjs",
     "module": "dist/index.mjs",
     "types": "dist/index.d.ts"
   },
@@ -42,11 +41,22 @@
     "build": "unbuild",
     "stub": "unbuild --stub"
   },
+  "peerDependencies": {
+    "@unocss/preset-uno": ">=0.59",
+    "unocss": ">=0.59"
+  },
+  "peerDependenciesMeta": {
+    "@unocss/preset-uno": {
+      "optional": true
+    }
+  },
   "dependencies": {
     "@unocss-applet/preset-applet": "workspace:*",
     "@unocss-applet/preset-rem-rpx": "workspace:*",
-    "@unocss-applet/transformer-applet": "^0.5.5",
-    "@unocss-applet/transformer-attributify": "workspace:*",
-    "@unocss/preset-uno": "^0.56.5"
+    "@unocss-applet/transformer-attributify": "workspace:*"
+  },
+  "devDependencies": {
+    "@unocss/preset-uno": "^0.59.2",
+    "unocss": "^0.59.2"
   }
 }

@@ -1,4 +1,5 @@
-import { createGenerator, UnocssPluginContext } from '@unocss/core'
+import type { UnocssPluginContext } from '@unocss/core'
+import { createGenerator } from '@unocss/core'
 import presetApplet from '@unocss-applet/preset-applet'
 import { describe, expect, it } from 'vitest'
 import { presetExtra } from 'unocss-preset-extra'
@@ -255,7 +256,6 @@ describe('preset-applet', () => {
     expect(css).toMatchSnapshot()
   })
 })
-
 
 const transformer = transformerApplet()
 
