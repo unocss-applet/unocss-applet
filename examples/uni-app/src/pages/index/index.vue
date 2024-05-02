@@ -12,7 +12,7 @@ const fixed = ref(true)
 </script>
 
 <template>
-  <div class="text-center aaa" p="4">
+  <div class="text-center aaa u-text-color" p="4">
     <div text="4xl" class="rotate-180 i-carbon-campsite" :class="bg" :hover-class="bool ? '' : '!bg-teal'" />
     <div :class="[border && 'u-border-top', fixed && 'u-tabbar--fixed']" />
     <div class="border bg-blue-200 font-light font-mono">
@@ -66,7 +66,7 @@ const fixed = ref(true)
           2
         </div>
       </div>
-      <div class="flex-1 flex space-x-1">
+      <div class="flex-1 flex space-x-1 md:selector-[aside]:shadow-xl">
         <div class="custom-div border-solid border-1 border-blue w-20">
           1
         </div>

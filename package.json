@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.8.0",
   "private": true,
-  "packageManager": "pnpm@8.12.0",
+  "packageManager": "pnpm@9.0.6",
   "scripts": {
     "dev": "pnpm stub",
     "build": "pnpm -r --filter=./packages/* run build && pnpm -r run build-post",

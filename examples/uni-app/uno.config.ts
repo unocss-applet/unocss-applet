@@ -40,6 +40,9 @@ export default defineConfig({
       info: '#373e47',
     },
   },
+  shortcuts: {
+    'u-text-color': 'text-[#323233] dark:text-[#F5F5F5]',
+  },
   safelist: [
     ...['primary', 'secondary', 'success', 'warning', 'error', 'info'].map(c => `bg-${c}`),
   ],
