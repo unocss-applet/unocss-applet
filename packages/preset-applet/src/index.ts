@@ -43,6 +43,9 @@ export function presetApplet(options: PresetAppletOptions = {}): Preset<Theme> {
           util.selector = unoCSSToAppletProcess(util.selector)
           util.selector = encodeNonSpaceLatin(util.selector)
         }
+        if (!util.layer)
+          util.layer = 'default'
+
         return util
       },
     ],
