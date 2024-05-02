@@ -83,6 +83,14 @@ const targets = [
   'divide-none',
   'divide-x-none',
   'divide-inline-none',
+
+  // media
+  'md:divide-y-4',
+  'md:bg-red',
+
+  // shortcuts
+  'u-text-color',
+  'u-text-color/2',
 ]
 
 const targets2 = [
@@ -219,6 +227,10 @@ const uno = createGenerator({
       },
       info: 'hsl(200.1, 100%, 54.3%)',
     },
+  },
+  shortcuts: {
+    'u-text-color': 'text-[#323233] dark:text-[#F5F5F5]',
+    'u-text-color/2': 'text-[#969799] dark:text-[#707070]',
   },
 })
 

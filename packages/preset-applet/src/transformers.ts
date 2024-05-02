@@ -2,11 +2,6 @@ import type { SourceCodeTransformer } from 'unocss'
 import { UNSUPPORTED_CHARS, encodeNonSpaceLatin } from '../../shared/src'
 
 export interface TransformerAppletOptions {
-  /**
-   * The layer name of generated rules
-   * @default 'applet_shortcuts'
-   */
-  layer?: string
 
   /**
    * Unsupported characters in applet, will be added to the default value
@@ -16,8 +11,6 @@ export interface TransformerAppletOptions {
 }
 
 export function transformerApplet(options: TransformerAppletOptions = {}): SourceCodeTransformer {
-  const layer = options.layer ?? 'applet_shortcuts'
-
   const _UNSUPPORTED_CHARS = [...UNSUPPORTED_CHARS, ...(options.unsupportedChars ?? [])]
   const ESCAPED_UNSUPPORTED_CHARS = _UNSUPPORTED_CHARS.map(char => `\\${char}`)
   const charTestReg = new RegExp(`[${ESCAPED_UNSUPPORTED_CHARS.join('')}]`)
@@ -43,7 +36,7 @@ export function transformerApplet(options: TransformerAppletOptions = {}): Sourc
         replace = replace.replace(negativeReplaceReg, '')
         replaced = replaced.replace(negativeReplaceReg, '')
 
-        uno.config.shortcuts.push([replaced, replace, { layer }])
+        uno.config.shortcuts.push([replaced, replace, { layer: layers[0] }])
         tokens.add(replaced)
 
         code = code.replaceAll(replace, replaced)
