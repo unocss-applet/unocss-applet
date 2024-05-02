@@ -31,7 +31,7 @@ export function transformerApplet(options: TransformerAppletOptions = {}): Sourc
       let code = s.toString()
 
       const { uno, tokens } = ctx
-      const { matched } = await uno.generate(code, { preflights: false })
+      const { matched, layers } = await uno.generate(code, { preflights: false })
       // skip attributify
       const replacements = Array.from(matched).filter(i => charTestReg.test(i))
         .filter(i => !i.includes('='))
