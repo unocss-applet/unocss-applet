@@ -13,6 +13,12 @@ export function variantSpaceAndDivide(options: PresetAppletOptions): Variant<The
       if (/space-?([xy])-?(-?.+)$/.test(matcher) || /divide-/.test(matcher)) {
         return {
           matcher,
+          body: (el) => {
+            if (matcher.includes('divide') && el.join(' ').includes('width')) {
+              el.unshift(['border', '0 solid #fff'])
+              return el
+            }
+          },
           selector: (input) => {
             const selectors = betweenElements.map(el => `${input}>${el}+${el}`)
             return selectors.join(',')
