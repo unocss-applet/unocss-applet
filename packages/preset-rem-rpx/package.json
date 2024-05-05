@@ -1,7 +1,7 @@
 {
   "name": "@unocss-applet/preset-rem-rpx",
   "type": "module",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "Coverts rem <=> rpx for utils.",
   "author": "Neil Lee <zguolee@foxmail.com>",
   "license": "MIT",
