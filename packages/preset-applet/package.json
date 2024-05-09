@@ -56,9 +56,9 @@
     }
   },
   "devDependencies": {
-    "@unocss/core": "^0.59.2",
-    "@unocss/preset-mini": "^0.59.2",
-    "@unocss/preset-uno": "^0.59.2",
-    "unocss": "^0.59.2"
+    "@unocss/core": "^0.60.0",
+    "@unocss/preset-mini": "^0.60.0",
+    "@unocss/preset-uno": "^0.60.0",
+    "unocss": "^0.60.0"
   }
 }
