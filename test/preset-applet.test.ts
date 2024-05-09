@@ -101,6 +101,7 @@ const targets2 = [
   'dark:selector-[.body_main]:bg-white',
   '[&_.nut-button]:text-lg',
   '[&_.nut-form-item\\_\\_label]:!text-left',
+  '*:p-2'
 ]
 
 const nonTargets = [
@@ -248,6 +249,7 @@ describe('preset-applet', () => {
     const code = targets2.join(' ')
     const { css } = await uno.generate(code, { preflights: false })
     const { css: css2 } = await uno.generate(code, { preflights: false })
+    console.log('css', css)
 
     expect(css).toMatchSnapshot()
     expect(css).toEqual(css2)

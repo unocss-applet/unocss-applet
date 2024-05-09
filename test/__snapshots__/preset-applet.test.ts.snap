@@ -118,6 +118,7 @@ exports[`preset-applet > targets 1`] = `
 
 exports[`preset-applet > targets2 1`] = `
 "/* layer: default */
+._a__a_p-2 > *{padding:0.5rem;}
 ._a__a___a_nut-form-item_a___a__label_a__a__a_text-left .nut-form-item__label{text-align:left !important;}
 ._a__a___a_nut-button_a__a_text-lg .nut-button{font-size:1.125rem;line-height:1.75rem;}
 .cls.multi,
