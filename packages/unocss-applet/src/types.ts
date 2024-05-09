@@ -9,7 +9,7 @@ export interface AppletConfig {
 
   /**
    * Unsupported characters in applet, will be added to the default value
-   * @default ['.', ':', '%', '!', '#', '(', ')', '[', '/', ']', ',', '$', '{', '}', '@', '+', '^', '&', '<', '>', '\'', '\\']
+   * @default ['.', ':', '%', '!', '#', '(', ')', '[', '/', ']', ',', '$', '{', '}', '@', '+', '^', '&', '<', '>', '\'', '\\', '"', '?', '*']
    */
   unsupportedChars?: string[]
 
