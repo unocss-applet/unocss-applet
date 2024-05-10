@@ -249,7 +249,6 @@ describe('preset-applet', () => {
     const code = targets2.join(' ')
     const { css } = await uno.generate(code, { preflights: false })
     const { css: css2 } = await uno.generate(code, { preflights: false })
-    console.log('css', css)
 
     expect(css).toMatchSnapshot()
     expect(css).toEqual(css2)
