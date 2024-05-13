@@ -101,7 +101,8 @@ const targets2 = [
   'dark:selector-[.body_main]:bg-white',
   '[&_.nut-button]:text-lg',
   '[&_.nut-form-item\\_\\_label]:!text-left',
-  '*:p-2'
+  '*:p-2',
+  'dark:*:p-2',
 ]
 
 const nonTargets = [
