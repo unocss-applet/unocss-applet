@@ -56,7 +56,7 @@
     "@unocss-applet/transformer-attributify": "workspace:*"
   },
   "devDependencies": {
-    "@unocss/preset-uno": "^0.60.1",
-    "unocss": "^0.60.1"
+    "@unocss/preset-uno": "^0.60.2",
+    "unocss": "^0.60.2"
   }
 }

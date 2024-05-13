@@ -55,7 +55,7 @@
     "@dcloudio/uni-automator": "3.0.0-4010520240507001",
     "@dcloudio/uni-cli-shared": "3.0.0-4010520240507001",
     "@dcloudio/vite-plugin-uni": "3.0.0-4010520240507001",
-    "@iconify-json/carbon": "^1.1.32",
+    "@iconify-json/carbon": "^1.1.33",
     "postcss": "^8.4.38",
     "sass": "^1.77.1",
     "vite-plugin-inspect": "^0.8.4"

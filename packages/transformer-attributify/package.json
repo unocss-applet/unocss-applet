@@ -48,6 +48,6 @@
   },
   "devDependencies": {
     "magic-string": "^0.30.10",
-    "unocss": "^0.60.1"
+    "unocss": "^0.60.2"
   }
 }

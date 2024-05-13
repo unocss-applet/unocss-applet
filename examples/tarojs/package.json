@@ -58,7 +58,7 @@
     "@tarojs/cli": "3.6.28",
     "@tarojs/webpack5-runner": "3.6.28",
     "@types/webpack-env": "^1.18.5",
-    "@unocss/webpack": "^0.60.1",
+    "@unocss/webpack": "^0.60.2",
     "@vue/babel-plugin-jsx": "^1.2.2",
     "@vue/compiler-sfc": "^3.4.27",
     "babel-preset-taro": "3.6.28",
