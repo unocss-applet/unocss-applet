@@ -14,4 +14,10 @@ export interface PresetAppletOptions extends PresetUnoOptions {
    * @default ['view', 'button', 'text', 'image']
    */
   betweenElements?: string[]
+
+  /**
+   * Space Between and Divide Width Elements
+   * @default ['view', 'button', 'text', 'image']
+   */
+  wildcardElements?: string[]
 }

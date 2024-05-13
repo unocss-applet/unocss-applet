@@ -22,3 +22,25 @@ export function variantSpaceAndDivide(options: PresetAppletOptions): Variant<The
     },
   ]
 }
+
+export function variantWildcard(options: PresetAppletOptions): Variant<Theme>[] {
+  const wildcardElements = options?.wildcardElements ?? ['view', 'button', 'text', 'image']
+
+  return [
+    (matcher) => {
+      if (matcher.startsWith('_'))
+        return
+
+      if (/\*:.*/.test(matcher)) {
+        return {
+          matcher,
+          selector: (input) => {
+            const newInput = input.replace(/\s?>\s?\*/g, '')
+            const selectors = wildcardElements.map(el => `${newInput}>${el}`)
+            return selectors.join(',')
+          },
+        }
+      }
+    },
+  ]
+}
