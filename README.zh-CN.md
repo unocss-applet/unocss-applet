@@ -84,19 +84,25 @@ export default defineConfig({
 `vite.config.ts`（UnoCSS v0.58 和更低版本）/ `vite.config.mts`（UnoCSS v0.59 和更高版本）
 
 ```ts
+import { defineConfig } from 'vite'
+import uniModule from '@dcloudio/vite-plugin-uni'
 import UnoCSS from 'unocss/vite'
 
-export default {
+// @ts-expect-error missing types
+const Uni = uniModule.default || uniModule
+
+export default defineConfig({
   plugins: [
+    Uni(),
     UnoCSS(),
   ],
-}
+})
 ```
 
 `main.ts`
 
 ```ts
-import 'virtual:uno.css'
+import 'uno.css'
 ```
 
 <br></details>

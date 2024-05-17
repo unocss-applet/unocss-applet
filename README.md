@@ -81,22 +81,28 @@ export default defineConfig({
 <details>
 <summary>UniApp + Vue3 + Vite</summary><br>
 
-`vite.config.ts`（UnoCSS v0.58 和更低版本）/ `vite.config.mts`（UnoCSS v0.59 和更高版本）
+`vite.config.ts` (UnoCSS v0.58 or below) / `vite.config.mts` (UnoCSS v0.59 or above)
 
 ```ts
+import { defineConfig } from 'vite'
+import uniModule from '@dcloudio/vite-plugin-uni'
 import UnoCSS from 'unocss/vite'
 
-export default {
+// @ts-expect-error missing types
+const Uni = uniModule.default || uniModule
+
+export default defineConfig({
   plugins: [
+    Uni(),
     UnoCSS(),
   ],
-}
+})
 ```
 
 `main.ts`
 
 ```ts
-import 'virtual:uno.css'
+import 'uno.css'
 ```
 
 <br></details>
@@ -104,7 +110,7 @@ import 'virtual:uno.css'
 <details>
 <summary>Taro v3.6 + Vue3 + Webpack5</summary><br>
 
-`config/index.js`（UnoCSS v0.59 和更高版本）
+`config/index.js` (UnoCSS v0.59 or above)
 
 ```js
 import { createSwcRegister, getModuleDefaultExport } from '@tarojs/helper'
@@ -131,7 +137,7 @@ export default async () => {
 }
 ```
 
-`config/index.js`（UnoCSS v0.58 和更低版本）
+`config/index.js` (UnoCSS v0.58 or below)
 
 ```js
 import UnoCSS from 'unocss/webpack'
