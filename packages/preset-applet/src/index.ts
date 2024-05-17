@@ -5,7 +5,7 @@ import { normalizePreflights } from '@unocss/preset-mini'
 import { UNSUPPORTED_CHARS, encodeNonSpaceLatin } from '../../shared/src'
 import { appletPreflights } from './preflights'
 import type { PresetAppletOptions } from './types'
-import { variantSpaceAndDivide } from './variants'
+import { variantSpaceAndDivide, variantWildcard } from './variants'
 import { transformerApplet } from './transformers'
 
 export * from './types'
@@ -31,7 +31,7 @@ export function presetApplet(options: PresetAppletOptions = {}): Preset<Theme> {
   // https://github.com/unocss/unocss/blob/main/packages/preset-mini/src/_rules/question-mark.ts
   _presetUno.rules?.pop()
   // remove the internal space and divide variant
-  _presetUno.variants?.splice(1, 1, ...variantSpaceAndDivide(options))
+  _presetUno.variants?.splice(1, 1, ...variantSpaceAndDivide(options), ...variantWildcard(options))
 
   return {
     ..._presetUno,

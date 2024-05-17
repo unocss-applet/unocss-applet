@@ -118,12 +118,14 @@ exports[`preset-applet > targets 1`] = `
 
 exports[`preset-applet > targets2 1`] = `
 "/* layer: default */
+._a__a_p-2>view,._a__a_p-2>button,._a__a_p-2>text,._a__a_p-2>image{padding:0.5rem;}
 ._a__a___a_nut-form-item_a___a__label_a__a__a_text-left .nut-form-item__label{text-align:left !important;}
 ._a__a___a_nut-button_a__a_text-lg .nut-button{font-size:1.125rem;line-height:1.75rem;}
 .cls.multi,
 section{--un-text-opacity:1;color:rgb(156 163 175 / var(--un-text-opacity));}
 @media (prefers-color-scheme: dark){
 .body main{--un-bg-opacity:1;background-color:rgb(255 255 255 / var(--un-bg-opacity));}
+.dark_a__a__a_p-2>view,.dark_a__a__a_p-2>button,.dark_a__a__a_p-2>text,.dark_a__a__a_p-2>image{padding:0.5rem;}
 }
 @media (min-width: 768px){
 aside{--un-shadow:var(--un-shadow-inset) 0 20px 25px -5px var(--un-shadow-color, rgb(0 0 0 / 0.1)),var(--un-shadow-inset) 0 8px 10px -6px var(--un-shadow-color, rgb(0 0 0 / 0.1));box-shadow:var(--un-ring-offset-shadow), var(--un-ring-shadow), var(--un-shadow);}

@@ -42,6 +42,6 @@
     "unocss": ">=0.59"
   },
   "devDependencies": {
-    "unocss": "^0.59.2"
+    "unocss": "^0.60.2"
   }
 }

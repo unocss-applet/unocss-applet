@@ -38,7 +38,7 @@
     "stub": "unbuild --stub"
   },
   "peerDependencies": {
-    "magic-string": "^0.30.9",
+    "magic-string": "^0.30.0",
     "unocss": ">=0.59"
   },
   "peerDependenciesMeta": {
@@ -47,7 +47,7 @@
     }
   },
   "devDependencies": {
-    "magic-string": "^0.30.9",
-    "unocss": "^0.59.2"
+    "magic-string": "^0.30.10",
+    "unocss": "^0.60.2"
   }
 }
