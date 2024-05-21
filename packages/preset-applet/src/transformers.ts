@@ -5,7 +5,7 @@ export interface TransformerAppletOptions {
 
   /**
    * Unsupported characters in applet, will be added to the default value
-   * @default ['.', ':', '%', '!', '#', '(', ')', '[', '/', ']', ',', '$', '{', '}', '@', '+', '^', '&', '<', '>', '\'', '\\', '"', '?', '*']
+   * @default ['.', ':', '%', '!', '#', '(', ')', '[', '/', ']', ',', '$', '{', '}', '@', '+', '^', '&', '<', '>', '\'', '\\', '"', '?', '*', '=']
    */
   unsupportedChars?: string[]
 }
@@ -25,9 +25,12 @@ export function transformerApplet(options: TransformerAppletOptions = {}): Sourc
 
       const { uno, tokens } = ctx
       const { matched, layers } = await uno.generate(code, { preflights: false })
+
       // skip attributify
-      const replacements = Array.from(matched).filter(i => charTestReg.test(i))
-        .filter(i => !i.includes('='))
+      const replacements = Array.from(matched)
+        .filter(i => charTestReg.test(i))
+        .filter(i => !i.includes('=') || i.includes('[url('))
+
       for (let replace of replacements) {
         let replaced = replace.replace(charReplaceReg, '_a_')
         replaced = encodeNonSpaceLatin(replaced)

@@ -42,6 +42,9 @@ const fixed = ref(true)
       class="bg-[url(https://static.runoob.com/images/demo/demo2.jpg)]" w-40 h-20 ma un-color="red"
       bg="center cover"
     />
+    <div
+      class="bg-[url(https://api.iconify.design/carbon:bat.svg?color=red)]"
+    />
     <div class="p-1 text-2xl" m-2 :class="bool ? '' : 'text-yellow-500 p-2.5'">
       abckefghijklmnopqrstuvwxyz
     </div>
