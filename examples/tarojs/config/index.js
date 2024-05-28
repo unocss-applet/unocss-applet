@@ -1,10 +1,13 @@
 import process from 'node:process'
+import { createSwcRegister, getModuleDefaultExport } from '@tarojs/helper'
 import dev from './dev'
 import prod from './prod'
 
 export default async (merge) => {
-  const unocssModule = await import('@unocss/webpack')
-  const UnoCSS = unocssModule.default || unocssModule
+  createSwcRegister({
+    only: [filePath => filePath.includes('@unocss')],
+  })
+  const UnoCSS = getModuleDefaultExport(await import('@unocss/webpack'))
 
   const base = {
     projectName: 'tarojs',

@@ -79,32 +79,65 @@ export default defineConfig({
 ### 平台配置
 
 <details>
-<summary>For UniApp with Vue3 and Vite</summary><br>
+<summary>UniApp + Vue3 + Vite</summary><br>
 
-`vite.config.ts`
+`vite.config.ts`（UnoCSS v0.58 和更低版本）/ `vite.config.mts`（UnoCSS v0.59 和更高版本）
 
 ```ts
+import { defineConfig } from 'vite'
+import uniModule from '@dcloudio/vite-plugin-uni'
 import UnoCSS from 'unocss/vite'
 
-export default {
+// @ts-expect-error missing types
+const Uni = uniModule.default || uniModule
+
+export default defineConfig({
   plugins: [
+    Uni(),
     UnoCSS(),
   ],
-}
+})
 ```
 
 `main.ts`
 
 ```ts
-import 'virtual:uno.css'
+import 'uno.css'
 ```
 
 <br></details>
 
 <details>
-<summary>For Taro(v3.5.6) with Vue3 and Webpack5</summary><br>
+<summary>Taro v3.6 + Vue3 + Webpack5</summary><br>
 
-`config/index.js`
+`config/index.js`（UnoCSS v0.59 和更高版本）
+
+```js
+import { createSwcRegister, getModuleDefaultExport } from '@tarojs/helper'
+
+export default async () => {
+  createSwcRegister({
+    only: [filePath => filePath.includes('@unocss')],
+  })
+  const UnoCSS = getModuleDefaultExport(await import('@unocss/webpack'))
+  return {
+    mini: {
+      // ...
+      webpackChain(chain, _webpack) {
+        chain.plugin('unocss').use(UnoCSS())
+      }
+    },
+    h5: {
+      // ...
+      webpackChain(chain) {
+        chain.plugin('unocss').use(UnoCSS())
+      }
+    }
+  }
+}
+```
+
+`config/index.js`（UnoCSS v0.58 和更低版本）
 
 ```js
 import UnoCSS from '@unocss/webpack'
