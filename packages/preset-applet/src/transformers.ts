@@ -24,7 +24,7 @@ export function transformerApplet(options: TransformerAppletOptions = {}): Sourc
       let code = s.toString()
 
       const { uno, tokens } = ctx
-      const { matched, layers } = await uno.generate(code, { preflights: false })
+      const { matched, layers } = await uno.generate(code, { safelist: true, preflights: false })
 
       // skip attributify
       const replacements = Array.from(matched)

@@ -233,7 +233,11 @@ const uno = createGenerator({
   shortcuts: {
     'u-text-color': 'text-[#323233] dark:text-[#F5F5F5]',
     'u-text-color/2': 'text-[#969799] dark:text-[#707070]',
+    'u:bg-color': 'bg-[#f8f8f8] dark:bg-[#1a1a1a]',
   },
+  safelist: [
+    'u:bg-color',
+  ],
 })
 
 describe('preset-applet', () => {
@@ -259,8 +263,8 @@ describe('preset-applet', () => {
     const code = nonTargets.join(' ')
     const { css, matched } = await uno.generate(code, { preflights: false })
 
-    expect(Array.from(matched)).toEqual([])
-    expect(css).toBe('')
+    expect(Array.from(matched)).toEqual(['u:bg-color'])
+    expect(css).toMatchSnapshot()
   })
 
   it('preset extras', async () => {

@@ -1,7 +1,20 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`preset-applet > non-targets 1`] = `
+"/* layer: shortcuts */
+.u_a_bg-color{--un-bg-opacity:1;background-color:rgb(248 248 248 / var(--un-bg-opacity));}
+@media (prefers-color-scheme: dark){
+.u_a_bg-color{--un-bg-opacity:1;background-color:rgb(26 26 26 / var(--un-bg-opacity));}
+}"
+`;
+
 exports[`preset-applet > preset extras 1`] = `
-"/* layer: default */
+"/* layer: shortcuts */
+.u_a_bg-color{--un-bg-opacity:1;background-color:rgb(248 248 248 / var(--un-bg-opacity));}
+@media (prefers-color-scheme: dark){
+.u_a_bg-color{--un-bg-opacity:1;background-color:rgb(26 26 26 / var(--un-bg-opacity));}
+}
+/* layer: default */
 .max-size-0{max-width:0;max-height:0;}
 .max-size-0_a_5{max-width:0.125rem;max-height:0.125rem;}
 .max-size-1{max-width:0.25rem;max-height:0.25rem;}
@@ -39,9 +52,11 @@ exports[`preset-applet > preset extras 1`] = `
 
 exports[`preset-applet > targets 1`] = `
 "/* layer: shortcuts */
+.u_a_bg-color{--un-bg-opacity:1;background-color:rgb(248 248 248 / var(--un-bg-opacity));}
 .u-text-color{--un-text-opacity:1;color:rgb(50 50 51 / var(--un-text-opacity));}
 .u-text-color_a_2{--un-text-opacity:1;color:rgb(150 151 153 / var(--un-text-opacity));}
 @media (prefers-color-scheme: dark){
+.u_a_bg-color{--un-bg-opacity:1;background-color:rgb(26 26 26 / var(--un-bg-opacity));}
 .u-text-color{--un-text-opacity:1;color:rgb(245 245 245 / var(--un-text-opacity));}
 .u-text-color_a_2{--un-text-opacity:1;color:rgb(112 112 112 / var(--un-text-opacity));}
 }
@@ -117,7 +132,12 @@ exports[`preset-applet > targets 1`] = `
 `;
 
 exports[`preset-applet > targets2 1`] = `
-"/* layer: default */
+"/* layer: shortcuts */
+.u_a_bg-color{--un-bg-opacity:1;background-color:rgb(248 248 248 / var(--un-bg-opacity));}
+@media (prefers-color-scheme: dark){
+.u_a_bg-color{--un-bg-opacity:1;background-color:rgb(26 26 26 / var(--un-bg-opacity));}
+}
+/* layer: default */
 ._a__a_p-2>view,._a__a_p-2>button,._a__a_p-2>text,._a__a_p-2>image{padding:0.5rem;}
 ._a__a___a_nut-form-item_a___a__label_a__a__a_text-left .nut-form-item__label{text-align:left !important;}
 ._a__a___a_nut-button_a__a_text-lg .nut-button{font-size:1.125rem;line-height:1.75rem;}
