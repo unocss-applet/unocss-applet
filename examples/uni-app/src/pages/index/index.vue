@@ -77,6 +77,17 @@ const fixed = ref(true)
           2
         </div>
       </div>
+      <div class="flex-1 flex md:selector-[aside]:shadow-xl flex-col space-y-5">
+        <div class="custom-div border-solid border-1 border-blue w-20">
+          1
+        </div>
+        <text border-blue border-solid border-1 w-20>
+          2
+        </text>
+        <div border-blue border-solid border-1 w-20>
+          3
+        </div>
+      </div>
     </div>
   </div>
 </template>
