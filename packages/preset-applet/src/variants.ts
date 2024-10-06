@@ -14,7 +14,13 @@ export function variantSpaceAndDivide(options: PresetAppletOptions): Variant<The
         return {
           matcher,
           selector: (input) => {
-            const selectors = betweenElements.map(el => `${input}>${el}+${el}`)
+            const selectors = betweenElements.map((el) => {
+              const res: string[] = []
+              betweenElements.forEach((e) => {
+                res.push(`${input}>${el}+${e}`)
+              })
+              return res.join(',')
+            })
             return selectors.join(',')
           },
         }

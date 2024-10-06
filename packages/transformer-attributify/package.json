@@ -47,6 +47,6 @@
   },
   "dependencies": {
     "@unocss/core": "^0.63.3",
-    "magic-string": "^0.30.10"
+    "magic-string": "^0.30.11"
   }
 }

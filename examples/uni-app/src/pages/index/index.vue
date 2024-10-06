@@ -13,7 +13,10 @@ const fixed = ref(true)
 
 <template>
   <div class="text-center aaa u-text-color" p="4">
-    <div text="4xl" class="rotate-180 i-carbon-campsite" :class="bg" :hover-class="bool ? '' : '!bg-teal'" />
+    <div class="flex justify-center space-x-2">
+      <img src="../../static/logo.png" class="h-10 w-10">
+      <div text="4xl" class="rotate-180 i-carbon-campsite" :class="bg" :hover-class="bool ? '' : '!bg-teal'" />
+    </div>
     <div :class="[border && 'u-border-top', fixed && 'u-tabbar--fixed']" />
     <div class="border bg-blue-200 font-light font-mono">
       <div class="!hover:bg-gray-600 hover:text-red hover:font-bold" text="#fff">
@@ -39,7 +42,7 @@ const fixed = ref(true)
       />
     </div>
     <div
-      class="bg-[url(https://static.runoob.com/images/demo/demo2.jpg)]" w-40 h-20 ma un-color="red"
+      class="bg-[url(https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg)]" w-40 h-20 ma un-color="red"
       bg="center cover"
     />
     <div

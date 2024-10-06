@@ -9,18 +9,18 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@unocss/autocomplete": "^0.60.2",
-    "@unocss/reset": "^0.60.2",
-    "@vueuse/core": "^10.9.0",
-    "vue": "^3.4.27"
+    "@unocss/autocomplete": "^0.63.3",
+    "@unocss/reset": "^0.63.3",
+    "@vueuse/core": "^11.1.0",
+    "vue": "^3.5.11"
   },
   "devDependencies": {
-    "@codemirror/lang-css": "^6.2.1",
+    "@codemirror/lang-css": "^6.3.0",
     "@codemirror/lang-html": "^6.4.9",
     "@codemirror/lang-javascript": "^6.2.2",
     "@codemirror/lang-xml": "^6.1.0",
-    "@iconify-json/tabler": "^1.1.111",
-    "@vitejs/plugin-vue": "^5.0.4",
+    "@iconify-json/tabler": "^1.2.4",
+    "@vitejs/plugin-vue": "^5.1.4",
     "codemirror": "^6.0.1",
     "codemirror-theme-vars": "^0.1.2",
     "lz-string": "^1.5.0"

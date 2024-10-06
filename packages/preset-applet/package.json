@@ -57,7 +57,6 @@
   "dependencies": {
     "@unocss/core": "^0.63.3",
     "@unocss/preset-mini": "^0.63.3",
-    "@unocss/preset-uno": "^0.63.3",
-    "@unocss/rule-utils": "^0.63.3"
+    "@unocss/preset-uno": "^0.63.3"
   }
 }
