@@ -39,9 +39,9 @@
     "stub": "unbuild --stub"
   },
   "peerDependencies": {
-    "unocss": ">=0.59"
+    "@unocss/core": ">=0.62"
   },
-  "devDependencies": {
-    "unocss": "^0.60.2"
+  "dependencies": {
+    "@unocss/core": "^0.63.3"
   }
 }

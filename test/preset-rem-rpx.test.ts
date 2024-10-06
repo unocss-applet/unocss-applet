@@ -3,34 +3,56 @@ import { describe, expect, it } from 'vitest'
 import presetRemRpx from '@unocss-applet/preset-rem-rpx'
 import presetUno from '@unocss/preset-uno'
 
+const unoRemToRpx = createGenerator({
+  presets: [
+    presetUno(),
+    presetRemRpx({
+      baseFontSize: 16,
+      screenWidth: 375,
+      mode: 'rem2rpx',
+    }),
+  ],
+})
+
+const unoRpxToRem = createGenerator({
+  presets: [
+    presetUno(),
+    presetRemRpx({
+      baseFontSize: 16,
+      screenWidth: 375,
+      mode: 'rpx2rem',
+    }),
+  ],
+})
+
+const rem2rpxTargets = [
+  'm4',
+  'm--4',
+  'mx2',
+  '-p2',
+  'gap2',
+  'space-x-4',
+  'space-x--4',
+  '-space-x-4',
+  'divide-x-4',
+  'divide-x-1rem',
+]
+
+const rpx2remTargets = [
+  'm-32rpx',
+  'm--32rpx',
+  'mx-16rpx',
+  '-p-2prx',
+  'gap-2rpx',
+  'space-x-32rpx',
+  'space-x--32rpx',
+  '-space-x-32rpx',
+  'divide-x-32rpx',
+]
+
 describe('rem-rpx', () => {
-  const unoRemToRpx = createGenerator({
-    presets: [
-      presetUno(),
-      presetRemRpx({
-        baseFontSize: 16,
-        screenWidth: 375,
-        mode: 'rem2rpx',
-      }),
-    ],
-  })
-
-  const unoRpxToRem = createGenerator({
-    presets: [
-      presetUno(),
-      presetRemRpx({
-        baseFontSize: 16,
-        screenWidth: 375,
-        mode: 'rpx2rem',
-      }),
-    ],
-  })
-
   it('should rem to rpx', async () => {
-    expect((await unoRemToRpx.generate(
-      new Set(['m4', 'm--4', 'mx2', '-p2', 'gap2', 'space-x-4', 'space-x--4', '-space-x-4', 'divide-x-4', 'divide-x-1rem']),
-      { preflights: false },
-    )).css)
+    expect((await unoRemToRpx.generate(rem2rpxTargets, { preflights: false })).css)
       .toMatchInlineSnapshot(`
         "/* layer: default */
         .m--4{margin:-32rpx;}
@@ -47,10 +69,7 @@ describe('rem-rpx', () => {
   })
 
   it('should rpx to rem', async () => {
-    expect((await unoRpxToRem.generate(
-      new Set(['m-32rpx', 'm--32rpx', 'mx-16rpx', '-p-2prx', 'gap-2rpx', 'space-x-32rpx', 'space-x--32rpx', '-space-x-32rpx', 'divide-x-32rpx']),
-      { preflights: false },
-    )).css)
+    expect((await unoRpxToRem.generate(rpx2remTargets, { preflights: false })).css)
       .toMatchInlineSnapshot(`
         "/* layer: default */
         .m--32rpx{margin:-1rem;}
