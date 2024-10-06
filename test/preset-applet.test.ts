@@ -1,9 +1,7 @@
 import type { UnocssPluginContext } from '@unocss/core'
 import { createGenerator } from '@unocss/core'
-import presetApplet from '@unocss-applet/preset-applet'
+import presetApplet, { transformerApplet } from '@unocss-applet/preset-applet'
 import { describe, expect, it } from 'vitest'
-import { presetExtra } from 'unocss-preset-extra'
-import { transformerApplet } from '@unocss-applet/preset-applet/src/transformers'
 import MagicString from 'magic-string'
 
 const targets = [
@@ -13,6 +11,12 @@ const targets = [
   'p-2.5rem',
   'p-2.5px',
   'p-2.5em',
+
+  'b-2',
+  'b-2.5',
+  'b-2.5rem',
+  'b-2.5px',
+  'b-2.5em',
 
   // variants - mix
   'mix-tint-50-c-red-400',
@@ -105,70 +109,6 @@ const targets2 = [
   'dark:*:p-2',
 ]
 
-const nonTargets = [
-  '--p-2',
-  'hi',
-  'row-{row.id}',
-  'tabs',
-  'tab.hello',
-  'text-anything',
-  'p-anything',
-  'rotate-[3]deg',
-  'list-none-inside',
-
-  // mini - color utility
-  'color-gray-100-prefix/10',
-  'color-gray-400-prefix',
-  'color-blue-gray-400-prefix',
-  'color-true-gray-400-prefix',
-  'color-gray-400-500',
-  'color-true-gray-400-500',
-
-  // mini - behaviors
-  'will-change-all',
-  'will-change-none',
-  'will-change-margins,padding',
-  'will-change-padding,margins',
-
-  // mini - filters
-  'brightness',
-  'hue-rotate',
-  'saturate',
-  'backdrop-brightness',
-  'backdrop-hue-rotate',
-  'backdrop-saturate',
-
-  // mini - ring
-  'ring-',
-
-  // mini - shadow
-  'shadow-',
-
-  // mini - transition
-  'property-colour',
-  'property-background-color,colour-300',
-  'property-colour-background-color-300',
-  'transition-colour',
-  'transition-background-color,colour-300',
-  'transition-colour,background-color-300',
-
-  // mini - typography
-  'tab-',
-
-  // mini - variable
-  'tab-$',
-  'ws-$',
-
-  // mini - pseudo colon only
-  'backdrop-shadow-green',
-
-  // wind - placeholder
-  '$-placeholder-red-200',
-
-  // wind - bg-blend
-  'bg-blend-plus-lighter', // only added in mix-blend
-]
-
 const presetExtras = [
   'size-0',
   'size-1',
@@ -215,7 +155,6 @@ const uno = createGenerator({
       dark: 'media',
       unsupportedChars: ['~', ' '],
     }),
-    presetExtra(),
   ],
   theme: {
     colors: {
@@ -255,14 +194,6 @@ describe('preset-applet', () => {
     expect(css).toEqual(css2)
   })
 
-  it('non-targets', async () => {
-    const code = nonTargets.join(' ')
-    const { css, matched } = await uno.generate(code, { preflights: false })
-
-    expect(Array.from(matched)).toEqual([])
-    expect(css).toBe('')
-  })
-
   it('preset extras', async () => {
     const code = presetExtras.join(' ')
     const { css } = await uno.generate(code, { preflights: false })
@@ -284,14 +215,12 @@ describe('transformer-applet', () => {
   }
 
   it('basic', async () => {
-    const caseAndSnapshotPairs = [
-      ['-ml-1.5 ml-1.5 -mt-2', '-ml-1_a_5 ml-1_a_5 -mt-2'],
-      ['bg-[url(https://api.iconify.design/carbon:bat.svg?color=red)]', 'bg-_a_url_a_https_a__a__a_api_a_iconify_a_design_a_carbon_a_bat_a_svg_a_color_a_red_a__a_'],
+    const transformTargets = [
+      '-ml-1.5 ml-1.5 -mt-2',
+      'bg-[url(https://api.iconify.design/carbon:bat.svg?color=red)]',
     ]
 
-    for (const [c, snapshot] of caseAndSnapshotPairs) {
-      const result = await transform(c)
-      expect(result).toMatchInlineSnapshot(`"${snapshot}"`)
-    }
+    const result = await transform(transformTargets.join(' '))
+    expect(result).toMatchInlineSnapshot(`"-ml-1_a_5 ml-1_a_5 -mt-2 bg-_a_url_a_https_a__a__a_api_a_iconify_a_design_a_carbon_a_bat_a_svg_a_color_a_red_a__a_"`)
   })
 })

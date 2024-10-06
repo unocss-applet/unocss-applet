@@ -38,16 +38,15 @@
     "stub": "unbuild --stub"
   },
   "peerDependencies": {
-    "magic-string": "^0.30.0",
-    "unocss": ">=0.59"
+    "@unocss/core": ">=0.62"
   },
   "peerDependenciesMeta": {
-    "magic-string": {
+    "@unocss/core": {
       "optional": true
     }
   },
-  "devDependencies": {
-    "magic-string": "^0.30.10",
-    "unocss": "^0.60.2"
+  "dependencies": {
+    "@unocss/core": "^0.63.3",
+    "magic-string": "^0.30.10"
   }
 }

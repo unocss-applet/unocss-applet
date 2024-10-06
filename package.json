@@ -41,7 +41,6 @@
     "magic-string": "^0.30.10",
     "typescript": "^5.4.5",
     "unbuild": "^2.0.0",
-    "unocss": "^0.60.2",
     "unocss-applet": "workspace:*",
     "unocss-preset-extra": "^0.5.3",
     "vite": "^5.2.11",

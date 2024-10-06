@@ -1,6 +1,6 @@
 import MagicString from 'magic-string'
-import type { SourceCodeTransformer } from 'unocss'
-import { isValidSelector } from 'unocss'
+import type { SourceCodeTransformer } from '@unocss/core'
+import { isValidSelector } from '@unocss/core'
 import type { TransformerAttributifyOptions } from './types'
 
 export * from './types'
