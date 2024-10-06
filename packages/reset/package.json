@@ -1,7 +1,7 @@
 {
   "name": "@unocss-applet/reset",
   "type": "module",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "description": "collection of reset CSS stylesheets.",
   "author": {
     "name": "ModyQyW",
