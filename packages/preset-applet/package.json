@@ -39,10 +39,9 @@
     "stub": "unbuild --stub"
   },
   "peerDependencies": {
-    "@unocss/core": ">=0.59",
-    "@unocss/preset-mini": ">=0.59",
-    "@unocss/preset-uno": ">=0.59",
-    "unocss": ">=0.59"
+    "@unocss/core": ">=0.62",
+    "@unocss/preset-mini": ">=0.62",
+    "@unocss/preset-uno": ">=0.62"
   },
   "peerDependenciesMeta": {
     "@unocss/core": {
@@ -55,10 +54,10 @@
       "optional": true
     }
   },
-  "devDependencies": {
-    "@unocss/core": "^0.60.2",
-    "@unocss/preset-mini": "^0.60.2",
-    "@unocss/preset-uno": "^0.60.2",
-    "unocss": "^0.60.2"
+  "dependencies": {
+    "@unocss/core": "^0.63.3",
+    "@unocss/preset-mini": "^0.63.3",
+    "@unocss/preset-uno": "^0.63.3",
+    "@unocss/rule-utils": "^0.63.3"
   }
 }

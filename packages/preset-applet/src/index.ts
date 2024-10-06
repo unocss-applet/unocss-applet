@@ -1,7 +1,6 @@
-import type { Preset } from 'unocss'
-import { presetUno } from 'unocss'
-import type { Theme } from '@unocss/preset-uno'
+import { presetUno } from '@unocss/preset-uno'
 import { normalizePreflights } from '@unocss/preset-mini'
+import { definePreset } from '@unocss/core'
 import { UNSUPPORTED_CHARS, encodeNonSpaceLatin } from '../../shared/src'
 import { appletPreflights } from './preflights'
 import type { PresetAppletOptions } from './types'
@@ -10,7 +9,7 @@ import { transformerApplet } from './transformers'
 
 export * from './types'
 
-export function presetApplet(options: PresetAppletOptions = {}): Preset<Theme> {
+export const presetApplet = definePreset((options: PresetAppletOptions = {}) => {
   options.preflight = options.preflight ?? true
   options.variablePrefix = options.variablePrefix ?? 'un-'
 
@@ -28,7 +27,6 @@ export function presetApplet(options: PresetAppletOptions = {}): Preset<Theme> {
   const _presetUno = presetUno({ ...options, preflight: false })
   // remove the last rule
   // https://github.com/unocss/unocss/blob/main/packages/preset-mini/src/_rules/default.ts#L86
-  // https://github.com/unocss/unocss/blob/main/packages/preset-mini/src/_rules/question-mark.ts
   _presetUno.rules?.pop()
   // remove the internal space and divide variant
   _presetUno.variants?.splice(1, 1, ...variantSpaceAndDivide(options), ...variantWildcard(options))
@@ -52,6 +50,8 @@ export function presetApplet(options: PresetAppletOptions = {}): Preset<Theme> {
       config.transformers.push(transformerApplet(options))
     },
   }
-}
+})
 
 export default presetApplet
+
+export { transformerApplet }

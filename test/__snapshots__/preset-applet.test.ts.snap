@@ -50,6 +50,14 @@ exports[`preset-applet > targets 1`] = `
 .divide-dotted>view+view,.divide-dotted>button+button,.divide-dotted>text+text,.divide-dotted>image+image{border-style:dotted;}
 .divide-none>view+view,.divide-none>button+button,.divide-none>text+text,.divide-none>image+image{border-style:none;}
 .divide-ridge>view+view,.divide-ridge>button+button,.divide-ridge>text+text,.divide-ridge>image+image{border-style:ridge;}
+.b-2{border-width:2px;}
+.b-2_a_5,
+.b-2_a_5px{border-width:2.5px;}
+.b-2_a_5em{border-width:2.5em;}
+.b-2_a_5rem{border-width:2.5rem;}
+.border-custom-b{--un-border-opacity:1;border-color:rgba(var(--custom), var(--un-border-opacity));}
+.border-custom-b_a_0{border-color:rgba(var(--custom), 0);}
+.border-custom-b_a_10{border-color:rgba(var(--custom), 0.1);}
 .bg-custom-b{--un-bg-opacity:1;background-color:rgba(var(--custom), var(--un-bg-opacity));}
 .bg-custom-c{--un-bg-opacity:1;background-color:rgba(var(--custom-c), var(--un-bg-opacity));}
 .bg-custom-c_a_10{background-color:rgba(var(--custom-c), 0.1);}
@@ -79,14 +87,6 @@ exports[`preset-applet > targets 1`] = `
 .hover_a_placeholder-op90:hover::placeholder{--un-placeholder-opacity:0.9;}
 .placeholder-op90::placeholder{--un-placeholder-opacity:0.9;}
 .placeholder-opacity-10::placeholder{--un-placeholder-opacity:0.1;}
-.b-2{border-width:2px;}
-.b-2_a_5,
-.b-2_a_5px{border-width:2.5px;}
-.b-2_a_5em{border-width:2.5em;}
-.b-2_a_5rem{border-width:2.5rem;}
-.border-custom-b{--un-border-opacity:1;border-color:rgba(var(--custom), var(--un-border-opacity));}
-.border-custom-b_a_0{border-color:rgba(var(--custom), 0);}
-.border-custom-b_a_10{border-color:rgba(var(--custom), 0.1);}
 @media (hover: none) and (pointer: coarse){
 .media-touch_a_p-4{padding:1rem;}
 }

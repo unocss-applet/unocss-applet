@@ -1,5 +1,5 @@
-import type { SourceCodeTransformer } from 'unocss'
-import { UNSUPPORTED_CHARS, encodeNonSpaceLatin } from '../../shared/src'
+import type { SourceCodeTransformer } from '@unocss/core'
+import { UNSUPPORTED_CHARS, encodeNonSpaceLatin } from '@unocss-applet/shared'
 
 export interface TransformerAppletOptions {
 
@@ -20,7 +20,7 @@ export function transformerApplet(options: TransformerAppletOptions = {}): Sourc
   return {
     name: 'transformer-applet',
     enforce: 'pre',
-    async transform(s, id, ctx) {
+    async transform(s, _, ctx) {
       let code = s.toString()
 
       const { uno, tokens } = ctx

@@ -215,14 +215,12 @@ describe('transformer-applet', () => {
   }
 
   it('basic', async () => {
-    const caseAndSnapshotPairs = [
-      ['-ml-1.5 ml-1.5 -mt-2', '-ml-1_a_5 ml-1_a_5 -mt-2'],
-      ['bg-[url(https://api.iconify.design/carbon:bat.svg?color=red)]', 'bg-_a_url_a_https_a__a__a_api_a_iconify_a_design_a_carbon_a_bat_a_svg_a_color_a_red_a__a_'],
+    const transformTargets = [
+      '-ml-1.5 ml-1.5 -mt-2',
+      'bg-[url(https://api.iconify.design/carbon:bat.svg?color=red)]',
     ]
 
-    for (const [c, snapshot] of caseAndSnapshotPairs) {
-      const result = await transform(c)
-      expect(result).toMatchInlineSnapshot(`"${snapshot}"`)
-    }
+    const result = await transform(transformTargets.join(' '))
+    expect(result).toMatchInlineSnapshot(`"-ml-1_a_5 ml-1_a_5 -mt-2 bg-_a_url_a_https_a__a__a_api_a_iconify_a_design_a_carbon_a_bat_a_svg_a_color_a_red_a__a_"`)
   })
 })

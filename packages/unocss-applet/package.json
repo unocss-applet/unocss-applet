@@ -42,8 +42,8 @@
     "stub": "unbuild --stub"
   },
   "peerDependencies": {
-    "@unocss/preset-uno": ">=0.59",
-    "unocss": ">=0.59"
+    "@unocss/preset-uno": ">=0.62",
+    "unocss": ">=0.62"
   },
   "peerDependenciesMeta": {
     "@unocss/preset-uno": {
@@ -54,9 +54,5 @@
     "@unocss-applet/preset-applet": "workspace:*",
     "@unocss-applet/preset-rem-rpx": "workspace:*",
     "@unocss-applet/transformer-attributify": "workspace:*"
-  },
-  "devDependencies": {
-    "@unocss/preset-uno": "^0.60.2",
-    "unocss": "^0.60.2"
   }
 }
