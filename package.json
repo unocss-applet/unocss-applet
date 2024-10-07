@@ -23,7 +23,8 @@
     "play:taro:weapp": "pnpm -C examples/tarojs run dev:weapp",
     "build:taro:weapp": "pnpm -C examples/tarojs run build:weapp",
     "play:taro:h5": "pnpm -C examples/tarojs run dev:h5",
-    "build:taro:h5": "pnpm -C examples/tarojs run build:h5"
+    "build:taro:h5": "pnpm -C examples/tarojs run build:h5",
+    "prepare": "simple-git-hooks"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^3.7.3",
@@ -38,12 +39,20 @@
     "bumpp": "^9.6.1",
     "eslint": "^9.12.0",
     "esno": "^4.8.0",
+    "lint-staged": "^15.2.10",
     "magic-string": "^0.30.11",
+    "simple-git-hooks": "^2.11.1",
     "typescript": "^5.6.2",
     "unbuild": "^2.0.0",
     "unocss-applet": "workspace:*",
     "unocss-preset-extra": "^0.5.3",
     "vite": "^5.4.8",
     "vitest": "^2.1.2"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm lint-staged"
+  },
+  "lint-staged": {
+    "*": "eslint --fix"
   }
 }

@@ -4,7 +4,10 @@
 <p align="center">Using <a href="https://github.com/unocss/unocss">UnoCSS</a> in applet(for <a href="https://github.com/dcloudio/uni-app">UniApp</a> and <a href="https://github.com/NervJS/taro">Taro</a>) to be compatible with unsupported syntax.</p>
 </p>
 <p align="center">
-<a href="https://www.npmjs.com/package/unocss-applet"><img src="https://img.shields.io/npm/v/unocss-applet?color=333333&amp;label=" alt="NPM version"></a>
+<a href="https://www.npmjs.com/package/unocss-applet"><img src="https://img.shields.io/npm/v/unocss-applet?style=flat&colorA=858585&colorB=F17F42" alt="NPM version"></a>
+<a href="https://www.npmjs.com/package/unocss-applet"><img src="https://img.shields.io/npm/dm/unocss-applet?style=flat&colorA=858585&colorB=F17F42" alt="NPM Downloads"></a>
+<a href="https://bundlephobia.com/result?p=unocss-applet"><img src="https://img.shields.io/bundlephobia/minzip/unocss-applet?style=flat&colorA=858585&colorB=F17F42" alt="Bundle"></a>
+<a href="https://github.com/unocss-applet/unocss-applet/blob/main/LICENSE"><img src="https://img.shields.io/github/license/unocss-applet/unocss-applet.svg?style=flat&colorA=858585&colorB=F17F42" alt="License"></a>
 </p>
 
 <p align='center'>
@@ -84,9 +87,9 @@ export default defineConfig({
 `vite.config.ts` (UnoCSS v0.58 or below) / `vite.config.mts` (UnoCSS v0.59 or above)
 
 ```ts
-import { defineConfig } from 'vite'
 import uniModule from '@dcloudio/vite-plugin-uni'
 import UnoCSS from 'unocss/vite'
+import { defineConfig } from 'vite'
 
 // @ts-expect-error missing types
 const Uni = uniModule.default || uniModule
@@ -168,8 +171,8 @@ import 'uno.css'
 
 ## Example
 
-- [starter-uni](https://github.com/zguolee/starter-uni)
-- [ColorTimetable](https://github.com/zguolee/ColorTimetable)
+- [starter-uni](https://github.com/nei1ee/starter-uni)
+- [ColorTimetable](https://github.com/nei1ee/ColorTimetable)
 
 ## Acknowledgement
 
@@ -177,4 +180,4 @@ import 'uno.css'
 
 ## License
 
-MIT License &copy; 2022-PRESENT [Neil Lee](https://github.com/zguolee) and all contributors.
+MIT License &copy; 2022-PRESENT [Neil](https://github.com/nei1ee) and all contributors.

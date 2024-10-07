@@ -4,7 +4,10 @@
 <p align="center">在小程序(<a href="https://github.com/dcloudio/uni-app">UniApp</a> 和 <a href="https://github.com/NervJS/taro">Taro</a>)中使用<a href="https://github.com/unocss/unocss">UnoCSS</a>，兼容不支持的语法。</p>
 </p>
 <p align="center">
-<a href="https://www.npmjs.com/package/unocss-applet"><img src="https://img.shields.io/npm/v/unocss-applet?color=333333&amp;label=" alt="NPM version"></a>
+<a href="https://www.npmjs.com/package/unocss-applet"><img src="https://img.shields.io/npm/v/unocss-applet?style=flat&colorA=858585&colorB=F17F42" alt="NPM version"></a>
+<a href="https://www.npmjs.com/package/unocss-applet"><img src="https://img.shields.io/npm/dm/unocss-applet?style=flat&colorA=858585&colorB=F17F42" alt="NPM Downloads"></a>
+<a href="https://bundlephobia.com/result?p=unocss-applet"><img src="https://img.shields.io/bundlephobia/minzip/unocss-applet?style=flat&colorA=858585&colorB=F17F42" alt="Bundle"></a>
+<a href="https://github.com/unocss-applet/unocss-applet/blob/main/LICENSE"><img src="https://img.shields.io/github/license/unocss-applet/unocss-applet.svg?style=flat&colorA=858585&colorB=F17F42" alt="License"></a>
 </p>
 
 <p align='center'>
@@ -84,9 +87,9 @@ export default defineConfig({
 `vite.config.ts`（UnoCSS v0.58 和更低版本）/ `vite.config.mts`（UnoCSS v0.59 和更高版本）
 
 ```ts
-import { defineConfig } from 'vite'
 import uniModule from '@dcloudio/vite-plugin-uni'
 import UnoCSS from 'unocss/vite'
+import { defineConfig } from 'vite'
 
 // @ts-expect-error missing types
 const Uni = uniModule.default || uniModule
