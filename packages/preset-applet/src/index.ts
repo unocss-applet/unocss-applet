@@ -1,11 +1,11 @@
-import { presetUno } from '@unocss/preset-uno'
-import { normalizePreflights } from '@unocss/preset-mini'
-import { definePreset } from '@unocss/core'
-import { UNSUPPORTED_CHARS, encodeNonSpaceLatin } from '@unocss-applet/shared'
-import { appletPreflights } from './preflights'
 import type { PresetAppletOptions } from './types'
-import { variantSpaceAndDivide, variantWildcard } from './variants'
+import { definePreset } from '@unocss/core'
+import { normalizePreflights } from '@unocss/preset-mini'
+import { presetUno } from '@unocss/preset-uno'
+import { encodeNonSpaceLatin, UNSUPPORTED_CHARS } from '../../shared/src'
+import { appletPreflights } from './preflights'
 import { transformerApplet } from './transformers'
+import { variantSpaceAndDivide, variantWildcard } from './variants'
 
 export * from './types'
 
