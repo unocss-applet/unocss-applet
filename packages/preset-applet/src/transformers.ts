@@ -1,5 +1,5 @@
 import type { SourceCodeTransformer } from '@unocss/core'
-import { UNSUPPORTED_CHARS, encodeNonSpaceLatin } from '@unocss-applet/shared'
+import { encodeNonSpaceLatin, UNSUPPORTED_CHARS } from '../../shared/src'
 
 export interface TransformerAppletOptions {
 
