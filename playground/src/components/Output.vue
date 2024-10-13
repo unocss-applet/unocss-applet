@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import { computed, unref } from 'vue'
-import CodeMirror from './CodeMirror.vue'
 import { cssFormatted } from '~/composables/prettier'
-import { customCSS, customConfigRaw, inputHTML, options } from '~/composables/url'
 import { transformedHTML } from '~/composables/uno'
+import { inputHTML, options } from '~/composables/url'
+import CodeMirror from './CodeMirror.vue'
 
 const computedInputHTML = computed({
   get: () => unref(options.value.transformHtml ? transformedHTML : inputHTML),

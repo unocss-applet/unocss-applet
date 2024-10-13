@@ -1,13 +1,13 @@
+import type { SourceCodeTransformer } from '@unocss/core'
 import { promises as fs } from 'node:fs'
 import path from 'node:path'
-import { describe, expect, it } from 'vitest'
-import type { SourceCodeTransformer } from '@unocss/core'
 import { createGenerator } from '@unocss/core'
-import MagicString from 'magic-string'
-import transformerAttributify from '@unocss-applet/transformer-attributify'
 import presetUno from '@unocss/preset-uno'
+import transformerAttributify from '@unocss-applet/transformer-attributify'
+import MagicString from 'magic-string'
 import { presetAttributify, presetIcons } from 'unocss'
 import { presetExtra } from 'unocss-preset-extra'
+import { describe, expect, it } from 'vitest'
 
 async function transform(code: string, transformer: SourceCodeTransformer) {
   const s = new MagicString(code)

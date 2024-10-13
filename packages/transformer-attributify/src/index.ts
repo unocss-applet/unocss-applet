@@ -1,12 +1,14 @@
-import MagicString from 'magic-string'
 import type { SourceCodeTransformer } from '@unocss/core'
-import { isValidSelector } from '@unocss/core'
 import type { TransformerAttributifyOptions } from './types'
+import { isValidSelector } from '@unocss/core'
+import MagicString from 'magic-string'
 
 export * from './types'
 
 const splitterRE = /[\s'"`;]+/g
-const elementRE = /<\w(?=.*>)[\w:\.$-]*\s(((".*?>?.*?")|.*?)*?)\/?>/gs
+// eslint-disable-next-line regexp/no-super-linear-backtracking, regexp/no-dupe-disjunctions
+const elementRE = /<\w(?=.*>)[\w:.$-]*\s(((".*?>?.*?")|.*?)*?)\/?>/gs
+// eslint-disable-next-line regexp/no-super-linear-backtracking, regexp/prefer-w, regexp/no-useless-escape, regexp/no-dupe-characters-character-class, regexp/no-useless-non-capturing-group, regexp/use-ignore-case
 const attributeRE = /([\[?a-zA-Z0-9\u00A0-\uFFFF-_:()#%.\]?]+)(?:\s*=\s*((?:'[^']*')|(?:"[^"]*")|\S+))?/g
 
 const defaultIgnoreAttributes = ['placeholder', 'setup', 'lang', 'scoped']

@@ -1,7 +1,7 @@
-import { ref } from 'vue'
-import { decompressFromEncodedURIComponent as decode, compressToEncodedURIComponent as encode } from 'lz-string'
 import { throttledWatch } from '@vueuse/core'
-import { STORAGE_KEY, defaultCSS, defaultConfigRaw, defaultHTML, defaultOptions } from '~/constants'
+import { decompressFromEncodedURIComponent as decode, compressToEncodedURIComponent as encode } from 'lz-string'
+import { ref } from 'vue'
+import { defaultConfigRaw, defaultCSS, defaultHTML, defaultOptions, STORAGE_KEY } from '~/constants'
 
 const params = new URLSearchParams(window.location.search || localStorage.getItem(STORAGE_KEY) || '')
 
