@@ -1,20 +1,32 @@
 <script setup lang="ts">
-import Editor from './components/Editor.vue'
-import HeaderBar from './components/HeaderBar.vue'
-import Output from './components/Output.vue'
+import { breakpointsTailwind, useBreakpoints } from '@vueuse/core'
+import { Pane, Splitpanes } from 'splitpanes'
+import { ref } from 'vue'
+
+import Panel from './components/Panel/Panel.vue'
 import Preview from './components/Preview.vue'
+
+const bp = useBreakpoints(breakpointsTailwind)
+
+const isMobile = bp.smaller('sm')
+const isResizing = ref(false)
 </script>
 
 <template>
-  <div class="font-sans leading-1em h-screen w-screen">
-    <HeaderBar />
-    <div class="flex absolute inset-0 top-10">
-      <Preview class="flex-1" />
-      <Editor class="flex-1" />
-      <Output class="flex-1" />
-    </div>
+  <div class="font-sans leading-1em">
+    <Splitpanes
+      h-screen
+      w-screen
+      :horizontal="isMobile"
+      @resized="isResizing = false"
+      @resize="isResizing = true"
+    >
+      <Pane>
+        <Preview />
+      </Pane>
+      <Pane>
+        <Panel />
+      </Pane>
+    </Splitpanes>
   </div>
 </template>
-
-<style scoped>
-</style>
