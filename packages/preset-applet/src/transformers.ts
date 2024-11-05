@@ -24,7 +24,7 @@ export function transformerApplet(options: TransformerAppletOptions = {}): Sourc
       let code = s.toString()
 
       const { uno, tokens } = ctx
-      const { matched, layers } = await uno.generate(code, { preflights: false })
+      const { matched } = await uno.generate(code, { preflights: false })
 
       // skip attributify
       const replacements = Array.from(matched)
@@ -35,11 +35,15 @@ export function transformerApplet(options: TransformerAppletOptions = {}): Sourc
         let replaced = replace.replace(charReplaceReg, '_a_')
         replaced = encodeNonSpaceLatin(replaced)
 
+        // get original layer
+        const util = await uno.parseToken(replace)
+        const layer = util?.[0]?.[4]?.layer
+
         // delete all - prefix
         replace = replace.replace(negativeReplaceReg, '')
         replaced = replaced.replace(negativeReplaceReg, '')
 
-        uno.config.shortcuts.push([replaced, replace, { layer: layers[0] }])
+        uno.config.shortcuts.push([replaced, replace, { layer }])
         tokens.add(replaced)
 
         code = code.replaceAll(replace, replaced)
