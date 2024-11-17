@@ -1,5 +1,5 @@
-import process from 'node:process'
 import type { Preset, SourceCodeTransformer } from 'unocss'
+import process from 'node:process'
 import {
   defineConfig,
   presetAttributify,

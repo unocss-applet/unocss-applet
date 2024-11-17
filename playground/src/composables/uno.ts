@@ -1,15 +1,15 @@
-import { computed, ref, shallowRef, watch } from 'vue'
-import type { GenerateResult, UserConfig } from 'unocss'
-import { createGenerator } from 'unocss'
-import { createAutocomplete } from '@unocss/autocomplete'
-import MagicString from 'magic-string'
-import type { HighlightAnnotation, UnocssPluginContext } from '@unocss/core'
 import type { CompletionContext, CompletionResult } from '@codemirror/autocomplete'
+import type { HighlightAnnotation, UnocssPluginContext } from '@unocss/core'
+import type { GenerateResult, UserConfig } from 'unocss'
+import { createAutocomplete } from '@unocss/autocomplete'
 import { computedAsync, debouncedWatch } from '@vueuse/core'
-import { defaultConfig } from './config'
-import { customCSS, customConfigRaw, inputHTML } from './url'
-import { evaluateUserConfig } from './uno-shared'
+import MagicString from 'magic-string'
+import { createGenerator } from 'unocss'
+import { computed, ref, shallowRef, watch } from 'vue'
 import { customCSSLayerName } from '~/constants'
+import { defaultConfig } from './config'
+import { evaluateUserConfig } from './uno-shared'
+import { customConfigRaw, customCSS, inputHTML } from './url'
 
 export const init = ref(false)
 export const customConfigError = ref<Error>()
@@ -22,6 +22,52 @@ export const annotations = shallowRef<HighlightAnnotation[]>()
 let customConfig: UserConfig = {}
 let autocomplete = createAutocomplete(uno)
 let initial = true
+
+function useTransformer() {
+  const transformed = computedAsync(
+    async () => await getTransformed('html'),
+    { output: '', annotations: [] },
+  )
+  const transformedHTML = computed(() => transformed.value?.output)
+  const transformedCSS = computedAsync(
+    async () => (await getTransformed('css')).output,
+    '',
+  )
+
+  async function applyTransformers(code: MagicString, id: string, enforce?: 'pre' | 'post') {
+    let { transformers } = uno.config
+    transformers = (transformers ?? []).filter(i => i.enforce === enforce)
+
+    if (!transformers.length)
+      return []
+
+    const annotations = []
+    const fakePluginContext = { uno, tokens: new Set<string>() } as UnocssPluginContext
+    for (const { idFilter, transform } of transformers) {
+      if (idFilter && !idFilter(id))
+        continue
+      const result = await transform(code, id, fakePluginContext)
+      const _annotations = result?.highlightAnnotations
+      if (_annotations)
+        annotations.push(..._annotations)
+    }
+    return annotations
+  }
+
+  async function getTransformed(type: 'html' | 'css') {
+    const isHTML = type === 'html'
+    // for uni-app only effect for vue files
+    const id = isHTML ? 'input.vue' : 'input.css'
+    const input = new MagicString(isHTML ? inputHTML.value : customCSS.value)
+    const annotations = []
+    annotations.push(...await applyTransformers(input, id, 'pre'))
+    annotations.push(...await applyTransformers(input, id))
+    annotations.push(...await applyTransformers(input, id, 'post'))
+    return { output: isHTML ? input.toString() : cleanOutput(input.toString()), annotations }
+  }
+
+  return { transformedHTML, transformed, getTransformed, transformedCSS }
+}
 
 const { transformedHTML, transformed, getTransformed, transformedCSS } = useTransformer()
 
@@ -41,7 +87,7 @@ export async function getHint(context: CompletionContext): Promise<CompletionRes
   const cursor = context.pos
   const result = await autocomplete.suggestInFile(context.state.doc.toString(), cursor)
 
-  if (!result.suggestions?.length)
+  if (!result?.suggestions?.length)
     return null
 
   const resolved = result.resolveReplacement(result.suggestions[0][0])
@@ -99,46 +145,6 @@ watch(
   { immediate: true },
 )
 
-function useTransformer() {
-  const transformed = computedAsync(async () => await getTransformed('html'))
-  const transformedHTML = computed(() => transformed.value?.output)
-  const transformedCSS = computedAsync(async () => (await getTransformed('css')).output)
-
-  async function applyTransformers(code: MagicString, id: string, enforce?: 'pre' | 'post') {
-    let { transformers } = uno.config
-    transformers = (transformers ?? []).filter(i => i.enforce === enforce)
-
-    if (!transformers.length)
-      return []
-
-    const annotations = []
-    const fakePluginContext = { uno, tokens: new Set<string>() } as UnocssPluginContext
-    for (const { idFilter, transform } of transformers) {
-      if (idFilter && !idFilter(id))
-        continue
-      const result = await transform(code, id, fakePluginContext)
-      const _annotations = result?.highlightAnnotations
-      if (_annotations)
-        annotations.push(..._annotations)
-    }
-    return annotations
-  }
-
-  async function getTransformed(type: 'html' | 'css') {
-    const isHTML = type === 'html'
-    // for uni-app only effect for vue files
-    const id = isHTML ? 'input.vue' : 'input.css'
-    const input = new MagicString(isHTML ? inputHTML.value : customCSS.value)
-    const annotations = []
-    annotations.push(...await applyTransformers(input, id, 'pre'))
-    annotations.push(...await applyTransformers(input, id))
-    annotations.push(...await applyTransformers(input, id, 'post'))
-    return { output: isHTML ? input.toString() : cleanOutput(input.toString()), annotations }
-  }
-
-  return { transformedHTML, transformed, getTransformed, transformedCSS }
-}
-
 async function detectTransformer() {
   const { transformers = [] } = uno.config
   if (!transformers.some(t => t.name === '@unocss/transformer-directives')) {
@@ -151,10 +157,10 @@ async function detectTransformer() {
   }
 }
 
-export { transformedHTML, transformedCSS }
+export { transformedCSS, transformedHTML }
 
 function cleanOutput(code: string) {
-  return code.replace(/\/\*\s*?[\s\S]*?\s*?\*\//g, '')
+  return code.replace(/\/\*[\s\S]*?\*\//g, '')
     .replace(/\n\s+/g, '\n')
     .trim()
 }

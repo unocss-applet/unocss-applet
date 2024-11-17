@@ -1,7 +1,10 @@
-import * as __unocss from 'unocss'
+/* eslint-disable regexp/optimal-quantifier-concatenation */
+/* eslint-disable regexp/strict */
+/* eslint-disable regexp/no-super-linear-backtracking */
 import type { HighlightAnnotation, UserConfig } from '@unocss/core'
 import { escapeRegExp, isAttributifySelector, splitWithVariantGroupRE } from '@unocss/core'
 import { $fetch } from 'ofetch'
+import * as __unocss from 'unocss'
 
 const AsyncFunction = Object.getPrototypeOf(async () => {}).constructor
 
@@ -44,7 +47,7 @@ export async function evaluateUserConfig<U = UserConfig>(configStr: string): Pro
     return result
 }
 
-export const quotedArbitraryValuesRE = /(?:[\w&:[\]-]|\[\S+=\S+\])+\[\\?['"]?\S+?['"]\]\]?[\w:-]*/g
+export const quotedArbitraryValuesRE = /(?:[\w&:[\]-]|\[\S[^\s=]*=\S+\])+\[\\?['"]?\S+?['"]\]\]?[\w:-]*/g
 export const arbitraryPropertyRE = /\[(\\\W|[\w-])+:[^\s:]*?("\S+?"|'\S+?'|`\S+?`|[^\s:]+?)[^\s:]*?\)?\]/g
 
 export function getPlainClassMatchedPositionsForPug(codeSplit: string, matchedPlain: Set<string>, start: number) {

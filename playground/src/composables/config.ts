@@ -1,7 +1,7 @@
-import { ref } from 'vue'
 import type { UserConfig } from '@unocss/core'
-import { evaluateUserConfig } from './uno-shared'
+import { ref } from 'vue'
 import { defaultConfigRaw } from '~/constants'
+import { evaluateUserConfig } from './uno-shared'
 
 export const defaultConfig = ref<UserConfig | undefined>()
 

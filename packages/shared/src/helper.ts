@@ -1,7 +1,8 @@
 // 编码空格及Latin字符以外的字符
 // 例如：'你好' => '203202'
 export function encodeNonSpaceLatin(str: string) {
-  const regex = /[^A-Za-z0-9!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~\\ ]+/g
+  // eslint-disable-next-line regexp/no-obscure-range
+  const regex = /[^\w!"#$%&'()*+,-./:;<=>?@[\]^`{|}~\\ ]+/g
 
   if (!regex.test(str))
     return str

@@ -19,11 +19,11 @@ watch([iframeData, iframe], send, { deep: true })
 </script>
 
 <template>
-  <div class="h-full w-full overflow-hidden">
+  <div class="h-full flex w-full items-center justify-center">
     <iframe
       v-show="init"
       ref="iframe"
-      h-full w-full border-0 flex-grow min-w-0 min-h-0
+      h-full border-0 min-w-0 min-h-0
       src="/__play.html"
       @load="send"
     />

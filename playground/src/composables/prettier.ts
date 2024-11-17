@@ -1,7 +1,7 @@
 import { computed, ref } from 'vue'
-import { useCSSPrettify, useHTMLPrettify, useJSPrettify } from './usePrettify'
 import { output, transformedCSS, transformedHTML } from './uno'
-import { customCSS, customConfigRaw, inputHTML, options } from './url'
+import { customConfigRaw, customCSS, inputHTML, options } from './url'
+import { useCSSPrettify, useHTMLPrettify, useJSPrettify } from './usePrettify'
 
 export function formatHTML() {
   inputHTML.value = useHTMLPrettify(options.value.transformHtml ? transformedHTML : inputHTML).value

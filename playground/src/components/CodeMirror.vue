@@ -1,11 +1,11 @@
 <script setup lang="ts">
+import type { CompletionSource } from '@codemirror/autocomplete'
 import type { HighlightAnnotation } from '@unocss/core'
 import { Decoration } from '@codemirror/view'
 import { useEventListener, useThrottleFn, useVModel } from '@vueuse/core'
-import type { CompletionSource } from '@codemirror/autocomplete'
 import { onMounted, reactive, ref, toRefs, watch } from 'vue'
-import { addMarks, filterMarks, useCodeMirror } from '../composables/codemirror'
 import { getMatchedPositions } from '~/composables/uno-shared'
+import { addMarks, filterMarks, useCodeMirror } from '../composables/codemirror'
 
 const props = defineProps<{
   modelValue: string
@@ -58,7 +58,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div ref="el" class="relative font-mono text-sm h-full" data-enable-grammarly="false" />
+  <div ref="el" class="relative font-mono h-full text-sm" data-enable-grammarly="false" />
 </template>
 
 <style>
