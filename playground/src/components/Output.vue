@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import { computed, unref } from 'vue'
-import CodeMirror from './CodeMirror.vue'
 import { cssFormatted } from '~/composables/prettier'
-import { customCSS, customConfigRaw, inputHTML, options } from '~/composables/url'
 import { transformedHTML } from '~/composables/uno'
+import { inputHTML, options } from '~/composables/url'
+import CodeMirror from './CodeMirror.vue'
 
 const computedInputHTML = computed({
   get: () => unref(options.value.transformHtml ? transformedHTML : inputHTML),
@@ -14,7 +14,7 @@ const computedInputHTML = computed({
 </script>
 
 <template>
-  <div class="flex flex-col h-full w-full overflow-hidden">
+  <div class="flex flex-col h-full overflow-hidden w-full">
     <div>Output</div>
     <div class="overflow-hidden flex-1 flex flex-col relative">
       <div>HTML</div>

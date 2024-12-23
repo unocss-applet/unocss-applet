@@ -1,8 +1,8 @@
 import type { UnocssPluginContext } from '@unocss/core'
 import { createGenerator } from '@unocss/core'
 import presetApplet, { transformerApplet } from '@unocss-applet/preset-applet'
-import { describe, expect, it } from 'vitest'
 import MagicString from 'magic-string'
+import { describe, expect, it } from 'vitest'
 
 const targets = [
   // base
@@ -149,7 +149,7 @@ const presetExtras = [
   '[size~="\\30 20"]',
 ]
 
-const uno = createGenerator({
+const uno = await createGenerator({
   presets: [
     presetApplet({
       dark: 'media',

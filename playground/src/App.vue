@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import HeaderBar from './components/HeaderBar.vue'
-import Preview from './components/Preview.vue'
 import Editor from './components/Editor.vue'
+import HeaderBar from './components/HeaderBar.vue'
 import Output from './components/Output.vue'
+import Preview from './components/Preview.vue'
 </script>
 
 <template>

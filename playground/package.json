@@ -9,8 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@unocss/autocomplete": "^0.63.3",
-    "@unocss/reset": "^0.63.3",
+    "@unocss/autocomplete": "^0.65.2",
+    "@unocss/reset": "^0.65.2",
     "@vueuse/core": "^11.1.0",
     "vue": "^3.5.11"
   },

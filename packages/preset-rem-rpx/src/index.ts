@@ -1,7 +1,7 @@
 import { definePreset } from '@unocss/core'
 
-const remRE = /(-?[\.\d]+)rem/g
-const rpxRE = /(-?[\.\d]+)rpx/g
+const remRE = /(-?[.\d]+)rem/g
+const rpxRE = /(-?[.\d]+)rpx/g
 
 export interface RemRpxOptions {
   /**

@@ -1,5 +1,5 @@
-import { expect, it } from 'vitest'
 import { encodeNonSpaceLatin } from '@unocss-applet/shared'
+import { expect, it } from 'vitest'
 
 it('encodeNonSpaceLatin', () => {
   expect(encodeNonSpaceLatin('Hello, thank you, goodbye'))
