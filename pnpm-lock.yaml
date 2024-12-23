@@ -68,9 +68,6 @@ importers:
       unocss-applet:
         specifier: workspace:*
         version: link:packages/unocss-applet
-      unocss-preset-extra:
-        specifier: ^0.5.3
-        version: 0.5.3(unocss@0.63.3(@unocss/webpack@0.63.3(rollup@3.28.1)(webpack@5.89.0))(postcss@8.4.47)(rollup@3.28.1)(vite@5.4.8(@types/node@22.7.4)(less@4.1.3)(sass@1.79.4)(stylus@0.55.0)(terser@5.30.3)))
       vite:
         specifier: ^5.4.8
         version: 5.4.8(@types/node@22.7.4)(less@4.1.3)(sass@1.79.4)(stylus@0.55.0)(terser@5.30.3)
@@ -9916,11 +9913,6 @@ packages:
     resolution: {integrity: sha512-hAZsKq7Yy11Zu1DE0OzWjw7nnLZmJZYTDZZyEFHZdUhV8FkH5MCfoU1XMaxXovpyW5nq5scPqq0ZDP9Zyl04oQ==}
     engines: {node: '>= 10.0.0'}
 
-  unocss-preset-extra@0.5.3:
-    resolution: {integrity: sha512-rRosBmJ3S8/97o/l4J1lc3AJnSGMSD1FgDs4bvUWmrz2OQvPheuZluL8xULEd5MGwHjw4vAwYkue114pnVelzA==}
-    peerDependencies:
-      unocss: '>= 0.31.0 < 1'
-
   unocss@0.63.3:
     resolution: {integrity: sha512-pjkLvzEghlNY9gyC3vnxr9zrO3ozx3FSBRxgCXflZmtEKP6APBopkzlB7+lJnRSY3gTFAPMLK1anqdfnQuKeUA==}
     engines: {node: '>=14'}
@@ -13887,15 +13879,6 @@ snapshots:
     optionalDependencies:
       rollup: 4.24.0
 
-  '@rollup/pluginutils@5.1.4(rollup@3.28.1)':
-    dependencies:
-      '@types/estree': 1.0.6
-      estree-walker: 2.0.2
-      picomatch: 4.0.2
-    optionalDependencies:
-      rollup: 3.28.1
-    optional: true
-
   '@rollup/pluginutils@5.1.4(rollup@4.24.0)':
     dependencies:
       '@types/estree': 1.0.6
@@ -14912,17 +14895,6 @@ snapshots:
 
   '@ungap/structured-clone@1.2.0': {}
 
-  '@unocss/astro@0.63.3(rollup@3.28.1)(vite@5.4.8(@types/node@22.7.4)(less@4.1.3)(sass@1.79.4)(stylus@0.55.0)(terser@5.30.3))':
-    dependencies:
-      '@unocss/core': 0.63.3
-      '@unocss/reset': 0.63.3
-      '@unocss/vite': 0.63.3(rollup@3.28.1)(vite@5.4.8(@types/node@22.7.4)(less@4.1.3)(sass@1.79.4)(stylus@0.55.0)(terser@5.30.3))
-    optionalDependencies:
-      vite: 5.4.8(@types/node@22.7.4)(less@4.1.3)(sass@1.79.4)(stylus@0.55.0)(terser@5.30.3)
-    transitivePeerDependencies:
-      - rollup
-      - supports-color
-
   '@unocss/astro@0.63.3(rollup@4.24.0)(vite@5.4.8(@types/node@22.7.4)(less@4.1.3)(sass@1.79.4)(stylus@0.55.0)(terser@5.30.3))':
     dependencies:
       '@unocss/core': 0.63.3
@@ -14938,25 +14910,6 @@ snapshots:
     dependencies:
       fzf: 0.5.2
       lru-cache: 10.4.3
-
-  '@unocss/cli@0.63.3(rollup@3.28.1)':
-    dependencies:
-      '@ampproject/remapping': 2.3.0
-      '@rollup/pluginutils': 5.1.2(rollup@3.28.1)
-      '@unocss/config': 0.63.3
-      '@unocss/core': 0.63.3
-      '@unocss/preset-uno': 0.63.3
-      cac: 6.7.14
-      chokidar: 3.6.0
-      colorette: 2.0.20
-      consola: 3.2.3
-      magic-string: 0.30.11
-      pathe: 1.1.2
-      perfect-debounce: 1.0.0
-      tinyglobby: 0.2.9
-    transitivePeerDependencies:
-      - rollup
-      - supports-color
 
   '@unocss/cli@0.63.3(rollup@4.24.0)':
     dependencies:
@@ -15166,21 +15119,6 @@ snapshots:
     dependencies:
       '@unocss/core': 0.63.3
 
-  '@unocss/vite@0.63.3(rollup@3.28.1)(vite@5.4.8(@types/node@22.7.4)(less@4.1.3)(sass@1.79.4)(stylus@0.55.0)(terser@5.30.3))':
-    dependencies:
-      '@ampproject/remapping': 2.3.0
-      '@rollup/pluginutils': 5.1.2(rollup@3.28.1)
-      '@unocss/config': 0.63.3
-      '@unocss/core': 0.63.3
-      '@unocss/inspector': 0.63.3
-      chokidar: 3.6.0
-      magic-string: 0.30.11
-      tinyglobby: 0.2.9
-      vite: 5.4.8(@types/node@22.7.4)(less@4.1.3)(sass@1.79.4)(stylus@0.55.0)(terser@5.30.3)
-    transitivePeerDependencies:
-      - rollup
-      - supports-color
-
   '@unocss/vite@0.63.3(rollup@4.24.0)(vite@5.4.8(@types/node@22.7.4)(less@4.1.3)(sass@1.79.4)(stylus@0.55.0)(terser@5.30.3))':
     dependencies:
       '@ampproject/remapping': 2.3.0
@@ -15195,23 +15133,6 @@ snapshots:
     transitivePeerDependencies:
       - rollup
       - supports-color
-
-  '@unocss/webpack@0.63.3(rollup@3.28.1)(webpack@5.89.0)':
-    dependencies:
-      '@ampproject/remapping': 2.3.0
-      '@rollup/pluginutils': 5.1.4(rollup@3.28.1)
-      '@unocss/config': 0.63.3
-      '@unocss/core': 0.63.3
-      chokidar: 3.6.0
-      magic-string: 0.30.17
-      tinyglobby: 0.2.10
-      unplugin: 1.16.0
-      webpack: 5.89.0
-      webpack-sources: 3.2.3
-    transitivePeerDependencies:
-      - rollup
-      - supports-color
-    optional: true
 
   '@unocss/webpack@0.63.3(rollup@4.24.0)(webpack@5.89.0(esbuild@0.20.2))':
     dependencies:
@@ -21916,16 +21837,6 @@ snapshots:
       esbuild: 0.20.2
     optional: true
 
-  terser-webpack-plugin@5.3.10(webpack@5.89.0):
-    dependencies:
-      '@jridgewell/trace-mapping': 0.3.25
-      jest-worker: 27.5.1
-      schema-utils: 3.3.0
-      serialize-javascript: 6.0.1
-      terser: 5.30.3
-      webpack: 5.89.0
-    optional: true
-
   terser@5.30.3:
     dependencies:
       '@jridgewell/source-map': 0.3.6
@@ -22226,37 +22137,6 @@ snapshots:
   universalify@0.2.0: {}
 
   universalify@2.0.0: {}
-
-  unocss-preset-extra@0.5.3(unocss@0.63.3(@unocss/webpack@0.63.3(rollup@3.28.1)(webpack@5.89.0))(postcss@8.4.47)(rollup@3.28.1)(vite@5.4.8(@types/node@22.7.4)(less@4.1.3)(sass@1.79.4)(stylus@0.55.0)(terser@5.30.3))):
-    dependencies:
-      unocss: 0.63.3(@unocss/webpack@0.63.3(rollup@3.28.1)(webpack@5.89.0))(postcss@8.4.47)(rollup@3.28.1)(vite@5.4.8(@types/node@22.7.4)(less@4.1.3)(sass@1.79.4)(stylus@0.55.0)(terser@5.30.3))
-
-  unocss@0.63.3(@unocss/webpack@0.63.3(rollup@3.28.1)(webpack@5.89.0))(postcss@8.4.47)(rollup@3.28.1)(vite@5.4.8(@types/node@22.7.4)(less@4.1.3)(sass@1.79.4)(stylus@0.55.0)(terser@5.30.3)):
-    dependencies:
-      '@unocss/astro': 0.63.3(rollup@3.28.1)(vite@5.4.8(@types/node@22.7.4)(less@4.1.3)(sass@1.79.4)(stylus@0.55.0)(terser@5.30.3))
-      '@unocss/cli': 0.63.3(rollup@3.28.1)
-      '@unocss/core': 0.63.3
-      '@unocss/postcss': 0.63.3(postcss@8.4.47)
-      '@unocss/preset-attributify': 0.63.3
-      '@unocss/preset-icons': 0.63.3
-      '@unocss/preset-mini': 0.63.3
-      '@unocss/preset-tagify': 0.63.3
-      '@unocss/preset-typography': 0.63.3
-      '@unocss/preset-uno': 0.63.3
-      '@unocss/preset-web-fonts': 0.63.3
-      '@unocss/preset-wind': 0.63.3
-      '@unocss/transformer-attributify-jsx': 0.63.3
-      '@unocss/transformer-compile-class': 0.63.3
-      '@unocss/transformer-directives': 0.63.3
-      '@unocss/transformer-variant-group': 0.63.3
-      '@unocss/vite': 0.63.3(rollup@3.28.1)(vite@5.4.8(@types/node@22.7.4)(less@4.1.3)(sass@1.79.4)(stylus@0.55.0)(terser@5.30.3))
-    optionalDependencies:
-      '@unocss/webpack': 0.63.3(rollup@3.28.1)(webpack@5.89.0)
-      vite: 5.4.8(@types/node@22.7.4)(less@4.1.3)(sass@1.79.4)(stylus@0.55.0)(terser@5.30.3)
-    transitivePeerDependencies:
-      - postcss
-      - rollup
-      - supports-color
 
   unocss@0.63.3(@unocss/webpack@0.63.3(rollup@4.24.0)(webpack@5.89.0(esbuild@0.20.2)))(postcss@8.4.47)(rollup@4.24.0)(vite@5.4.8(@types/node@22.7.4)(less@4.1.3)(sass@1.79.4)(stylus@0.55.0)(terser@5.30.3)):
     dependencies:
@@ -22739,38 +22619,6 @@ snapshots:
   webpack-virtual-modules@0.6.1: {}
 
   webpack-virtual-modules@0.6.2: {}
-
-  webpack@5.89.0:
-    dependencies:
-      '@types/eslint-scope': 3.7.4
-      '@types/estree': 1.0.5
-      '@webassemblyjs/ast': 1.12.1
-      '@webassemblyjs/wasm-edit': 1.12.1
-      '@webassemblyjs/wasm-parser': 1.12.1
-      acorn: 8.11.3
-      acorn-import-assertions: 1.9.0(acorn@8.11.3)
-      browserslist: 4.23.0
-      chrome-trace-event: 1.0.3
-      enhanced-resolve: 5.16.0
-      es-module-lexer: 1.2.1
-      eslint-scope: 5.1.1
-      events: 3.3.0
-      glob-to-regexp: 0.4.1
-      graceful-fs: 4.2.11
-      json-parse-even-better-errors: 2.3.1
-      loader-runner: 4.3.0
-      mime-types: 2.1.35
-      neo-async: 2.6.2
-      schema-utils: 3.3.0
-      tapable: 2.2.1
-      terser-webpack-plugin: 5.3.10(webpack@5.89.0)
-      watchpack: 2.4.1
-      webpack-sources: 3.2.3
-    transitivePeerDependencies:
-      - '@swc/core'
-      - esbuild
-      - uglify-js
-    optional: true
 
   webpack@5.89.0(@swc/core@1.3.96)(esbuild@0.23.1):
     dependencies:
