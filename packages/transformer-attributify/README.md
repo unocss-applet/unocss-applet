@@ -13,9 +13,9 @@ pnpm add @unocss-applet/transformer-attributify -D # with pnpm
 ## Usage
 
 ```ts
-import { defineConfig } from 'unocss'
-
 import transformerAttributify from '@unocss-applet/transformer-attributify'
+
+import { defineConfig } from 'unocss'
 
 export default defineConfig({
   // ...

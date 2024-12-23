@@ -1,15 +1,15 @@
-import { computed, ref, shallowRef, watch } from 'vue'
-import type { GenerateResult, UserConfig } from 'unocss'
-import { createGenerator } from 'unocss'
-import { createAutocomplete } from '@unocss/autocomplete'
-import MagicString from 'magic-string'
-import type { HighlightAnnotation, UnocssPluginContext } from '@unocss/core'
 import type { CompletionContext, CompletionResult } from '@codemirror/autocomplete'
+import type { HighlightAnnotation, UnocssPluginContext } from '@unocss/core'
+import type { GenerateResult, UserConfig } from 'unocss'
+import { createAutocomplete } from '@unocss/autocomplete'
 import { computedAsync, debouncedWatch } from '@vueuse/core'
-import { defaultConfig } from './config'
-import { customCSS, customConfigRaw, inputHTML } from './url'
-import { evaluateUserConfig } from './uno-shared'
+import MagicString from 'magic-string'
+import { createGenerator } from 'unocss'
+import { computed, ref, shallowRef, watch } from 'vue'
 import { customCSSLayerName } from '~/constants'
+import { defaultConfig } from './config'
+import { evaluateUserConfig } from './uno-shared'
+import { customConfigRaw, customCSS, inputHTML } from './url'
 
 export const init = ref(false)
 export const customConfigError = ref<Error>()
@@ -151,10 +151,10 @@ async function detectTransformer() {
   }
 }
 
-export { transformedHTML, transformedCSS }
+export { transformedCSS, transformedHTML }
 
 function cleanOutput(code: string) {
-  return code.replace(/\/\*\s*?[\s\S]*?\s*?\*\//g, '')
+  return code.replace(/\/\*[\s\S]*?\*\//g, '')
     .replace(/\n\s+/g, '\n')
     .trim()
 }

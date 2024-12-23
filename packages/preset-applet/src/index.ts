@@ -1,9 +1,8 @@
 import type { PresetAppletOptions } from './types'
 import { definePreset } from '@unocss/core'
-import { normalizePreflights } from '@unocss/preset-mini'
 import { presetUno } from '@unocss/preset-uno'
 import { encodeNonSpaceLatin, UNSUPPORTED_CHARS } from '../../shared/src'
-import { appletPreflights } from './preflights'
+import { preflights } from './preflights'
 import { transformerApplet } from './transformers'
 import { variantSpaceAndDivide, variantWildcard } from './variants'
 
@@ -34,7 +33,7 @@ export const presetApplet = definePreset((options: PresetAppletOptions = {}) => 
   return {
     ..._presetUno,
     name: 'unocss-preset-applet',
-    preflights: options.preflight ? normalizePreflights(appletPreflights, options.variablePrefix) : [],
+    preflights: preflights(options),
     postprocess: [
       (util) => {
         if (util.selector) {

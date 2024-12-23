@@ -1,4 +1,4 @@
-import type { Variant } from 'unocss'
+import type { Variant } from '@unocss/core'
 import type { Theme } from '@unocss/preset-uno'
 import type { PresetAppletOptions } from './types'
 
@@ -10,7 +10,7 @@ export function variantSpaceAndDivide(options: PresetAppletOptions): Variant<The
       if (matcher.startsWith('_'))
         return
 
-      if (/space-?([xy])-?(-?.+)$/.test(matcher) || /divide-/.test(matcher)) {
+      if (/space-[xy]-.+$/.test(matcher) || /divide-/.test(matcher)) {
         return {
           matcher,
           selector: (input) => {
