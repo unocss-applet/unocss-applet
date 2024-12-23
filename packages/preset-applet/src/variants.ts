@@ -1,5 +1,5 @@
+import type { Variant } from '@unocss/core'
 import type { Theme } from '@unocss/preset-uno'
-import type { Variant } from 'unocss'
 import type { PresetAppletOptions } from './types'
 
 export function variantSpaceAndDivide(options: PresetAppletOptions): Variant<Theme>[] {

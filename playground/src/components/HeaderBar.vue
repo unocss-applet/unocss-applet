@@ -15,7 +15,7 @@ function handleReset() {
 </script>
 
 <template>
-  <div class="flex items-center h-10 px-2 op-60 bg-gray/10 w-full justify-between">
+  <div class="flex items-center px-2 op-60 bg-gray/10 h-10 w-full justify-between">
     <div class="flex items-center gap-2">
       <img src="/icon.svg" w-8 h-8>
       <div text-sm>

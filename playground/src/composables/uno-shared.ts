@@ -1,6 +1,3 @@
-/* eslint-disable regexp/optimal-quantifier-concatenation */
-/* eslint-disable regexp/strict */
-/* eslint-disable regexp/no-super-linear-backtracking */
 import type { HighlightAnnotation, UserConfig } from '@unocss/core'
 import { escapeRegExp, isAttributifySelector, splitWithVariantGroupRE } from '@unocss/core'
 import { $fetch } from 'ofetch'
@@ -19,9 +16,9 @@ export function clearModuleCache() {
 
 export async function evaluateUserConfig<U = UserConfig>(configStr: string): Promise<U | undefined> {
   const code = configStr
-    .replace(/import\s*(.*?)\s*from\s*(['"])unocss\2/g, 'const $1 = await __import("unocss");')
-    .replace(/import\s*(\{[\s\S]*?\})\s*from\s*(['"])([\w-@/]+)\2/g, 'const $1 = await __import("$3");')
-    .replace(/import\s*(.*?)\s*from\s*(['"])([\w-@/]+)\2/g, 'const $1 = (await __import("$3")).default;')
+    .replace(/import\s(.*?)\sfrom\s*(['"])unocss\2/g, 'const $1 = await __import("unocss");')
+    .replace(/import\s*(\{[\s\S]*?\})\s*from\s*(['"])([\w@/-]+)\2/g, 'const $1 = await __import("$3");')
+    .replace(/import\s(.*?)\sfrom\s*(['"])([\w@/-]+)\2/g, 'const $1 = (await __import("$3")).default;')
     .replace(/export default /, 'return ')
     .replace(/\bimport\s*\(/, '__import(')
 
@@ -47,8 +44,11 @@ export async function evaluateUserConfig<U = UserConfig>(configStr: string): Pro
     return result
 }
 
-export const quotedArbitraryValuesRE = /(?:[\w&:[\]-]|\[\S[^\s=]*=\S+\])+\[\\?['"]?\S+?['"]\]\]?[\w:-]*/g
-export const arbitraryPropertyRE = /\[(\\\W|[\w-])+:[^\s:]*?("\S+?"|'\S+?'|`\S+?`|[^\s:]+?)[^\s:]*?\)?\]/g
+export const quotedArbitraryValuesRE
+  = /(?:[\w&:[\]-]|\[\S{1,64}=\S{1,64}\]){1,64}\[\\?['"]?\S{1,64}?['"]\]\]?[\w:-]{0,64}/g
+
+export const arbitraryPropertyRE
+  = /\[(\\\W|[\w-]){1,64}:[^\s:]{0,64}?("\S{1,64}?"|'\S{1,64}?'|`\S{1,64}?`|[^\s:]{1,64}?)[^\s:]{0,64}?\)?\]/g
 
 export function getPlainClassMatchedPositionsForPug(codeSplit: string, matchedPlain: Set<string>, start: number) {
   const result: [number, number, string][] = []

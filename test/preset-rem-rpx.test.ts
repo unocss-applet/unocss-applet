@@ -3,7 +3,7 @@ import presetUno from '@unocss/preset-uno'
 import presetRemRpx from '@unocss-applet/preset-rem-rpx'
 import { describe, expect, it } from 'vitest'
 
-const unoRemToRpx = createGenerator({
+const unoRemToRpx = await createGenerator({
   presets: [
     presetUno(),
     presetRemRpx({
@@ -14,7 +14,7 @@ const unoRemToRpx = createGenerator({
   ],
 })
 
-const unoRpxToRem = createGenerator({
+const unoRpxToRem = await createGenerator({
   presets: [
     presetUno(),
     presetRemRpx({

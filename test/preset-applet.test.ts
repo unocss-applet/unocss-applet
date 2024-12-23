@@ -149,7 +149,7 @@ const presetExtras = [
   '[size~="\\30 20"]',
 ]
 
-const uno = createGenerator({
+const uno = await createGenerator({
   presets: [
     presetApplet({
       dark: 'media',

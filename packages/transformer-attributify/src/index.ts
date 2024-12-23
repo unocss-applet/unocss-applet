@@ -8,8 +8,8 @@ export * from './types'
 const splitterRE = /[\s'"`;]+/g
 // eslint-disable-next-line regexp/no-super-linear-backtracking, regexp/no-dupe-disjunctions
 const elementRE = /<\w(?=.*>)[\w:.$-]*\s(((".*?>?.*?")|.*?)*?)\/?>/gs
-// eslint-disable-next-line regexp/no-super-linear-backtracking, regexp/prefer-w, regexp/no-useless-escape, regexp/no-dupe-characters-character-class, regexp/no-useless-non-capturing-group, regexp/use-ignore-case
-const attributeRE = /([\[?a-zA-Z0-9\u00A0-\uFFFF-_:()#%.\]?]+)(?:\s*=\s*((?:'[^']*')|(?:"[^"]*")|\S+))?/g
+// eslint-disable-next-line regexp/no-super-linear-backtracking
+const attributeRE = /([[?\w\u00A0-\uFFFF-:()#%.\]]+)(?:\s*=\s*('[^']*'|"[^"]*"|\S+))?/g
 
 const defaultIgnoreAttributes = ['placeholder', 'setup', 'lang', 'scoped']
 
