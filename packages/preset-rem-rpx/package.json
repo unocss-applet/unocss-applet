@@ -25,12 +25,9 @@
     },
     "./*": "./*"
   },
-  "main": "src/index.ts",
-  "publishConfig": {
-    "main": "dist/index.mjs",
-    "module": "dist/index.mjs",
-    "types": "dist/index.d.ts"
-  },
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
@@ -42,6 +39,6 @@
     "@unocss/core": ">=0.62"
   },
   "dependencies": {
-    "@unocss/core": "^0.65.2"
+    "@unocss/core": "catalog:"
   }
 }

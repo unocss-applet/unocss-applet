@@ -9,22 +9,22 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@unocss/autocomplete": "^0.65.2",
-    "@unocss/reset": "^0.65.2",
-    "@vueuse/core": "^11.1.0",
-    "splitpanes": "^3.1.5",
-    "vue": "^3.5.11"
+    "@unocss/autocomplete": "catalog:",
+    "@unocss/reset": "catalog:",
+    "@vueuse/core": "catalog:",
+    "splitpanes": "catalog:",
+    "vue": "catalog:"
   },
   "devDependencies": {
-    "@codemirror/lang-css": "^6.3.0",
-    "@codemirror/lang-html": "^6.4.9",
-    "@codemirror/lang-javascript": "^6.2.2",
-    "@codemirror/lang-xml": "^6.1.0",
-    "@iconify-json/tabler": "^1.2.4",
-    "@types/splitpanes": "^2.2.6",
-    "@vitejs/plugin-vue": "^5.1.4",
-    "codemirror": "^6.0.1",
-    "codemirror-theme-vars": "^0.1.2",
-    "lz-string": "^1.5.0"
+    "@codemirror/lang-css": "catalog:",
+    "@codemirror/lang-html": "catalog:",
+    "@codemirror/lang-javascript": "catalog:",
+    "@codemirror/lang-xml": "catalog:",
+    "@iconify-json/tabler": "catalog:",
+    "@types/splitpanes": "catalog:",
+    "@vitejs/plugin-vue": "catalog:",
+    "codemirror": "catalog:",
+    "codemirror-theme-vars": "catalog:",
+    "lz-string": "catalog:"
   }
 }

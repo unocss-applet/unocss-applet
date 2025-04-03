@@ -25,12 +25,9 @@
     },
     "./*": "./*"
   },
-  "main": "src/index.ts",
-  "publishConfig": {
-    "main": "dist/index.mjs",
-    "module": "dist/index.mjs",
-    "types": "dist/index.d.ts"
-  },
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
@@ -38,25 +35,10 @@
     "build": "unbuild",
     "stub": "unbuild --stub"
   },
-  "peerDependencies": {
-    "@unocss/core": ">=0.62",
-    "@unocss/preset-mini": ">=0.62",
-    "@unocss/preset-uno": ">=0.62"
-  },
-  "peerDependenciesMeta": {
-    "@unocss/core": {
-      "optional": true
-    },
-    "@unocss/preset-mini": {
-      "optional": true
-    },
-    "@unocss/preset-uno": {
-      "optional": true
-    }
-  },
   "dependencies": {
-    "@unocss/core": "^0.65.2",
-    "@unocss/preset-mini": "^0.65.2",
-    "@unocss/preset-uno": "^0.65.2"
+    "@unocss/core": "catalog:",
+    "@unocss/preset-mini": "catalog:",
+    "@unocss/preset-wind3": "catalog:",
+    "@unocss/preset-wind4": "catalog:"
   }
 }

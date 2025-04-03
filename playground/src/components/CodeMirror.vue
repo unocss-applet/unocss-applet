@@ -58,7 +58,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div ref="el" class="relative font-mono h-full text-sm" data-enable-grammarly="false" />
+  <div ref="el" class="font-mono relative h-full text-sm" data-enable-grammarly="false" />
 </template>
 
 <style>
