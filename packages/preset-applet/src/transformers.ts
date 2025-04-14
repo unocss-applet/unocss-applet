@@ -1,14 +1,7 @@
 import type { SourceCodeTransformer } from '@unocss/core'
+import type { TransformerAppletOptions } from './types'
+
 import { encodeNonSpaceLatin, UNSUPPORTED_CHARS } from '../../shared/src'
-
-export interface TransformerAppletOptions {
-
-  /**
-   * Unsupported characters in applet, will be added to the default value
-   * @default ['.', ':', '%', '!', '#', '(', ')', '[', '/', ']', ',', '$', '{', '}', '@', '+', '^', '&', '<', '>', '\'', '\\', '"', '?', '*', '=']
-   */
-  unsupportedChars?: string[]
-}
 
 export function transformerApplet(options: TransformerAppletOptions = {}): SourceCodeTransformer {
   const _UNSUPPORTED_CHARS = [...UNSUPPORTED_CHARS, ...(options.unsupportedChars ?? [])]

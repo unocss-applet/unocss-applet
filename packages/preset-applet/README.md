@@ -1,6 +1,6 @@
 # @unocss-applet/preset-applet
 
-The Applet preset for [UnoCSS](https://github.com/unocss/unocss), fork from [@unocss/preset-uno](https://github.com/unocss/unocss/tree/main/packages/preset-uno) and modified to transform some CSS selector.
+The Applet preset for [UnoCSS](https://github.com/unocss/unocss), fork from [@unocss/preset-wind3](https://github.com/unocss/unocss/tree/main/packages/preset-uno) and modified to transform some CSS selector.
 
 ## Install
 

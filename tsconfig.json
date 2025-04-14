@@ -30,6 +30,8 @@
     "**/playground/**",
     "**/examples/**",
     "**/interactive/**",
-    "**/test/dts/**"
+    "**/test/dts/**",
+
+    "eslint.config.mjs"
   ]
 }

@@ -14,7 +14,8 @@
   "bugs": "https://github.com/unocss-applet/unocss-applet/issues",
   "keywords": [
     "unocss",
-    "unocss-transformer"
+    "unocss-transformer",
+    "uni-app"
   ],
   "sideEffects": false,
   "exports": {
@@ -24,12 +25,9 @@
     },
     "./*": "./*"
   },
-  "main": "src/index.ts",
-  "publishConfig": {
-    "main": "dist/index.mjs",
-    "module": "dist/index.mjs",
-    "types": "dist/index.d.ts"
-  },
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
@@ -38,15 +36,10 @@
     "stub": "unbuild --stub"
   },
   "peerDependencies": {
-    "@unocss/core": ">=0.62"
-  },
-  "peerDependenciesMeta": {
-    "@unocss/core": {
-      "optional": true
-    }
+    "@unocss/core": ">=66.0.0"
   },
   "dependencies": {
-    "@unocss/core": "^0.65.2",
-    "magic-string": "^0.30.11"
+    "@unocss/core": "catalog:",
+    "magic-string": "catalog:"
   }
 }

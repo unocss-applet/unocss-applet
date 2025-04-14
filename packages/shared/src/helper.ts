@@ -1,5 +1,12 @@
-// 编码空格及Latin字符以外的字符
-// 例如：'你好' => '203202'
+/**
+ * Encode non-space Latin characters
+ * @param str - The string to encode
+ * @example
+ * ```ts
+ * encodeNonSpaceLatin('你好') // '203202'
+ * ```
+ * @returns The encoded string
+ */
 export function encodeNonSpaceLatin(str: string) {
   // eslint-disable-next-line regexp/prefer-w, regexp/no-obscure-range
   const regex = /[^A-Z0-9!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~\\ ]+/gi

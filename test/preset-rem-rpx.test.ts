@@ -1,11 +1,11 @@
+import { presetRemRpx } from '@unocss-applet/preset-rem-rpx'
 import { createGenerator } from '@unocss/core'
-import presetUno from '@unocss/preset-uno'
-import presetRemRpx from '@unocss-applet/preset-rem-rpx'
+import { presetWind3 } from '@unocss/preset-wind3'
 import { describe, expect, it } from 'vitest'
 
 const unoRemToRpx = await createGenerator({
   presets: [
-    presetUno(),
+    presetWind3(),
     presetRemRpx({
       baseFontSize: 16,
       screenWidth: 375,
@@ -16,7 +16,7 @@ const unoRemToRpx = await createGenerator({
 
 const unoRpxToRem = await createGenerator({
   presets: [
-    presetUno(),
+    presetWind3(),
     presetRemRpx({
       baseFontSize: 16,
       screenWidth: 375,

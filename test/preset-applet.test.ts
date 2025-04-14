@@ -1,6 +1,6 @@
 import type { UnocssPluginContext } from '@unocss/core'
+import { presetApplet, transformerApplet } from '@unocss-applet/preset-applet'
 import { createGenerator } from '@unocss/core'
-import presetApplet, { transformerApplet } from '@unocss-applet/preset-applet'
 import MagicString from 'magic-string'
 import { describe, expect, it } from 'vitest'
 

@@ -9,13 +9,19 @@ export interface AppletConfig {
 
   /**
    * Unsupported characters in applet, will be added to the default value
-   * @default ['.', ':', '%', '!', '#', '(', ')', '[', '/', ']', ',', '$', '{', '}', '@', '+', '^', '&', '<', '>', '\'', '\\', '"', '?', '*']
+   * @default
+   * ```
+   * ['.', ':', '%', '!', '#', '(', ')', '[', '/', ']', ',', '$', '{', '}', '@', '+', '^', '&', '<', '>', '\'', '\\', '"', '?', '*']
+   * ```
    */
   unsupportedChars?: string[]
 
   /**
    * Space Between and Divide Width Elements
-   * @default ['view', 'button', 'text', 'image']
+   * @default
+   * ```
+   * ['view', 'button', 'text', 'image']
+   * ```
    */
   betweenElements?: string[]
 }

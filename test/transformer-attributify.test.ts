@@ -1,11 +1,11 @@
 import type { SourceCodeTransformer } from '@unocss/core'
 import { promises as fs } from 'node:fs'
 import path from 'node:path'
+import transformerAttributify from '@unocss-applet/transformer-attributify'
 import { createGenerator } from '@unocss/core'
 import { presetAttributify } from '@unocss/preset-attributify'
 import { presetIcons } from '@unocss/preset-icons'
-import presetUno from '@unocss/preset-uno'
-import transformerAttributify from '@unocss-applet/transformer-attributify'
+import { presetWind3 } from '@unocss/preset-wind3'
 import MagicString from 'magic-string'
 import { describe, expect, it } from 'vitest'
 
@@ -14,7 +14,7 @@ async function transform(code: string, transformer: SourceCodeTransformer) {
 
   const uno = await createGenerator({
     presets: [
-      presetUno(),
+      presetWind3(),
       presetIcons({
         scale: 1.2,
         cdn: 'https://esm.sh/',
