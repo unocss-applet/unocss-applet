@@ -33,4 +33,11 @@ export interface TransformerAttributifyOptions {
    * @default true
    */
   deleteAttributes?: boolean
+
+  /**
+   * A list of tag prefixes to be ignored from processing.
+   * For example, ['uni'] will ignore both <UniIcon> and <uni-icon>
+   * @default []
+   */
+  ignoreTagPrefix?: string[]
 }
