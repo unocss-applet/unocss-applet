@@ -6,12 +6,12 @@ import MagicString from 'magic-string'
 export * from './types'
 
 const splitterRE = /[\s'"`;]+/g
-function genElementRE(ignoreTagPrefix: string[] = []) {
-  if (!ignoreTagPrefix.length)
+function genElementRE(ignoreTagPrefixes: string[] = []) {
+  if (!ignoreTagPrefixes.length)
     // eslint-disable-next-line regexp/no-super-linear-backtracking, regexp/no-dupe-disjunctions
     return /<\w(?=.*>)[\w:.$-]*\s(((".*?>?.*?")|.*?)*?)\/?>/gs
 
-  const patterns = ignoreTagPrefix.flatMap((prefix) => {
+  const patterns = ignoreTagPrefixes.flatMap((prefix) => {
     const baseLower = prefix.toLowerCase()
     const capitalized = baseLower.charAt(0).toUpperCase() + baseLower.slice(1)
     const hyphenated = `${baseLower}-`
@@ -33,7 +33,7 @@ export function transformerAttributify(options: TransformerAttributifyOptions = 
   const prefix = options.prefix ?? 'un-'
   const prefixedOnly = options.prefixedOnly ?? false
   const deleteAttributes = options.deleteAttributes ?? true
-  const elementRE = genElementRE(options.ignoreTagPrefix ?? [])
+  const elementRE = genElementRE(options.ignoreTagPrefixes ?? [])
 
   return {
     name: 'transformer-attributify',

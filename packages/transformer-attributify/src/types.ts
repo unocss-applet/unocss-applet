@@ -39,5 +39,5 @@ export interface TransformerAttributifyOptions {
    * For example, ['uni'] will ignore both <UniIcon> and <uni-icon>
    * @default []
    */
-  ignoreTagPrefix?: string[]
+  ignoreTagPrefixes?: string[]
 }
