@@ -6,8 +6,22 @@ import MagicString from 'magic-string'
 export * from './types'
 
 const splitterRE = /[\s'"`;]+/g
-// eslint-disable-next-line regexp/no-super-linear-backtracking, regexp/no-dupe-disjunctions
-const elementRE = /<\w(?=.*>)[\w:.$-]*\s(((".*?>?.*?")|.*?)*?)\/?>/gs
+function genElementRE(ignoreTagPrefixes: string[] = []) {
+  if (!ignoreTagPrefixes.length)
+    // eslint-disable-next-line regexp/no-super-linear-backtracking, regexp/no-dupe-disjunctions
+    return /<\w(?=.*>)[\w:.$-]*\s(((".*?>?.*?")|.*?)*?)\/?>/gs
+
+  const patterns = ignoreTagPrefixes.flatMap((prefix) => {
+    const baseLower = prefix.toLowerCase()
+    const capitalized = baseLower.charAt(0).toUpperCase() + baseLower.slice(1)
+    const hyphenated = `${baseLower}-`
+
+    return [capitalized, hyphenated]
+  })
+
+  const ignorePattern = patterns.length ? `(?!${patterns.join('|')})` : ''
+  return new RegExp(`<${ignorePattern}\\w(?=.*>)[\\w:.$-]*\\s(((".*?>?.*?")|.*?)*?)\\/?>`, 'gs')
+}
 // eslint-disable-next-line regexp/no-super-linear-backtracking
 const attributeRE = /([[?\w\u00A0-\uFFFF-:()#%.\]]+)(?:\s*=\s*('[^']*'|"[^"]*"|\S+))?/g
 
@@ -19,6 +33,7 @@ export function transformerAttributify(options: TransformerAttributifyOptions = 
   const prefix = options.prefix ?? 'un-'
   const prefixedOnly = options.prefixedOnly ?? false
   const deleteAttributes = options.deleteAttributes ?? true
+  const elementRE = genElementRE(options.ignoreTagPrefixes ?? [])
 
   return {
     name: 'transformer-attributify',
