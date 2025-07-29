@@ -37,12 +37,12 @@ describe('transformer-attributify', async () => {
   it('basic', async () => {
     const transformer = transformerAttributify({ ignoreAttributes: ['block'] })
     const result = await transform(content.toString(), transformer)
-    expect(result).toMatchSnapshot()
+    expect(result).toMatchFileSnapshot('./fixtures/output/attributify.vue')
   })
 
-  it('prefixedOnly', async () => {
+  it('prefixed-only', async () => {
     const transformer = transformerAttributify({ prefixedOnly: true })
     const result = await transform(content.toString(), transformer)
-    expect(result).toMatchSnapshot()
+    expect(result).toMatchFileSnapshot('./fixtures/output/attributify-prefixed-only.vue')
   })
 })
