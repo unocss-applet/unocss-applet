@@ -2,7 +2,7 @@ import type { PresetWind3Options } from '@unocss/preset-wind3'
 import type { PresetWind4Options } from '@unocss/preset-wind4'
 
 import type { PresetAppletOptions } from './types'
-import { definePreset } from '@unocss/core'
+import { definePreset, escapeSelector } from '@unocss/core'
 import { presetWind3 as internalPresetWind3 } from '@unocss/preset-wind3'
 import { presetWind4 as internalPresetWind4 } from '@unocss/preset-wind4'
 import { encodeNonSpaceLatin, UNSUPPORTED_CHARS } from '../../shared/src'
@@ -15,7 +15,10 @@ export * from './types'
 export function presetApplet(options: PresetAppletOptions = {}) {
   options.preset = options.preset ?? 'wind3'
   const unsupportedChars = [...UNSUPPORTED_CHARS, ...(options.unsupportedChars ?? [])]
-  const escapedUnsupportedChars = unsupportedChars.map(char => `\\\\\\${char}`)
+  /**
+   * util.selector is escaped by escapeSelector, so we need to escape it again
+   */
+  const escapedUnsupportedChars = unsupportedChars.map(char => escapeSelector(escapeSelector(char)))
   const charTestReg = new RegExp(`${escapedUnsupportedChars.join('|')}`)
   const charReplaceReg = new RegExp(charTestReg, 'g')
 

@@ -1,13 +1,14 @@
 import type { SourceCodeTransformer } from '@unocss/core'
 import type { TransformerAppletOptions } from './types'
+import { escapeSelector } from '@unocss/core'
 
 import { encodeNonSpaceLatin, UNSUPPORTED_CHARS } from '../../shared/src'
 
 export function transformerApplet(options: TransformerAppletOptions = {}): SourceCodeTransformer {
-  const _UNSUPPORTED_CHARS = [...UNSUPPORTED_CHARS, ...(options.unsupportedChars ?? [])]
-  const ESCAPED_UNSUPPORTED_CHARS = _UNSUPPORTED_CHARS.map(char => `\\${char}`)
-  const charTestReg = new RegExp(`[${ESCAPED_UNSUPPORTED_CHARS.join('')}]`)
-  const charReplaceReg = new RegExp(`[${ESCAPED_UNSUPPORTED_CHARS.join('')}]`, 'g')
+  const unsupportedChars = [...UNSUPPORTED_CHARS, ...(options.unsupportedChars ?? [])]
+  const escapedUnsupportedChars = unsupportedChars.map(char => escapeSelector(char))
+  const charTestReg = new RegExp(`[${escapedUnsupportedChars.join('')}]`)
+  const charReplaceReg = new RegExp(`[${escapedUnsupportedChars.join('')}]`, 'g')
   const negativeReplaceReg = /^-+/
 
   return {
