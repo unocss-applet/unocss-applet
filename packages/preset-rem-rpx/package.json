@@ -35,9 +35,6 @@
     "build": "unbuild",
     "stub": "unbuild --stub"
   },
-  "peerDependencies": {
-    "@unocss/core": ">=66.0.0"
-  },
   "dependencies": {
     "@unocss/core": "catalog:"
   }
