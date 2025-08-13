@@ -3,7 +3,7 @@ import { Pane } from 'splitpanes'
 import { computed, unref } from 'vue'
 import { annotations, getHint, output, transformedHTML } from '~/composables/uno'
 import { inputHTML, options } from '~/composables/url'
-import { defaultHTML } from '~/constants'
+import { defaultHTMLRaw } from '~/constants/index'
 import CodeMirror from '../CodeMirror.vue'
 import TitleBar from './TitleBar.vue'
 import { isCollapsed, panelSizes, titleHeightPercent, togglePanel } from './use-panel'
@@ -11,7 +11,7 @@ import { isCollapsed, panelSizes, titleHeightPercent, togglePanel } from './use-
 defineProps<{ index: number }>()
 
 if (!inputHTML.value)
-  inputHTML.value = defaultHTML
+  inputHTML.value = defaultHTMLRaw
 
 const computedInputHTML = computed({
   get: () => unref(options.value.transformHtml ? transformedHTML : inputHTML),

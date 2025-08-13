@@ -9,18 +9,18 @@ import { computed, ref, shallowRef, watch } from 'vue'
 import { customCSSLayerName } from '~/constants'
 import { defaultConfig } from './config'
 import { evaluateUserConfig } from './uno-shared'
-import { customConfigRaw, customCSS, inputHTML } from './url'
+import { customConfig, customCSS, inputHTML } from './url'
 
 export const init = ref(false)
 export const customConfigError = ref<Error>()
 export const customCSSWarn = ref<Error>()
 
-export const uno = createGenerator({}, defaultConfig.value)
+const __uno = createGenerator({}, defaultConfig.value)
 export const output = shallowRef<GenerateResult>()
 export const annotations = shallowRef<HighlightAnnotation[]>()
 
-let customConfig: UserConfig = {}
-let autocomplete = createAutocomplete(uno)
+let __customConfig: UserConfig = {}
+let autocomplete = (async () => createAutocomplete(await __uno))()
 let initial = true
 
 function useTransformer() {
@@ -35,6 +35,7 @@ function useTransformer() {
   )
 
   async function applyTransformers(code: MagicString, id: string, enforce?: 'pre' | 'post') {
+    const uno = await __uno
     let { transformers } = uno.config
     transformers = (transformers ?? []).filter(i => i.enforce === enforce)
 
@@ -72,20 +73,22 @@ function useTransformer() {
 const { transformedHTML, transformed, getTransformed, transformedCSS } = useTransformer()
 
 export async function generate() {
+  const uno = await __uno
   output.value = await uno.generate(transformedHTML.value || '')
   annotations.value = transformed.value?.annotations || []
   init.value = true
 }
 
-function reGenerate() {
-  uno.setConfig(customConfig, defaultConfig.value)
+async function reGenerate() {
+  const uno = await __uno
+  uno.setConfig(__customConfig, defaultConfig.value)
   generate()
-  autocomplete = createAutocomplete(uno)
+  autocomplete = Promise.resolve(createAutocomplete(uno))
 }
 
 export async function getHint(context: CompletionContext): Promise<CompletionResult | null> {
   const cursor = context.pos
-  const result = await autocomplete.suggestInFile(context.state.doc.toString(), cursor)
+  const result = await (await autocomplete).suggestInFile(context.state.doc.toString(), cursor)
 
   if (!result?.suggestions?.length)
     return null
@@ -105,12 +108,13 @@ export async function getHint(context: CompletionContext): Promise<CompletionRes
 }
 
 debouncedWatch(
-  [customConfigRaw, customCSS],
+  [customConfig, customCSS],
   async () => {
+    const uno = await __uno
     customConfigError.value = undefined
     customCSSWarn.value = undefined
     try {
-      const result = await evaluateUserConfig(customConfigRaw.value)
+      const result = await evaluateUserConfig(customConfig.value)
       if (result) {
         const preflights = (result.preflights ?? []).filter(p => p.layer !== customCSSLayerName)
         preflights.push({
@@ -119,7 +123,7 @@ debouncedWatch(
         })
 
         result.preflights = preflights
-        customConfig = result
+        __customConfig = result
         reGenerate()
         await detectTransformer()
 
@@ -146,6 +150,7 @@ watch(
 )
 
 async function detectTransformer() {
+  const uno = await __uno
   const { transformers = [] } = uno.config
   if (!transformers.some(t => t.name === '@unocss/transformer-directives')) {
     const msg = 'Using directives requires \'@unocss/transformer-directives\' to be installed.'

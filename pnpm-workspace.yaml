@@ -48,16 +48,16 @@ catalog:
   '@types/node': ^22.13.17
   '@types/splitpanes': ^2.2.6
   '@types/webpack-env': ^1.18.8
-  '@unocss/autocomplete': ^66.3.0
-  '@unocss/core': ^66.3.0
-  '@unocss/eslint-config': ^66.3.0
-  '@unocss/preset-attributify': ^66.3.0
-  '@unocss/preset-icons': ^66.3.0
-  '@unocss/preset-mini': ^66.3.0
-  '@unocss/preset-wind3': ^66.3.0
-  '@unocss/preset-wind4': ^66.3.0
-  '@unocss/reset': ^66.3.0
-  '@unocss/webpack': ^66.3.0
+  '@unocss/autocomplete': ^66.4.0
+  '@unocss/core': ^66.4.0
+  '@unocss/eslint-config': ^66.4.0
+  '@unocss/preset-attributify': ^66.4.0
+  '@unocss/preset-icons': ^66.4.0
+  '@unocss/preset-mini': ^66.4.0
+  '@unocss/preset-wind3': ^66.4.0
+  '@unocss/preset-wind4': ^66.4.0
+  '@unocss/reset': ^66.4.0
+  '@unocss/webpack': ^66.4.0
   '@vitejs/plugin-vue': ^5.2.3
   '@vue/babel-plugin-jsx': ^1.4.0
   '@vue/compiler-sfc': ^3.5.13
@@ -80,6 +80,7 @@ catalog:
   style-loader: 3.3.3
   typescript: ^5.8.2
   unbuild: ^3.5.0
+  unocss: ^66.4.0
   vite: ^6.2.4
   vite-plugin-inspect: ^11.0.0
   vitest: ^3.1.1
