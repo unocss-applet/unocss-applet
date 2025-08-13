@@ -1,6 +1,6 @@
 import { computed, ref } from 'vue'
 import { output, transformedCSS, transformedHTML } from './uno'
-import { customConfigRaw, customCSS, inputHTML, options } from './url'
+import { customConfig, customCSS, inputHTML, options } from './url'
 import { useCSSPrettify, useHTMLPrettify, useJSPrettify } from './usePrettify'
 
 export function formatHTML() {
@@ -8,7 +8,7 @@ export function formatHTML() {
 }
 
 export function formatConfig() {
-  customConfigRaw.value = useJSPrettify(customConfigRaw).value
+  customConfig.value = useJSPrettify(customConfig).value
 }
 
 export function formatCSS() {

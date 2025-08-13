@@ -1,15 +1,15 @@
 <script lang='ts' setup>
 import { toggleDark } from '~/composables/dark'
-import { customConfigRaw, customCSS, inputHTML, options } from '~/composables/url'
-import { defaultConfigRaw, defaultCSS, defaultHTML, VERSION } from '~/constants'
+import { customConfig, customCSS, inputHTML, options } from '~/composables/url'
+import { defaultConfigRaw, defaultCSSRaw, defaultHTMLRaw, VERSION } from '~/constants'
 
 function handleReset() {
   // eslint-disable-next-line no-alert
   if (confirm('Reset all settings? It can NOT be undone.')) {
-    inputHTML.value = defaultHTML
-    customConfigRaw.value = defaultConfigRaw
+    inputHTML.value = defaultHTMLRaw
+    customConfig.value = defaultConfigRaw
     options.value.transformHtml = false
-    customCSS.value = defaultCSS
+    customCSS.value = defaultCSSRaw
   }
 }
 </script>

@@ -1,7 +1,7 @@
 import { throttledWatch } from '@vueuse/core'
 import { decompressFromEncodedURIComponent as decode, compressToEncodedURIComponent as encode } from 'lz-string'
 import { ref } from 'vue'
-import { defaultConfigRaw, defaultCSS, defaultHTML, defaultOptions, STORAGE_KEY } from '~/constants'
+import { defaultConfigRaw, defaultCSSRaw, defaultHTMLRaw, defaultOptions, STORAGE_KEY } from '~/constants'
 
 const params = new URLSearchParams(window.location.search || localStorage.getItem(STORAGE_KEY) || '')
 
@@ -13,17 +13,17 @@ interface Options {
   height?: number
 }
 
-export const inputHTML = ref(decode(params.get('html') || '') || defaultHTML)
-export const customConfigRaw = ref(decode(params.get('config') || '') || defaultConfigRaw)
-export const customCSS = ref(decode(params.get('css') || '') || defaultCSS)
+export const inputHTML = ref(decode(params.get('html') || '') || defaultHTMLRaw)
+export const customConfig = ref(decode(params.get('config') || '') || defaultConfigRaw)
+export const customCSS = ref(decode(params.get('css') || '') || defaultCSSRaw)
 export const options = ref<Options>(JSON.parse(decode(params.get('options') || '') || defaultOptions))
 
 throttledWatch(
-  [customConfigRaw, inputHTML, customCSS, options],
+  [customConfig, inputHTML, customCSS, options],
   () => {
     const url = new URL('/', window.location.origin)
     url.searchParams.set('html', encode(inputHTML.value))
-    url.searchParams.set('config', encode(customConfigRaw.value))
+    url.searchParams.set('config', encode(customConfig.value))
     url.searchParams.set('css', encode(customCSS.value))
     url.searchParams.set('options', encode(JSON.stringify(options.value)))
     localStorage.setItem(STORAGE_KEY, url.search)

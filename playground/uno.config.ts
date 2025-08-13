@@ -2,7 +2,7 @@ import {
   defineConfig,
   presetAttributify,
   presetIcons,
-  presetUno,
+  presetWind3,
   transformerCompileClass,
   transformerDirectives,
   transformerVariantGroup,
@@ -20,7 +20,7 @@ export default defineConfig({
   },
   presets: [
     presetAttributify(),
-    presetUno(),
+    presetWind3(),
     presetIcons(),
   ],
   transformers: [
