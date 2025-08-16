@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import { computed, reactive, ref, watch } from 'vue'
 import { isDark } from '~/composables/dark'
-import { init, output, transformedHTML } from '~/composables/uno'
+import { init, output } from '~/composables/states'
 
 const iframe = ref<HTMLIFrameElement>()
 const iframeData = reactive({
   source: 'unocss-applet-playground',
   css: computed(() => output.value?.css || ''),
-  html: transformedHTML,
+  html: 'transformedHTML',
   dark: isDark,
 })
 
@@ -16,6 +16,12 @@ async function send() {
 }
 
 watch([iframeData, iframe], send, { deep: true })
+
+// watch(
+//   transformedHTML,
+//   generate,
+//   { immediate: true },
+// )
 </script>
 
 <template>

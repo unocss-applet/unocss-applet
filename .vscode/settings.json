@@ -9,8 +9,10 @@
     "attributify",
     "composables",
     "preflights",
+    "Splitpanes",
     "tabler",
     "unocss",
+    "unref",
     "Vitest",
     "vueuse"
   ],

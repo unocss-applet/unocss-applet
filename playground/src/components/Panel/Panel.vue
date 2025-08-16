@@ -10,8 +10,8 @@ import { panelEl, panelSizes } from './use-panel'
 
 const loading = ref(true)
 
-function handleResize(event: ({ size: number })[]) {
-  panelSizes.value = event.map(({ size }) => size)
+function handleResize({ panes }: { panes: { size: number }[] }) {
+  panelSizes.value = panes.map(panel => panel.size)
 }
 
 onMounted(() => {
@@ -25,9 +25,9 @@ const _panelEl = ref(panelEl)
 </script>
 
 <template>
-  <div flex="~ col" h-full>
+  <div class="flex flex-col h-full">
     <HeaderBar />
-    <div flex-1 of-hidden>
+    <div class="flex-1 overflow-hidden">
       <Splitpanes ref="_panelEl" :class="{ loading }" horizontal @resized="handleResize">
         <PanelHTML :index="0" />
         <PanelConfig :index="1" />

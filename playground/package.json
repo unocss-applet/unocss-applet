@@ -12,19 +12,16 @@
     "@unocss/autocomplete": "catalog:",
     "@unocss/reset": "catalog:",
     "@vueuse/core": "catalog:",
+    "monaco-editor": "catalog:",
+    "shiki": "catalog:",
     "splitpanes": "catalog:",
     "vue": "catalog:"
   },
   "devDependencies": {
-    "@codemirror/lang-css": "catalog:",
-    "@codemirror/lang-html": "catalog:",
-    "@codemirror/lang-javascript": "catalog:",
-    "@codemirror/lang-xml": "catalog:",
     "@iconify-json/tabler": "catalog:",
+    "@shikijs/monaco": "catalog:",
     "@types/splitpanes": "catalog:",
     "@vitejs/plugin-vue": "catalog:",
-    "codemirror": "catalog:",
-    "codemirror-theme-vars": "catalog:",
     "lz-string": "catalog:"
   }
 }

@@ -12,20 +12,17 @@ const isResizing = ref(false)
 </script>
 
 <template>
-  <div class="font-sans leading-1em">
-    <Splitpanes
-      h-screen
-      w-screen
-      :horizontal="isMobile"
-      @resized="isResizing = false"
-      @resize="isResizing = true"
-    >
-      <Pane>
-        <Preview />
-      </Pane>
-      <Pane>
-        <Panel />
-      </Pane>
-    </Splitpanes>
-  </div>
+  <Splitpanes
+    class="h-screen w-screen"
+    :horizontal="isMobile"
+    @resized="isResizing = false"
+    @resize="isResizing = true"
+  >
+    <Pane>
+      <Preview />
+    </Pane>
+    <Pane>
+      <Panel />
+    </Pane>
+  </Splitpanes>
 </template>

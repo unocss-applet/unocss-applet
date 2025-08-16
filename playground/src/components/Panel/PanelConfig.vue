@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { Pane } from 'splitpanes'
-import { customConfig } from '~/composables/url'
-import { defaultConfigRaw } from '~/constants/index'
-import CodeMirror from '../CodeMirror.vue'
+import { customConfig } from '~/composables/states'
+import { defaultConfigRaw } from '~/constants'
+import MonacoEditor from '../MonacoEditor.vue'
 import TitleBar from './TitleBar.vue'
 import { isCollapsed, panelSizes, titleHeightPercent, togglePanel } from './use-panel'
 
@@ -15,7 +15,9 @@ if (!customConfig.value)
 <template>
   <Pane :min-size="titleHeightPercent" :size="panelSizes[index]" class="flex flex-col">
     <TitleBar title="Config" :is-collapsed="isCollapsed(index)" @title-click="togglePanel(index)" />
-    <TitleBar title="Config" />
-    <CodeMirror v-model="customConfig" flex-auto mode="js" border="l gray-400/20" class="scrolls" />
+    <MonacoEditor
+      v-model="customConfig" language="javascript" class="border-l border-gray-400/20 transition-all"
+      :class="{ hidden: isCollapsed(1) }"
+    />
   </Pane>
 </template>

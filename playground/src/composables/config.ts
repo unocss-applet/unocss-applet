@@ -3,15 +3,20 @@ import { ref } from 'vue'
 import { defaultConfigRaw } from '~/constants'
 import { evaluateUserConfig } from './uno-shared'
 
-export const defaultConfig = ref<UserConfig | undefined>()
+export function useConfig() {
+  const config = ref<UserConfig | undefined>()
 
-export async function load() {
-  try {
-    defaultConfig.value = await evaluateUserConfig(defaultConfigRaw)
+  async function load() {
+    try {
+      config.value = await evaluateUserConfig(defaultConfigRaw)
+    }
+    catch (e) {
+      console.error(e)
+    }
   }
-  catch (e) {
-    console.error(e)
+
+  return {
+    config,
+    load,
   }
 }
-
-load()
