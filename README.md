@@ -39,7 +39,7 @@ pnpm add unocss-applet -D # with pnpm
 
 ```ts
 import type { Preset, SourceCodeTransformer } from 'unocss'
-import { defineConfig } from 'unocss'
+import { defineConfig, presetAttributify } from 'unocss'
 
 import {
   presetApplet,
