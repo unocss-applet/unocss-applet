@@ -1,18 +1,23 @@
 <script lang="ts" setup>
+import { storeToRefs } from 'pinia'
 import { Pane } from 'splitpanes'
 import { computed, unref } from 'vue'
-import { customCSS, customCSSWarn, options, transformedCSS } from '~/composables/states'
+import { useUnoStore, useUrlStore } from '~/stores'
 import MonacoEditor from '../MonacoEditor.vue'
-import TitleBar from './TitleBar.vue'
 
+import TitleBar from './TitleBar.vue'
 import { isCollapsed, panelSizes, titleHeightPercent, togglePanel } from './use-panel'
 
 defineProps<{ index: number }>()
 
+const { customCSSRaw, options } = storeToRefs(useUrlStore())
+const { customCSSWarn } = storeToRefs(useUnoStore())
+const { transformedCSS } = storeToRefs(useUnoStore())
+
 const computedCustomCSS = computed({
-  get: () => unref(options.value.transformCustomCSS ? transformedCSS : customCSS) || '',
+  get: () => unref(options.value.transformCustomCSS ? transformedCSS.value?.output : customCSSRaw.value) || '',
   set: (value: string) => {
-    customCSS.value = value
+    customCSSRaw.value = value
   },
 })
 

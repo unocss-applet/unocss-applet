@@ -18,10 +18,10 @@ const isResizing = ref(false)
     @resized="isResizing = false"
     @resize="isResizing = true"
   >
-    <Pane>
+    <Pane :size="isMobile ? 50 : 40">
       <Preview />
     </Pane>
-    <Pane>
+    <Pane :size="isMobile ? 50 : 60">
       <Panel />
     </Pane>
   </Splitpanes>

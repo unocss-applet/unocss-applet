@@ -4,7 +4,10 @@ import { computed, ref, watch } from 'vue'
 export const panelEl = ref()
 const TITLE_HEIGHT = 29
 const { height: vh } = useElementSize(panelEl)
-const collapsedPanels = ref(new Set())
+/**
+ * Default collapsed Custom CSS panel
+ */
+const collapsedPanels = ref(new Set([2]))
 
 export const titleHeightPercent = computed(() => {
   if (!vh.value)

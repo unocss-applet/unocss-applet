@@ -1,11 +1,25 @@
 <script lang='ts' setup>
+import { debouncedWatch } from '@vueuse/core'
+import { storeToRefs } from 'pinia'
 import { toggleDark } from '~/composables/dark'
 import { VERSION } from '~/constants'
+import { useUrlStore } from '~/stores'
+
+const { customConfigRaw, customCSSRaw, customHTMLRaw, options } = storeToRefs(useUrlStore())
+const { resetUrlParams, updateUrlParams } = useUrlStore()
+
+debouncedWatch(
+  [customConfigRaw, customCSSRaw, customHTMLRaw, options],
+  () => {
+    updateUrlParams()
+  },
+  { debounce: 300, deep: true },
+)
 
 function handleReset() {
   // eslint-disable-next-line no-alert
   if (confirm('Reset all settings? It can NOT be undone.')) {
-    // handleResetConfig()
+    resetUrlParams()
   }
 }
 </script>

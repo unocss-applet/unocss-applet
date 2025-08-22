@@ -14,6 +14,14 @@ export const defaultCSSRaw = defaultCSS.trim()
 
 export const customCSSLayerName = 'playground'
 
-export const defaultOptions = '{}'
+export const defaultOptions = JSON.stringify({
+  transformHtml: false,
+  transformCustomCSS: false,
+  prettifyCSS: false,
+  selectedCSSLayers: ['ALL'],
+  responsive: false,
+})
 
 export const STORAGE_KEY = 'last-search'
+
+export const CUSTOM_CSS_LAYER_NAME = 'playground'

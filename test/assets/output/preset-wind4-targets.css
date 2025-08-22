@@ -341,7 +341,8 @@
 .peer:where(.child)~.peer-where-_a__a_child_a__a_m-1,
 .previous:is(div)+.previous-is-_a_div_a__a_m-1,
 .has-_a__a_hover_a__a_m-1:has(:hover){margin:calc(var(--spacing) * 1);}
-.m--lg{margin:calc(var(--spacing) * -4.5);}
+.-m-lg,
+.m--lg{margin:calc(var(--spacing-lg) * -1);}
 .m-_a_3em_a_{margin:3em;}
 ._a_m-_a_c-m{margin:var(--c-m) !important;}
 .m-0{margin:calc(var(--spacing) * 0);}
@@ -358,8 +359,7 @@
 .children_a_m-auto>*,
 .m-auto{margin:auto;}
 .m-inherit{margin:inherit;}
-.-m-lg{margin:calc(calc(var(--spacing) * 4.5) * -1);}
-.m-lg{margin:calc(var(--spacing) * 4.5);}
+.m-lg{margin:var(--spacing-lg);}
 .all_a_m1_a_1 *{margin:100%;}
 .mx-1{margin-inline:calc(var(--spacing) * 1);}
 .my-_a_var_a_--hello-space-y_a__a_{margin-block:var(--hello-space-y);}

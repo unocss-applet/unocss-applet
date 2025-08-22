@@ -16,6 +16,7 @@ import { isDark } from '~/composables/dark'
 const props = defineProps<{
   modelValue: string
   language?: 'html' | 'css' | 'javascript'
+  readonly?: boolean
 }>()
 
 const emit = defineEmits<{
@@ -83,9 +84,29 @@ onMounted(async () => {
   }
 })
 
-watch(isDark, (value) => {
-  monaco.editor.setTheme(value ? 'vitesse-dark' : 'vitesse-light')
-})
+watch(
+  () => props.readonly,
+  (value) => {
+    if (editor) {
+      editor.updateOptions({
+        readOnly: value,
+      })
+    }
+  },
+  {
+    immediate: true,
+  },
+)
+
+watch(
+  isDark,
+  (value) => {
+    monaco.editor.setTheme(value ? 'vitesse-dark' : 'vitesse-light')
+  },
+  {
+    immediate: true,
+  },
+)
 
 watch(
   () => props.modelValue,

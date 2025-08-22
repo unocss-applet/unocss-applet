@@ -13,6 +13,7 @@
     "@unocss/reset": "catalog:",
     "@vueuse/core": "catalog:",
     "monaco-editor": "catalog:",
+    "pinia": "catalog:",
     "shiki": "catalog:",
     "splitpanes": "catalog:",
     "vue": "catalog:"
@@ -23,5 +24,6 @@
     "@types/splitpanes": "catalog:",
     "@vitejs/plugin-vue": "catalog:",
     "lz-string": "catalog:"
+
   }
 }
