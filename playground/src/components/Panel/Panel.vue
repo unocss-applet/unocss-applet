@@ -1,34 +1,51 @@
 <script lang="ts" setup>
+import { storeToRefs } from 'pinia'
 import { Splitpanes } from 'splitpanes'
-import { onMounted, ref } from 'vue'
+import { watch } from 'vue'
+import { usePanelStore } from '~/stores'
 import HeaderBar from '../HeaderBar.vue'
 import PanelConfig from './PanelConfig.vue'
 import PanelCustomCSS from './PanelCustomCSS.vue'
 import PanelHTML from './PanelHTML.vue'
 import PanelOutputCSS from './PanelOutputCSS.vue'
-import { panelEl, panelSizes } from './use-panel'
 
-const loading = ref(true)
+const { panelEl, panelSizes, titleHeightPercent, collapsedPanels } = storeToRefs(usePanelStore())
+
+watch(
+  panelSizes,
+  (value: number[]) => {
+    value.forEach((height, idx) => {
+      if (height > titleHeightPercent.value)
+        collapsedPanels.value.delete(idx)
+      else
+        collapsedPanels.value.add(idx)
+    })
+  },
+)
+
+watch(
+  titleHeightPercent,
+  (value: number) => {
+    const spareSpace = (100 - collapsedPanels.value.size * value - panelSizes.value
+      .reduce(
+        (uncollapsed, height, idx) => collapsedPanels.value.has(idx) ? uncollapsed : uncollapsed + height,
+        0,
+      )
+    ) / (panelSizes.value.length - collapsedPanels.value.size)
+    panelSizes.value = panelSizes.value.map((height, idx) => (height <= value || collapsedPanels.value.has(idx)) ? value : height + spareSpace)
+  },
+)
 
 function handleResize({ panes }: { panes: { size: number }[] }) {
   panelSizes.value = panes.map(panel => panel.size)
 }
-
-onMounted(() => {
-  // prevent init transition
-  setTimeout(() => {
-    loading.value = false
-  }, 200)
-})
-
-const _panelEl = ref(panelEl)
 </script>
 
 <template>
   <div class="flex flex-col h-full">
     <HeaderBar />
     <div class="flex-1 overflow-hidden">
-      <Splitpanes ref="_panelEl" :class="{ loading }" horizontal @resized="handleResize">
+      <Splitpanes ref="panelEl" horizontal @resized="handleResize">
         <PanelHTML :index="0" />
         <PanelConfig :index="1" />
         <PanelCustomCSS :index="2" />

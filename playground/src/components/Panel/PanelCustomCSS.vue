@@ -2,13 +2,15 @@
 import { storeToRefs } from 'pinia'
 import { Pane } from 'splitpanes'
 import { computed, unref } from 'vue'
-import { useUnoStore, useUrlStore } from '~/stores'
+import { usePanel } from '~/composables'
+import { usePanelStore, useUnoStore, useUrlStore } from '~/stores'
 import MonacoEditor from '../MonacoEditor.vue'
-
 import TitleBar from './TitleBar.vue'
-import { isCollapsed, panelSizes, titleHeightPercent, togglePanel } from './use-panel'
 
 defineProps<{ index: number }>()
+
+const { panelSizes, titleHeightPercent } = storeToRefs(usePanelStore())
+const { isCollapsed, togglePanel } = usePanel()
 
 const { customCSSRaw, options } = storeToRefs(useUrlStore())
 const { customCSSWarn } = storeToRefs(useUnoStore())
