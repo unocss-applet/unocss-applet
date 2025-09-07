@@ -12,21 +12,20 @@ const emit = defineEmits<{
 <template>
   <div
     style="background-color: var(--cm-background)"
-    border="l y main"
+    border="l y gray-400/20"
     text="gray/80"
-    class="min-h-30px max-h-30px all:my-auto cursor-pointer"
-    flex
+    class="flex items-center justify-between min-h-30px max-h-30px cursor-pointer"
   >
-    <div class="flex px1 gap-1" @click="e => emit('titleClick', e)">
+    <div class="flex px-1 gap-1 items-center" @click="e => emit('titleClick', e)">
       <div
-        class="flex-shrink-0 transition-transform transform"
-        :class="isCollapsed ? 'i-tabler-chevron-right' : 'i-tabler-chevron-down'"
+        class="transition-transform transform i-tabler-chevron-right"
+        :class="isCollapsed ? '' : 'rotate-90'"
       />
       <div class="op-60 shrink-0">
         {{ title }}
       </div>
     </div>
-    <div class="px1 flex flex-auto h-full gap-2">
+    <div class="px-1">
       <slot />
     </div>
   </div>

@@ -3,7 +3,6 @@
   "type": "module",
   "version": "0.11.0",
   "private": true,
-  "packageManager": "pnpm@10.7.1",
   "scripts": {
     "dev": "pnpm stub",
     "build": "pnpm -r --filter=./packages/* run build && pnpm -r run build-post",
@@ -46,6 +45,7 @@
     "simple-git-hooks": "catalog:",
     "typescript": "catalog:",
     "unbuild": "catalog:",
+    "unocss": "catalog:",
     "unocss-applet": "workspace:*",
     "vite": "catalog:",
     "vitest": "catalog:"

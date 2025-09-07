@@ -1,18 +1,25 @@
 <script lang="ts" setup>
+import { storeToRefs } from 'pinia'
 import { Pane } from 'splitpanes'
 import { computed, unref } from 'vue'
-import { customCSSWarn, transformedCSS } from '~/composables/uno'
-import { customCSS, options } from '~/composables/url'
-import CodeMirror from '../CodeMirror.vue'
+import { usePanel } from '~/composables'
+import { usePanelStore, useUnoStore, useUrlStore } from '~/stores'
+import MonacoEditor from '../MonacoEditor.vue'
 import TitleBar from './TitleBar.vue'
-import { isCollapsed, panelSizes, titleHeightPercent, togglePanel } from './use-panel'
 
 defineProps<{ index: number }>()
 
+const { panelSizes, titleHeightPercent } = storeToRefs(usePanelStore())
+const { isCollapsed, togglePanel } = usePanel()
+
+const { customCSSRaw, options } = storeToRefs(useUrlStore())
+const { customCSSWarn } = storeToRefs(useUnoStore())
+const { transformedCSS } = storeToRefs(useUnoStore())
+
 const computedCustomCSS = computed({
-  get: () => unref(options.value.transformCustomCSS ? transformedCSS : customCSS),
-  set: (value) => {
-    customCSS.value = value
+  get: () => unref(options.value.transformCustomCSS ? transformedCSS.value?.output : customCSSRaw.value) || '',
+  set: (value: string) => {
+    customCSSRaw.value = value
   },
 })
 
@@ -30,8 +37,9 @@ const WarnContent = computed(() => {
 <template>
   <Pane :min-size="titleHeightPercent" :size="panelSizes[index]" class="flex flex-col">
     <TitleBar title="Custom CSS" :is-collapsed="isCollapsed(index)" @title-click="togglePanel(index)" />
-    <CodeMirror
-      v-model="computedCustomCSS" :read-only="options.transformCustomCSS" flex-auto mode="css" border="l gray-400/20" class="scrolls"
+    <MonacoEditor
+      v-model="computedCustomCSS" language="css" class="border-l border-gray-400/20 transition-all"
+      :class="{ hidden: isCollapsed(2) }"
     />
     <div
       v-if="options.transformCustomCSS && customCSSWarn && WarnContent" class="absolute left-0 right-0 bottom-0"

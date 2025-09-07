@@ -1,19 +1,50 @@
 <script lang="ts" setup>
+import { storeToRefs } from 'pinia'
 import { Pane } from 'splitpanes'
-import { cssFormatted } from '~/composables/prettier'
-import CodeMirror from '../CodeMirror.vue'
+import { computed } from 'vue'
+import { usePanel } from '~/composables'
+import { usePanelStore, useUnoStore, useUrlStore } from '~/stores'
+import { prettify } from '~/utils'
+
+import MonacoEditor from '../MonacoEditor.vue'
 import TitleBar from './TitleBar.vue'
-import { isCollapsed, panelSizes, titleHeightPercent, togglePanel } from './use-panel'
 
 defineProps<{ index: number }>()
+
+const { panelSizes, titleHeightPercent } = storeToRefs(usePanelStore())
+const { isCollapsed, togglePanel } = usePanel()
+
+const { options } = storeToRefs(useUrlStore())
+const { generatedAppletResult } = storeToRefs(useUnoStore())
+
+const formattedCSS = computed({
+  get: () => {
+    const css = generatedAppletResult.value?.css || ''
+    if (options.value.prettifyCSS) {
+      return prettify(css, 'css')
+    }
+    return css
+  },
+  set: (value: string) => {
+    return value
+  },
+})
 </script>
 
 <template>
   <Pane :min-size="titleHeightPercent" :size="panelSizes[index]" class="flex flex-col">
-    <TitleBar title="Output CSS" :is-collapsed="isCollapsed(index)" @title-click="togglePanel(index)" />
-    <CodeMirror
-      :model-value="cssFormatted" flex-auto mode="css" border="l gray-400/20" class="scrolls"
-      :read-only="true"
+    <TitleBar title="Output CSS" :is-collapsed="isCollapsed(index)" @title-click="togglePanel(index)">
+      <div class="flex items-center gap-1">
+        <label class="flex items-center gap-1">
+          <input v-model="options.prettifyCSS" type="checkbox">
+          <span text-sm>Prettify</span>
+        </label>
+      </div>
+    </TitleBar>
+    <MonacoEditor
+      v-model="formattedCSS" language="css" class="border-l border-gray-400/20 transition-all"
+      :class="{ hidden: isCollapsed(3) }"
+      readonly
     />
   </Pane>
 </template>
