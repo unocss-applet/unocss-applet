@@ -28,7 +28,7 @@ watch(
   (value: number) => {
     const spareSpace = (100 - collapsedPanels.value.size * value - panelSizes.value
       .reduce(
-        (uncollapsed, height, idx) => collapsedPanels.value.has(idx) ? uncollapsed : uncollapsed + height,
+        (unCollapsed, height, idx) => collapsedPanels.value.has(idx) ? unCollapsed : unCollapsed + height,
         0,
       )
     ) / (panelSizes.value.length - collapsedPanels.value.size)

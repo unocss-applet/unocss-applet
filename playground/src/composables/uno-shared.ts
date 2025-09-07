@@ -137,8 +137,6 @@ export function getMatchedPositions(code: string, matched: string[]) {
           result.push([index + 1, start, end, `[${name}="${value}"]`])
         })
     })
-
-    // result.push(...extraAnnotations.map(i => [i.offset, i.offset + i.length, i.className] as const))
   })
 
   return result.sort((a, b) => a[0] - b[0])
