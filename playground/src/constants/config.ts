@@ -1,8 +1,8 @@
 import { defineConfig, presetAttributify, presetIcons, presetWind3 } from 'unocss'
 import { presetApplet, presetRemRpx, transformerAttributify } from 'unocss-applet'
 
-// eslint-disable-next-line node/prefer-global/process
-const isApplet = process?.env?.UNI_PLATFORM?.startsWith('mp-') ?? false
+// const isApplet = process?.env?.UNI_PLATFORM?.startsWith('mp-') ?? false
+const isApplet = false
 
 const presets = []
 const transformers = []
