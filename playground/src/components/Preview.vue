@@ -7,8 +7,8 @@ import { isDark } from '~/composables/dark'
 
 import { useUnoStore, useUrlStore } from '~/stores'
 
-const { customConfigRaw, customCSSRaw } = storeToRefs(useUrlStore())
-const { hasGenerated, isLoadingUno, generateResult, transformedHTML } = storeToRefs(useUnoStore())
+const { customHTMLRaw, customConfigRaw, customCSSRaw } = storeToRefs(useUrlStore())
+const { hasGenerated, isLoadingUno, generatedAppletResult, transformedAppletHTML } = storeToRefs(useUnoStore())
 const { initUno } = useUnoStore()
 
 const { transformHTML, transformCSS } = useUnoTransform()
@@ -17,8 +17,8 @@ const { generate, reGenerate } = useUnoGenerate()
 const iframe = ref<HTMLIFrameElement>()
 const iframeData = reactive({
   source: 'unocss-applet-playground',
-  css: computed(() => generateResult.value?.css || ''),
-  html: computed(() => transformedHTML.value?.output || ''),
+  css: computed(() => generatedAppletResult.value?.css || ''),
+  html: computed(() => transformedAppletHTML.value?.output || ''),
   dark: isDark,
 })
 
@@ -39,7 +39,13 @@ watch(isLoadingUno, async (v) => {
   }
 }, { immediate: true })
 
-watch(() => transformedHTML.value?.output, generate)
+watch(
+  customHTMLRaw,
+  async () => {
+    await transformHTML()
+    await generate()
+  },
+)
 
 debouncedWatch(
   [customConfigRaw, customCSSRaw],

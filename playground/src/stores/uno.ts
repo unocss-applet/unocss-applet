@@ -19,20 +19,26 @@ export const useUnoStore = defineStore('uno', () => {
   const isLoadingUno = ref(true)
 
   const defaultConfig = ref<UserConfig>()
+  const appletConfig = ref<UserConfig>()
 
   const customConfigError = ref<Error>()
   const customCSSWarn = ref<Error>()
-  const customConfig = ref<UserConfig>()
 
-  const __uno = ref<Promise<UnoGenerator<object>>>()
-  const __autocomplete = ref<Promise<UnocssAutocomplete>>()
+  const customDefaultConfig = ref<UserConfig>()
+  const customAppletConfig = ref<UserConfig>()
+
+  const defaultUno = ref<Promise<UnoGenerator<object>>>()
+  const appletUno = ref<Promise<UnoGenerator<object>>>()
+  const autocomplete = ref<Promise<UnocssAutocomplete>>()
 
   async function initUno() {
     try {
       defaultConfig.value = await evaluateUserConfig(defaultConfigRaw)
-      const uno = createGenerator({}, defaultConfig.value)
-      __uno.value = uno
-      __autocomplete.value = Promise.resolve(createAutocomplete(await uno))
+      appletConfig.value = await evaluateUserConfig(defaultConfigRaw, true)
+
+      defaultUno.value = createGenerator({}, defaultConfig.value)
+      appletUno.value = createGenerator({}, appletConfig.value)
+      autocomplete.value = Promise.resolve(createAutocomplete(await defaultUno.value))
       isLoadingUno.value = false
     }
     catch (e) {
@@ -40,24 +46,35 @@ export const useUnoStore = defineStore('uno', () => {
     }
   }
 
-  const transformedHTML = ref<{ output: string, annotations: HighlightAnnotation[] }>()
-  const transformedCSS = ref<{ output: string, annotations: HighlightAnnotation[] }>()
-  const generateResult = shallowRef<GenerateResult>()
+  const transformedDefaultHTML = ref<{ output: string, annotations: HighlightAnnotation[] }>()
+  const transformedAppletHTML = ref<{ output: string, annotations: HighlightAnnotation[] }>()
+
+  const transformedDefaultCSS = ref<{ output: string, annotations: HighlightAnnotation[] }>()
+  const transformedAppletCSS = ref<{ output: string, annotations: HighlightAnnotation[] }>()
+  const generatedDefaultResult = shallowRef<GenerateResult>()
+  const generatedAppletResult = shallowRef<GenerateResult>()
 
   return {
     hasGenerated,
     isLoadingUno,
     defaultConfig,
-    customConfig,
+    appletConfig,
+    customDefaultConfig,
+    customAppletConfig,
     customConfigError,
     customCSSWarn,
 
-    __uno,
-    __autocomplete,
+    defaultUno,
+    appletUno,
+    autocomplete,
 
-    generateResult,
-    transformedHTML,
-    transformedCSS,
+    transformedDefaultHTML,
+    transformedAppletHTML,
+    transformedDefaultCSS,
+    transformedAppletCSS,
+
+    generatedDefaultResult,
+    generatedAppletResult,
 
     initUno,
   }

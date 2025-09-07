@@ -32,22 +32,30 @@ async function applyTransformers(uno: UnoGenerator<object>, code: MagicString, i
 
 export function useUnoTransform() {
   const { customHTMLRaw, customCSSRaw } = storeToRefs(useUrlStore())
-  const { __uno, customCSSWarn, transformedHTML, transformedCSS } = storeToRefs(useUnoStore())
+  const {
+    defaultUno,
+    appletUno,
+    customCSSWarn,
+    transformedDefaultHTML,
+    transformedAppletHTML,
+    transformedDefaultCSS,
+    transformedAppletCSS,
+  } = storeToRefs(useUnoStore())
 
   async function transformHTML() {
-    if (!__uno.value) {
+    if (!defaultUno.value || !appletUno.value) {
       return
     }
-    const uno = await __uno.value
-    transformedHTML.value = await getTransformed(uno, 'html')
+    transformedDefaultHTML.value = await getTransformed(await defaultUno.value, 'html')
+    transformedAppletHTML.value = await getTransformed(await appletUno.value, 'html')
   }
 
   async function transformCSS() {
-    if (!__uno.value) {
+    if (!defaultUno.value || !appletUno.value) {
       return
     }
-    const uno = await __uno.value
-    transformedCSS.value = await getTransformed(uno, 'css')
+    transformedDefaultCSS.value = await getTransformed(await defaultUno.value, 'css')
+    transformedAppletCSS.value = await getTransformed(await appletUno.value, 'css')
   }
 
   async function getTransformed(uno: UnoGenerator<object>, type: 'html' | 'css') {
@@ -64,18 +72,31 @@ export function useUnoTransform() {
   }
 
   async function detectTransformer() {
-    if (!__uno.value) {
+    if (!defaultUno.value || !appletUno.value) {
       return
     }
-    const uno = await __uno.value
-    const { transformers = [] } = uno.config
-    if (!transformers.some(t => t.name === '@unocss/transformer-directives')) {
+
+    const _defaultUno = await defaultUno.value
+
+    const { transformers: defaultTransformers = [] } = _defaultUno.config
+    if (!defaultTransformers.some(t => t.name === '@unocss/transformer-directives')) {
       const msg = 'Using directives requires \'@unocss/transformer-directives\' to be installed.'
       customCSSWarn.value = new Error(msg)
-      transformedCSS.value = { output: customCSSRaw.value, annotations: [] }
+      transformedDefaultCSS.value = { output: customCSSRaw.value, annotations: [] }
     }
     else {
-      transformedCSS.value = await getTransformed(uno, 'css')
+      transformedDefaultCSS.value = await getTransformed(_defaultUno, 'css')
+    }
+
+    const _appletUno = await appletUno.value
+    const { transformers: appletTransformers = [] } = _appletUno.config
+    if (!appletTransformers.some(t => t.name === '@unocss/transformer-directives')) {
+      const msg = 'Using directives requires \'@unocss/transformer-directives\' to be installed.'
+      customCSSWarn.value = new Error(msg)
+      transformedAppletCSS.value = { output: customCSSRaw.value, annotations: [] }
+    }
+    else {
+      transformedAppletCSS.value = await getTransformed(_appletUno, 'css')
     }
   }
 

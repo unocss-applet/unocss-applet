@@ -9,55 +9,83 @@ export function useUnoGenerate() {
   const { customConfigRaw } = storeToRefs(useUrlStore())
   const {
     hasGenerated,
-    __uno,
-    __autocomplete,
-    customConfig,
+    defaultUno,
+    appletUno,
+    autocomplete,
+    customDefaultConfig,
+    customAppletConfig,
     defaultConfig,
     customConfigError,
     customCSSWarn,
-    generateResult,
-    transformedHTML,
-    transformedCSS,
+    generatedDefaultResult,
+    generatedAppletResult,
+    transformedDefaultHTML,
+    transformedAppletHTML,
+    transformedDefaultCSS,
+    transformedAppletCSS,
   } = storeToRefs(useUnoStore())
 
   const { detectTransformer } = useUnoTransform()
 
   async function generate() {
-    if (!__uno.value) {
+    if (!defaultUno.value || !appletUno.value) {
       return
     }
-    const uno = await __uno.value
-    generateResult.value = await uno.generate(transformedHTML.value?.output || '')
+
+    const _defaultUno = await defaultUno.value
+    generatedDefaultResult.value = await _defaultUno.generate(transformedDefaultHTML.value?.output || '')
+
+    const _appletUno = await appletUno.value
+    generatedAppletResult.value = await _appletUno.generate(transformedAppletHTML.value?.output || '')
     hasGenerated.value = true
   }
 
   async function reGenerate() {
-    if (!__uno.value) {
+    if (!appletUno.value) {
       return
     }
-    const uno = await __uno.value
+    const uno = await appletUno.value
     customConfigError.value = undefined
     customCSSWarn.value = undefined
     try {
-      const result = await evaluateUserConfig(customConfigRaw.value)
+      const result = await evaluateUserConfig(customConfigRaw.value, true)
       if (result) {
         const preflights = (result.preflights ?? []).filter(p => p.layer !== CUSTOM_CSS_LAYER_NAME)
         preflights.push({
           layer: CUSTOM_CSS_LAYER_NAME,
-          getCSS: () => cleanOutput(transformedCSS.value?.output || ''),
+          getCSS: () => cleanOutput(transformedAppletCSS.value?.output || ''),
         })
         result.preflights = preflights
-        customConfig.value = result
+        customAppletConfig.value = result
 
-        await uno.setConfig(customConfig.value, defaultConfig.value)
+        await uno.setConfig(customAppletConfig.value, defaultConfig.value)
         await detectTransformer()
         generate()
-        __autocomplete.value = Promise.resolve(createAutocomplete(uno))
+        reGenerateDefault()
       }
     }
     catch (e) {
       console.error(e)
       customConfigError.value = e as Error
+    }
+  }
+
+  async function reGenerateDefault() {
+    if (!defaultUno.value) {
+      return
+    }
+    const uno = await defaultUno.value
+    const result = await evaluateUserConfig(customConfigRaw.value)
+    if (result) {
+      const preflights = (result.preflights ?? []).filter(p => p.layer !== CUSTOM_CSS_LAYER_NAME)
+      preflights.push({
+        layer: CUSTOM_CSS_LAYER_NAME,
+        getCSS: () => cleanOutput(transformedDefaultCSS.value?.output || ''),
+      })
+      result.preflights = preflights
+      customDefaultConfig.value = result
+      await uno.setConfig(customDefaultConfig.value, defaultConfig.value)
+      autocomplete.value = Promise.resolve(createAutocomplete(uno))
     }
   }
 

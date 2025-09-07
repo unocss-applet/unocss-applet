@@ -12,13 +12,16 @@ const plugins = {
 
 export function prettify(content: string, type: 'css' | 'babel' | 'html') {
   try {
-    return prettier.format(toValue(content) || '', {
-      parser: type,
-      plugins: [plugins[type]],
-      singleQuote: true,
-      semi: false,
-      printWidth: 100,
-    })
+    return prettier.format(
+      toValue(content) || '',
+      {
+        parser: type,
+        plugins: [plugins[type]],
+        singleQuote: true,
+        semi: false,
+        printWidth: 100,
+      },
+    )
   }
   catch (e: any) {
     console.error(e)

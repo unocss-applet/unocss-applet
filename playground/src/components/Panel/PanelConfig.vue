@@ -21,7 +21,7 @@ if (!customConfigRaw.value)
 </script>
 
 <template>
-  <Pane :min-size="titleHeightPercent" :size="panelSizes[index]" class="flex flex-col">
+  <Pane :min-size="titleHeightPercent" :size="panelSizes[index]" class="flex flex-col relative">
     <TitleBar title="Config" :is-collapsed="isCollapsed(index)" @title-click="togglePanel(index)" />
     <MonacoEditor
       v-model="customConfigRaw" language="javascript" class="border-l border-gray-400/20 transition-all"

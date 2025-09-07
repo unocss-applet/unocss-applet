@@ -15,11 +15,11 @@ const { panelSizes, titleHeightPercent } = storeToRefs(usePanelStore())
 const { isCollapsed, togglePanel } = usePanel()
 
 const { options } = storeToRefs(useUrlStore())
-const { generateResult } = storeToRefs(useUnoStore())
+const { generatedAppletResult } = storeToRefs(useUnoStore())
 
 const formattedCSS = computed({
   get: () => {
-    const css = generateResult.value?.css || ''
+    const css = generatedAppletResult.value?.css || ''
     if (options.value.prettifyCSS) {
       return prettify(css, 'css')
     }
@@ -33,7 +33,14 @@ const formattedCSS = computed({
 
 <template>
   <Pane :min-size="titleHeightPercent" :size="panelSizes[index]" class="flex flex-col">
-    <TitleBar title="Output CSS" :is-collapsed="isCollapsed(index)" @title-click="togglePanel(index)" />
+    <TitleBar title="Output CSS" :is-collapsed="isCollapsed(index)" @title-click="togglePanel(index)">
+      <div class="flex items-center gap-1">
+        <label class="flex items-center gap-1">
+          <input v-model="options.prettifyCSS" type="checkbox">
+          <span text-sm>Prettify</span>
+        </label>
+      </div>
+    </TitleBar>
     <MonacoEditor
       v-model="formattedCSS" language="css" class="border-l border-gray-400/20 transition-all"
       :class="{ hidden: isCollapsed(3) }"

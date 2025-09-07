@@ -1,6 +1,7 @@
 <!-- eslint-disable new-cap -->
 <script setup lang="ts">
 import { shikiToMonaco } from '@shikijs/monaco'
+import { useDebounceFn } from '@vueuse/core'
 import * as monaco from 'monaco-editor'
 import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
 import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker'
@@ -12,11 +13,13 @@ import { createHighlighter } from 'shiki'
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
 import { isDark } from '~/composables/dark'
+import { getMatchedPositions } from '~/composables/uno-shared'
 
 const props = defineProps<{
   modelValue: string
   language?: 'html' | 'css' | 'javascript'
   readonly?: boolean
+  matched?: Set<string>
 }>()
 
 const emit = defineEmits<{
@@ -46,6 +49,8 @@ const emit = defineEmits<{
 
 const editorContainer = ref<HTMLDivElement | null>(null)
 let editor: monaco.editor.IStandaloneCodeEditor | null = null
+let decorations: monaco.editor.IEditorDecorationsCollection | null = null
+let decorationsIds: string[] = []
 
 onMounted(async () => {
   if (editorContainer.value) {
@@ -78,11 +83,51 @@ onMounted(async () => {
       },
     })
 
+    decorations = editor.createDecorationsCollection()
+
     editor.onDidChangeModelContent(() => {
-      emit('update:modelValue', editor!.getValue())
+      if (!editor) {
+        return
+      }
+      emit('update:modelValue', editor.getValue())
     })
   }
 })
+
+const updateDecorations = useDebounceFn(
+  (modelValue: string, matched: Set<string>) => {
+    const matchedArray = Array.from(matched || [])
+    if (!editor || !matchedArray.length || !decorations) {
+      return
+    }
+    editor.removeDecorations(decorationsIds)
+    const sourceText = modelValue
+    const newDecorations: monaco.editor.IModelDeltaDecoration[] = []
+
+    const positions = getMatchedPositions(sourceText, matchedArray)
+    positions.forEach((position) => {
+      const [line, start, end] = position
+      newDecorations.push({
+        range: new monaco.Range(line, start + 1, line, end + 1),
+        options: {
+          inlineClassName: 'border-b border-b-dashed border-b-current',
+        },
+      })
+    })
+    decorationsIds = decorations.set(newDecorations)
+  },
+  100,
+)
+
+watch(
+  () => [props.modelValue, props.matched] as const,
+  ([modelValue, matched]) => {
+    if (props.language !== 'html') {
+      return
+    }
+    updateDecorations(modelValue, matched || new Set())
+  },
+)
 
 watch(
   () => props.readonly,
