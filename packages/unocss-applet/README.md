@@ -10,10 +10,6 @@
 <a href="https://github.com/unocss-applet/unocss-applet/blob/main/LICENSE"><img src="https://img.shields.io/github/license/unocss-applet/unocss-applet.svg?style=flat&colorA=858585&colorB=F17F42" alt="License"></a>
 </p>
 
-<p align='center'>
-<a href="https://github.com/unocss-applet/unocss-applet/blob/main/README.md">English</a> | <b>简体中文</b>
-</p>
-
 ## 预设和插件
 
 - [unocss-applet](https://github.com/unocss-applet/unocss-applet/tree/main/packages/unocss-applet) - 主包，包含所有预设和插件。
