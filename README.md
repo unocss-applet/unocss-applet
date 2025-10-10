@@ -1,7 +1,7 @@
 <p align="center">
 <img src="https://github.com/unocss-applet/unocss-applet/raw/main/public/logo.svg" style="width:100px;" />
 <h1 align="center">UnoCSS Applet</h1>
-<p align="center">Using <a href="https://github.com/unocss/unocss">UnoCSS</a> in applet(for <a href="https://github.com/dcloudio/uni-app">UniApp</a> and <a href="https://github.com/NervJS/taro">Taro</a>) to be compatible with unsupported syntax.</p>
+<p align="center">在小程序(<a href="https://github.com/dcloudio/uni-app">UniApp</a> 和 <a href="https://github.com/NervJS/taro">Taro</a>)中使用<a href="https://github.com/unocss/unocss">UnoCSS</a>，兼容不支持的语法。</p>
 </p>
 <p align="center">
 <a href="https://www.npmjs.com/package/unocss-applet"><img src="https://img.shields.io/npm/v/unocss-applet?style=flat&colorA=858585&colorB=F17F42" alt="NPM version"></a>
@@ -11,18 +11,18 @@
 </p>
 
 <p align='center'>
-<b>English</b> | <a href="https://github.com/unocss-applet/unocss-applet/blob/main/README.zh-CN.md">简体中文</a>
+<a href="https://github.com/unocss-applet/unocss-applet/blob/main/README.md">English</a> | <b>简体中文</b>
 </p>
 
-## Presets and Plugins
+## 预设和插件
 
-- [unocss-applet](https://github.com/unocss-applet/unocss-applet/tree/main/packages/unocss-applet) - The default package with common presets and plugins.
-- [@unocss-applet/preset-applet](https://github.com/unocss-applet/unocss-applet/tree/main/packages/preset-applet) - The default preset (right now it's equivalent to `@unocss/preset-wind3`).
-- [@unocss-applet/preset-rem-rpx](https://github.com/unocss-applet/unocss-applet/tree/main/packages/preset-rem-rpx) - Coverts rem <=> rpx for utils.
-- [@unocss-applet/transformer-attributify](https://github.com/unocss-applet/unocss-applet/tree/main/packages/transformer-attributify) - Enables Attributify Mode for applet.
-- [@unocss-applet/reset](https://github.com/unocss-applet/unocss-applet/tree/main/packages/reset) - Collection of reset CSS stylesheets.
+- [unocss-applet](https://github.com/unocss-applet/unocss-applet/tree/main/packages/unocss-applet) - 主包，包含所有预设和插件。
+- [@unocss-applet/preset-applet](https://github.com/unocss-applet/unocss-applet/tree/main/packages/preset-applet) - 默认预设（等同于`@unocss/preset-wind3`）。
+- [@unocss-applet/preset-rem-rpx](https://github.com/unocss-applet/unocss-applet/tree/main/packages/preset-rem-rpx) - 转换rem <=> rpx的工具。
+- [@unocss-applet/transformer-attributify](https://github.com/unocss-applet/unocss-applet/tree/main/packages/transformer-attributify) - 为小程序启用 Attributify 模式。
+- [@unocss-applet/reset](https://github.com/unocss-applet/unocss-applet/tree/main/packages/reset) - CSS 样式重置集合。
 
-## Installation
+## 安装
 
 ```bash
 npm i unocss-applet --save-dev # with npm
@@ -30,9 +30,9 @@ yarn add unocss-applet -D # with yarn
 pnpm add unocss-applet -D # with pnpm
 ```
 
-## Usage
+## 使用
 
-### UnoCSS config
+### UnoCSS 配置
 
 <details>
 <summary>uno.config.ts</summary><br>
@@ -79,25 +79,24 @@ export default defineConfig({
 
 <br></details>
 
-### For Platform
+### 平台配置
 
 <details>
 <summary>UniApp + Vue3 + Vite</summary><br>
 
-`vite.config.ts` (UnoCSS v0.58 or below) / `vite.config.mts` (UnoCSS v0.59 or above)
+`vite.config.ts`（UnoCSS v0.58 和更低版本）/ `vite.config.mts`（UnoCSS v0.59 和更高版本）
 
 ```ts
-import uniModule from '@dcloudio/vite-plugin-uni'
-import UnoCSS from 'unocss/vite'
+// use @uni-helper/plugin-uni support ESM
+import Uni from '@uni-helper/plugin-uni'
+import UnoCSS from '@unocss/vite'
 import { defineConfig } from 'vite'
 
-// @ts-expect-error missing types
-const Uni = uniModule.default || uniModule
-
+// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     Uni(),
-    UnoCSS(),
+    UnoCSS() as any,
   ],
 })
 ```
@@ -113,7 +112,7 @@ import 'uno.css'
 <details>
 <summary>Taro v3.6 + Vue3 + Webpack5</summary><br>
 
-`config/index.js` (UnoCSS v0.59 or above)
+`config/index.js`（UnoCSS v0.59 和更高版本）
 
 ```js
 import { createSwcRegister, getModuleDefaultExport } from '@tarojs/helper'
@@ -140,10 +139,10 @@ export default async () => {
 }
 ```
 
-`config/index.js` (UnoCSS v0.58 or below)
+`config/index.js`（UnoCSS v0.58 和更低版本）
 
 ```js
-import UnoCSS from 'unocss/webpack'
+import UnoCSS from '@unocss/webpack'
 
 const config = {
   mini: {
@@ -169,15 +168,15 @@ import 'uno.css'
 
 <br></details>
 
-## Example
+## 示例
 
-- [starter-uni](https://github.com/nei1ee/starter-uni)
-- [ColorTimetable](https://github.com/nei1ee/ColorTimetable)
+- [starter-uni](https://github.com/zguolee/starter-uni)
+- [ColorTimetable](https://github.com/zguolee/ColorTimetable)
 
-## Acknowledgement
+## 感谢
 
 - [UnoCSS](https://github.com/unocss/unocss)
 
 ## License
 
-MIT License &copy; 2022-PRESENT [Neil](https://github.com/nei1ee) and all contributors.
+MIT License &copy; 2022-PRESENT [Neil Lee](https://github.com/zguolee) 和所有贡献者。
