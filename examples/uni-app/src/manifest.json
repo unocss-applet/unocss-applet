@@ -1,5 +1,5 @@
 {
-  "name": "UnoCSS Applet",
+  "name": "",
   "appid": "",
   "description": "",
   "versionName": "1.0.0",
@@ -42,7 +42,7 @@
   },
   "quickapp": {},
   "mp-weixin": {
-    "appid": "wx59f6a03a5fe180ac",
+    "appid": "",
     "setting": {
       "urlCheck": false
     },

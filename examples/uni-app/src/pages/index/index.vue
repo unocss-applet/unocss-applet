@@ -1,4 +1,3 @@
-<!-- eslint-disable @typescript-eslint/quotes -->
 <script setup lang="ts">
 import { ref } from 'vue'
 import { menuList } from './data'
@@ -15,7 +14,7 @@ const fixed = ref(true)
   <div class="text-center aaa u-text-color" p="4">
     <div class="flex justify-center space-x-2">
       <img src="../../static/logo.png" class="h-10 w-10">
-      <div text="4xl" class="rotate-180 i-carbon-campsite" :class="bg" :hover-class="bool ? '' : '!bg-teal'" />
+      <div text="4xl" class="rotate-180 i-tabler-carrot" :class="bg" :hover-class="bool ? '' : '!bg-teal'" />
     </div>
     <div :class="[border && 'u-border-top', fixed && 'u-tabbar--fixed']" />
     <div class="border bg-blue-200 font-light font-mono">

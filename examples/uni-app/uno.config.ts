@@ -1,13 +1,6 @@
 import type { Preset, SourceCodeTransformer } from 'unocss'
 import process from 'node:process'
-import {
-  defineConfig,
-  presetAttributify,
-  presetIcons,
-  presetUno,
-  transformerDirectives,
-  transformerVariantGroup,
-} from 'unocss'
+import { defineConfig, presetAttributify, presetIcons } from 'unocss'
 
 import {
   presetApplet,
@@ -15,7 +8,7 @@ import {
   transformerAttributify,
 } from 'unocss-applet'
 
-const isApplet = process.env?.UNI_PLATFORM?.startsWith('mp') ?? false
+const isApplet = process.env?.UNI_PLATFORM?.startsWith('mp-') ?? false
 const presets: Preset[] = []
 const transformers: SourceCodeTransformer[] = []
 
@@ -25,7 +18,8 @@ if (isApplet) {
   transformers.push(transformerAttributify({ ignoreAttributes: ['block'] }))
 }
 else {
-  presets.push(presetUno())
+  presets.push(presetApplet())
+  presets.push(presetAttributify())
   presets.push(presetRemRpx({ mode: 'rpx2rem' }))
 }
 
@@ -40,12 +34,6 @@ export default defineConfig({
       info: '#373e47',
     },
   },
-  shortcuts: {
-    'u-text-color': 'text-[#323233] dark:text-[#F5F5F5]',
-  },
-  safelist: [
-    ...['primary', 'secondary', 'success', 'warning', 'error', 'info'].map(c => `bg-${c}`),
-  ],
   presets: [
     presetIcons({
       scale: 1.2,
@@ -55,17 +43,9 @@ export default defineConfig({
         'vertical-align': 'middle',
       },
     }),
-    /**
-     * you can add `presetAttributify()` here to enable unocss attributify mode prompt
-     * although preset is not working for applet, but will generate useless css
-     */
-    presetAttributify(),
     ...presets,
   ],
   transformers: [
-    transformerDirectives(),
-    transformerVariantGroup(),
     ...transformers,
   ],
-
 })

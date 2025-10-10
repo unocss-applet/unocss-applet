@@ -1,7 +1,10 @@
 {
   "pages": [
     {
-      "path": "pages/index/index"
+      "path": "pages/index/index",
+      "style": {
+        "navigationBarTitleText": "uni-app"
+      }
     }
   ],
   "globalStyle": {
@@ -9,11 +12,5 @@
     "navigationBarTitleText": "uni-app",
     "navigationBarBackgroundColor": "#F8F8F8",
     "backgroundColor": "#F8F8F8"
-  },
-  "easycom": {
-    "autoscan": true,
-    "custom": {
-      "^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue"
-    }
   }
 }

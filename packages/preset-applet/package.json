@@ -36,9 +36,9 @@
     "stub": "unbuild --stub"
   },
   "dependencies": {
-    "@unocss/core": "catalog:",
-    "@unocss/preset-mini": "catalog:",
-    "@unocss/preset-wind3": "catalog:",
-    "@unocss/preset-wind4": "catalog:"
+    "@unocss/core": "catalog:unocss",
+    "@unocss/preset-mini": "catalog:unocss",
+    "@unocss/preset-wind3": "catalog:unocss",
+    "@unocss/preset-wind4": "catalog:unocss"
   }
 }

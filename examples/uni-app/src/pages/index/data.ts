@@ -2,10 +2,10 @@
 export const menuList = [
   {
     name: '首页',
-    icon: 'i-carbon:campsite',
+    icon: 'i-tabler:home',
   },
   {
     name: '我的',
-    icon: 'i-carbon:user',
+    icon: 'i-tabler:user',
   },
 ]

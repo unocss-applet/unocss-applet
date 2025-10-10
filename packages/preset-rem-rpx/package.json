@@ -36,6 +36,6 @@
     "stub": "unbuild --stub"
   },
   "dependencies": {
-    "@unocss/core": "catalog:"
+    "@unocss/core": "catalog:unocss"
   }
 }
