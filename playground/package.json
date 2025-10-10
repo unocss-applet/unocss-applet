@@ -9,21 +9,20 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@unocss/autocomplete": "catalog:",
-    "@unocss/reset": "catalog:",
-    "@vueuse/core": "catalog:",
-    "monaco-editor": "catalog:",
-    "pinia": "catalog:",
-    "shiki": "catalog:",
-    "splitpanes": "catalog:",
-    "vue": "catalog:"
+    "@shikijs/monaco": "catalog:utils",
+    "@unocss/autocomplete": "catalog:unocss",
+    "@unocss/reset": "catalog:unocss",
+    "@vueuse/core": "catalog:vue",
+    "monaco-editor": "catalog:utils",
+    "pinia": "catalog:vue",
+    "shiki": "catalog:utils",
+    "splitpanes": "catalog:utils",
+    "vue": "catalog:vue"
   },
   "devDependencies": {
-    "@iconify-json/tabler": "catalog:",
-    "@shikijs/monaco": "catalog:",
-    "@types/splitpanes": "catalog:",
-    "@vitejs/plugin-vue": "catalog:",
-    "lz-string": "catalog:"
-
+    "@iconify-json/tabler": "catalog:icons",
+    "@types/splitpanes": "catalog:types",
+    "@vitejs/plugin-vue": "catalog:vite",
+    "lz-string": "catalog:utils"
   }
 }

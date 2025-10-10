@@ -52,6 +52,10 @@ let editor: monaco.editor.IStandaloneCodeEditor | null = null
 let decorations: monaco.editor.IEditorDecorationsCollection | null = null
 let decorationsIds: string[] = []
 
+function updateTheme() {
+  monaco.editor.setTheme(isDark.value ? 'vitesse-dark' : 'vitesse-light')
+}
+
 onMounted(async () => {
   if (editorContainer.value) {
     const highlighter = await createHighlighter({
@@ -82,6 +86,7 @@ onMounted(async () => {
         enabled: false,
       },
     })
+    updateTheme()
 
     decorations = editor.createDecorationsCollection()
 
@@ -145,11 +150,8 @@ watch(
 
 watch(
   isDark,
-  (value) => {
-    monaco.editor.setTheme(value ? 'vitesse-dark' : 'vitesse-light')
-  },
-  {
-    immediate: true,
+  () => {
+    updateTheme()
   },
 )
 

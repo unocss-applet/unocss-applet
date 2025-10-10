@@ -21,7 +21,7 @@ export function preflights(options: PresetMiniOptions): Preflight<Theme>[] | und
               if (options.variablePrefix !== 'un-') {
                 css = css.replace(/--un-/g, `--${options.variablePrefix}`)
               }
-              const roots = toArray(theme.preflightRoot ?? ['page,::before,::after', '::backdrop'])
+              const roots = toArray(theme.preflightRoot ?? [':not(not),::before,::after', '::backdrop'])
               return roots.map(root => `${root}{${css}}`).join('')
             }
           }

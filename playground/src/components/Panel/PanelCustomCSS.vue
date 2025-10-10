@@ -14,10 +14,10 @@ const { isCollapsed, togglePanel } = usePanel()
 
 const { customCSSRaw, options } = storeToRefs(useUrlStore())
 const { customCSSWarn } = storeToRefs(useUnoStore())
-const { transformedCSS } = storeToRefs(useUnoStore())
+const { transformedAppletCSS } = storeToRefs(useUnoStore())
 
 const computedCustomCSS = computed({
-  get: () => unref(options.value.transformCustomCSS ? transformedCSS.value?.output : customCSSRaw.value) || '',
+  get: () => unref(options.value.transformCustomCSS ? transformedAppletCSS.value?.output : customCSSRaw.value) || '',
   set: (value: string) => {
     customCSSRaw.value = value
   },

@@ -36,7 +36,7 @@
     "stub": "unbuild --stub"
   },
   "dependencies": {
-    "@unocss/core": "catalog:",
-    "magic-string": "catalog:"
+    "@unocss/core": "catalog:unocss",
+    "magic-string": "catalog:utils"
   }
 }

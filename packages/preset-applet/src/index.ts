@@ -30,10 +30,15 @@ export function presetApplet(options: PresetAppletOptions = {}) {
 
   return definePreset((presetOptions: PresetWind3Options | PresetWind4Options = {}) => {
     presetOptions = options.presetOptions ?? {}
+    presetOptions.dark = presetOptions.dark ?? 'class'
+    presetOptions.attributifyPseudo = presetOptions.attributifyPseudo ?? false
+    presetOptions.preflight = presetOptions.preflight ?? true
+    presetOptions.variablePrefix = presetOptions.variablePrefix ?? 'un-'
+
     let preset
 
     if (options.preset === 'wind3') {
-      preset = internalPresetWind3({ ...(presetOptions as PresetWind3Options), preflight: false })
+      preset = internalPresetWind3({ ...(presetOptions as PresetWind3Options) })
       /**
        * remove the last rule
        * @see https://github.com/unocss/unocss/blob/main/packages-presets/preset-mini/src/_rules/default.ts#L86
@@ -58,7 +63,7 @@ export function presetApplet(options: PresetAppletOptions = {}) {
     return {
       ...preset,
       name: 'unocss-preset-applet',
-      preflights: preflights(options),
+      preflights: preflights(presetOptions),
       postprocess: [
         (util) => {
           if (util.selector) {
