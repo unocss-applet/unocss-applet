@@ -1,3 +1,9 @@
+/* ==== Fork from @unocss/reset v66.7.4 ==== */
+
+/*
+Please read: https://github.com/unocss/unocss/blob/main/packages-presets/reset/tailwind-compat.md
+*/
+
 /*
 1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
 2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)
@@ -64,11 +70,6 @@ navigator,
   border-color: var(--un-default-border-color, #e5e7eb); /* 2 */
 }
 /* #endif */
-
-::before,
-::after {
-  --un-content: '';
-}
 
 /*
 1. Use a consistent sensible line-height in all browsers.
@@ -302,13 +303,13 @@ textarea {
 Remove the inheritance of text transform in Edge and Firefox.
 */
 
-/* #ifdef h5 */
+/* #ifdef H5 */
 button,
 select {
   text-transform: none;
 }
-/* #endif */ 
-/* #ifdef h5 */
+/* #endif */
+/* #ifndef H5 */
 button {
   text-transform: none;
 }
@@ -531,6 +532,6 @@ video {
 /*
 Make elements with the HTML hidden attribute stay hidden by default.
 */
-[hidden] {
+[hidden]:where(:not([hidden="until-found"])) {
   display: none;
 }

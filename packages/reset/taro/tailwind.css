@@ -1,3 +1,5 @@
+/* ==== Fork from @unocss/reset v66.7.4 ==== */
+
 /*
 1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
 2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)
@@ -92,7 +94,7 @@ html,
   font-variation-settings: normal; /* 6 */
   -webkit-tap-highlight-color: transparent; /* 7 */
 }
-/*  #endif  */ 
+/*  #endif  */
 /*  #ifndef  h5  */
 page,
 :host {
@@ -307,12 +309,12 @@ button,
 select {
   text-transform: none;
 }
-/*  #endif  */ 
-/*  #ifdef  h5  */
+/*  #endif  */
+/*  #ifndef  h5  */
 button {
   text-transform: none;
 }
-/*  #endif  */ 
+/*  #endif  */
 
 /*
 1. Correct the inability to style clickable types in iOS and Safari.
@@ -529,6 +531,6 @@ video {
 /*
 Make elements with the HTML hidden attribute stay hidden by default.
 */
-[hidden] {
+[hidden]:where(:not([hidden="until-found"])) {
   display: none;
 }
