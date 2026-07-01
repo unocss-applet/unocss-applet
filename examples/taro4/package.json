@@ -69,6 +69,6 @@
     "typescript": "catalog:typescript",
     "unocss": "catalog:unocss",
     "unocss-applet": "workspace:*",
-    "webpack": "catalog:taro-shared"
+    "webpack": "catalog:taro4"
   }
 }

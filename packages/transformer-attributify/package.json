@@ -33,6 +33,7 @@
   ],
   "scripts": {
     "build": "unbuild",
+    "build-post": "exit 0",
     "stub": "unbuild --stub"
   },
   "dependencies": {
