@@ -1,0 +1,5 @@
+/* page-local styles; UnoCSS utilities are applied via class/attributify in index.tsx */
+.custom-div {
+  text-align: right;
+  color: red;
+}
