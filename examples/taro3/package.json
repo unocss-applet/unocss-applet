@@ -1,0 +1,72 @@
+{
+  "name": "playground-taro3",
+  "version": "0.0.0",
+  "private": true,
+  "description": "unocss-applet Taro 3 + React + Webpack5 example",
+  "templateInfo": {
+    "name": "default",
+    "typescript": true,
+    "css": "None",
+    "framework": "React"
+  },
+  "scripts": {
+    "build:weapp": "taro build --type weapp",
+    "build:swan": "taro build --type swan",
+    "build:alipay": "taro build --type alipay",
+    "build:tt": "taro build --type tt",
+    "build:h5": "taro build --type h5",
+    "build:rn": "taro build --type rn",
+    "build:qq": "taro build --type qq",
+    "build:jd": "taro build --type jd",
+    "dev:weapp": "npm run build:weapp -- --watch",
+    "dev:swan": "npm run build:swan -- --watch",
+    "dev:alipay": "npm run build:alipay -- --watch",
+    "dev:tt": "npm run build:tt -- --watch",
+    "dev:h5": "npm run build:h5 -- --watch",
+    "dev:rn": "npm run build:rn -- --watch",
+    "dev:qq": "npm run build:qq -- --watch",
+    "dev:jd": "npm run build:jd -- --watch"
+  },
+  "browserslist": [
+    "last 3 versions",
+    "Android >= 4.1",
+    "ios >= 8"
+  ],
+  "dependencies": {
+    "@babel/runtime": "catalog:taro-shared",
+    "@tarojs/components": "catalog:taro3",
+    "@tarojs/helper": "catalog:taro3",
+    "@tarojs/plugin-framework-react": "catalog:taro3",
+    "@tarojs/plugin-platform-alipay": "catalog:taro3",
+    "@tarojs/plugin-platform-h5": "catalog:taro3",
+    "@tarojs/plugin-platform-jd": "catalog:taro3",
+    "@tarojs/plugin-platform-qq": "catalog:taro3",
+    "@tarojs/plugin-platform-swan": "catalog:taro3",
+    "@tarojs/plugin-platform-tt": "catalog:taro3",
+    "@tarojs/plugin-platform-weapp": "catalog:taro3",
+    "@tarojs/react": "catalog:taro3",
+    "@tarojs/runtime": "catalog:taro3",
+    "@tarojs/shared": "catalog:taro3",
+    "@tarojs/taro": "catalog:taro3",
+    "react": "catalog:react",
+    "react-dom": "catalog:react"
+  },
+  "devDependencies": {
+    "@babel/core": "catalog:taro-shared",
+    "@iconify-json/tabler": "catalog:icons",
+    "@pmmmwh/react-refresh-webpack-plugin": "catalog:taro-shared",
+    "@tarojs/cli": "catalog:taro3",
+    "@tarojs/taro-loader": "catalog:taro3",
+    "@tarojs/webpack5-runner": "catalog:taro3",
+    "@types/react": "catalog:react",
+    "@types/webpack-env": "catalog:taro-shared",
+    "@unocss/webpack": "catalog:unocss",
+    "babel-preset-taro": "catalog:taro3",
+    "react-refresh": "catalog:taro-shared",
+    "tsconfig-paths-webpack-plugin": "catalog:taro-shared",
+    "typescript": "catalog:typescript",
+    "unocss": "catalog:unocss",
+    "unocss-applet": "workspace:*",
+    "webpack": "catalog:taro-shared"
+  }
+}

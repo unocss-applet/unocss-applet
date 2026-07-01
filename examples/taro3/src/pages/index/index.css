@@ -1,0 +1,6 @@
+/* page-local styles using UnoCSS @apply via preflight is not available in plain css;
+   custom-div uses a plain CSS rule, UnoCSS utilities are applied via class/attributify in index.tsx */
+.custom-div {
+  text-align: right;
+  color: red;
+}
