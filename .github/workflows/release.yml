@@ -7,21 +7,27 @@ on:
 
 jobs:
   release:
+    permissions:
+      id-token: write
+      contents: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
 
       - name: Set node
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version: lts/*
           cache: pnpm
           registry-url: 'https://registry.npmjs.org'
+
+      - name: Setup corepack
+        run: npm install -f -g npm@latest corepack@latest && corepack enable
 
       - run: npx changelogithub
         continue-on-error: true
@@ -36,5 +42,3 @@ jobs:
 
       - name: Publish to NPM
         run: pnpm -r publish --access public --no-git-checks
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
