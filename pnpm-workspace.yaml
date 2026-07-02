@@ -1,65 +1,121 @@
+catalogMode: prefer
+
+shellEmulator: true
+
+trustPolicy: off
 packages:
   - packages/*
   - playground
   - examples/*
-
-catalog:
-  unocss-applet: ^0.11.0
-
-catalogMode: prefer
-
 catalogs:
-  css:
-    css-loader: 6.8.1
-    postcss: ^8.5.3
-    sass: ^1.86.1
   eslint:
-    '@antfu/eslint-config': ^4.11.0
-    eslint: ^9.23.0
+    '@antfu/eslint-config': ^9.1.0
+    eslint: ^10.6.0
   icons:
-    '@iconify-json/tabler': ^1.2.23
+    '@iconify-json/tabler': ^1.2.35
+  react:
+    '@types/react': ^18.3.31
+    react: ^18.3.1
+    react-dom: ^18.3.1
+  taro-shared:
+    '@babel/core': ^7.29.7
+    '@babel/plugin-transform-class-properties': ^7.29.7
+    '@babel/preset-react': ^7.29.7
+    '@babel/runtime': ^7.29.7
+    '@pmmmwh/react-refresh-webpack-plugin': ^0.6.2
+    '@types/webpack-env': ^1.18.8
+    react-refresh: ^0.18.0
+    tsconfig-paths-webpack-plugin: ^4.2.0
+  taro3:
+    '@tarojs/cli': 3.6.40
+    '@tarojs/components': 3.6.40
+    '@tarojs/helper': 3.6.40
+    '@tarojs/plugin-framework-react': 3.6.40
+    '@tarojs/plugin-platform-alipay': 3.6.40
+    '@tarojs/plugin-platform-h5': 3.6.40
+    '@tarojs/plugin-platform-jd': 3.6.40
+    '@tarojs/plugin-platform-qq': 3.6.40
+    '@tarojs/plugin-platform-swan': 3.6.40
+    '@tarojs/plugin-platform-tt': 3.6.40
+    '@tarojs/plugin-platform-weapp': 3.6.40
+    '@tarojs/react': 3.6.40
+    '@tarojs/runtime': 3.6.40
+    '@tarojs/shared': 3.6.40
+    '@tarojs/taro': 3.6.40
+    '@tarojs/taro-loader': 3.6.40
+    '@tarojs/webpack5-runner': 3.6.40
+    babel-preset-taro: 3.6.40
+    webpack: 5.78.0
+  taro4:
+    '@tarojs/cli': 4.2.0
+    '@tarojs/components': 4.2.0
+    '@tarojs/helper': 4.2.0
+    '@tarojs/plugin-framework-react': 4.2.0
+    '@tarojs/plugin-generator': 4.2.0
+    '@tarojs/plugin-platform-alipay': 4.2.0
+    '@tarojs/plugin-platform-h5': 4.2.0
+    '@tarojs/plugin-platform-jd': 4.2.0
+    '@tarojs/plugin-platform-qq': 4.2.0
+    '@tarojs/plugin-platform-swan': 4.2.0
+    '@tarojs/plugin-platform-tt': 4.2.0
+    '@tarojs/plugin-platform-weapp': 4.2.0
+    '@tarojs/react': 4.2.0
+    '@tarojs/runtime': 4.2.0
+    '@tarojs/shared': 4.2.0
+    '@tarojs/taro': 4.2.0
+    '@tarojs/taro-loader': 4.2.0
+    '@tarojs/webpack5-runner': 4.2.0
+    babel-preset-taro: 4.2.0
+    webpack: 5.91.0
   types:
-    '@types/node': ^22.13.17
-    '@types/splitpanes': ^2.2.6
+    '@types/node': ^22.20.0
   typescript:
-    typescript: ^5.8.2
-  ui:
-    ano-ui: ^0.9.2
+    typescript: ^6.0.3
+  uni-app:
+    '@dcloudio/types': ^3.4.31
+    '@dcloudio/uni-app': 3.0.0-5000720260410001
+    '@dcloudio/uni-app-harmony': 3.0.0-5000720260410001
+    '@dcloudio/uni-app-plus': 3.0.0-5000720260410001
+    '@dcloudio/uni-automator': 3.0.0-5000720260410001
+    '@dcloudio/uni-cli-shared': 3.0.0-5000720260410001
+    '@dcloudio/uni-components': 3.0.0-5000720260410001
+    '@dcloudio/uni-h5': 3.0.0-5000720260410001
+    '@dcloudio/uni-mp-alipay': 3.0.0-5000720260410001
+    '@dcloudio/uni-mp-baidu': 3.0.0-5000720260410001
+    '@dcloudio/uni-mp-jd': 3.0.0-5000720260410001
+    '@dcloudio/uni-mp-kuaishou': 3.0.0-5000720260410001
+    '@dcloudio/uni-mp-lark': 3.0.0-5000720260410001
+    '@dcloudio/uni-mp-qq': 3.0.0-5000720260410001
+    '@dcloudio/uni-mp-toutiao': 3.0.0-5000720260410001
+    '@dcloudio/uni-mp-weixin': 3.0.0-5000720260410001
+    '@dcloudio/uni-mp-xhs': 3.0.0-5000720260410001
+    '@dcloudio/uni-quickapp-webview': 3.0.0-5000720260410001
+    '@dcloudio/uni-stacktracey': 3.0.0-5000720260410001
+    '@dcloudio/vite-plugin-uni': 3.0.0-5000720260410001
+    '@uni-helper/plugin-uni': ^0.1.0
+    '@vue/runtime-core': ~3.4.38
+    vue: ~3.4.38
+    vue-i18n: ^9.0.0
+    vue-tsc: ^3.3.6
   unocss:
-    '@unocss/autocomplete': ^66.4.0
-    '@unocss/core': ^66.4.0
-    '@unocss/eslint-config': ^66.4.0
-    '@unocss/preset-attributify': ^66.4.0
-    '@unocss/preset-icons': ^66.4.0
-    '@unocss/preset-mini': ^66.4.0
-    '@unocss/preset-wind3': ^66.4.0
-    '@unocss/preset-wind4': ^66.4.0
-    '@unocss/reset': ^66.4.0
-    '@unocss/vite': 66.0.0
-    '@unocss/webpack': ^66.4.0
-    unocss: ^66.4.0
+    '@unocss/core': ~66.7.4
+    '@unocss/eslint-config': ~66.7.4
+    '@unocss/preset-attributify': ~66.7.4
+    '@unocss/preset-icons': ~66.7.4
+    '@unocss/preset-mini': ~66.7.4
+    '@unocss/preset-wind3': ~66.7.4
+    '@unocss/preset-wind4': ~66.7.4
+    '@unocss/webpack': ~66.7.4
+    unocss: ~66.7.4
   utils:
-    '@shikijs/monaco': ^3.9.2
-    bumpp: ^10.1.0
+    bumpp: ^11.1.0
     esno: ^4.8.0
-    lint-staged: ^15.5.0
-    lz-string: ^1.5.0
-    magic-string: ^0.30.17
-    monaco-editor: ^0.52.2
-    shiki: ^3.9.2
-    simple-git-hooks: ^2.12.1
-    splitpanes: ^4.0.3
-    unbuild: ^3.5.0
+    lint-staged: ^17.0.8
+    magic-string: ^0.30.21
+    simple-git-hooks: ^2.13.1
+    unbuild: ^3.6.1
   vite:
-    '@vitejs/plugin-vue': ^5.2.3
-    vite: ^5.2.8
-    vite-plugin-inspect: ^11.0.0
-    vitest: ^3.1.1
-  vue:
-    '@vue/babel-plugin-jsx': ^1.4.0
-    '@vue/compiler-sfc': ^3.5.13
-    '@vueuse/core': ^13.0.0
-    pinia: ^3.0.3
-    vue: ^3.5.13
-    vue-i18n: ^11.1.2
-    vue-loader: ^17.4.2
+    vite: ^5.4.21
+    vitest: ^3.2.6
+configDependencies:
+  '@pnpm/plugin-trusted-deps': 0.2.2+sha512-+ZupiXKJhW2fbSilfyRp+wrAY54MKg+c0JWSFGdeb/y9bUoYN5u4XLOZ0Txk7O2bBa6NMhWrX5mwmsHP3/nm9Q==

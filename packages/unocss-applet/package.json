@@ -36,10 +36,11 @@
   ],
   "scripts": {
     "build": "unbuild",
+    "build-post": "exit 0",
     "stub": "unbuild --stub"
   },
   "peerDependencies": {
-    "unocss": ">=66.0.0"
+    "unocss": "catalog:unocss"
   },
   "dependencies": {
     "@unocss-applet/preset-applet": "workspace:*",

@@ -1,18 +1,25 @@
+/* ==== Fork from @unocss/reset v66.7.4 ==== */
+
 /* Document
  * ========================================================================== */
 
 /**
  * 1. Correct the line height in all browsers.
+ * 2. Prevent adjustments of font size after orientation changes in iOS.
  */
 
 /*  #ifdef  h5  */
 :where(html) {
   line-height: 1.15; /* 1 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+  text-size-adjust: 100%; /* 2 */
 }
 /*  #endif  */
 /*  #ifndef  h5  */
 :where(page) {
   line-height: 1.15; /* 1 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+  text-size-adjust: 100%; /* 2 */
 }
 /*  #endif  */
 
@@ -51,21 +58,11 @@
  * 2. Correct the inheritance of border color in Firefox.
  */
 
+/*  #ifdef  h5  */
 :where(hr) {
   box-sizing: content-box; /* 1 */
   color: inherit; /* 2 */
   height: 0; /* 1 */
-}
-
-/**
- * 1. Correct the inheritance and scaling of font size in all browsers.
- * 2. Correct the odd `em` font sizing in all browsers.
- */
-
-/*  #ifdef  h5  */
-:where(pre) {
-  font-family: monospace, monospace; /* 1 */
-  font-size: 1em; /* 2 */
 }
 /*  #endif  */
 
@@ -99,7 +96,7 @@
  */
 
 /*  #ifdef  h5  */
-:where(code, kbd, samp) {
+:where(code, kbd, pre, samp) {
   font-family: monospace, monospace; /* 1 */
   font-size: 1em; /* 2 */
 }

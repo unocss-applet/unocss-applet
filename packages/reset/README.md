@@ -42,7 +42,7 @@ It may bring conflicts with UI frameworks. Remove the import if you find button 
 
 **NOT RECOMMEND** since `:where` is used which is not likely supported in many platforms.
 
-Source: <https://github.com/csstools/normalize.css>
+Source: <https://github.com/csstools/normalize.css>, <https://cdn.jsdelivr.net/npm/@unocss/reset@66.7.4/normalize.css>.
 
 ```ts
 // uni-app
@@ -52,23 +52,11 @@ import '@unocss-applet/reset/uni-app/normalize.css'
 import '@unocss-applet/reset/taro/normalize.css'
 ```
 
-### modern-normalize
-
-Source: <https://github.com/sindresorhus/modern-normalize>
-
-```ts
-// uni-app
-import '@unocss-applet/reset/uni-app/modern-normalize.css'
-
-// taro
-import '@unocss-applet/reset/taro/modern-normalize.css'
-```
-
 ### sanitize.css
 
 **NOT RECOMMEND** since `:where` is used which is not likely supported in many platforms.
 
-Source: <https://github.com/csstools/sanitize.css>
+Source: <https://github.com/csstools/sanitize.css>, <https://cdn.jsdelivr.net/npm/@unocss/reset@66.7.4/sanitize>.
 
 ```ts
 // uni-app
@@ -82,7 +70,7 @@ import '@unocss-applet/reset/taro/sanitize/assets.css'
 
 ### Eric Meyer
 
-Source: <https://meyerweb.com/eric/tools/css/reset/index.html>
+Source: <https://meyerweb.com/eric/tools/css/reset/index.html>, <https://cdn.jsdelivr.net/npm/@unocss/reset@66.7.4/eric-meyer.css>.
 
 ```ts
 // uni-app
@@ -94,7 +82,7 @@ import '@unocss-applet/reset/taro/eric-meyer.css'
 
 ### tailwind.css
 
-Based on [Tailwind's preflight](https://tailwindcss.com/docs/preflight), in static forms.
+Based on [Tailwind v3 preflight](https://v3.tailwindcss.com/docs/preflight), in [static forms](https://github.com/tailwindlabs/tailwindcss/blob/v3.4.18/src/css/preflight.css).
 
 ```ts
 // uni-app
@@ -108,11 +96,11 @@ import '@unocss-applet/reset/taro/tailwind.css'
 
 ##### Static
 
-This is provided as a static version of Tailwind's preflight, so it doesn't inherit any styles from the theme.
+This is provided as a static version of Tailwind v3 preflight, so it doesn't inherit any styles from the theme.
 
 ##### Border color
 
-In Tailwind's preflight, the border color default border color is read from the theme borderColor.DEFAULT. To customize it in Uno's reset, we use CSS variable instead:
+In Tailwind v3 preflight, the border color default border color is read from the theme borderColor.DEFAULT. To customize it in Uno's reset, we use CSS variable instead:
 
 ```css
 /* uni-app */
@@ -131,7 +119,7 @@ We add conditional compilation in style files to bring cross-platform compatibil
 
 ### tailwind-compat.css
 
-Based on [tailwind.css](./tailwind.css), with some styles clean up to avoid conflicts with UI frameworks.
+Based on [tailwind.css](#tailwindcss), with some styles clean up to avoid conflicts with UI frameworks.
 
 ```ts
 // uni-app
@@ -190,6 +178,28 @@ button,
 </tr>
 </tbody>
 </table>
+
+### tailwind-v4.css
+
+```ts
+// uni-app
+import '@unocss-applet/reset/uni-app/tailwind-v4.css'
+
+// taro
+import '@unocss-applet/reset/taro/tailwind-v4.css'
+```
+
+Based on [Tailwind v4 preflight](https://tailwindcss.com/docs/preflight), in [static forms](https://github.com/tailwindlabs/tailwindcss/blob/main/packages/tailwindcss/preflight.css).
+
+## Changes
+
+### Static
+
+This is provided as a static version of Tailwind v4 preflight, so it doesn't inherit any styles from the theme.
+
+### Cross-platform compatibility
+
+We add conditional compilation in style files to bring cross-platform compatibility.
 
 ## License
 

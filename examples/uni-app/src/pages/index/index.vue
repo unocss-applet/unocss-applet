@@ -11,14 +11,14 @@ const fixed = ref(true)
 </script>
 
 <template>
-  <div class="text-center aaa u-text-color" p="4">
+  <div class="aaa u-text-color text-center" p="4">
     <div class="flex justify-center space-x-2">
       <img src="../../static/logo.png" class="h-10 w-10">
-      <div text="4xl" class="rotate-180 i-tabler-carrot" :class="bg" :hover-class="bool ? '' : '!bg-teal'" />
+      <div text="4xl" class="i-tabler-carrot rotate-180" :class="bg" :hover-class="bool ? '' : '!bg-teal'" />
     </div>
     <div :class="[border && 'u-border-top', fixed && 'u-tabbar--fixed']" />
     <div class="border bg-blue-200 font-light font-mono">
-      <div class="!hover:bg-gray-600 hover:text-red hover:font-bold" text="#fff">
+      <div class="hover:text-red hover:font-bold !hover:bg-gray-600" text="#fff">
         hover bg-gray-600 text-red font-bold
       </div>
     </div>
@@ -32,7 +32,7 @@ const fixed = ref(true)
       </div>
     </div>
     <div flex="~ col" b="~ solid green dark:(red 2)">
-      <div text-right h-10 flex="1" text="red" :class="{ 'text-sm': index > 0 }">
+      <div h-10 text-right flex="1" text="red" :class="{ 'text-sm': index > 0 }">
         0123456789
       </div>
       <div
@@ -41,7 +41,7 @@ const fixed = ref(true)
       />
     </div>
     <div
-      class="bg-[url(https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg)]" w-40 h-20 ma un-color="red"
+      class="bg-[url(https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg)]" ma h-20 w-40 un-color="red"
       bg="center cover"
     />
     <div
@@ -52,7 +52,7 @@ const fixed = ref(true)
     </div>
     <div flex="~" gap-2>
       <template v-for="menu, _idx of menuList" :key="_idx">
-        <div class="[&>view]:last:text-red [&>view]:first:text-green [&>div]:last:text-red [&>div]:first:text-green">
+        <div class="[&>div]:first:text-green [&>div]:last:text-red [&>view]:first:text-green [&>view]:last:text-red">
           <div>{{ menu.name }}</div>
           <div :class="menu.icon" />
         </div>
@@ -62,8 +62,8 @@ const fixed = ref(true)
         <div class="before:text-sm before:content-['中文']" />
       </div>
     </div>
-    <div class="gap-2 flex">
-      <div class="flex-1 divide-y-1 divide-red divide-dashed border-red border-solid">
+    <div class="flex gap-2">
+      <div class="flex-1 border-red border-solid divide-y-1 divide-red divide-dashed">
         <div class="custom-div">
           1
         </div>
@@ -71,11 +71,11 @@ const fixed = ref(true)
           2
         </div>
       </div>
-      <div class="flex-1 flex space-x-1 md:selector-[aside]:shadow-xl">
-        <div class="custom-div border-solid border-1 border-blue w-20">
+      <div class="flex flex-1 space-x-1 md:selector-[aside]:shadow-xl">
+        <div class="custom-div w-20 border-1 border-blue border-solid">
           1
         </div>
-        <div border-blue border-solid border-1 w-20>
+        <div w-20 border-1 border-blue border-solid>
           2
         </div>
       </div>

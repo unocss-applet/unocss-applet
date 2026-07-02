@@ -1,8 +1,8 @@
 # @unocss-applet/preset-applet
 
-The Applet preset for [UnoCSS](https://github.com/unocss/unocss), fork from [@unocss/preset-wind3](https://github.com/unocss/unocss/tree/main/packages/preset-uno) and modified to transform some CSS selector.
+[UnoCSS](https://github.com/unocss/unocss) 的小程序预设，包裹 [`@unocss/preset-wind3`](https://github.com/unocss/unocss/tree/main/packages-presets/preset-wind3)（默认）/ [`@unocss/preset-wind4`](https://github.com/unocss/unocss/tree/main/packages-presets/preset-wind4)，对部分 CSS 选择器做转换以兼容小程序。
 
-## Install
+## 安装
 
 ```bash
 npm i @unocss-applet/preset-applet --save-dev # with npm
@@ -10,7 +10,7 @@ yarn add @unocss-applet/preset-applet -D # with yarn
 pnpm add @unocss-applet/preset-applet -D # with pnpm
 ```
 
-## Usage
+## 使用
 
 ```ts
 import { presetApplet } from '@unocss-applet/preset-applet'
@@ -23,42 +23,54 @@ export default defineConfig({
 })
 ```
 
-## Type Declarations
+## 类型声明
 
 ```ts
-// PresetUnoOptions https://github.com/unocss/unocss/blob/main/packages/preset-uno/src/index.ts#L9
-// PresetMiniOptions https://github.com/unocss/unocss/blob/main/packages/preset-mini/src/index.ts#L33-L73
-export interface PresetAppletOptions extends PresetUnoOptions {
+// PresetWind3Options https://github.com/unocss/unocss/blob/main/packages-presets/preset-wind3/src/index.ts
+// PresetWind4Options https://github.com/unocss/unocss/blob/main/packages-presets/preset-wind4/src/index.ts
+export interface PresetAppletOptions {
   /**
-   * Unsupported characters in applet, will be added to the default value
+   * 上游预设，wind3（默认）或 wind4
+   * @default 'wind3'
+   */
+  preset?: 'wind3' | 'wind4'
+
+  /**
+   * 传给上游 wind3 / wind4 的选项
+   */
+  presetOptions?: PresetWind3Options | PresetWind4Options
+
+  /**
+   * 额外的不支持字符，会合并进默认值
    * @default ['.', ':', '%', '!', '#', '(', ')', '[', '/', ']', ',', '$', '{', '}', '@', '+', '^', '&', '<', '>', '\'', '\\', '"', '?', '*']
    */
   unsupportedChars?: string[]
 
   /**
-   * Space Between and Divide Width Elements
+   * Space Between / Divide Width 作用的元素列表
    * @default ['view', 'button', 'text', 'image']
    */
   betweenElements?: string[]
 
   /**
-   * Space Between and Divide Width Elements
+   * 通配符 `*:` 变体展开的元素列表
    * @default ['view', 'button', 'text', 'image']
    */
   wildcardElements?: string[]
 }
 ```
 
-## Change
+## 与上游的差异
 
-- The `*` selector will be replaced with `page` in the generated class name.
-- the unsupported characters in applet will be replaced with `_a_` in the generated class name.
+- `space-x-*` / `space-y-*` / `divide-*`：上游用 `> * + *`，applet 改写为枚举元素选择器（默认 `view`/`button`/`text`/`image`，可通过 `betweenElements` 自定义）。
+- `*:` 通配变体：上游 `> *` 在 applet 展开为枚举元素选择器（同上，可通过 `wildcardElements` 自定义）。
+- 类名中的不支持字符（`. : [ / % ! # ( ) ...`）会被替换为 `_a_`，使生成的选择器在 applet wxss 中可引用。
 
-## Example
+## 示例
 
-### Using in with `class`
+以 `class` 为例：
 
-#### without
+### 转换前
 
 ```html
 <div class="py-3.5 grid-cols-[0.7fr_repeat(7,1fr)]">
@@ -66,7 +78,7 @@ export interface PresetAppletOptions extends PresetUnoOptions {
 </div>
 ```
 
-#### with
+### 转换后
 
 ```html
 <div class="py-3_a_5 grid-cols-_a_0_a_7fr_repeat_a_7_a_1fr_a__a_">
@@ -80,35 +92,6 @@ export interface PresetAppletOptions extends PresetUnoOptions {
 
 .py-3_a_5 {
   padding-top:0.875rem;padding-bottom: 0.875rem;
-}
-</style>
-```
-
-### Using with string
-
-If you want to ignore a string, add a prefix(default `applet-ignore:`), and the plugin will automatically ignore the string and delete the prefix.
-
-#### without
-
-```html
-<script setup lang="ts">
-  const bg = 'bg-[hsl(2.7,81.9%,69.6%)]'
-  const bg2 = 'applet-ignore: bg-[hsl(2.7,81.9%,69.6%)]'
-</script>
-```
-
-#### with
-
-```html
-<script setup lang="ts">
-  const bg = 'bg-_a_hsl_a_2_a_7_a_81_a_9_a__a_69_a_6_a__a__a_'
-  const bg2 = 'bg-[hsl(2.7,81.9%,69.6%)]'
-</script>
-
-<style>
-.bg-_a_hsl_a_2_a_7_a_81_a_9_a__a_69_a_6_a__a__a_ {
-  --un-bg-opacity: 1;
-  background-color: hsla(2.7, 81.9%, 69.6%, var(--un-bg-opacity));
 }
 </style>
 ```
