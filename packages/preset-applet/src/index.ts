@@ -51,7 +51,27 @@ export function presetApplet(options: PresetAppletOptions = {}): Preset<object> 
       preset.preflights = preflights(presetOptions)
     }
     else if (options.preset === 'wind4') {
-      preset = internalPresetWind4({ ...(presetOptions as PresetWind4Options) })
+      // applet can't express a universal selector: wind4's `property` preflight defaults its
+      // selector to `*, ::before, ::after, ::backdrop` (scoped only by an `@supports` query).
+      // Replace the `*` with `:not(not)` for parity with the wind3 #99 fix; merge with any
+      // user-provided `preflights` so a user's `reset: false` / `theme` config is preserved.
+      // @see https://github.com/unocss-applet/unocss-applet/issues/99
+      const wind4Options = presetOptions as PresetWind4Options
+      const userProperty = wind4Options.preflights?.property
+      wind4Options.preflights = {
+        ...wind4Options.preflights,
+        // leave a user's explicit `property: false` untouched so they can still disable it
+        ...(userProperty === false
+          ? { property: false }
+          : {
+              property: {
+                ...(typeof userProperty === 'object' ? userProperty : {}),
+                selector: ':not(not), ::before, ::after, ::backdrop',
+              },
+            }),
+      }
+
+      preset = internalPresetWind4({ ...wind4Options })
 
       // drop the trailing `questionMark` rule: same incompatibility as wind3 above.
       // @see https://github.com/unocss/unocss/blob/main/packages-presets/preset-wind4/src/rules/default.ts

@@ -295,7 +295,6 @@ describe('preset-applet-wind4', () => {
         "m-inline-none",
         "pxy",
         "p-xy",
-        "p-is",
         "mxy",
         "m-xy",
         "-m-md",
@@ -656,6 +655,7 @@ describe('preset-applet-wind4', () => {
         "columns-[3_auto]",
         "columns-[auto_13em]",
         "columns-[auto_auto]",
+        "columns-unset",
         "divide-block-4",
         "divide-inline-4",
         "divide-inline-reverse",
@@ -668,8 +668,6 @@ describe('preset-applet-wind4', () => {
         "scroll-m-none",
         "scroll-p-inline-none",
         "space-y-none",
-        "space-x-$space",
-        "space-x-[var(--space)]",
         "space-inline-2",
         "space-block-4",
         "space-block-none",
@@ -684,8 +682,6 @@ describe('preset-applet-wind4', () => {
         "top-1/2",
         "translate-y-1/2",
         "bg-blend-$data",
-        "divide-$variable",
-        "divide-x-$variable",
         "divide-inline-$variable",
         "blur-$variable",
         "brightness-$variable",
@@ -718,7 +714,6 @@ describe('preset-applet-wind4', () => {
         "!animate-ping",
         "-hue-rotate-[var(--for-hue,0.5turn)]",
         "hover:animate-bounce",
-        "-space-x-4",
         "*:data-[inline]:p-2",
         "*:data-[inline]:hover:p-2",
         "**:p-2",
@@ -769,5 +764,28 @@ describe('preset-applet-wind4', () => {
         "mask-size-[auto_1rem]",
       ]
     `)
+  })
+
+  // Regression for #99: wind4's `property` preflight scopes CSS-variable defaults via a
+  // selector that defaults to `*, ::before, ::after, ::backdrop` upstream. Applet can't
+  // express `*`, so preset-applet rewrites it to `:not(not)`; verify no bare universal
+  // selector leaks into the wind4 preflight output.
+  // @see https://github.com/unocss-applet/unocss-applet/issues/99
+  it('property preflight uses :not(not) instead of universal selector (#99)', async () => {
+    const uno = await createGenerator({
+      envMode: 'dev',
+      presets: [
+        presetApplet({
+          preset: 'wind4',
+          presetOptions: { preflights: { reset: false } },
+          unsupportedChars: ['~', ' '],
+        }),
+      ],
+    })
+
+    const { css } = await uno.generate('translate-x-4')
+
+    expect(css).toContain(':not(not)')
+    expect(css).not.toMatch(/(^|[{,}])\s*\*\s*[,{]/)
   })
 })
