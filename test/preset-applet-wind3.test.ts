@@ -59,4 +59,18 @@ describe('preset-applet-wind3', () => {
 
     await expect(css).toMatchFileSnapshot('./assets/output/preset-wind3-preset-extras.css')
   })
+
+  // Regression for #99: wind3 preflight must scope its CSS-variable defaults to
+  // `:not(not)` instead of a universal selector (`*`) or `page`, which applet wxss
+  // cannot express and which leaks transform-origin vars into children.
+  // @see https://github.com/unocss-applet/unocss-applet/issues/99
+  it('preflight uses :not(not) instead of universal/page selector (#99)', async () => {
+    const { css } = await uno.generate('translate-x-4', { preflights: true })
+
+    expect(css).toContain(':not(not)')
+    // a bare universal selector (`*{`, `*,`, `,*`, or wrapped in `@supports{*`)
+    // is never applet-safe; the `[{,}]` anchor also catches the @supports-block form
+    expect(css).not.toMatch(/(^|[{,}])\s*\*\s*[,{]/)
+    expect(css).not.toMatch(/(^|[{,}])\s*page\s*[,{]/)
+  })
 })
