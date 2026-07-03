@@ -4,7 +4,7 @@
     "jsx": "preserve",
     "lib": ["esnext"],
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "paths": {
       "@unocss-applet/preset-applet": ["./packages/preset-applet/src/index.ts"],
       "@unocss-applet/preset-rem-rpx": ["./packages/preset-rem-rpx/src/index.ts"],
