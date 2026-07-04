@@ -88,3 +88,19 @@ presets.push(presetIcons({ scale: 1.2, warn: true, /* ... */ }))
 - `space-x-*` / `space-y-*` / `divide-*`：上游用 `> * + *`，applet 改写为枚举元素选择器（默认 `view`/`button`/`text`/`image`），可通过 `presetApplet({ betweenElements })` 自定义元素列表。
 - `*:` 通配变体：上游 `> *` 在 applet 展开为枚举元素选择器（同上，可通过 `wildcardElements` 自定义）。
 - wind4 新增的若干语法（见上文 wind4 行）。
+
+## 伪类变体写法
+
+结构性伪类（`:first-child` / `:last-child` / `:nth-child` 等）的变体名遵循上游 UnoCSS / Tailwind 的约定——**变体 key 与 CSS 伪类名并不相同**，这是上游 `PseudoClasses` 表决定的，并非小程序引入的不兼容。下表列出常用写法：
+
+| 期望语义 | 正确写法 | 错误写法（不生成样式） |
+| --- | --- | --- |
+| `:first-child` / `:not(:first-child)` | `first:` / `not-first:` | ~~`first-child:` / `not-first-child:`~~ |
+| `:last-child` / `:not(:last-child)` | `last:` / `not-last:` | ~~`last-child:` / `not-last-child:`~~ |
+| `:only-child` / `:not(:only-child)` | `only-child:` / `not-only-child:` | ~~`only:` / `not-only:`~~ |
+| `:first-of-type` / `:not(:first-of-type)` | `first-of-type:` / `not-first-of-type:` | |
+| `:last-of-type` / `:not(:last-of-type)` | `last-of-type:` / `not-last-of-type:` | |
+| `:only-of-type` / `:not(:only-of-type)` | `only-of-type:` / `not-only-of-type:` | |
+| `:nth-child(2n)` 等 | `[&:nth-child(2n)]:`（任意值变体） | ~~`nth-child-2n:`~~ |
+
+任意值形式 `[&:nth-child(2n)]:` 经 `_a_` 别名后在小程序端可用；其余变体同理。详见 [#52](https://github.com/unocss-applet/unocss-applet/issues/52)。
