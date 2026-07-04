@@ -96,4 +96,22 @@ describe('transformer-applet', async () => {
   it('keeps important-flag utilities through the #109 filter', async () => {
     expect(await transform('bg-red! p-2.5!')).toMatchInlineSnapshot(`"bg-red_a_ p-2_a_5_a_"`)
   })
+
+  // #108: the default extractor splits a ternary so a bare `?` becomes its own token. The
+  // built-in `questionMark` rule (matching `/^(where|\?)$/`) would treat `?` as a utility,
+  // landing it in `matched`; since `?` is an unsupported char the transformer rewrites it to
+  // `_a_`, corrupting the ternary into `true _a_ 1 : 0`. `presetApplet` drops that rule, so `?`
+  // never reaches the transformer and script stays intact. `where` (also matched by that rule)
+  // is covered by the same fix.
+  it('does not rewrite the ternary `?` in script (#108)', async () => {
+    expect(await transform('onLaunch(() => { const a = true ? 1 : 0 })'))
+      .toMatchInlineSnapshot(`"onLaunch(() => { const a = true ? 1 : 0 })"`)
+    // a real utility in the same source still gets aliased — the fix must be surgical, not a
+    // blanket pass-through that would also drop legitimate `_a_` rewrites.
+    expect(await transform('<view class="p-2.5">const a = true ? 1 : 0'))
+      .toMatchInlineSnapshot(`"<view class=\"p-2_a_5\">const a = true ? 1 : 0"`)
+    // `where` is the rule's other match; it must also pass through untouched.
+    expect(await transform('const x = where ? 1 : 0'))
+      .toMatchInlineSnapshot(`"const x = where ? 1 : 0"`)
+  })
 })
