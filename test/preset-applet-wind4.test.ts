@@ -762,6 +762,9 @@ describe('preset-applet-wind4', () => {
         "mask-pos-[left_-10%_top_1rem]",
         "mask-position-[var(--my-mask-position)]",
         "mask-size-[auto_1rem]",
+        "!font-bold",
+        "font-bold!",
+        "important:font-bold",
       ]
     `)
   })
@@ -787,5 +790,31 @@ describe('preset-applet-wind4', () => {
 
     expect(css).toContain(':not(not)')
     expect(css).not.toMatch(/(^|[{,}])\s*\*\s*[,{]/)
+  })
+
+  // Regression for #106: the three `important` spellings must emit `!important` under a
+  // selector with no literal `!`. Mirrors the wind3 #106 test; wind4 differs only in that
+  // the weight is sourced from a CSS variable (`var(--fontWeight-bold)`) rather than a
+  // literal `700`.
+  // @see https://github.com/unocss-applet/unocss-applet/issues/106
+  it('emits !important under applet-safe selectors for every important spelling (#106)', async () => {
+    const uno = await createGenerator({
+      envMode: 'dev',
+      presets: [
+        presetApplet({
+          preset: 'wind4',
+          presetOptions: { preflights: { reset: false } },
+          unsupportedChars: ['~', ' '],
+        }),
+      ],
+    })
+
+    const { css } = await uno.generate('!font-bold font-bold! important:font-bold', { preflights: false })
+
+    expect(css).toMatch(/font-weight:var\(--fontWeight-bold\) !important/)
+    expect(css).toContain('._a_font-bold')
+    expect(css).toContain('.font-bold_a_')
+    expect(css).toContain('.important_a_font-bold')
+    expect(css).not.toMatch(/\.[\w-]*!/)
   })
 })

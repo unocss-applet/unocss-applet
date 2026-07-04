@@ -73,4 +73,21 @@ describe('preset-applet-wind3', () => {
     expect(css).not.toMatch(/(^|[{,}])\s*\*\s*[,{]/)
     expect(css).not.toMatch(/(^|[{,}])\s*page\s*[,{]/)
   })
+
+  // Regression for #106: the three `important` spellings must emit `!important` under a
+  // selector with no literal `!` (applet wxss rejects it), each with a distinct applet-safe
+  // alias matching what `transformerApplet` writes into the source.
+  // @see https://github.com/unocss-applet/unocss-applet/issues/106
+  it('emits !important under applet-safe selectors for every important spelling (#106)', async () => {
+    const { css } = await uno.generate('!font-bold font-bold! important:font-bold', { preflights: false })
+
+    // the `!important` declarations themselves must land
+    expect(css).toMatch(/font-weight:700 !important/)
+    // and the selectors must contain the applet-safe aliases, never a literal `!`
+    expect(css).toContain('._a_font-bold')
+    expect(css).toContain('.font-bold_a_')
+    expect(css).toContain('.important_a_font-bold')
+    // any selector still holding a raw `!` would be applet-invalid
+    expect(css).not.toMatch(/\.[\w-]*!/)
+  })
 })

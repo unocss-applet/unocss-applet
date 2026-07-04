@@ -275,6 +275,9 @@
 .mix-shift--50-c-red-600{--un-text-opacity:1;color:rgb(calc(220 + (255 - 220) * 50 / 100) calc(38 + (255 - 38) * 50 / 100) calc(38 + (255 - 38) * 50 / 100) / calc(var(--un-text-opacity) + (1 - var(--un-text-opacity)) * 50 / 100));}
 .mix-shift-50-c-red-600{--un-text-opacity:1;color:rgb(calc(220 + (0 - 220) * 50 / 100) calc(38 + (0 - 38) * 50 / 100) calc(38 + (0 - 38) * 50 / 100) / calc(var(--un-text-opacity) + (1 - var(--un-text-opacity)) * 50 / 100));}
 .mix-tint-50-c-red-400{--un-text-opacity:1;color:rgb(calc(248 + (255 - 248) * 50 / 100) calc(113 + (255 - 113) * 50 / 100) calc(113 + (255 - 113) * 50 / 100) / calc(var(--un-text-opacity) + (1 - var(--un-text-opacity)) * 50 / 100));}
+._a_font-bold,
+.font-bold_a_,
+.important_a_font-bold{font-weight:700 !important;}
 .capitalize{text-transform:capitalize;}
 .normal-case{text-transform:none;}
 .lining-nums{--un-numeric-figure:lining-nums;font-variant-numeric:var(--un-ordinal) var(--un-slashed-zero) var(--un-numeric-figure) var(--un-numeric-spacing) var(--un-numeric-fraction);}

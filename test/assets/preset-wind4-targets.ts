@@ -632,6 +632,12 @@ export const presetWind4Targets: string[] = [
 
   // inert
   'inert:opacity-25',
+
+  // #106: all three `important` spellings must produce a `!important` declaration under an
+  // applet-safe selector (no `!` left in the class name). Mirrors the wind3 #106 coverage.
+  '!font-bold',
+  'font-bold!',
+  'important:font-bold',
 ]
 
 export const presetWindNonTargets: string[] = [

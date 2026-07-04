@@ -97,6 +97,21 @@ describe('transformer-applet', async () => {
     expect(await transform('bg-red! p-2.5!')).toMatchInlineSnapshot(`"bg-red_a_ p-2_a_5_a_"`)
   })
 
+  // #106: all three `important` spellings must alias the leading/trailing `!` (and the `:`
+  // inside the `important:` variant) so the rewritten class is applet-safe, while the paired
+  // postprocess keeps source and selector in sync — see `preset-applet-wind3.test.ts` for the
+  // matching `!important` CSS assertion.
+  it('aliases every `important` spelling (#106)', async () => {
+    // prefix form: `!` is the leading char of the matched token
+    expect(await transform('!font-bold')).toMatchInlineSnapshot(`"_a_font-bold"`)
+    // variant + important: both `:` and `!` get aliased; longest-first ordering owns the full span
+    expect(await transform('hover:!font-bold')).toMatchInlineSnapshot(`"hover_a__a_font-bold"`)
+    // `important:` variant: the `:` separates it from the utility
+    expect(await transform('important:font-bold')).toMatchInlineSnapshot(`"important_a_font-bold"`)
+    // mixed with a normal utility to confirm the alias doesn't bleed into neighbours
+    expect(await transform('text-red !font-bold')).toMatchInlineSnapshot(`"text-red _a_font-bold"`)
+  })
+
   // #108: the default extractor splits a ternary so a bare `?` becomes its own token. The
   // built-in `questionMark` rule (matching `/^(where|\?)$/`) would treat `?` as a utility,
   // landing it in `matched`; since `?` is an unsupported char the transformer rewrites it to

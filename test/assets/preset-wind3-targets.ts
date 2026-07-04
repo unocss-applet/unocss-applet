@@ -438,6 +438,12 @@ export const targets = [
   // variants - data
   'data-[foo=x]:text-green-600',
   'data-[foo=x]:data-[bar=y]:text-green-600',
+
+  // #106: all three `important` spellings must produce a `!important` declaration under an
+  // applet-safe selector (no `!` left in the class name).
+  '!font-bold',
+  'font-bold!',
+  'important:font-bold',
 ]
 
 export const targets2 = [

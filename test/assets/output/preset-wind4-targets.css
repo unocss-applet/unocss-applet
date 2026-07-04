@@ -195,6 +195,7 @@
 --text-base-lineHeight: 1.5rem;
 --text-lg-fontSize: 1.125rem;
 --text-lg-lineHeight: 1.75rem;
+--fontWeight-bold: 700;
 --colors-green-DEFAULT: oklch(79.2% 0.209 151.711);
 --colors-violet-50: oklch(96.9% 0.016 293.756);
 --colors-pink-100: oklch(94.8% 0.028 342.258);
@@ -206,7 +207,6 @@
 --text-3xl-lineHeight: 2.25rem;
 --text-xl-fontSize: 1.25rem;
 --text-xl-lineHeight: 1.75rem;
---fontWeight-bold: 700;
 --fontWeight-medium: 500;
 --colors-slate-100: oklch(96.8% 0.007 247.896);
 --colors-slate-200: oklch(92.9% 0.013 255.508);
@@ -382,6 +382,9 @@
 .font-_a_system-ui_a_{font-family:system-ui;}
 .font-_a_font-name{font-family:var(--font-name);}
 .font-550{--un-font-weight:550;font-weight:550;}
+._a_font-bold,
+.font-bold_a_,
+.important_a_font-bold{--un-font-weight:var(--fontWeight-bold) !important;font-weight:var(--fontWeight-bold) !important;}
 .font-inherit{font-family:inherit;}
 .font-mono{font-family:var(--font-mono);}
 .font-sans{font-family:var(--font-sans);}
