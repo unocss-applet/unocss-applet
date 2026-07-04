@@ -98,11 +98,25 @@ export function presetApplet(options: PresetAppletOptions = {}): Preset<object> 
       //   2. encode any non-ASCII (e.g. CJK) into char codes, since applet class names
       //      must match `[A-Za-z0-9_-]`
       // This runs after UnoCSS has resolved rules, so it covers everything wind3/wind4 emit.
+      //
+      // wind3 emits complex variants as a flat compound selector (e.g.
+      // `.group[data-state=open] .group-data-\[state\=open\]\:font-bold`), so aliasing
+      // `util.selector` is sufficient. wind4 restructures these into a nested form: the
+      // original class moves into `util.parent` (used as the wrapping selector) and
+      // `util.selector` becomes a relative `&:is(...)` body. Without aliasing `parent`,
+      // the wrapping class keeps `\:` `\[` `\=` `\]` and is unreachable from applet wxss.
+      // At-rules in `parent` (`@media`, `@supports`) carry raw `:`/`(`/`)` that are part
+      // of their query, not class names; the double-escaped regex only matches the
+      // backslash-escaped form, so it leaves those intact.
       postprocess: [
         (util) => {
           if (util.selector) {
             util.selector = replaceUnsupportedChars(util.selector)
             util.selector = encodeNonSpaceLatin(util.selector)
+          }
+          if (util.parent) {
+            util.parent = replaceUnsupportedChars(util.parent)
+            util.parent = encodeNonSpaceLatin(util.parent)
           }
           return util
         },

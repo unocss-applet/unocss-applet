@@ -565,10 +565,21 @@ describe('preset-applet-wind4', () => {
         "group-[.as-parent_&]/label:font-18",
         "group-[.not-parent]/label:font-19",
         "group-[[data-attr]]/label:font-17",
+        "group-data-[x=y]/named:font-17",
+        "peer-data-[x=y]/named:font-17",
+        "parent-data-[x=y]/named:font-17",
+        "previous-data-[x=y]/named:font-17",
         "group-aria-focus:p-4",
+        "peer-aria-checked:bg-blue-500",
         "parent-aria-hover:text-center",
+        "previous-aria-checked/label:bg-red-500",
         "group-aria-hover:font-10",
         "group-aria-hover/label:font-15",
+        "has-aria-[hidden=false]:font-20",
+        "group-aria-[level="1"]/named:font-21",
+        "peer-aria-[level="2"]/named:font-21",
+        "parent-aria-[level="3"]/named:font-21",
+        "previous-aria-[level="4"]/named:hover:font-21",
         "nth-[2]:text-yellow",
         "[&:nth-child(2)]:m-10",
         "[&>*]:m-11",
@@ -590,6 +601,10 @@ describe('preset-applet-wind4', () => {
         "aria-[invalid=spelling]:underline-red-600",
         "data-[inline]:inline",
         "data-[invalid~=grammar]:underline-green-600",
+        "group-data-[state=open]:font-bold",
+        "group-data-[state=open]/named:font-medium",
+        "peer-data-[state=closed]:border-3",
+        "has-data-[state=closed]:border-4",
         "@container",
         "@container/label",
         "@container-normal",
@@ -668,6 +683,8 @@ describe('preset-applet-wind4', () => {
         "scroll-m-none",
         "scroll-p-inline-none",
         "space-y-none",
+        "space-x-$space",
+        "space-x-[var(--space)]",
         "space-inline-2",
         "space-block-4",
         "space-block-none",
@@ -682,6 +699,8 @@ describe('preset-applet-wind4', () => {
         "top-1/2",
         "translate-y-1/2",
         "bg-blend-$data",
+        "divide-$variable",
+        "divide-x-$variable",
         "divide-inline-$variable",
         "blur-$variable",
         "brightness-$variable",
@@ -762,6 +781,11 @@ describe('preset-applet-wind4', () => {
         "mask-pos-[left_-10%_top_1rem]",
         "mask-position-[var(--my-mask-position)]",
         "mask-size-[auto_1rem]",
+        "in-[div]:bg-red-400",
+        "in-[a>button:hover]:font-bold",
+        "in-data-[state=closed]:border-5",
+        "in-aria-[hidden=false]:font-21",
+        "inert:opacity-25",
         "!font-bold",
         "font-bold!",
         "important:font-bold",
@@ -816,5 +840,39 @@ describe('preset-applet-wind4', () => {
     expect(css).toContain('.font-bold_a_')
     expect(css).toContain('.important_a_font-bold')
     expect(css).not.toMatch(/\.[\w-]*!/)
+  })
+
+  // Regression for wind4 nested-variant aliasing: wind4 restructures complex variants
+  // (group-/peer-/parent-/previous-/has-/in-/inert:/space-/divide- with brackets) into a
+  // nested form where the original class moves into `util.parent` (the wrapping selector)
+  // and `util.selector` becomes a relative `&:is(...)` body. Without aliasing `parent`,
+  // the wrapping class keeps backslash-escaped `:` `[` `=` `]` and is unreachable from
+  // applet wxss. The postprocess must rewrite `parent` the same way it rewrites `selector`.
+  it('aliases the wrapping selector of nested wind4 variants', async () => {
+    const uno = await createGenerator({
+      envMode: 'dev',
+      presets: [
+        presetApplet({
+          preset: 'wind4',
+          presetOptions: { preflights: { reset: false } },
+          unsupportedChars: ['~', ' '],
+        }),
+      ],
+    })
+
+    const { css } = await uno.generate(
+      'peer-aria-checked:bg-blue-500 group-data-[state=open]:font-bold in-[div]:bg-red-400',
+      { preflights: false },
+    )
+
+    // wrapping class names must not carry backslash-escaped unsupported chars
+    expect(css).not.toMatch(/\\:/)
+    expect(css).not.toMatch(/\\\[/)
+    expect(css).not.toMatch(/\\\]/)
+    expect(css).not.toMatch(/\\=/)
+    // and must be aliased to the applet-safe form
+    expect(css).toContain('.peer-aria-checked_a_bg-blue-500')
+    expect(css).toContain('.group-data-_a_state_a_open_a__a_font-bold')
+    expect(css).toContain('.in-_a_div_a__a_bg-red-400')
   })
 })
