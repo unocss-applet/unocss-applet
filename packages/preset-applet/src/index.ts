@@ -28,6 +28,18 @@ export function presetApplet(options: PresetAppletOptions = {}): Preset<object> 
     return str
   }
 
+  // `questionMark` rule's matcher — matches a bare `?` (and `where`) as a utility. Applet wxss
+  // can't express its `:where`-style selector, and worse: UnoCSS's default extractor splits a
+  // ternary (`true ? 1 : 0`) into tokens, so `?` enters `matched` and `transformerApplet`
+  // rewrites it to `_a_`, corrupting script (#108). Removed by pattern rather than `pop()`,
+  // since `pop()` relies on `questionMark` being the array's last entry — an upstream change
+  // that appends another rule would silently leave it in place and reintroduce #108.
+  // @see https://github.com/unocss/unocss/blob/main/packages-presets/preset-mini/src/_rules/default.ts
+  const isQuestionMarkRule = (rule: unknown): boolean => {
+    const pattern = Array.isArray(rule) ? rule[0] : rule
+    return pattern instanceof RegExp && pattern.source === '^(where|\\?)$'
+  }
+
   return definePreset((presetOptions: PresetWind3Options | PresetWind4Options = {}) => {
     presetOptions = options.presetOptions ?? {}
     presetOptions.dark = presetOptions.dark ?? 'class'
@@ -39,10 +51,8 @@ export function presetApplet(options: PresetAppletOptions = {}): Preset<object> 
 
     if (options.preset === 'wind3') {
       preset = internalPresetWind3({ ...(presetOptions as PresetWind3Options) })
-      // drop the trailing `questionMark` rule: it generates attribute/`:where`-style selectors
-      // that the applet wxss engine cannot express.
-      // @see https://github.com/unocss/unocss/blob/main/packages-presets/preset-mini/src/_rules/default.ts
-      preset.rules?.pop()
+      // drop the `questionMark` rule (see `isQuestionMarkRule` above for why by-pattern, not `pop()`).
+      preset.rules = preset.rules?.filter(rule => !isQuestionMarkRule(rule))
       // replace the built-in `variantSpaceAndDivide` (position 1): the upstream variant targets
       // `> * + *`, which applets can't express — applet needs an explicit element list
       // (`> view + view`, etc.). Inject the wildcard variant at the same time.
@@ -73,9 +83,9 @@ export function presetApplet(options: PresetAppletOptions = {}): Preset<object> 
 
       preset = internalPresetWind4({ ...wind4Options })
 
-      // drop the trailing `questionMark` rule: same incompatibility as wind3 above.
+      // drop the `questionMark` rule: same incompatibility as wind3 above.
       // @see https://github.com/unocss/unocss/blob/main/packages-presets/preset-wind4/src/rules/default.ts
-      preset.rules?.pop()
+      preset.rules = preset.rules?.filter(rule => !isQuestionMarkRule(rule))
       // wind4 ships its own reset/theme/property preflights (trackedTheme/trackedProperties);
       // keep them as-is — overriding with the wind3-style preflight would drop them all.
     }
