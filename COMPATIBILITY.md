@@ -32,7 +32,7 @@
 | Transformer | 小程序端 | H5 端 | 说明与变通 |
 | --- | :---: | :---: | --- |
 | [`transformer-variant-group`](https://unocss.dev/transformers/variant-group) | ✅ 支持 | ✅ | 纯源码展开（`foo-(bar baz)` → `foo-bar foo-baz`），输出标准 class，可被 `presetApplet` 的 postprocess 再处理。三套 example 未启用，但可放心叠加。 |
-| [`transformer-directives`](https://unocss.dev/transformers/directives) | ❌ 不支持 | ✅ | 处理 `@apply` / `@screen` 等 CSS at-rules，小程序 wxss 不支持这些 at-rules。H5 端可用。 |
+| [`transformer-directives`](https://unocss.dev/transformers/directives) | ❌ 不支持 | ✅ | `@apply` / `@screen` 在 UnoCSS 的 generator 上下文里无法把声明绑定到自定义选择器（`.foo { @apply p-2; }` 只产出 `.p-2{...}`，`.foo` 包裹丢失），且小程序构建链不注入 UnoCSS 插件层来补救；`@screen` / `theme()` 等则被静默丢弃。H5 端配合 UnoCSS Vite/Webpack 插件可用。 |
 | [`transformer-compile-class`](https://unocss.dev/transformers/compile-class) | ⚠️ 需验证 | ✅ | 把 `:uno: xxx` 编译为 hash shortcut。hash 类名本身 applet 安全，但与 `transformerApplet` 叠加时需实际测试两者执行顺序与最终选择器是否符合预期。 |
 | [`transformer-attributify-jsx`](https://unocss.dev/transformers/attributify-jsx) | ➡️ 不适用 | ➡️ 不适用 | 面向 JSX/TSX 的无值 attributify。小程序模板非 JSX；uni-app（Vue3）使用本仓库 `transformerAttributify`，Taro/React example 直接写 `class`/`className`。 |
 | 本仓库 `transformerAttributify` | ✅ 官方变通 | ➡️ 不需要 | 小程序端 Attributify 的官方实现，把 `.vue` 模板里的属性编译进 `class=""`。**仅处理 `.vue` 文件**。 |

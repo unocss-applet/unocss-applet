@@ -22,7 +22,7 @@ export interface PresetAppletOptions {
    * Unsupported characters in applet, will be added to the default value
    * @default
    * ```
-   * ['.', ':', '%', '!', '#', '(', ')', '[', '/', ']', ',', '$', '{', '}', '@', '+', '^', '&', '<', '>', '\'', '\\', '"', '?', '*']
+   * ['.', ':', '%', '!', '#', '(', ')', '[', '/', ']', ',', '$', '{', '}', '@', '+', '^', '&', '<', '>', '\'', '\\', '"', '?', '*', '=']
    * ```
    */
   unsupportedChars?: string[]
