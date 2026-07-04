@@ -3,6 +3,7 @@ import antfu from '@antfu/eslint-config'
 export default antfu({
   type: 'lib',
   unocss: true,
+  ignores: ['**node_modules/**', '**/dist/**', 'examples/**'],
 }, {
   files: ['pnpm-workspace.yaml'],
   rules: {

@@ -7,7 +7,7 @@
  * ```
  * @returns The encoded string
  */
-export function encodeNonSpaceLatin(str: string) {
+export function encodeNonSpaceLatin(str: string): string {
   // eslint-disable-next-line regexp/prefer-w, regexp/no-obscure-range
   const regex = /[^A-Z0-9!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~\\ ]+/gi
 
@@ -20,7 +20,7 @@ export function encodeNonSpaceLatin(str: string) {
   if (str.includes(' $$ '))
     return str
 
-  function encode(str: string) {
+  function encode(str: string): string {
     let encoded = ''
     for (let i = 0; i < str.length; i++)
       encoded += str.charCodeAt(i)

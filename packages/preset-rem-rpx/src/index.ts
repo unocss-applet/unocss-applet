@@ -43,11 +43,11 @@ export const presetRemRpx = definePreset((options: RemRpxOptions = {}) => {
   }
 })
 
-function rem2rpx(value: string, baseFontSize: number, screenWidth: number) {
+function rem2rpx(value: string, baseFontSize: number, screenWidth: number): string {
   return value.replace(remRE, (_, p1) => `${p1 * baseFontSize * (750 / screenWidth)}rpx`)
 }
 
-function rpx2rem(value: string, baseFontSize: number, screenWidth: number) {
+function rpx2rem(value: string, baseFontSize: number, screenWidth: number): string {
   return value.replace(rpxRE, (_, p1) => `${p1 / (750 / screenWidth) / baseFontSize}rem`)
 }
 
