@@ -88,6 +88,33 @@ export interface TransformerAttributifyOptions {
 </div>
 ```
 
+## JSX / TSX support
+
+Besides `.vue`, this transformer also processes `.jsx` and `.tsx`. On the JSX side:
+
+- Generated utilities are injected as `className` (not `class`) for React compatibility.
+- A static `className="foo"` has utilities appended to its value; a dynamic `className={expr}` is
+  rewritten into a template literal that preserves the runtime expression, e.g.
+  `className={c} mt-2` → `` className={`${c} mt-2`} ``.
+- Dynamic non-class attributes (e.g. `text={cond ? 'a' : 'b'}`) and spread attributes
+  (`{...props}`) are skipped — they can't be statically compiled.
+- Tokens containing `.` (e.g. `mt-2.5`) or `:` (e.g. `dark:text-red`) aren't valid bare JSX
+  attribute names — JSX identifiers can't contain `.` or `:`. Put them through `className`
+  instead.
+
+Out of scope on the JSX side (the element matcher is regex-based, not a full JSX parser):
+
+- Fragment short syntax (`<>...</>`) isn't matched.
+- String or comment children that look like tags (e.g. a string child `'<div>'`, or a JSX
+  comment containing `<foo>`) may be misread as real tags. Keep such content out of
+  hand-written templates this transformer runs on.
+- A `>` inside any attribute expression is treated as the tag's closing `>`, so an element
+  whose attribute expression contains `>` — arrow functions (`onClick={() => fn()}`),
+  comparison operators (`disabled={a > b}`), or `<`/`>` inside string literals — is matched
+  only up to that `>` and silently skipped: utilities on that element are dropped without an
+  error. This is the most common gotcha in real Taro/React code. To avoid the drop, move
+  utilities on such elements into a literal `className="..."`.
+
 ## License
 
 MIT License &copy; 2022-PRESENT [Neil Lee](https://github.com/zguolee)
