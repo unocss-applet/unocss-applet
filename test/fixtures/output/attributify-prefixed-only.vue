@@ -7,7 +7,7 @@ const c = 'text-red'
 
 <template>
   <div class="text-center aaa" p="2.5" text-blue :class="c">
-    <div text="4xl" ma text-green  class="p-2"/>
+    <div text="4xl" ma text-green class="p-2"/>
     <div bg="pink dark:yellow hover:green">
       dark
     </div>
