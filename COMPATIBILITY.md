@@ -34,8 +34,8 @@
 | [`transformer-variant-group`](https://unocss.dev/transformers/variant-group) | ✅ 支持 | ✅ | 纯源码展开（`foo-(bar baz)` → `foo-bar foo-baz`），输出标准 class，可被 `presetApplet` 的 postprocess 再处理。三套 example 未启用，但可放心叠加。 |
 | [`transformer-directives`](https://unocss.dev/transformers/directives) | ❌ 不支持 | ✅ | `@apply` / `@screen` 在 UnoCSS 的 generator 上下文里无法把声明绑定到自定义选择器（`.foo { @apply p-2; }` 只产出 `.p-2{...}`，`.foo` 包裹丢失），且小程序构建链不注入 UnoCSS 插件层来补救；`@screen` / `theme()` 等则被静默丢弃。H5 端配合 UnoCSS Vite/Webpack 插件可用。 |
 | [`transformer-compile-class`](https://unocss.dev/transformers/compile-class) | ⚠️ 需验证 | ✅ | 把 `:uno: xxx` 编译为 hash shortcut。hash 类名本身 applet 安全，但与 `transformerApplet` 叠加时需实际测试两者执行顺序与最终选择器是否符合预期。 |
-| [`transformer-attributify-jsx`](https://unocss.dev/transformers/attributify-jsx) | ➡️ 不适用 | ➡️ 不适用 | 面向 JSX/TSX 的无值 attributify。小程序模板非 JSX；uni-app（Vue3）使用本仓库 `transformerAttributify`，Taro/React example 直接写 `class`/`className`。 |
-| 本仓库 `transformerAttributify` | ✅ 官方变通 | ➡️ 不需要 | 小程序端 Attributify 的官方实现，把 `.vue` 模板里的属性编译进 `class=""`。**仅处理 `.vue` 文件**。 |
+| [`transformer-attributify-jsx`](https://unocss.dev/transformers/attributify-jsx) | ➡️ 不适用 | ➡️ 不适用 | 面向 JSX/TSX 的无值 attributify，依赖运行期 `presetAttributify`，小程序端不可用。uni-app（Vue3）与 Taro React（JSX/TSX）均使用本仓库 `transformerAttributify`（已支持 `.vue`/`.jsx`/`.tsx`，JSX 端注入 `className`）。 |
+| 本仓库 `transformerAttributify` | ✅ 官方变通 | ➡️ 不需要 | 小程序端 Attributify 的官方实现，把 `.vue` / `.jsx` / `.tsx` 模板里的属性编译进 `class=""`（JSX 端注入 `className`）。 |
 
 ## Extractors
 
@@ -77,7 +77,7 @@ presets.push(presetIcons({ scale: 1.2, warn: true, /* ... */ }))
 | --- | --- | --- | --- |
 | `presetApplet` | ✅ 必需 | ✅ 必需 | 包裹 wind3/wind4，注入 postprocess + transformerApplet，处理非法字符。 |
 | `presetRemRpx` | `rem2rpx`（默认） | `rpx2rem` | 两端 rem/rpx 互转，共用一份样式。 |
-| `transformerAttributify` | ✅ 必需（如需 attributify） | ❌ 不需要 | 小程序 attributify 变通方案，仅 `.vue`。 |
+| `transformerAttributify` | ✅ 必需（如需 attributify） | ❌ 不需要 | 小程序 attributify 变通方案，处理 `.vue` / `.jsx` / `.tsx`。 |
 | `presetAttributify`（上游） | ❌ 不可用 | ✅ 必需 | H5 端 attributify 运行期支持。 |
 | `presetIcons`（上游） | ✅ 可选 | ✅ 可选 | 图标，两端通用。 |
 
