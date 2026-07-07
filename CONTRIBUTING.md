@@ -32,6 +32,7 @@ unocss-applet 让 [UnoCSS](https://github.com/unocss/unocss) 能在 uni-app、Ta
 │   ├── preset-applet/       # 默认预设，包裹 wind3/wind4
 │   ├── preset-rem-rpx/      # rem <-> rpx 互转
 │   ├── transformer-attributify/  # 小程序 Attributify 模式
+│   ├── transformer-hover/   # hover: → 原生 hover-class
 │   ├── shared/              # private，源码级内部模块（不发布）
 │   └── reset/               # 纯 CSS reset 集合（无构建）
 ├── examples/                # 集成示例
@@ -53,6 +54,7 @@ graph TD
   preset["preset-applet<br/>包裹 wind3/wind4"]
   remrpx["preset-rem-rpx<br/>rem / rpx 互转"]
   attr["transformer-attributify<br/>Attributify 模式"]
+  hover["transformer-hover<br/>hover: → 原生 hover-class"]
   shared["shared<br/>private 源码模块（不发布）"]
   reset["reset<br/>纯 CSS 集合（无构建）"]
 
@@ -65,6 +67,7 @@ graph TD
   app -->|workspace| preset
   app -->|workspace| remrpx
   app -->|workspace| attr
+  app -->|workspace| hover
 
   preset -->|workspace| core
   preset -->|workspace| wind3
@@ -74,13 +77,16 @@ graph TD
   attr -->|workspace| core
   attr -->|workspace| ms
 
+  hover -->|workspace| core
+  hover -->|workspace| ms
+
   wind3 -.->|传递依赖| mini
   wind4 -.->|传递依赖| mini
 ```
 
 **关键点：**
 
-- `unocss-applet` 是聚合入口，对外暴露 `presetApplet`、`presetRemRpx`、`transformerAttributify`。
+- `unocss-applet` 是聚合入口，对外暴露 `presetApplet`、`presetRemRpx`、`transformerAttributify`、`transformerHover`。
 - `preset-applet` 通过调用上游 `presetWind3` / `presetWind4`、删除末尾 `questionMark` 规则、替换 `variantSpaceAndDivide` 变体，并注入小程序专用的 `postprocess`（编码选择器非法字符）来工作。
 - `shared` 是 `private` 包，仅通过相对路径被 `preset-applet` 引用，不发布到 npm。
 - `reset` 是纯静态 CSS，直接发布 `taro/` 和 `uni-app/` 目录，无构建步骤。
@@ -93,6 +99,7 @@ graph TD
 | `preset-applet` | 默认预设。包裹 `@unocss/preset-wind3`/`wind4`，移除小程序不兼容的规则与变体，注入选择器编码 postprocess。支持 `preset: 'wind3' \| 'wind4'`。 |
 | `preset-rem-rpx` | 在 `rem2rpx`（小程序端）与 `rpx2rem`（H5 端）间转换，使同一份样式适配两端。 |
 | `transformer-attributify` | 为小程序启用 Attributify 模式（把 `text="red"` 转成 `class="text-red"`），因为小程序不支持属性选择器生成的写法。 |
+| `transformer-hover` | 把 `hover:` 工具类改写到原生 `hover-class` 属性（小程序不支持 `:hover` 伪类）。仅小程序端启用。 |
 | `reset` | CSS reset 集合（tailwind、normalize、sanitize 等），每个文件含 uni-app / Taro 条件编译注释，区分 H5 与小程序端规则。 |
 
 > preset / transformer 与上游 UnoCSS 的兼容关系、不支持项及变通方案详见 [`COMPATIBILITY.md`](./COMPATIBILITY.md)。

@@ -17,6 +17,7 @@
 - [@unocss-applet/preset-applet](https://github.com/unocss-applet/unocss-applet/tree/main/packages/preset-applet) - 默认预设，包裹 `@unocss/preset-wind3`（默认）/ `@unocss/preset-wind4`。
 - [@unocss-applet/preset-rem-rpx](https://github.com/unocss-applet/unocss-applet/tree/main/packages/preset-rem-rpx) - 转换rem <=> rpx的工具。
 - [@unocss-applet/transformer-attributify](https://github.com/unocss-applet/unocss-applet/tree/main/packages/transformer-attributify) - 为小程序启用 Attributify 模式。
+- [@unocss-applet/transformer-hover](https://github.com/unocss-applet/unocss-applet/tree/main/packages/transformer-hover) - 把 `hover:` 工具类改写到原生 `hover-class` 属性。
 - [@unocss-applet/reset](https://github.com/unocss-applet/unocss-applet/tree/main/packages/reset) - CSS 样式重置集合。
 
 > 各 preset / transformer 与上游 UnoCSS 的兼容关系、不支持项及变通方案见 [COMPATIBILITY.md](./COMPATIBILITY.md)。
@@ -44,6 +45,7 @@ import {
   presetApplet,
   presetRemRpx,
   transformerAttributify,
+  transformerHover,
 } from 'unocss-applet'
 
 // uni-app
@@ -57,6 +59,7 @@ if (isApplet) {
   presets.push(presetApplet())
   presets.push(presetRemRpx())
   transformers.push(transformerAttributify({ ignoreAttributes: ['block'] }))
+  transformers.push(transformerHover())
 }
 else {
   presets.push(presetApplet())

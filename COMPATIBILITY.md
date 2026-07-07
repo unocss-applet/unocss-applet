@@ -36,6 +36,7 @@
 | [`transformer-compile-class`](https://unocss.dev/transformers/compile-class) | ⚠️ 需验证 | ✅ | 把 `:uno: xxx` 编译为 hash shortcut。hash 类名本身 applet 安全，但与 `transformerApplet` 叠加时需实际测试两者执行顺序与最终选择器是否符合预期。 |
 | [`transformer-attributify-jsx`](https://unocss.dev/transformers/attributify-jsx) | ➡️ 不适用 | ➡️ 不适用 | 面向 JSX/TSX 的无值 attributify，依赖运行期 `presetAttributify`，小程序端不可用。uni-app（Vue3）与 Taro React（JSX/TSX）均使用本仓库 `transformerAttributify`（已支持 `.vue`/`.jsx`/`.tsx`，JSX 端注入 `className`）。 |
 | 本仓库 `transformerAttributify` | ✅ 官方变通 | ➡️ 不需要 | 小程序端 Attributify 的官方实现，把 `.vue` / `.jsx` / `.tsx` 模板里的属性编译进 `class=""`（JSX 端注入 `className`）。 |
+| 本仓库 [`transformerHover`](./packages/transformer-hover) | ✅ 官方变通 | ➡️ 不需要 | 把 `hover:` 工具类改写到原生 `hover-class` 属性（`view`/`button` 按下态）。`hover-class` 仅支持字符串，transformer 自动合并并去前缀。**仅小程序端启用**——H5 端 `:hover` 原生可用，启用反而失效。 |
 
 ## Extractors
 
@@ -104,3 +105,23 @@ presets.push(presetIcons({ scale: 1.2, warn: true, /* ... */ }))
 | `:nth-child(2n)` 等 | `[&:nth-child(2n)]:`（任意值变体） | ~~`nth-child-2n:`~~ |
 
 任意值形式 `[&:nth-child(2n)]:` 经 `_a_` 别名后在小程序端可用；其余变体同理。详见 [#52](https://github.com/unocss-applet/unocss-applet/issues/52)。
+
+### `hover:` 变体（小程序原生 `hover-class`）
+
+小程序不支持 `:hover` 伪类，原生 `view`/`button` 通过字符串属性 `hover-class` 表达按下态。`hover:bg-red` 这类工具类经 `_a_` 别名后生成的 CSS 仍带 `:hover`，在小程序端被静默丢弃。使用本仓库 [`transformerHover`](./packages/transformer-hover) 把 `hover:` 工具类从 `class` 移到 `hover-class`（自动去前缀、合并既有值），即可在小程序端生效：
+
+```html
+<div class="hover:bg-red hover:text-xl"/>
+⬇ transformerHover
+<div hover-class="bg-red text-xl"/>
+```
+
+**移动条件**：仅当 `hover:` 去前缀后的 body 是一个**无进一步变体限定符**的纯工具类时才移动（即 body 的顶层 `:` 必须位于 `[...]` 任意值组之内，例如 `bg-[url(http://x)]` 的 `:` 算合法）。前导 `!` important 修饰符会保留并随 body 一起移动（`!hover:bg-red` → `hover-class="!bg-red"`）。
+
+**限制（不会被移动）**：
+
+- 变体限定符（任意一侧）：`dark:hover:`、`md:hover:`、`hover:dark:`、`hover:focus:`、`hover:peer-focus:` 等——`hover-class` 无法表达 dark/focus/media/peer 限定。
+- 动态 `:class="[cond ? 'hover:a' : 'hover:b']"` / `className={[...]}` 表达式内的 `hover:` 字符串字面量——正则无法可靠解析 JS 表达式。
+- body 不被 UnoCSS 识别为工具类的 `hover:`（如 `hover:notarealthing`）。
+
+上述情况需手动写 `hover-class`。详见 [#19](https://github.com/unocss-applet/unocss-applet/issues/19)。
