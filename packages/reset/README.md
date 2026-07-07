@@ -1,8 +1,8 @@
 # @unocss-applet/reset
 
-Collection of reset CSS stylesheets.
+CSS reset 样式集合。
 
-## Install
+## 安装
 
 ```bash
 npm i @unocss-applet/reset --save-dev # with npm
@@ -10,17 +10,17 @@ yarn add @unocss-applet/reset -D # with yarn
 pnpm add @unocss-applet/reset -D # with pnpm
 ```
 
-## Usage
+## 使用
 
-You can add one of the following reset stylesheets to your entry file.
+可在入口文件引入下列任一 reset 样式。
 
-For uni-app, it should be `src/main.[j|t]s`.
+uni-app 的入口是 `src/main.[j|t]s`。
 
-For taro, it should be `src/app.[j|t]sx?`.
+Taro 的入口是 `src/app.[j|t]sx?`。
 
 ### button-after.css
 
-Preflight for `button::after`. Will remove all `button::after` styles.
+针对 `button::after` 的 preflight，会移除所有 `button::after` 样式。
 
 ```ts
 // uni-app
@@ -30,19 +30,19 @@ import '@unocss-applet/reset/uni-app/button-after.css'
 import '@unocss-applet/reset/taro/button-after.css'
 ```
 
-#### When to use it
+#### 何时使用
 
-Import this file before other reset files if you want to customize button border more flexibly.
+若想更灵活地自定义按钮边框，请在其他 reset 文件之前引入本文件。
 
-#### When not to use it
+#### 何时不要使用
 
-It may bring conflicts with UI frameworks. Remove the import if you find button styles wrong.
+它可能与 UI 框架产生冲突。若发现按钮样式异常，请移除该引入。
 
 ### normalize.css
 
-**NOT RECOMMEND** since `:where` is used which is not likely supported in many platforms.
+**不推荐**使用，因为使用了 `:where`，多数平台可能不支持。
 
-Source: <https://github.com/csstools/normalize.css>, <https://cdn.jsdelivr.net/npm/@unocss/reset@66.7.4/normalize.css>.
+来源：<https://github.com/csstools/normalize.css>、<https://cdn.jsdelivr.net/npm/@unocss/reset@66.7.4/normalize.css>。
 
 ```ts
 // uni-app
@@ -54,9 +54,9 @@ import '@unocss-applet/reset/taro/normalize.css'
 
 ### sanitize.css
 
-**NOT RECOMMEND** since `:where` is used which is not likely supported in many platforms.
+**不推荐**使用，因为使用了 `:where`，多数平台可能不支持。
 
-Source: <https://github.com/csstools/sanitize.css>, <https://cdn.jsdelivr.net/npm/@unocss/reset@66.7.4/sanitize>.
+来源：<https://github.com/csstools/sanitize.css>、<https://cdn.jsdelivr.net/npm/@unocss/reset@66.7.4/sanitize>。
 
 ```ts
 // uni-app
@@ -70,7 +70,7 @@ import '@unocss-applet/reset/taro/sanitize/assets.css'
 
 ### Eric Meyer
 
-Source: <https://meyerweb.com/eric/tools/css/reset/index.html>, <https://cdn.jsdelivr.net/npm/@unocss/reset@66.7.4/eric-meyer.css>.
+来源：<https://meyerweb.com/eric/tools/css/reset/index.html>、<https://cdn.jsdelivr.net/npm/@unocss/reset@66.7.4/eric-meyer.css>。
 
 ```ts
 // uni-app
@@ -82,7 +82,7 @@ import '@unocss-applet/reset/taro/eric-meyer.css'
 
 ### tailwind.css
 
-Based on [Tailwind v3 preflight](https://v3.tailwindcss.com/docs/preflight), in [static forms](https://github.com/tailwindlabs/tailwindcss/blob/v3.4.18/src/css/preflight.css).
+基于 [Tailwind v3 preflight](https://v3.tailwindcss.com/docs/preflight)，采用[静态形式](https://github.com/tailwindlabs/tailwindcss/blob/v3.4.18/src/css/preflight.css)。
 
 ```ts
 // uni-app
@@ -92,15 +92,15 @@ import '@unocss-applet/reset/uni-app/tailwind.css'
 import '@unocss-applet/reset/taro/tailwind.css'
 ```
 
-#### Changes
+#### 改动点
 
-##### Static
+##### 静态化
 
-This is provided as a static version of Tailwind v3 preflight, so it doesn't inherit any styles from the theme.
+这是 Tailwind v3 preflight 的静态版本，不会从主题继承任何样式。
 
-##### Border color
+##### 边框颜色
 
-In Tailwind v3 preflight, the border color default border color is read from the theme borderColor.DEFAULT. To customize it in Uno's reset, we use CSS variable instead:
+Tailwind v3 preflight 中，边框默认颜色读取自主题的 `borderColor.DEFAULT`。要在本 reset 中自定义，改用 CSS 变量：
 
 ```css
 /* uni-app */
@@ -113,13 +113,13 @@ In Tailwind v3 preflight, the border color default border color is read from the
 }
 ```
 
-##### Cross-platform compatibility
+##### 跨端兼容
 
-We add conditional compilation in style files to bring cross-platform compatibility.
+我们在样式文件中加入了条件编译，以提供跨端兼容性。
 
 ### tailwind-compat.css
 
-Based on [tailwind.css](#tailwindcss), with some styles clean up to avoid conflicts with UI frameworks.
+基于 [tailwind.css](#tailwindcss)，清理了部分样式以避免与 UI 框架冲突。
 
 ```ts
 // uni-app
@@ -129,19 +129,19 @@ import '@unocss-applet/reset/uni-app/tailwind-compat.css'
 import '@unocss-applet/reset/taro/tailwind-compat.css'
 ```
 
-#### Changes
+#### 改动点
 
-##### [Changes inherit from `tailwind.css`](#tailwindcss)
+##### [继承自 `tailwind.css` 的改动](#tailwindcss)
 
-##### Remove background color override for buttons
+##### 移除按钮的背景色覆盖
 
-Linked issue: [#2127](https://github.com/unocss/unocss/issues/2127)
+关联 issue：[#2127](https://github.com/unocss/unocss/issues/2127)
 
 <table>
 <thead>
 <tr style="text-align: center">
-<th>Before</th>
-<th>After</th>
+<th>前</th>
+<th>后</th>
 </tr>
 </thead>
 <tbody>
@@ -189,18 +189,18 @@ import '@unocss-applet/reset/uni-app/tailwind-v4.css'
 import '@unocss-applet/reset/taro/tailwind-v4.css'
 ```
 
-Based on [Tailwind v4 preflight](https://tailwindcss.com/docs/preflight), in [static forms](https://github.com/tailwindlabs/tailwindcss/blob/main/packages/tailwindcss/preflight.css).
+基于 [Tailwind v4 preflight](https://tailwindcss.com/docs/preflight)，采用[静态形式](https://github.com/tailwindlabs/tailwindcss/blob/main/packages/tailwindcss/preflight.css)。
 
-## Changes
+## 改动点
 
-### Static
+### 静态化
 
-This is provided as a static version of Tailwind v4 preflight, so it doesn't inherit any styles from the theme.
+这是 Tailwind v4 preflight 的静态版本，不会从主题继承任何样式。
 
-### Cross-platform compatibility
+### 跨端兼容
 
-We add conditional compilation in style files to bring cross-platform compatibility.
+我们在样式文件中加入了条件编译，以提供跨端兼容性。
 
 ## License
 
-MIT License &copy; 2022-PRESENT ModyQyW
+MIT License © 2022-PRESENT ModyQyW

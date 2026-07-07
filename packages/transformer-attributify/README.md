@@ -1,8 +1,8 @@
 # @unocss-applet/transformer-attributify
 
-Attributify Mode for [UnoCSS](https://github.com/unocss/unocss).
+为小程序启用 [UnoCSS](https://github.com/unocss/unocss) 的 Attributify 模式。
 
-## Instal
+## 安装
 
 ```bash
 npm i @unocss-applet/transformer-attributify --save-dev # with npm
@@ -10,7 +10,7 @@ yarn add @unocss-applet/transformer-attributify -D # with yarn
 pnpm add @unocss-applet/transformer-attributify -D # with pnpm
 ```
 
-## Usage
+## 使用
 
 ```ts
 import transformerAttributify from '@unocss-applet/transformer-attributify'
@@ -25,7 +25,7 @@ export default defineConfig({
 })
 ```
 
-## Type Declarations
+## 类型声明
 
 ```ts
 export interface TransformerAttributifyOptions {
@@ -35,16 +35,16 @@ export interface TransformerAttributifyOptions {
   prefix?: string
 
   /**
-   * Only match for prefixed attributes
+   * 仅匹配带前缀的属性
    *
    * @default false
    */
   prefixedOnly?: boolean
 
   /**
-   * Support matching non-valued attributes
+   * 是否匹配无值属性
    *
-   * For example
+   * 例如
    * ```html
    * <div mt-2 />
    * ```
@@ -54,23 +54,23 @@ export interface TransformerAttributifyOptions {
   nonValuedAttribute?: boolean
 
   /**
-   * A list of attributes to be ignored from extracting.
+   * 需要忽略、不提取的属性列表
    */
   ignoreAttributes?: string[]
 
   /**
-   * Delete attributes that added in `class=""`
+   * 是否删除已合并进 `class=""` 的属性
    * @default true
    */
   deleteAttributes?: boolean
 }
 ```
 
-## Example
+## 示例
 
-> Attributes will be deleted unless `deleteAttributes` is set to `true`.
+> 除非把 `deleteAttributes` 设为 `false`，否则属性会被删除。
 
-### without
+### 转换前
 
 ```html
 <div h-80 text-center flex flex-col align-center select-none all:transition-400>
@@ -78,9 +78,7 @@ export interface TransformerAttributifyOptions {
 </div>
 ```
 
-</td><td width="500px" valign="top">
-
-### with
+### 转换后
 
 ```html
 <div class="h-80 text-center flex flex-col select-none all:transition-400">
@@ -88,33 +86,21 @@ export interface TransformerAttributifyOptions {
 </div>
 ```
 
-## JSX / TSX support
+## JSX / TSX 支持
 
-Besides `.vue`, this transformer also processes `.jsx` and `.tsx`. On the JSX side:
+除 `.vue` 外，本 transformer 也会处理 `.jsx` / `.tsx`。在 JSX 侧：
 
-- Generated utilities are injected as `className` (not `class`) for React compatibility.
-- A static `className="foo"` has utilities appended to its value; a dynamic `className={expr}` is
-  rewritten into a template literal that preserves the runtime expression, e.g.
-  `className={c} mt-2` → `` className={`${c} mt-2`} ``.
-- Dynamic non-class attributes (e.g. `text={cond ? 'a' : 'b'}`) and spread attributes
-  (`{...props}`) are skipped — they can't be statically compiled.
-- Tokens containing `.` (e.g. `mt-2.5`) or `:` (e.g. `dark:text-red`) aren't valid bare JSX
-  attribute names — JSX identifiers can't contain `.` or `:`. Put them through `className`
-  instead.
+- 为兼容 React，生成的工具类以 `className`（而非 `class`）注入。
+- 静态 `className="foo"` 会把工具类追加到其值后；动态 `className={expr}` 会被改写成保留运行期表达式的模板字符串，例如 `className={c} mt-2` → `` className={`${c} mt-2`} ``。
+- 动态非 class 属性（如 `text={cond ? 'a' : 'b'}`）和展开属性（`{...props}`）会被跳过——它们无法在编译期静态处理。
+- 含 `.`（如 `mt-2.5`）或 `:`（如 `dark:text-red`）的 token 不是合法的 JSX 裸属性名——JSX 标识符不能包含 `.` 或 `:`，请改用 `className`。
 
-Out of scope on the JSX side (the element matcher is regex-based, not a full JSX parser):
+JSX 侧不在支持范围内（元素匹配器基于正则，并非完整的 JSX 解析器）：
 
-- Fragment short syntax (`<>...</>`) isn't matched.
-- String or comment children that look like tags (e.g. a string child `'<div>'`, or a JSX
-  comment containing `<foo>`) may be misread as real tags. Keep such content out of
-  hand-written templates this transformer runs on.
-- A `>` inside any attribute expression is treated as the tag's closing `>`, so an element
-  whose attribute expression contains `>` — arrow functions (`onClick={() => fn()}`),
-  comparison operators (`disabled={a > b}`), or `<`/`>` inside string literals — is matched
-  only up to that `>` and silently skipped: utilities on that element are dropped without an
-  error. This is the most common gotcha in real Taro/React code. To avoid the drop, move
-  utilities on such elements into a literal `className="..."`.
+- Fragment 简写（`<>...</>`）不会被匹配。
+- 看起来像标签的字符串或注释子节点（如字符串子节点 `'<div>'`，或含 `<foo>` 的 JSX 注释）可能被误读为真实标签。请避免在本 transformer 处理的手写模板里出现这类内容。
+- 任意属性表达式中的 `>` 会被当作标签的闭合 `>`，因此属性表达式含 `>` 的元素——箭头函数（`onClick={() => fn()}`）、比较运算符（`disabled={a > b}`）、字符串字面量里的 `<`/`>`——只会匹配到该 `>` 处并被静默跳过：该元素上的工具类会被丢弃且不报错。这是真实 Taro/React 代码里最常见的坑。要避免丢失，请把这类元素上的工具类写进字面量 `className="..."`。
 
 ## License
 
-MIT License &copy; 2022-PRESENT [Neil Lee](https://github.com/zguolee)
+MIT License © 2022-PRESENT [Neil Lee](https://github.com/zguolee)

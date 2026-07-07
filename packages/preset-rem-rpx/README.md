@@ -1,8 +1,8 @@
 # @unocss-applet/preset-rem-rpx
 
-Coverts rem <=> rpx for utils.
+工具类 rem <=> rpx 互转预设。
 
-## Instal
+## 安装
 
 ```bash
 npm i @unocss-applet/preset-rem-rpx --save-dev # with npm
@@ -10,7 +10,7 @@ yarn add @unocss-applet/preset-rem-rpx -D # with yarn
 pnpm add @unocss-applet/preset-rem-rpx -D # with pnpm
 ```
 
-## Usage
+## 使用
 
 ```ts
 import { presetRemRpx } from '@unocss-applet/preset-rem-rpx'
@@ -25,9 +25,9 @@ export default defineConfig({
 })
 ```
 
-⚠️If you change `baseFontSize` other than `16` and use `rpx2rem` mode, you need to set the corresponding root `font-size` in H5.
+⚠️ 若把 `baseFontSize` 改为非 `16` 的值并使用 `rpx2rem` 模式，需要在 H5 端设置对应的根 `font-size`。
 
-## Type Declarations
+## 类型声明
 
 ```ts
 export interface RemRpxOptions {
@@ -38,13 +38,13 @@ export interface RemRpxOptions {
   baseFontSize?: number
 
   /**
-   * screen width in px
+   * 屏幕宽度（px）
    * @default 375
    */
   screenWidth?: number
 
   /**
-   * rem to rpx or rpx to rem
+   * rem 转 rpx，或 rpx 转 rem
    * @default 'rem2rpx'
    */
   mode?: 'rem2rpx' | 'rpx2rem'
@@ -57,7 +57,7 @@ export interface RemRpxOptions {
 
 <table><tr><td width="300px" valign="top">
 
-### without
+### 未启用
 
 ```css
 .m-1rem {
@@ -98,4 +98,4 @@ export interface RemRpxOptions {
 
 ## License
 
-MIT License &copy; 2022-PRESENT [Neil Lee](https://github.com/zguolee)
+MIT License © 2022-PRESENT [Neil Lee](https://github.com/zguolee)
