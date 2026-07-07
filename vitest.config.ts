@@ -14,6 +14,7 @@ export default defineConfig({
       '@unocss-applet/preset-applet': r('./packages/preset-applet/src'),
       '@unocss-applet/preset-rem-rpx': r('./packages/preset-rem-rpx/src'),
       '@unocss-applet/transformer-attributify': r('./packages/transformer-attributify/src'),
+      '@unocss-applet/transformer-hover': r('./packages/transformer-hover/src'),
       '@unocss-applet/shared': r('./packages/shared/src'),
       'unocss-applet': r('./packages/unocss-applet/src'),
     },

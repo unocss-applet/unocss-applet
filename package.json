@@ -35,6 +35,7 @@
     "@unocss-applet/reset": "workspace:*",
     "@unocss-applet/shared": "workspace:*",
     "@unocss-applet/transformer-attributify": "workspace:*",
+    "@unocss-applet/transformer-hover": "workspace:*",
     "@unocss/eslint-config": "catalog:unocss",
     "@unocss/preset-attributify": "catalog:unocss",
     "@unocss/preset-icons": "catalog:unocss",

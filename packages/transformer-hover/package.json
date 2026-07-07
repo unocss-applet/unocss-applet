@@ -1,24 +1,22 @@
 {
-  "name": "unocss-applet",
+  "name": "@unocss-applet/transformer-hover",
   "type": "module",
   "version": "0.13.5",
-  "description": "",
+  "description": "Transform `hover:` utilities into the mini-program-native `hover-class` attribute for [UnoCSS](https://github.com/unocss/unocss).",
   "author": "Neil Lee <zguolee@foxmail.com>",
   "license": "MIT",
-  "homepage": "https://github.com/unocss-applet/unocss-applet#readme",
+  "homepage": "https://github.com/unocss-applet/unocss-applet/tree/main/packages/transformer-hover#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/unocss-applet/unocss-applet.git"
+    "url": "git+https://github.com/unocss-applet/unocss-applet.git",
+    "directory": "packages/transformer-hover"
   },
   "bugs": "https://github.com/unocss-applet/unocss-applet/issues",
   "keywords": [
     "unocss",
+    "unocss-transformer",
     "uni-app",
-    "atomic-css",
-    "atomic-css-engine",
-    "css",
-    "tailwind",
-    "windicss"
+    "hover-class"
   ],
   "sideEffects": false,
   "exports": {
@@ -39,13 +37,8 @@
     "build-post": "exit 0",
     "stub": "unbuild --stub"
   },
-  "peerDependencies": {
-    "unocss": "catalog:unocss"
-  },
   "dependencies": {
-    "@unocss-applet/preset-applet": "workspace:*",
-    "@unocss-applet/preset-rem-rpx": "workspace:*",
-    "@unocss-applet/transformer-attributify": "workspace:*",
-    "@unocss-applet/transformer-hover": "workspace:*"
+    "@unocss/core": "catalog:unocss",
+    "magic-string": "catalog:utils"
   }
 }

@@ -339,6 +339,9 @@ importers:
       '@unocss-applet/transformer-attributify':
         specifier: workspace:*
         version: link:packages/transformer-attributify
+      '@unocss-applet/transformer-hover':
+        specifier: workspace:*
+        version: link:packages/transformer-hover
       '@unocss/eslint-config':
         specifier: catalog:unocss
         version: 66.7.4(eslint@10.6.0(jiti@2.7.0))(typescript@6.0.3)
@@ -728,6 +731,15 @@ importers:
         specifier: catalog:utils
         version: 0.30.21
 
+  packages/transformer-hover:
+    dependencies:
+      '@unocss/core':
+        specifier: catalog:unocss
+        version: 66.7.4
+      magic-string:
+        specifier: catalog:utils
+        version: 0.30.21
+
   packages/unocss-applet:
     dependencies:
       '@unocss-applet/preset-applet':
@@ -739,6 +751,9 @@ importers:
       '@unocss-applet/transformer-attributify':
         specifier: workspace:*
         version: link:../transformer-attributify
+      '@unocss-applet/transformer-hover':
+        specifier: workspace:*
+        version: link:../transformer-hover
       unocss:
         specifier: catalog:unocss
         version: 66.7.4(@unocss/webpack@66.7.4(esbuild@0.28.1)(rollup@4.62.2)(vite@5.4.21(@types/node@26.0.1)(less@4.6.7)(lightningcss@1.32.0)(sass@1.50.0)(stylus@0.55.0)(terser@5.48.0))(webpack@5.91.0(esbuild@0.28.1)(lightningcss@1.32.0)(postcss@8.5.16)))(vite@5.4.21(@types/node@26.0.1)(less@4.6.7)(lightningcss@1.32.0)(sass@1.50.0)(stylus@0.55.0)(terser@5.48.0))
@@ -17573,7 +17588,7 @@ snapshots:
       browserslist: 4.28.4
       browserslist-to-esbuild: 2.1.1(browserslist@4.28.4)
       core-js: 3.49.0
-      magic-string: 0.30.11
+      magic-string: 0.30.21
       regenerator-runtime: 0.14.1
       systemjs: 6.15.1
       terser: 5.48.0
@@ -17767,7 +17782,7 @@ snapshots:
       '@vue/compiler-ssr': 3.4.21
       '@vue/shared': 3.4.21
       estree-walker: 2.0.2
-      magic-string: 0.30.11
+      magic-string: 0.30.21
       postcss: 8.5.16
       source-map-js: 1.2.1
 
