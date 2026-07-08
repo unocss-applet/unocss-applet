@@ -30,6 +30,10 @@ yarn add unocss-applet -D # with yarn
 pnpm add unocss-applet -D # with pnpm
 ```
 
+## 兼容性
+
+`unocss-applet` 当前已验证支持 UnoCSS `~66.7.4`（`peerDependencies` 锁定）。各 preset / transformer 与上游的兼容关系、不支持项及变通方案详见 [COMPATIBILITY.md](./COMPATIBILITY.md)。
+
 ## 使用
 
 ### UnoCSS 配置

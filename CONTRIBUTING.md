@@ -18,7 +18,7 @@ unocss-applet 让 [UnoCSS](https://github.com/unocss/unocss) 能在 uni-app、Ta
 ### 技术栈
 
 - **Monorepo**：pnpm workspace + [catalog](https://pnpm.io/catalogs) 集中管理依赖版本（`pnpm-workspace.yaml`）
-- **构建**：[unbuild](https://github.com/unjs/unbuild)
+- **构建**：[tsdown](https://github.com/rolldown/tsdown)
 - **测试**：[vitest](https://vitest.dev/)（快照位于 `test/assets/output/`、`test/fixtures/output/`）
 - **Lint**：[@antfu/eslint-config](https://github.com/antfu/eslint-config)
 - **示例**：uni-app（Vue3 + Vite）、Taro 3 / Taro 4（React + Webpack5）
@@ -110,7 +110,7 @@ graph TD
 # 1. 安装依赖
 pnpm install
 
-# 2. 开发模式（生成 stub，源码改动实时生效，无需重新构建）
+# 2. 开发模式（watch 模式持续重建 dist，源码改动实时生效）
 pnpm dev
 
 # 3. 构建所有包
