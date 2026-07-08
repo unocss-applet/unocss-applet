@@ -61,6 +61,7 @@
     "@dcloudio/uni-cli-shared": "catalog:uni-app",
     "@dcloudio/uni-stacktracey": "catalog:uni-app",
     "@dcloudio/vite-plugin-uni": "catalog:uni-app",
+    "@iconify-json/carbon": "catalog:icons",
     "@iconify-json/tabler": "catalog:icons",
     "@uni-helper/plugin-uni": "catalog:uni-app",
     "@vue/runtime-core": "catalog:uni-app",

@@ -12,6 +12,7 @@ catalogs:
     '@antfu/eslint-config': ^9.1.0
     eslint: ^10.6.0
   icons:
+    '@iconify-json/carbon': ^1.2.24
     '@iconify-json/tabler': ^1.2.35
   react:
     '@types/react': ^18.3.31

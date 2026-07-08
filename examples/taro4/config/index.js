@@ -53,6 +53,11 @@ export default defineConfig<'webpack5'>(async (merge) => {
       webpackChain(chain) {
         chain.resolve.plugin('tsconfig-paths').use(TsconfigPathsPlugin)
         chain.plugin('unocss').use(UnoCSS())
+        chain.merge({
+          optimization: {
+            realContentHash: true
+          }
+        })
       },
     },
     h5: {
@@ -83,6 +88,11 @@ export default defineConfig<'webpack5'>(async (merge) => {
       webpackChain(chain) {
         chain.resolve.plugin('tsconfig-paths').use(TsconfigPathsPlugin)
         chain.plugin('unocss').use(UnoCSS())
+        chain.merge({
+          optimization: {
+            realContentHash: true
+          }
+        })
       },
     },
     rn: {
