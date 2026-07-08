@@ -1,7 +1,7 @@
 {
   "name": "@unocss-applet/transformer-hover",
   "type": "module",
-  "version": "0.13.6",
+  "version": "0.13.7",
   "description": "Transform `hover:` utilities into the mini-program-native `hover-class` attribute for [UnoCSS](https://github.com/unocss/unocss).",
   "author": "Neil Lee <zguolee@foxmail.com>",
   "license": "MIT",
