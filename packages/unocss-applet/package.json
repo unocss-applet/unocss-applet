@@ -30,14 +30,13 @@
   },
   "main": "./dist/index.mjs",
   "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "unbuild",
+    "build": "tsdown",
     "build-post": "exit 0",
-    "stub": "unbuild --stub"
+    "dev": "tsdown --watch"
   },
   "peerDependencies": {
     "unocss": "catalog:unocss"

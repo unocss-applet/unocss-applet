@@ -113,7 +113,7 @@ catalogs:
     lint-staged: ^17.0.8
     magic-string: ^0.30.21
     simple-git-hooks: ^2.13.1
-    unbuild: ^3.6.1
+    tsdown: ^0.22.3
   vite:
     vite: ^5.4.21
     vitest: ^3.2.6
