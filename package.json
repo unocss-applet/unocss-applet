@@ -23,7 +23,8 @@
     "build:taro:weapp": "pnpm -C examples/tarojs run build:weapp",
     "play:taro:h5": "pnpm -C examples/tarojs run dev:h5",
     "build:taro:h5": "pnpm -C examples/tarojs run build:h5",
-    "prepare": "simple-git-hooks"
+    "prepare": "simple-git-hooks",
+    "prepublishOnly": "pnpm run build"
   },
   "devDependencies": {
     "@antfu/eslint-config": "catalog:eslint",

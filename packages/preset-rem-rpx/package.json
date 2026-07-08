@@ -33,7 +33,8 @@
   "scripts": {
     "build": "tsdown",
     "build-post": "exit 0",
-    "dev": "tsdown --watch"
+    "dev": "tsdown --watch",
+    "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
     "@unocss/core": "catalog:unocss"
