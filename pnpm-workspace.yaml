@@ -69,7 +69,7 @@ catalogs:
     babel-preset-taro: 4.2.0
     webpack: 5.91.0
   types:
-    '@types/node': ^22.20.0
+    '@types/node': ^22.20.1
   typescript:
     typescript: ^6.0.3
   uni-app:
@@ -97,26 +97,26 @@ catalogs:
     '@vue/runtime-core': ~3.4.38
     vue: ~3.4.38
     vue-i18n: ^9.0.0
-    vue-tsc: ^3.3.6
+    vue-tsc: ^3.3.7
   unocss:
-    '@unocss/core': ~66.7.4
-    '@unocss/eslint-config': ~66.7.4
-    '@unocss/preset-attributify': ~66.7.4
-    '@unocss/preset-icons': ~66.7.4
-    '@unocss/preset-mini': ~66.7.4
-    '@unocss/preset-wind3': ~66.7.4
-    '@unocss/preset-wind4': ~66.7.4
-    '@unocss/webpack': ~66.7.4
-    unocss: ~66.7.4
+    '@unocss/core': ~66.7.5
+    '@unocss/eslint-config': ~66.7.5
+    '@unocss/preset-attributify': ~66.7.5
+    '@unocss/preset-icons': ~66.7.5
+    '@unocss/preset-mini': ~66.7.5
+    '@unocss/preset-wind3': ~66.7.5
+    '@unocss/preset-wind4': ~66.7.5
+    '@unocss/webpack': ~66.7.5
+    unocss: ~66.7.5
   utils:
     bumpp: ^11.1.0
     esno: ^4.8.0
     lint-staged: ^17.0.8
     magic-string: ^0.30.21
     simple-git-hooks: ^2.13.1
-    tsdown: ^0.22.3
+    tsdown: ^0.22.4
   vite:
     vite: ^5.4.21
-    vitest: ^3.2.6
+    vitest: ^3.2.7
 configDependencies:
   '@pnpm/plugin-trusted-deps': 0.2.2+sha512-+ZupiXKJhW2fbSilfyRp+wrAY54MKg+c0JWSFGdeb/y9bUoYN5u4XLOZ0Txk7O2bBa6NMhWrX5mwmsHP3/nm9Q==
