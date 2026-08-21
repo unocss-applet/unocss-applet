@@ -316,7 +316,7 @@
 .color-blue-400{color:color-mix(in srgb, var(--colors-blue-400) var(--un-text-opacity), transparent) /* oklch(70.7% 0.165 254.624) */;}
 .color-blue-400_a_10{color:color-mix(in srgb, var(--colors-blue-400) 10%, transparent) /* oklch(70.7% 0.165 254.624) */;}
 .color-blue_a_10{color:color-mix(in srgb, var(--colors-blue-DEFAULT) 10%, transparent) /* oklch(70.7% 0.165 254.624) */;}
-.open_a_color-pink-100[open]{color:color-mix(in srgb, var(--colors-pink-100) var(--un-text-opacity), transparent) /* oklch(94.8% 0.028 342.258) */;}
+.open_a_color-pink-100:is([open],:popover-open,:open){color:color-mix(in srgb, var(--colors-pink-100) var(--un-text-opacity), transparent) /* oklch(94.8% 0.028 342.258) */;}
 .placeholder-shown-color-transparent:placeholder-shown{color:transparent;}
 .in-range_a_color-pink-100:in-range{color:color-mix(in srgb, var(--colors-pink-100) var(--un-text-opacity), transparent) /* oklch(94.8% 0.028 342.258) */;}
 .out-of-range_a_color-pink-100:out-of-range{color:color-mix(in srgb, var(--colors-pink-100) var(--un-text-opacity), transparent) /* oklch(94.8% 0.028 342.258) */;}
@@ -1925,7 +1925,7 @@ unocss .scope-_a_unocss_a__a_block{display:block;}
 .color-blue-400{color:color-mix(in oklab, var(--colors-blue-400) var(--un-text-opacity), transparent) /* oklch(70.7% 0.165 254.624) */;}
 .color-blue-400_a_10{color:color-mix(in oklab, var(--colors-blue-400) 10%, transparent) /* oklch(70.7% 0.165 254.624) */;}
 .color-blue_a_10{color:color-mix(in oklab, var(--colors-blue-DEFAULT) 10%, transparent) /* oklch(70.7% 0.165 254.624) */;}
-.open_a_color-pink-100[open]{color:color-mix(in oklab, var(--colors-pink-100) var(--un-text-opacity), transparent) /* oklch(94.8% 0.028 342.258) */;}
+.open_a_color-pink-100:is([open],:popover-open,:open){color:color-mix(in oklab, var(--colors-pink-100) var(--un-text-opacity), transparent) /* oklch(94.8% 0.028 342.258) */;}
 .in-range_a_color-pink-100:in-range{color:color-mix(in oklab, var(--colors-pink-100) var(--un-text-opacity), transparent) /* oklch(94.8% 0.028 342.258) */;}
 .out-of-range_a_color-pink-100:out-of-range{color:color-mix(in oklab, var(--colors-pink-100) var(--un-text-opacity), transparent) /* oklch(94.8% 0.028 342.258) */;}
 .text-stroke-blue-500{-webkit-text-stroke-color:color-mix(in oklab, var(--colors-blue-500) var(--un-text-stroke-opacity), transparent) /* oklch(62.3% 0.214 259.815) */;}
