@@ -42,7 +42,7 @@ import '@unocss-applet/reset/taro/button-after.css'
 
 **不推荐**使用，因为使用了 `:where`，多数平台可能不支持。
 
-来源：<https://github.com/csstools/normalize.css>、<https://cdn.jsdelivr.net/npm/@unocss/reset@66.7.4/normalize.css>。
+来源：<https://github.com/csstools/normalize.css>、<https://cdn.jsdelivr.net/npm/@unocss/reset@66.8.1/normalize.css>。
 
 ```ts
 // uni-app
@@ -56,7 +56,7 @@ import '@unocss-applet/reset/taro/normalize.css'
 
 **不推荐**使用，因为使用了 `:where`，多数平台可能不支持。
 
-来源：<https://github.com/csstools/sanitize.css>、<https://cdn.jsdelivr.net/npm/@unocss/reset@66.7.4/sanitize>。
+来源：<https://github.com/csstools/sanitize.css>、<https://cdn.jsdelivr.net/npm/@unocss/reset@66.8.1/sanitize>。
 
 ```ts
 // uni-app
@@ -70,7 +70,7 @@ import '@unocss-applet/reset/taro/sanitize/assets.css'
 
 ### Eric Meyer
 
-来源：<https://meyerweb.com/eric/tools/css/reset/index.html>、<https://cdn.jsdelivr.net/npm/@unocss/reset@66.7.4/eric-meyer.css>。
+来源：<https://meyerweb.com/eric/tools/css/reset/index.html>、<https://cdn.jsdelivr.net/npm/@unocss/reset@66.8.1/eric-meyer.css>。
 
 ```ts
 // uni-app

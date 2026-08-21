@@ -158,7 +158,7 @@ pnpm play:taro4:h5
 feat(preset-applet): support wind4 property preflight
 fix(reset): wrap form rules with ifdef H5
 docs: add architecture diagram to CONTRIBUTING
-chore(deps): bump unocss to 66.7
+chore(deps): bump unocss to 66.8
 ```
 
 类型前缀：`feat`、`fix`、`docs`、`style`、`refactor`、`perf`、`test`、`chore`、`ci`。

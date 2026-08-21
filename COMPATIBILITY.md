@@ -11,9 +11,9 @@
 
 ## 版本支持
 
-`unocss-applet` 当前已验证支持 UnoCSS [`~66.7.4`](https://github.com/unocss/unocss/releases/tag/v66.7.4)。
+`unocss-applet` 当前已验证支持 UnoCSS [`~66.8.1`](https://github.com/unocss/unocss/releases/tag/v66.8.1)。
 
-- 主包 `unocss-applet` 的 `peerDependencies.unocss` 与 monorepo catalog 均锁定为 `~66.7.4`（仅允许 patch 升级，minor/主版本不变）。
+- 主包 `unocss-applet` 的 `peerDependencies.unocss` 与 monorepo catalog 均锁定为 `~66.8.1`（仅允许 patch 升级，minor/主版本不变）。
 - 下表矩阵基于此版本验证；上游 minor/patch 升级通常兼容，主版本升级需重新验证。
 - 下方各 preset/transformer 的「支持 / 部分支持 / 不支持」结论均针对此版本。
 
