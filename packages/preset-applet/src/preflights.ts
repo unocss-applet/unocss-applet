@@ -21,7 +21,7 @@ export function preflights(options: PresetMiniOptions): Preflight<Theme>[] | und
             if (options.preflight === 'on-demand') {
               // only emit base entries whose key is referenced by an activated rule, so
               // unused preflight CSS isn't shipped to the applet bundle
-              const keys = new Set(Array.from(generator.activatedRules).map(r => r[2]?.custom?.preflightKeys).filter(Boolean).flat())
+              const keys = new Set(Array.from(generator.getActivatedRules()).map(r => r[2]?.custom?.preflightKeys).filter(Boolean).flat())
               entries = entries.filter(([k]) => keys.has(k))
             }
 
