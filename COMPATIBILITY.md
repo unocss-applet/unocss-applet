@@ -14,8 +14,26 @@
 `unocss-applet` 当前已验证支持 UnoCSS [`~66.8.1`](https://github.com/unocss/unocss/releases/tag/v66.8.1)。
 
 - 主包 `unocss-applet` 的 `peerDependencies.unocss` 与 monorepo catalog 均锁定为 `~66.8.1`（仅允许 patch 升级，minor/主版本不变）。
+- 需要 Node.js `>= 22.12`：上游依赖链中的 `magic-string@1.x` 仅提供 ESM 入口，构建工具在 CJS 链上加载它（如 Taro webpack 的 `@unocss/webpack`）依赖 Node 22.12 起默认支持的 `require(esm)`。
 - 下表矩阵基于此版本验证；上游 minor/patch 升级通常兼容，主版本升级需重新验证。
 - 下方各 preset/transformer 的「支持 / 部分支持 / 不支持」结论均针对此版本。
+
+### unocss-applet 与 UnoCSS 版本对应
+
+各版本 `unocss-applet` 实际验证对应的 UnoCSS 版本如下（依据各 git tag 与 npm 发布的 `peerDependencies`）：
+
+| unocss-applet | unocss | 说明 |
+| --- | --- | --- |
+| `0.14.0` | `~66.8.1` | |
+| `0.13.8` | `~66.7.5` | |
+| `0.13.0` – `0.13.7` | `~66.7.4` | 0.13.0 起 peerDependencies 从 `>=66.0.0` 收紧为 `~66.7.4`。 |
+| `0.12.2` | `>=66.0.0` | 0.12.x 唯一发布版，实际开发/测试基于 66.4。 |
+| `0.10.0` – `0.11.0` | `>=66.0.0` | 实际开发/测试基于 66.0。 |
+| `0.8.3` – `0.9.0` | `>=0.62` | |
+| `0.8.0` – `0.8.2` | `>=0.59` | |
+| `< 0.8.0` | — | 未声明 `peerDependencies.unocss`。 |
+
+0.12.x 及更早版本允许的 `>=66.0.0` / `>=0.62` 是宽松下限，未逐一验证上限；如遇生成异常，请优先按上表对齐 UnoCSS 版本。
 
 ## Presets 兼容矩阵
 

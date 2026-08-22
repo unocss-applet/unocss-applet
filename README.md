@@ -32,7 +32,9 @@ pnpm add unocss-applet -D # with pnpm
 
 ## 兼容性
 
-`unocss-applet` 当前已验证支持 UnoCSS `~66.8.1`（`peerDependencies` 锁定）。各 preset / transformer 与上游的兼容关系、不支持项及变通方案详见 [COMPATIBILITY.md](./COMPATIBILITY.md)。
+`unocss-applet` 当前已验证支持 UnoCSS `~66.8.1`（`peerDependencies` 锁定）。需要 Node.js `>= 22.12`（原因见 [COMPATIBILITY.md](./COMPATIBILITY.md)）。各 preset / transformer 与上游的兼容关系、不支持项及变通方案详见 [COMPATIBILITY.md](./COMPATIBILITY.md)。
+
+各历史版本与 UnoCSS 的对应关系（如 `unocss-applet@0.13.x` 对应 `unocss@~66.7.4` / `~66.7.5`，`0.12.x` 对应 `>=66.0.0`）见 [COMPATIBILITY.md 的版本对应表](./COMPATIBILITY.md#unocss-applet-与-unocss-版本对应)。
 
 ## 使用
 

@@ -20,7 +20,7 @@
 - [@unocss-applet/transformer-hover](https://github.com/unocss-applet/unocss-applet/tree/main/packages/transformer-hover) - 把 `hover:` 工具类改写到原生 `hover-class` 属性。
 - [@unocss-applet/reset](https://github.com/unocss-applet/unocss-applet/tree/main/packages/reset) - CSS 样式重置集合。
 
-> 各 preset / transformer 与上游 UnoCSS 的兼容关系、不支持项及变通方案见 [COMPATIBILITY.md](./COMPATIBILITY.md)。
+> 各 preset / transformer 与上游 UnoCSS 的兼容关系、不支持项及变通方案见 [COMPATIBILITY.md](../../COMPATIBILITY.md)。
 
 ## 安装
 
@@ -29,6 +29,10 @@ npm i unocss-applet --save-dev # with npm
 yarn add unocss-applet -D # with yarn
 pnpm add unocss-applet -D # with pnpm
 ```
+
+## 兼容性
+
+`unocss-applet` 当前已验证支持 UnoCSS `~66.8.1`（`peerDependencies` 锁定），需要 Node.js `>= 22.12`。各历史版本与 UnoCSS 的对应关系（如 `unocss-applet@0.13.x` 对应 `unocss@~66.7.4` / `~66.7.5`）及完整兼容矩阵见 [COMPATIBILITY.md](../../COMPATIBILITY.md)。
 
 ## 使用
 
