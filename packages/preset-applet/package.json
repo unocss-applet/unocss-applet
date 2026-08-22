@@ -30,6 +30,9 @@
   "files": [
     "dist"
   ],
+  "engines": {
+    "node": ">=22.12"
+  },
   "scripts": {
     "build": "tsdown",
     "build-post": "exit 0",
