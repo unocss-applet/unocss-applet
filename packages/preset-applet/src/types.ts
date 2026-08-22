@@ -37,7 +37,8 @@ export interface PresetAppletOptions {
   betweenElements?: string[]
 
   /**
-   * Space Between and Divide Width Elements
+   * Wildcard variant (`*:`) elements, expanded to an explicit element list since
+   * applets have no universal selector
    * @default
    * ```
    * ['view', 'button', 'text', 'image']

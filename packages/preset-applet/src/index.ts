@@ -34,7 +34,7 @@ export function presetApplet(options: PresetAppletOptions = {}): Preset<object> 
   // rewrites it to `_a_`, corrupting script (#108). Removed by pattern rather than `pop()`,
   // since `pop()` relies on `questionMark` being the array's last entry — an upstream change
   // that appends another rule would silently leave it in place and reintroduce #108.
-  // @see https://github.com/unocss/unocss/blob/main/packages-presets/preset-mini/src/_rules/default.ts
+  // @see https://github.com/unocss/unocss/blob/main/packages-presets/preset-mini/src/_rules/question-mark.ts
   const isQuestionMarkRule = (rule: unknown): boolean => {
     const pattern = Array.isArray(rule) ? rule[0] : rule
     return pattern instanceof RegExp && pattern.source === '^(where|\\?)$'
@@ -84,7 +84,7 @@ export function presetApplet(options: PresetAppletOptions = {}): Preset<object> 
       preset = internalPresetWind4({ ...wind4Options })
 
       // drop the `questionMark` rule: same incompatibility as wind3 above.
-      // @see https://github.com/unocss/unocss/blob/main/packages-presets/preset-wind4/src/rules/default.ts
+      // @see https://github.com/unocss/unocss/blob/main/packages-presets/preset-wind4/src/rules/question-mark.ts
       preset.rules = preset.rules?.filter(rule => !isQuestionMarkRule(rule))
       // wind4 ships its own reset/theme/property preflights (trackedTheme/trackedProperties);
       // keep them as-is — overriding with the wind3-style preflight would drop them all.
