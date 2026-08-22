@@ -57,7 +57,7 @@ import {
 // uni-app
 const isApplet = process.env?.UNI_PLATFORM?.startsWith('mp-') ?? false
 // taro
-// const isApplet = process.env.TARO_ENV !== 'h5' ?? false
+// const isApplet = process.env.TARO_ENV !== 'h5'
 const presets: Preset[] = []
 const transformers: SourceCodeTransformer[] = []
 
