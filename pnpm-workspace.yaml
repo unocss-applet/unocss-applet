@@ -9,11 +9,11 @@ packages:
   - examples/*
 catalogs:
   eslint:
-    '@antfu/eslint-config': ^9.1.0
-    eslint: ^10.6.0
+    '@antfu/eslint-config': ^9.3.0
+    eslint: ^10.9.0
   icons:
-    '@iconify-json/carbon': ^1.2.24
-    '@iconify-json/tabler': ^1.2.35
+    '@iconify-json/carbon': ^1.2.25
+    '@iconify-json/tabler': ^1.2.38
   react:
     '@types/react': ^18.3.31
     react: ^18.3.1
@@ -73,7 +73,7 @@ catalogs:
   typescript:
     typescript: ^6.0.3
   uni-app:
-    '@dcloudio/types': ^3.4.31
+    '@dcloudio/types': ^3.4.32
     '@dcloudio/uni-app': 3.0.0-5000720260410001
     '@dcloudio/uni-app-harmony': 3.0.0-5000720260410001
     '@dcloudio/uni-app-plus': 3.0.0-5000720260410001
@@ -97,7 +97,7 @@ catalogs:
     '@vue/runtime-core': ~3.4.38
     vue: ~3.4.38
     vue-i18n: ^9.0.0
-    vue-tsc: ^3.3.7
+    vue-tsc: ^3.3.11
   unocss:
     '@unocss/core': ~66.8.1
     '@unocss/eslint-config': ~66.8.1
@@ -109,12 +109,12 @@ catalogs:
     '@unocss/webpack': ~66.8.1
     unocss: ~66.8.1
   utils:
-    bumpp: ^11.1.0
+    bumpp: ^12.2.1
     esno: ^4.8.0
-    lint-staged: ^17.0.8
-    magic-string: ^0.30.21
+    lint-staged: ^17.3.0
+    magic-string: ^1.2.2
     simple-git-hooks: ^2.13.1
-    tsdown: ^0.22.4
+    tsdown: ^0.22.14
   vite:
     vite: ^5.4.21
     vitest: ^3.2.7
