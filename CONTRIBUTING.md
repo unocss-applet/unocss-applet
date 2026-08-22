@@ -10,8 +10,8 @@ unocss-applet 让 [UnoCSS](https://github.com/unocss/unocss) 能在 uni-app、Ta
 
 | 依赖 | 版本 |
 | --- | --- |
-| Node | 22（见 `.nvmrc`） |
-| pnpm | 10.34.4（见 `package.json` 的 `packageManager`） |
+| Node | 24（见 `.node-version`）；发布的包要求 `>= 22.12`（见各包 `engines`） |
+| pnpm | 10.34.5（见 `package.json` 的 `packageManager`） |
 
 建议启用 [corepack](https://nodejs.org/api/corepack.html) 自动切换 pnpm 版本：`corepack enable`。
 
@@ -87,7 +87,7 @@ graph TD
 **关键点：**
 
 - `unocss-applet` 是聚合入口，对外暴露 `presetApplet`、`presetRemRpx`、`transformerAttributify`、`transformerHover`。
-- `preset-applet` 通过调用上游 `presetWind3` / `presetWind4`、删除末尾 `questionMark` 规则、替换 `variantSpaceAndDivide` 变体，并注入小程序专用的 `postprocess`（编码选择器非法字符）来工作。
+- `preset-applet` 通过调用上游 `presetWind3` / `presetWind4`、按规则形态过滤删除 `questionMark` 规则（不依赖其在数组中的位置）、替换 `variantSpaceAndDivide` 变体，并注入小程序专用的 `postprocess`（编码选择器非法字符）来工作。
 - `shared` 是 `private` 包，仅通过相对路径被 `preset-applet` 引用，不发布到 npm。
 - `reset` 是纯静态 CSS，直接发布 `taro/` 和 `uni-app/` 目录，无构建步骤。
 
