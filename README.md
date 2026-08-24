@@ -32,9 +32,24 @@ pnpm add unocss-applet -D # with pnpm
 
 ## 兼容性
 
-`unocss-applet` 当前已验证支持 UnoCSS `~66.8.1`（`peerDependencies` 锁定）。需要 Node.js `>= 22.12`（原因见 [COMPATIBILITY.md](./COMPATIBILITY.md)）。各 preset / transformer 与上游的兼容关系、不支持项及变通方案详见 [COMPATIBILITY.md](./COMPATIBILITY.md)。
+> 建议始终使用 Node.js 最新的 LTS 版本。
 
-各历史版本与 UnoCSS 的对应关系（如 `unocss-applet@0.13.x` 对应 `unocss@~66.7.4` / `~66.7.5`，`0.12.x` 对应 `>=66.0.0`）见 [COMPATIBILITY.md 的版本对应表](./COMPATIBILITY.md#unocss-applet-与-unocss-版本对应)。
+`unocss-applet` 当前已验证支持 UnoCSS `~66.8.1`（`peerDependencies` 锁定），需要 Node.js `>= 22.12`（原因见 [COMPATIBILITY.md](./COMPATIBILITY.md)）。各 preset / transformer 与上游的兼容关系、不支持项及变通方案详见 [COMPATIBILITY.md](./COMPATIBILITY.md)。
+
+各版本对应关系如下（依据各 git tag 与 npm 发布的 `peerDependencies` / `engines`）：
+
+| unocss-applet | unocss | Node.js | 备注 |
+| --- | --- | --- | --- |
+| `0.14.0` | `~66.8.1` | `>=22.12` | 本包 `engines.node` 声明；运行时依赖 `magic-string` 升级至 `1.x`（仅 ESM），Taro Webpack 等 CJS 加载链依赖 Node 22.12+ 默认启用的 `require(esm)`。 |
+| `0.13.8` | `~66.7.5` | 未声明 | 0.14.0 前未声明 `engines`；自身依赖 `magic-string@0.30.x`（CJS + ESM 双格式），发布基于 Node 22 LTS。 |
+| `0.13.0` – `0.13.7` | `~66.7.4` | 未声明 | 同上；0.13.0 起 `peerDependencies` 从 `>=66.0.0` 收紧为 `~66.7.4`，上游发布包自 66.7.0 起也不再声明 `engines`。 |
+| `0.12.2` | `>=66.0.0` | `>=14`（上游声明） | 0.12.x 唯一发布版，实际开发/测试基于 66.4。 |
+| `0.10.0` – `0.11.0` | `>=66.0.0` | `>=14`（上游声明） | 实际开发/测试基于 66.0。 |
+| `0.8.3` – `0.9.0` | `>=0.62` | `>=14`（上游声明） | 发布环境 Node 18。 |
+| `0.8.0` – `0.8.2` | `>=0.59` | `>=14`（上游声明） | |
+| `< 0.8.0` | — | — | 未声明 `peerDependencies.unocss`。 |
+
+`0.12.x` 及更早版本允许的 `>=66.0.0` / `>=0.62` 是宽松下限，未逐一验证上限；如遇生成异常，请优先按上表对齐 UnoCSS 版本。
 
 ## 使用
 
