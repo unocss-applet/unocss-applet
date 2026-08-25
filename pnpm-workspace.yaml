@@ -10,7 +10,7 @@ packages:
 catalogs:
   eslint:
     '@antfu/eslint-config': ^9.3.0
-    eslint: ^10.9.0
+    eslint: ^10.9.1
   icons:
     '@iconify-json/carbon': ^1.2.25
     '@iconify-json/tabler': ^1.2.38
@@ -48,28 +48,28 @@ catalogs:
     babel-preset-taro: 3.6.40
     webpack: 5.78.0
   taro4:
-    '@tarojs/cli': 4.2.0
-    '@tarojs/components': 4.2.0
-    '@tarojs/helper': 4.2.0
-    '@tarojs/plugin-framework-react': 4.2.0
-    '@tarojs/plugin-generator': 4.2.0
-    '@tarojs/plugin-platform-alipay': 4.2.0
-    '@tarojs/plugin-platform-h5': 4.2.0
-    '@tarojs/plugin-platform-jd': 4.2.0
-    '@tarojs/plugin-platform-qq': 4.2.0
-    '@tarojs/plugin-platform-swan': 4.2.0
-    '@tarojs/plugin-platform-tt': 4.2.0
-    '@tarojs/plugin-platform-weapp': 4.2.0
-    '@tarojs/react': 4.2.0
-    '@tarojs/runtime': 4.2.0
-    '@tarojs/shared': 4.2.0
-    '@tarojs/taro': 4.2.0
-    '@tarojs/taro-loader': 4.2.0
-    '@tarojs/webpack5-runner': 4.2.0
-    babel-preset-taro: 4.2.0
+    '@tarojs/cli': 4.2.1
+    '@tarojs/components': 4.2.1
+    '@tarojs/helper': 4.2.1
+    '@tarojs/plugin-framework-react': 4.2.1
+    '@tarojs/plugin-generator': 4.2.1
+    '@tarojs/plugin-platform-alipay': 4.2.1
+    '@tarojs/plugin-platform-h5': 4.2.1
+    '@tarojs/plugin-platform-jd': 4.2.1
+    '@tarojs/plugin-platform-qq': 4.2.1
+    '@tarojs/plugin-platform-swan': 4.2.1
+    '@tarojs/plugin-platform-tt': 4.2.1
+    '@tarojs/plugin-platform-weapp': 4.2.1
+    '@tarojs/react': 4.2.1
+    '@tarojs/runtime': 4.2.1
+    '@tarojs/shared': 4.2.1
+    '@tarojs/taro': 4.2.1
+    '@tarojs/taro-loader': 4.2.1
+    '@tarojs/webpack5-runner': 4.2.1
+    babel-preset-taro: 4.2.1
     webpack: 5.91.0
   types:
-    '@types/node': ^22.20.1
+    '@types/node': ^24.13.3
   typescript:
     typescript: ^6.0.3
   uni-app:
