@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es2017",
+    "target": "esnext",
     "jsx": "react-jsx",
     "experimentalDecorators": true,
     "rootDir": ".",
@@ -22,7 +22,8 @@
     "preserveConstEnums": true,
     "removeComments": false,
     "sourceMap": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true
   },
   "include": ["./src", "./types", "./config"],
   "compileOnSave": false

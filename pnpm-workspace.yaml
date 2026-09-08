@@ -23,36 +23,12 @@ catalogs:
     '@types/react': ^18.3.31
     react: ^18.3.1
     react-dom: ^18.3.1
-  taro-shared:
+  taro:
     '@babel/core': ^7.29.7
     '@babel/plugin-transform-class-properties': ^7.29.7
     '@babel/preset-react': ^7.29.7
     '@babel/runtime': ^7.29.7
     '@pmmmwh/react-refresh-webpack-plugin': ^0.6.2
-    '@types/webpack-env': ^1.18.8
-    react-refresh: ^0.18.0
-    tsconfig-paths-webpack-plugin: ^4.2.0
-  taro3:
-    '@tarojs/cli': 3.6.40
-    '@tarojs/components': 3.6.40
-    '@tarojs/helper': 3.6.40
-    '@tarojs/plugin-framework-react': 3.6.40
-    '@tarojs/plugin-platform-alipay': 3.6.40
-    '@tarojs/plugin-platform-h5': 3.6.40
-    '@tarojs/plugin-platform-jd': 3.6.40
-    '@tarojs/plugin-platform-qq': 3.6.40
-    '@tarojs/plugin-platform-swan': 3.6.40
-    '@tarojs/plugin-platform-tt': 3.6.40
-    '@tarojs/plugin-platform-weapp': 3.6.40
-    '@tarojs/react': 3.6.40
-    '@tarojs/runtime': 3.6.40
-    '@tarojs/shared': 3.6.40
-    '@tarojs/taro': 3.6.40
-    '@tarojs/taro-loader': 3.6.40
-    '@tarojs/webpack5-runner': 3.6.40
-    babel-preset-taro: 3.6.40
-    webpack: 5.78.0
-  taro4:
     '@tarojs/cli': 4.2.1
     '@tarojs/components': 4.2.1
     '@tarojs/helper': 4.2.1
@@ -71,7 +47,10 @@ catalogs:
     '@tarojs/taro': 4.2.1
     '@tarojs/taro-loader': 4.2.1
     '@tarojs/webpack5-runner': 4.2.1
+    '@types/webpack-env': ^1.18.8
     babel-preset-taro: 4.2.1
+    react-refresh: ^0.18.0
+    tsconfig-paths-webpack-plugin: ^4.2.0
     webpack: 5.91.0
   types:
     '@types/node': ^24.13.3

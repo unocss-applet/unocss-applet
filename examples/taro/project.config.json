@@ -1,6 +1,6 @@
 {
   "miniprogramRoot": "./dist",
-  "projectname": "taro4",
+  "projectname": "taro",
   "description": "unocss-applet Taro 4 + React + Webpack5 example",
   "appid": "touristappid",
   "setting": {

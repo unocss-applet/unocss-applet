@@ -34,7 +34,7 @@ pnpm add unocss-applet -D # with pnpm
 
 > 建议始终使用 Node.js 最新的 LTS 版本。
 
-`unocss-applet` 当前已验证支持 UnoCSS `~66.8.1`（`peerDependencies` 锁定），需要 Node.js `>= 22.12`（原因见 [COMPATIBILITY.md](./COMPATIBILITY.md)）。各 preset / transformer 与上游的兼容关系、不支持项及变通方案详见 [COMPATIBILITY.md](./COMPATIBILITY.md)。
+`unocss-applet` 当前已验证支持 UnoCSS `~66.10.0`（`peerDependencies` 锁定），需要 Node.js `>= 22.12`（原因见 [COMPATIBILITY.md](./COMPATIBILITY.md)）。各 preset / transformer 与上游的兼容关系、不支持项及变通方案详见 [COMPATIBILITY.md](./COMPATIBILITY.md)。
 
 各版本对应关系如下（依据各 git tag 与 npm 发布的 `peerDependencies` / `engines`）：
 
@@ -112,7 +112,7 @@ export default defineConfig({
 ```ts
 // use @uni-helper/plugin-uni support ESM
 import Uni from '@uni-helper/plugin-uni'
-import UnoCSS from '@unocss/vite'
+import UnoCSS from 'unocss/vite'
 import { defineConfig } from 'vite'
 
 // https://vitejs.dev/config/
@@ -189,7 +189,7 @@ const config = {
 import 'uno.css'
 ```
 
-> ⚠️ 小程序端（weapp 等）已验证可正常编译并生成工具类；**H5 端目前会构建失败**：`@unocss/webpack` 的虚拟模块 `uno.css` 是占位符，本应由插件 `processAssets` 阶段替换，但 Taro H5 的 `style-loader` / `mini-css-extract-plugin` → `css-loader` → `postcss-loader` 链会在替换前先把它当 CSS 解析，导致 `ModuleParseError`。这是 `@unocss/webpack` 与 Taro Webpack5 H5 端的集成问题，与 `unocss-applet` 预设本身无关。H5 端如需使用，可改用 `@unocss/cli` 预生成 `uno.css` 再 import 的方案。完整可运行示例见仓库内 [`examples/taro3`](./examples/taro3)、[`examples/taro4`](./examples/taro4)。
+> ⚠️ 小程序端（weapp 等）已验证可正常编译并生成工具类；**H5 端目前会构建失败**：`@unocss/webpack` 的虚拟模块 `uno.css` 是占位符，本应由插件 `processAssets` 阶段替换，但 Taro H5 的 `style-loader` / `mini-css-extract-plugin` → `css-loader` → `postcss-loader` 链会在替换前先把它当 CSS 解析，导致 `ModuleParseError`。这是 `@unocss/webpack` 与 Taro Webpack5 H5 端的集成问题，与 `unocss-applet` 预设本身无关。H5 端如需使用，可改用 `@unocss/cli` 预生成 `uno.css` 再 import 的方案。完整可运行示例见仓库内 [`examples/taro`](./examples/taro)。
 
 <br></details>
 
@@ -198,8 +198,7 @@ import 'uno.css'
 仓库内集成示例（均启用了上游 `presetIcons`）：
 
 - [`examples/uni-app`](./examples/uni-app) - uni-app + Vue3 + Vite
-- [`examples/taro3`](./examples/taro3) - Taro 3.6 + React + Webpack5
-- [`examples/taro4`](./examples/taro4) - Taro 4.2 + React + Webpack5
+- [`examples/taro`](./examples/taro) - Taro 4.2 + React + Webpack5
 
 社区示例：
 

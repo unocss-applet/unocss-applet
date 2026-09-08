@@ -1,8 +1,7 @@
 {
   "unocss.root": [
-    "playground",
-    "examples/uni-app",
-    "examples/tarojs"
+    "examples/taro",
+    "examples/uni-app"
   ],
 
   "cSpell.words": [

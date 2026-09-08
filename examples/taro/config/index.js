@@ -14,7 +14,7 @@ export default defineConfig<'webpack5'>(async (merge) => {
   const UnoCSS = getModuleDefaultExport(await import('@unocss/webpack'))
 
   const baseConfig: UserConfigExport<'webpack5'> = {
-    projectName: 'taro4',
+    projectName: 'taro',
     date: '2026-6-30',
     designWidth: 750,
     deviceRatio: {

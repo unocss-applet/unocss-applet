@@ -21,7 +21,7 @@ unocss-applet 让 [UnoCSS](https://github.com/unocss/unocss) 能在 uni-app、Ta
 - **构建**：[tsdown](https://github.com/rolldown/tsdown)
 - **测试**：[vitest](https://vitest.dev/)（快照位于 `test/assets/output/`、`test/fixtures/output/`）
 - **Lint**：[@antfu/eslint-config](https://github.com/antfu/eslint-config)
-- **示例**：uni-app（Vue3 + Vite）、Taro 3 / Taro 4（React + Webpack5）
+- **示例**：uni-app（Vue3 + Vite）、Taro 4（React + Webpack5）
 
 ### 目录结构
 
@@ -37,8 +37,7 @@ unocss-applet 让 [UnoCSS](https://github.com/unocss/unocss) 能在 uni-app、Ta
 │   └── reset/               # 纯 CSS reset 集合（无构建）
 ├── examples/                # 集成示例
 │   ├── uni-app/             # uni-app + Vue3 + Vite
-│   ├── taro3/               # Taro 3.6 + React + Webpack5
-│   └── taro4/               # Taro 4.2 + React + Webpack5
+│   └── taro/                # Taro 4.2 + React + Webpack5
 ├── test/                    # 单元测试与快照
 ├── patches/                 # 依赖补丁（当前：@unocss/webpack CJS interop 修复）
 ├── pnpm-workspace.yaml      # workspace 与 catalog 定义
@@ -138,13 +137,9 @@ pnpm test:update
 pnpm play:uni:mp-weixin   # 小程序
 pnpm play:uni:h5           # H5
 
-# Taro 3
-pnpm play:taro3:weapp
-pnpm play:taro3:h5
-
 # Taro 4
-pnpm play:taro4:weapp
-pnpm play:taro4:h5
+pnpm play:taro:weapp
+pnpm play:taro:h5
 ```
 
 > 小程序端编译依赖原生工具链与平台插件，真机预览需在微信开发者工具中完成。
@@ -191,7 +186,7 @@ chore(deps): bump unocss to 66.8
 
 `patches/@unocss__webpack@66.10.0.patch` 修复 `@unocss/webpack@66.8+` CJS 产物的 interop 缺陷：其 node-mode interop 在 `require(esm)` 下把 magic-string 命名空间当作 default 导出，Taro webpack 构建报 `magic_string.default is not a constructor`。背景详见 [`COMPATIBILITY.md`](./COMPATIBILITY.md)。
 
-升级 unocss 时注意：patch 绑定精确版本，pnpm 安装会提示 `The following patches were not used`。先跑 `pnpm build:taro3:weapp` 与 `pnpm build:taro4:weapp` 确认新版是否已修复——已修复则删除 `patches/` 与 `pnpm-workspace.yaml` 的 `patchedDependencies` 条目；未修复则用 `pnpm patch @unocss/webpack@<新版本>` 重打同款补丁（把产物里的 `__toESM(require("magic-string"), 1)` 改为 `__toESM(require("magic-string"))`）。
+升级 unocss 时注意：patch 绑定精确版本，pnpm 安装会提示 `The following patches were not used`。先跑 `pnpm build:taro:weapp` 与 `pnpm build:taro:h5` 确认新版是否已修复——已修复则删除 `patches/` 与 `pnpm-workspace.yaml` 的 `patchedDependencies` 条目；未修复则用 `pnpm patch @unocss/webpack@<新版本>` 重打同款补丁（把产物里的 `__toESM(require("magic-string"), 1)` 改为 `__toESM(require("magic-string"))`）。
 
 ### 发布流程
 
