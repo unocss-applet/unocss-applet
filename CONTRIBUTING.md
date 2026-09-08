@@ -10,8 +10,8 @@ unocss-applet 让 [UnoCSS](https://github.com/unocss/unocss) 能在 uni-app、Ta
 
 | 依赖 | 版本 |
 | --- | --- |
-| Node | 24（见 `.node-version`）；发布的包要求 `>= 22.12`（见各包 `engines`） |
-| pnpm | 10.34.5（见 `package.json` 的 `packageManager`） |
+| Node | 26（见 `.node-version`）；发布的包要求 `>= 22.12`（见各包 `engines`） |
+| pnpm | 12.3.4（见 `package.json` 的 `packageManager`） |
 
 建议启用 [corepack](https://nodejs.org/api/corepack.html) 自动切换 pnpm 版本：`corepack enable`。
 
