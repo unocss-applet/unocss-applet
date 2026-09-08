@@ -172,7 +172,7 @@ const config = {
 import 'uno.css'
 ```
 
-> ⚠️ 小程序端（weapp 等）已验证可正常编译并生成工具类；**H5 端目前会构建失败**：`@unocss/webpack` 的虚拟模块 `uno.css` 是占位符，本应由插件 `processAssets` 阶段替换，但 Taro H5 的 `style-loader` / `mini-css-extract-plugin` → `css-loader` → `postcss-loader` 链会在替换前先把它当 CSS 解析，导致 `ModuleParseError`。这是 `@unocss/webpack` 与 Taro Webpack5 H5 端的集成问题，与 `unocss-applet` 预设本身无关。H5 端如需使用，可改用 `@unocss/cli` 预生成 `uno.css` 再 import 的方案。完整可运行示例见仓库内 [`examples/taro`](../../examples/taro)。
+> 小程序端（weapp 等）与 H5 端均已验证可正常编译并生成工具类（Taro 4.2 + UnoCSS 66.10，Taro Webpack 链路需要 [`patches/@unocss__webpack@66.10.0.patch`](../../patches/@unocss__webpack@66.10.0.patch)，背景见 [`COMPATIBILITY.md`](../../COMPATIBILITY.md)）。完整可运行示例见仓库内 [`examples/taro`](../../examples/taro)。
 
 <br></details>
 
