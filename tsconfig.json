@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es2018",
+    "target": "esnext",
     "jsx": "preserve",
     "lib": ["esnext"],
     "module": "esnext",
@@ -28,7 +28,6 @@
     "**/dist/**",
     "**/node_modules/**",
     "**/client/**",
-    "**/playground/**",
     "**/examples/**",
     "**/interactive/**",
     "**/test/dts/**",

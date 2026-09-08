@@ -11,10 +11,11 @@
 
 ## 版本支持
 
-`unocss-applet` 当前已验证支持 UnoCSS [`~66.8.1`](https://github.com/unocss/unocss/releases/tag/v66.8.1)。
+`unocss-applet` 当前已验证支持 UnoCSS [`~66.10.0`](https://github.com/unocss/unocss/releases/tag/v66.10.0)。
 
-- 主包 `unocss-applet` 的 `peerDependencies.unocss` 与 monorepo catalog 均锁定为 `~66.8.1`（仅允许 patch 升级，minor/主版本不变）。
-- 需要 Node.js `>= 22.12`：本包 `transformer-attributify` / `transformer-hover` 的运行时依赖 `magic-string@1.x` 仅提供 ESM 入口，构建工具在 CJS 链上加载它（如 Taro webpack 的 `@unocss/webpack`）依赖 Node 22.12 起默认支持的 `require(esm)`；unocss 上游使用双格式的 `magic-string@0.30.x` 并打包进产物，与该下限无关。
+- 主包 `unocss-applet` 的 `peerDependencies.unocss` 与 monorepo catalog 均锁定为 `~66.10.0`（仅允许 patch 升级，minor/主版本不变）。
+- 需要 Node.js `>= 22.12`：本包 `transformer-attributify` / `transformer-hover` 的运行时依赖 `magic-string@1.x` 仅提供 ESM 入口，构建工具在 CJS 链上加载它（如 Taro webpack 的 `@unocss/webpack`）依赖 Node 22.12 起默认支持的 `require(esm)`。
+- **Taro（Webpack/CJS 链路）已知上游缺陷**：unocss 自 66.8 起，`@unocss/webpack` 的 CJS 产物外部依赖 ESM-only 的 `magic-string@1.x`，且其打包 interop 在 `require(esm)` 返回的命名空间上取错 default，构建时报 `magic_string.default is not a constructor`（uni-app/Vite 走 ESM 入口，不受影响）。本仓库以 [`patches/@unocss__webpack@66.10.0.patch`](./patches/@unocss__webpack@66.10.0.patch) 修复 Taro 示例构建（CI 目前不构建示例，taro 构建仅本地/手动验证），上游修复后移除；直接使用 `@unocss/webpack@66.8+` 的 Taro 项目会命中同样问题，可参考该补丁处理。
 - 下表矩阵基于此版本验证；上游 minor/patch 升级通常兼容，主版本升级需重新验证。
 - 下方各 preset/transformer 的「支持 / 部分支持 / 不支持」结论均针对此版本。
 

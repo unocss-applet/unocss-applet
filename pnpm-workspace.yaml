@@ -5,8 +5,13 @@ shellEmulator: true
 trustPolicy: off
 packages:
   - packages/*
-  - playground
   - examples/*
+# @unocss/webpack@66.8+ 的 CJS 产物用 node-mode interop 加载 ESM-only 的 magic-string@1.x，
+# 在 Node 的 require(esm) 下把命名空间当作 default，Taro webpack 构建报
+# "magic_string.default is not a constructor"。patch 去掉 node-mode 标志，改读命名空间
+# 真实的 .default；背景见 COMPATIBILITY.md，上游修复后删除本条目与 patches/。
+patchedDependencies:
+  '@unocss/webpack@66.10.0': patches/@unocss__webpack@66.10.0.patch
 catalogs:
   eslint:
     '@antfu/eslint-config': ^9.3.0
@@ -74,49 +79,58 @@ catalogs:
     typescript: ^6.0.3
   uni-app:
     '@dcloudio/types': ^3.4.32
-    '@dcloudio/uni-app': 3.0.0-5000720260410001
-    '@dcloudio/uni-app-harmony': 3.0.0-5000720260410001
-    '@dcloudio/uni-app-plus': 3.0.0-5000720260410001
-    '@dcloudio/uni-automator': 3.0.0-5000720260410001
-    '@dcloudio/uni-cli-shared': 3.0.0-5000720260410001
-    '@dcloudio/uni-components': 3.0.0-5000720260410001
-    '@dcloudio/uni-h5': 3.0.0-5000720260410001
-    '@dcloudio/uni-mp-alipay': 3.0.0-5000720260410001
-    '@dcloudio/uni-mp-baidu': 3.0.0-5000720260410001
-    '@dcloudio/uni-mp-jd': 3.0.0-5000720260410001
-    '@dcloudio/uni-mp-kuaishou': 3.0.0-5000720260410001
-    '@dcloudio/uni-mp-lark': 3.0.0-5000720260410001
-    '@dcloudio/uni-mp-qq': 3.0.0-5000720260410001
-    '@dcloudio/uni-mp-toutiao': 3.0.0-5000720260410001
-    '@dcloudio/uni-mp-weixin': 3.0.0-5000720260410001
-    '@dcloudio/uni-mp-xhs': 3.0.0-5000720260410001
-    '@dcloudio/uni-quickapp-webview': 3.0.0-5000720260410001
-    '@dcloudio/uni-stacktracey': 3.0.0-5000720260410001
-    '@dcloudio/vite-plugin-uni': 3.0.0-5000720260410001
+    '@dcloudio/uni-app': 3.0.0-5020420260813003
+    '@dcloudio/uni-app-harmony': 3.0.0-5020420260813003
+    '@dcloudio/uni-app-plus': 3.0.0-5020420260813003
+    '@dcloudio/uni-automator': 3.0.0-5020420260813003
+    '@dcloudio/uni-cli-shared': 3.0.0-5020420260813003
+    '@dcloudio/uni-components': 3.0.0-5020420260813003
+    '@dcloudio/uni-h5': 3.0.0-5020420260813003
+    '@dcloudio/uni-mp-alipay': 3.0.0-5020420260813003
+    '@dcloudio/uni-mp-baidu': 3.0.0-5020420260813003
+    '@dcloudio/uni-mp-jd': 3.0.0-5020420260813003
+    '@dcloudio/uni-mp-kuaishou': 3.0.0-5020420260813003
+    '@dcloudio/uni-mp-lark': 3.0.0-5020420260813003
+    '@dcloudio/uni-mp-qq': 3.0.0-5020420260813003
+    '@dcloudio/uni-mp-toutiao': 3.0.0-5020420260813003
+    '@dcloudio/uni-mp-weixin': 3.0.0-5020420260813003
+    '@dcloudio/uni-mp-xhs': 3.0.0-5020420260813003
+    '@dcloudio/uni-quickapp-webview': 3.0.0-5020420260813003
+    '@dcloudio/uni-stacktracey': 3.0.0-5020420260813003
+    '@dcloudio/vite-plugin-uni': 3.0.0-5020420260813003
     '@uni-helper/plugin-uni': ^0.1.0
     '@vue/runtime-core': ~3.4.38
     vue: ~3.4.38
     vue-i18n: ^9.0.0
     vue-tsc: ^3.3.11
   unocss:
-    '@unocss/core': ~66.8.1
-    '@unocss/eslint-config': ~66.8.1
-    '@unocss/preset-attributify': ~66.8.1
-    '@unocss/preset-icons': ~66.8.1
-    '@unocss/preset-mini': ~66.8.1
-    '@unocss/preset-wind3': ~66.8.1
-    '@unocss/preset-wind4': ~66.8.1
-    '@unocss/webpack': ~66.8.1
-    unocss: ~66.8.1
+    '@unocss/core': ~66.10.0
+    '@unocss/eslint-config': ~66.10.0
+    '@unocss/preset-attributify': ~66.10.0
+    '@unocss/preset-icons': ~66.10.0
+    '@unocss/preset-mini': ~66.10.0
+    '@unocss/preset-wind3': ~66.10.0
+    '@unocss/preset-wind4': ~66.10.0
+    # 精确钉死：patchedDependencies 绑定 66.10.0，波浪号范围内的 66.10.x 升级会导致
+    # patch 静默失配（只剩安装警告），升级时必须连 patch 一起处理
+    '@unocss/webpack': 66.10.0
+    unocss: ~66.10.0
   utils:
     bumpp: ^12.2.1
-    esno: ^4.8.0
-    lint-staged: ^17.3.0
+    concurrently: ^10.0.5
     magic-string: ^1.2.2
-    simple-git-hooks: ^2.13.1
     tsdown: ^0.22.14
   vite:
     vite: ^5.4.21
     vitest: ^3.2.7
 configDependencies:
   '@pnpm/plugin-trusted-deps': 0.2.2+sha512-+ZupiXKJhW2fbSilfyRp+wrAY54MKg+c0JWSFGdeb/y9bUoYN5u4XLOZ0Txk7O2bBa6NMhWrX5mwmsHP3/nm9Q==
+allowBuilds:
+  '@parcel/watcher': true
+  '@swc/core': true
+  '@tarojs/binding': true
+  '@tarojs/cli': true
+  core-js: true
+  core-js-pure: true
+  esbuild: true
+  swiper: true

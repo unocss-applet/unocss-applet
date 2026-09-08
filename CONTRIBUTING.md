@@ -40,6 +40,7 @@ unocss-applet 让 [UnoCSS](https://github.com/unocss/unocss) 能在 uni-app、Ta
 │   ├── taro3/               # Taro 3.6 + React + Webpack5
 │   └── taro4/               # Taro 4.2 + React + Webpack5
 ├── test/                    # 单元测试与快照
+├── patches/                 # 依赖补丁（当前：@unocss/webpack CJS interop 修复）
 ├── pnpm-workspace.yaml      # workspace 与 catalog 定义
 └── package.json
 ```
@@ -185,6 +186,12 @@ chore(deps): bump unocss to 66.8
 - `tailwind.css` 上游对应 UnoCSS 内置的 Tailwind preflight，需定期对照 `@unocss/reset/tailwind.css` 同步。
 - `normalize.css`、`modern-normalize.css`、`sanitize.css`、`eric-meyer.css`、`button-after.css` 是各自独立项目的快照，与 UnoCSS 版本无关。
 - 同步时注意：表单/浏览器兼容规则（`-webkit-appearance`、`::-webkit-*`、`:-moz-*`、`[type='search']` 等）只在 H5 端有效，必须放在 `#ifdef H5`（uni-app）/ `#ifdef  h5`（Taro）块内；`[hidden]`、`--un-content` 变量等双端通用规则放在条件编译外。
+
+### 上游依赖补丁（patches/）
+
+`patches/@unocss__webpack@66.10.0.patch` 修复 `@unocss/webpack@66.8+` CJS 产物的 interop 缺陷：其 node-mode interop 在 `require(esm)` 下把 magic-string 命名空间当作 default 导出，Taro webpack 构建报 `magic_string.default is not a constructor`。背景详见 [`COMPATIBILITY.md`](./COMPATIBILITY.md)。
+
+升级 unocss 时注意：patch 绑定精确版本，pnpm 安装会提示 `The following patches were not used`。先跑 `pnpm build:taro3:weapp` 与 `pnpm build:taro4:weapp` 确认新版是否已修复——已修复则删除 `patches/` 与 `pnpm-workspace.yaml` 的 `patchedDependencies` 条目；未修复则用 `pnpm patch @unocss/webpack@<新版本>` 重打同款补丁（把产物里的 `__toESM(require("magic-string"), 1)` 改为 `__toESM(require("magic-string"))`）。
 
 ### 发布流程
 

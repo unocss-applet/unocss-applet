@@ -1,0 +1,13 @@
+diff --git a/dist/unplugin-DZWdE8SL.cjs b/dist/unplugin-DZWdE8SL.cjs
+index a5da5eb25120b15e1785d72ef0a5a761a7e58229..527e8f911dfb8aa28757311b166d84ca439fa45c 100644
+--- a/dist/unplugin-DZWdE8SL.cjs
++++ b/dist/unplugin-DZWdE8SL.cjs
+@@ -32,7 +32,7 @@ let tinyglobby = require("tinyglobby");
+ let _jridgewell_remapping = require("@jridgewell/remapping");
+ _jridgewell_remapping = __toESM(_jridgewell_remapping, 1);
+ let magic_string = require("magic-string");
+-magic_string = __toESM(magic_string, 1);
++magic_string = __toESM(magic_string);
+ let _unocss_core = require("@unocss/core");
+ let _unocss_config = require("@unocss/config");
+ let unplugin_utils = require("unplugin-utils");

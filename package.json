@@ -3,7 +3,19 @@
   "type": "module",
   "version": "0.14.0",
   "private": true,
-  "packageManager": "pnpm@10.34.5",
+  "packageManager": "pnpm@12.3.4",
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": "26",
+      "onFail": "warn"
+    },
+    "packageManager": {
+      "name": "pnpm",
+      "version": "12.3.4",
+      "onFail": "warn"
+    }
+  },
   "scripts": {
     "dev": "pnpm -r --filter='./packages/*' --parallel run dev",
     "build": "pnpm -r --filter='./packages/*' run build && pnpm -r run build-post",
@@ -13,8 +25,6 @@
     "lint:fix": "pnpm lint --fix",
     "test": "vitest",
     "test:update": "vitest -u",
-    "deploy": "pnpm build && pnpm -C playground run build",
-    "play": "pnpm -C playground run dev",
     "play:uni:mp-weixin": "pnpm -C examples/uni-app run dev:mp-weixin",
     "build:uni:mp-weixin": "pnpm -C examples/uni-app run build:mp-weixin",
     "play:uni:h5": "pnpm -C examples/uni-app run dev:h5",
@@ -27,8 +37,10 @@
     "build:taro4:weapp": "pnpm -C examples/taro4 run build:weapp",
     "play:taro4:h5": "pnpm -C examples/taro4 run dev:h5",
     "build:taro4:h5": "pnpm -C examples/taro4 run build:h5",
-    "prepare": "simple-git-hooks",
     "prepublishOnly": "pnpm run build"
+  },
+  "dependencies": {
+    "concurrently": "catalog:utils"
   },
   "devDependencies": {
     "@antfu/eslint-config": "catalog:eslint",
@@ -40,26 +52,19 @@
     "@unocss-applet/shared": "workspace:*",
     "@unocss-applet/transformer-attributify": "workspace:*",
     "@unocss-applet/transformer-hover": "workspace:*",
+    "@unocss/core": "catalog:unocss",
     "@unocss/eslint-config": "catalog:unocss",
     "@unocss/preset-attributify": "catalog:unocss",
     "@unocss/preset-icons": "catalog:unocss",
+    "@unocss/preset-wind3": "catalog:unocss",
     "bumpp": "catalog:utils",
     "eslint": "catalog:eslint",
-    "esno": "catalog:utils",
-    "lint-staged": "catalog:utils",
     "magic-string": "catalog:utils",
-    "simple-git-hooks": "catalog:utils",
     "tsdown": "catalog:utils",
     "typescript": "catalog:typescript",
     "unocss": "catalog:unocss",
     "unocss-applet": "workspace:*",
     "vite": "catalog:vite",
     "vitest": "catalog:vite"
-  },
-  "simple-git-hooks": {
-    "pre-commit": "pnpm lint-staged"
-  },
-  "lint-staged": {
-    "*": "eslint --fix"
   }
 }
