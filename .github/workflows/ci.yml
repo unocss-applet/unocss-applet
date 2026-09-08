@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+  merge_group: {}
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        node_version: [22, 24, 26]
+      fail-fast: false
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Set git to use LF
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.eol lf
+
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Setup pnpm and Node.js
+        uses: pnpm/setup@v2
+        with:
+          cache: true
+          require-lockfile: true
+          runtime: node@${{ matrix.node_version }}
+
+      - name: Build
+        run: pnpm run build
+
+      - name: Build uni-app mp-weixin
+        run: pnpm run build:uni:mp-weixin
+
+      - name: Build uni-app h5
+        run: pnpm run build:uni:h5
+
+      - name: Build taro weapp
+        run: pnpm run build:taro:weapp
+
+      - name: Build taro h5
+        run: pnpm run build:taro:h5
+
+      - name: Lint
+        run: pnpm run lint
+
+      - name: Test
+        run: pnpm run test
+
+      - name: Typecheck
+        run: pnpm run typecheck

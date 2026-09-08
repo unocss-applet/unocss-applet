@@ -16,26 +16,16 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v6
-
-      - name: Set node
-        uses: actions/setup-node@v7
+      - name: Setup pnpm and Node.js
+        uses: pnpm/setup@v2
         with:
-          node-version-file: .node-version
-          cache: pnpm
-          registry-url: 'https://registry.npmjs.org'
+          cache: true
+          require-lockfile: true
 
-      - name: Setup corepack
-        run: npm install -f -g npm@latest corepack@latest && corepack enable
-
-      - run: npx changelogithub
+      - run: pnpx changelogithub
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-
-      - name: Install Dependencies
-        run: pnpm i
 
       - name: Publish to NPM
         run: pnpm -r publish --access public --no-git-checks
