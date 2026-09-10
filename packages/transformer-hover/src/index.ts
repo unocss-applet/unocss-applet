@@ -150,7 +150,10 @@ export function transformerHover(options: TransformerHoverOptions = {}): SourceC
 
       const code = new MagicString(s.toString())
 
-      let changed = false
+      // 回写条件用 code.hasChanged() 而不是“是否发过 overwrite”的标志：若某个改写恰好
+      // 产出原文，整文件 overwrite 就成了 no-op 编辑——MagicString 会把全文件记成已编辑
+      // chunk 但 hasChanged() 为 false，下游 transformerApplet 按原文偏移 overwrite 就会抛
+      // `cannot split a chunk that has already been edited`（与 attributify 的修复同源）。
       const elementMatches = code.original.matchAll(elementRE)
       for (const eleMatch of elementMatches) {
         const start = eleMatch.index!
@@ -465,12 +468,11 @@ export function transformerHover(options: TransformerHoverOptions = {}): SourceC
         }
 
         code.overwrite(start, start + eleMatch[0].length, matchStrTemp)
-        changed = true
       }
 
       // 真的有变化时才回写源码。空文件（或没有可处理元素）时 `s.overwrite(0, 0, ...)`
       // 或 `(0, len, 原文)` 会抛异常或白做一次；MagicString 拒绝零长度改写。
-      if (changed)
+      if (code.hasChanged())
         s.overwrite(0, s.original.length, code.toString())
     },
   }
