@@ -246,14 +246,17 @@
 .text-size-1em{font-size:1em;}
 .text-size-unset{font-size:unset;}
 .text-_a_--variable_a_,
+.text-_a_color_a_--variable_a_,
 .text-_a_variable{color:color-mix(in oklab, var(--variable) var(--un-text-opacity), transparent) /* var(--variable) */;}
 .text-_a__a_124_a_{color:color-mix(in oklab, #124 var(--un-text-opacity), transparent) /* #124 */;}
 .text-_a_calc_a_1em-1px_a__a_,
 .text-_a_length_a_calc_a_1em-1px_a__a_{font-size:calc(1em - 1px);}
 .text-_a_calc_a_1rem-1px_a__a_{font-size:calc(1rem - 1px);}
+.text-_a_color_a_var_a_--color-x_a__a__a__a_trick_a_{color:color-mix(in oklab, var(--color-x) trick, transparent) /* var(--color-x) */;}
+.text-_a_color_a_var_a_--color_a__a_,
+.text-_a_var_a_--color_a__a_{color:color-mix(in oklab, var(--color) var(--un-text-opacity), transparent) /* var(--color) */;}
 .text-_a_red_a__a_50_a_display-p3{color:color-mix(in display-p3, red 50%, transparent) /* red */;}
 .text-_a_red_a__a_50{color:color-mix(in oklab, red 50%, transparent) /* red */;}
-.text-_a_var_a_--color_a__a_{color:color-mix(in oklab, var(--color) var(--un-text-opacity), transparent) /* var(--color) */;}
 .text-black_a_10{color:color-mix(in srgb, var(--colors-black) 10%, transparent) /* #000 */;}
 .aria-busy_a_aria-pressed_a_text-green-600[aria-pressed="true"][aria-busy="true"],
 .aria-busy_a_data-_a_bar_a__a_text-green-600[data-bar][aria-busy="true"],

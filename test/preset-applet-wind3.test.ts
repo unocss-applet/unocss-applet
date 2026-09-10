@@ -60,34 +60,34 @@ describe('preset-applet-wind3', () => {
     await expect(css).toMatchFileSnapshot('./assets/output/preset-wind3-preset-extras.css')
   })
 
-  // Regression for #99: wind3 preflight must scope its CSS-variable defaults to
-  // `:not(not)` instead of a universal selector (`*`) or `page`, which applet wxss
-  // cannot express and which leaks transform-origin vars into children.
+  // #99 的回归测试：wind3 preflight 的 CSS 变量默认值必须作用在 `:not(not)` 上，
+  // 不能用通用选择器（`*`）或 `page`——小程序 wxss 写不出来，而且 `*` 会把
+  // transform-origin 变量泄漏给子元素。
   // @see https://github.com/unocss-applet/unocss-applet/issues/99
   it('preflight uses :not(not) instead of universal/page selector (#99)', async () => {
     const { css } = await uno.generate('translate-x-4', { preflights: true })
 
     expect(css).toContain(':not(not)')
-    // a bare universal selector (`*{`, `*,`, `,*`, or wrapped in `@supports{*`)
-    // is never applet-safe; the `[{,}]` anchor also catches the @supports-block form
+    // 光秃秃的通用选择器（`*{`、`*,`、`,*`，或包在 `@supports{*` 里）永远不是小程序
+    // 安全的；`[{,}]` 锚点同时能抓到 @supports 块的形态
     expect(css).not.toMatch(/(^|[{,}])\s*\*\s*[,{]/)
     expect(css).not.toMatch(/(^|[{,}])\s*page\s*[,{]/)
   })
 
-  // Regression for #106: the three `important` spellings must emit `!important` under a
-  // selector with no literal `!` (applet wxss rejects it), each with a distinct applet-safe
-  // alias matching what `transformerApplet` writes into the source.
+  // #106 的回归测试：三种 `important` 写法都要在不含字面 `!` 的选择器下产出
+  // `!important`（小程序 wxss 拒绝 `!`），且每个都有独立的小程序安全别名，和
+  // `transformerApplet` 写进源码的名字一一对应。
   // @see https://github.com/unocss-applet/unocss-applet/issues/106
   it('emits !important under applet-safe selectors for every important spelling (#106)', async () => {
     const { css } = await uno.generate('!font-bold font-bold! important:font-bold', { preflights: false })
 
-    // the `!important` declarations themselves must land
+    // `!important` 声明本身必须落地
     expect(css).toMatch(/font-weight:700 !important/)
-    // and the selectors must contain the applet-safe aliases, never a literal `!`
+    // 选择器里必须是小程序安全的别名，不能出现字面 `!`
     expect(css).toContain('._a_font-bold')
     expect(css).toContain('.font-bold_a_')
     expect(css).toContain('.important_a_font-bold')
-    // any selector still holding a raw `!` would be applet-invalid
+    // 任何还带着原始 `!` 的选择器在小程序端都是非法的
     expect(css).not.toMatch(/\.[\w-]*!/)
   })
 })

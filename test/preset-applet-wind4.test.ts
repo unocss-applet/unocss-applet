@@ -32,7 +32,7 @@ describe('preset-applet-wind4', () => {
 
     await expect(css).toMatchFileSnapshot('./assets/output/preset-wind4-targets.css')
 
-    // The following is a list of safe differences, the expected behavior of `preset-wind4` is inconsistent with `preset-wind3`.
+    // 以下是已确认的安全差异清单：`preset-wind4` 的预期行为与 `preset-wind3` 不一致。
     expect(unmatched).toMatchInlineSnapshot(`
       [
         "align-[--variable]",
@@ -793,10 +793,9 @@ describe('preset-applet-wind4', () => {
     `)
   })
 
-  // Regression for #99: wind4's `property` preflight scopes CSS-variable defaults via a
-  // selector that defaults to `*, ::before, ::after, ::backdrop` upstream. Applet can't
-  // express `*`, so preset-applet rewrites it to `:not(not)`; verify no bare universal
-  // selector leaks into the wind4 preflight output.
+  // #99 的回归测试：wind4 的 `property` preflight 上游默认用 `*, ::before, ::after,
+  // ::backdrop` 来限定 CSS 变量默认值的作用范围。小程序写不出 `*`，preset-applet 把它
+  // 改写成 `:not(not)`；验证 wind4 的 preflight 输出里没有漏进光秃秃的通用选择器。
   // @see https://github.com/unocss-applet/unocss-applet/issues/99
   it('property preflight uses :not(not) instead of universal selector (#99)', async () => {
     const uno = await createGenerator({
@@ -816,10 +815,9 @@ describe('preset-applet-wind4', () => {
     expect(css).not.toMatch(/(^|[{,}])\s*\*\s*[,{]/)
   })
 
-  // Regression for #106: the three `important` spellings must emit `!important` under a
-  // selector with no literal `!`. Mirrors the wind3 #106 test; wind4 differs only in that
-  // the weight is sourced from a CSS variable (`var(--fontWeight-bold)`) rather than a
-  // literal `700`.
+  // #106 的回归测试：三种 `important` 写法都要在不含字面 `!` 的选择器下产出
+  // `!important`。和 wind3 的 #106 测试对应；wind4 唯一的差别是字重来自 CSS 变量
+  // （`var(--fontWeight-bold)`）而不是字面 `700`。
   // @see https://github.com/unocss-applet/unocss-applet/issues/106
   it('emits !important under applet-safe selectors for every important spelling (#106)', async () => {
     const uno = await createGenerator({
@@ -842,12 +840,11 @@ describe('preset-applet-wind4', () => {
     expect(css).not.toMatch(/\.[\w-]*!/)
   })
 
-  // Regression for wind4 nested-variant aliasing: wind4 restructures complex variants
-  // (group-/peer-/parent-/previous-/has-/in-/inert:/space-/divide- with brackets) into a
-  // nested form where the original class moves into `util.parent` (the wrapping selector)
-  // and `util.selector` becomes a relative `&:is(...)` body. Without aliasing `parent`,
-  // the wrapping class keeps backslash-escaped `:` `[` `=` `]` and is unreachable from
-  // applet wxss. The postprocess must rewrite `parent` the same way it rewrites `selector`.
+  // wind4 嵌套变体改写的回归测试：wind4 会把复杂变体（带 bracket 的 group-/peer-/
+  // parent-/previous-/has-/in-/inert:/space-/divide-）重构成嵌套形式——原始类名挪进
+  // `util.parent`（外层包裹选择器），`util.selector` 变成相对形式的 `&:is(...)`。
+  // 不改写 `parent` 的话，外层类名会留着反斜杠转义的 `:` `[` `=` `]`，小程序 wxss
+  // 够不着它。postprocess 必须用改写 `selector` 的同一套逻辑处理 `parent`。
   it('aliases the wrapping selector of nested wind4 variants', async () => {
     const uno = await createGenerator({
       envMode: 'dev',
@@ -865,12 +862,12 @@ describe('preset-applet-wind4', () => {
       { preflights: false },
     )
 
-    // wrapping class names must not carry backslash-escaped unsupported chars
+    // 外层类名不能带着反斜杠转义的不支持字符
     expect(css).not.toMatch(/\\:/)
     expect(css).not.toMatch(/\\\[/)
     expect(css).not.toMatch(/\\\]/)
     expect(css).not.toMatch(/\\=/)
-    // and must be aliased to the applet-safe form
+    // 而且要改写成小程序安全的别名
     expect(css).toContain('.peer-aria-checked_a_bg-blue-500')
     expect(css).toContain('.group-data-_a_state_a_open_a__a_font-bold')
     expect(css).toContain('.in-_a_div_a__a_bg-red-400')

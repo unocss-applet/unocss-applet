@@ -5,9 +5,8 @@ import { presetWind3 } from '@unocss/preset-wind3'
 import MagicString from 'magic-string'
 import { describe, expect, it } from 'vitest'
 
-// `id` is required — the transformer branches on `.vue` vs `.jsx`/`.tsx`, picking the
-// native attribute name (`hover-class` for Vue, `hoverClass` for JSX). A default would
-// silently route JSX cases through the Vue path.
+// `id` 是必填的——transformer 按 `.vue` 还是 `.jsx`/`.tsx` 分流，选对应的原生属性名
+// （Vue 用 `hover-class`，JSX 用 `hoverClass`）。给个默认值会让 JSX 用例悄悄走 Vue 的路径。
 async function transform(code: string, transformer: SourceCodeTransformer, id: string) {
   const s = new MagicString(code)
 
@@ -68,7 +67,7 @@ describe('transformer-hover (vue)', () => {
       transformer,
       'foo.vue',
     )
-    // dark:hover: stays; only standalone hover: moves.
+    // dark:hover: 留在原地；只有独立的 hover: 才会被搬走。
     expect(result).toBe('<div class="dark:hover:bg-red" hover-class="text-xl"/>')
   })
 
@@ -95,7 +94,7 @@ describe('transformer-hover (vue)', () => {
       transformer,
       'foo.vue',
     )
-    // Dynamic class expressions can't be statically parsed; left untouched (documented limit).
+    // 动态 class 表达式没法静态解析，原样保留（文档里写明的局限）。
     expect(result).toBe('<div :class="x ? \'hover:bg-red\' : \'\'"/>')
   })
 
@@ -105,22 +104,22 @@ describe('transformer-hover (vue)', () => {
     expect(result).toBe('<div hover-class="bg-red"/>')
   })
 
-  // Regression: empty source must not crash (MagicString rejects zero-length overwrites).
+  // 回归：空文件不能崩（MagicString 拒绝零长度 overwrite）。
   it('handles an empty file without throwing', async () => {
     const transformer = transformerHover()
     const result = await transform('', transformer, 'foo.vue')
     expect(result).toBe('')
   })
 
-  // Regression: a file with no eligible elements is left untouched (no needless overwrite).
+  // 回归：没有可处理元素的文件原样保留（不做多余的 overwrite）。
   it('leaves a file with no hover: utilities unchanged', async () => {
     const transformer = transformerHover()
     const result = await transform('<div class="p-2">hello</div>', transformer, 'foo.vue')
     expect(result).toBe('<div class="p-2">hello</div>')
   })
 
-  // Regression: preserve the original quote char of a Vue dynamic binding whose expression
-  // contains the opposite quote, so the wrapper doesn't collide and corrupt the markup.
+  // 回归：Vue 动态绑定的表达式里若包含另一种引号，要保留原始引号字符，
+  // 包一层模板字符串时才不会和它撞车、弄坏标记。
   it('preserves the original quote of a dynamic :hover-class binding', async () => {
     const transformer = transformerHover()
     const result = await transform(
@@ -132,8 +131,7 @@ describe('transformer-hover (vue)', () => {
     expect(result).toBe('<div :hover-class=\'`${cond ? "a" : "b"} bg-red`\'/>')
   })
 
-  // Regression: a value-less `hover-class` shorthand is rewritten to a valued form, not
-  // duplicated.
+  // 回归：无值的 `hover-class` 简写要改写成带值的形式，而不是重复一份。
   it('rewrites a value-less hover-class shorthand instead of duplicating it', async () => {
     const transformer = transformerHover()
     const result = await transform(
@@ -144,8 +142,8 @@ describe('transformer-hover (vue)', () => {
     expect(result).toBe('<div hover-class="bg-red"/>')
   })
 
-  // Regression: a tab or newline between the tag name and the first attribute must not
-  // corrupt the source (the offset is computed via `search(/\s/)`, not `indexOf(' ')`).
+  // 回归：标签名和第一个属性之间是 tab 或换行时不能把源码弄坏
+  // （偏移用 `search(/\s/)` 算，不是 `indexOf(' ')`）。
   it('handles a tab between tag name and first attribute', async () => {
     const transformer = transformerHover()
     const result = await transform(
@@ -166,16 +164,16 @@ describe('transformer-hover (vue)', () => {
     expect(result).toBe('<div hover-class="bg-red"/>')
   })
 
-  // Regression: a leading `!` important modifier is preserved when moving the token
-  // (`!hover:bg-red` and `hover:!bg-red` are the same rule in UnoCSS).
+  // 回归：搬移 token 时开头的 `!` important 修饰符要保留——在别名里体现为 `_a_`
+  // （`!` 属于不支持字符，与 postprocess 的选择器别名化同一套规则，CSS 侧生成 `._a_bg-red`）
   it('preserves a leading important modifier (!hover:bg-red)', async () => {
     const transformer = transformerHover()
     const result = await transform('<div class="!hover:bg-red"/>', transformer, 'foo.vue')
-    expect(result).toBe('<div hover-class="!bg-red"/>')
+    expect(result).toBe('<div hover-class="_a_bg-red"/>')
   })
 
-  // Sanity: arbitrary-value bodies whose own `:` is inside `[...]` (not a variant
-  // separator) are still moved.
+  // 基本校验：arbitrary value 里的 `:` 在 `[...]` 内部（不是变体分隔符）时，token 照常搬移；
+  // 别名化后与 postprocess 的选择器形式一致（`bg-[url(http://x.png)]` → `bg-_a_url_a_...`）
   it('moves arbitrary-value hover: bodies (colon inside [...])', async () => {
     const transformer = transformerHover()
     const result = await transform(
@@ -183,13 +181,12 @@ describe('transformer-hover (vue)', () => {
       transformer,
       'foo.vue',
     )
-    expect(result).toBe('<div hover-class="bg-[url(http://x.png)]"/>')
+    expect(result).toBe('<div hover-class="bg-_a_url_a_http_a__a__a_x_a_png_a__a_"/>')
   })
 
-  // Regression: pseudo-class / pseudo-element / peer variants as a `hover:` body are NOT
-  // moved — `hover-class` can't gate on focus/active/peer, and moving them would drop the
-  // qualifier. These compile to a single compound selector (no whitespace / `@media`), so a
-  // selector-shape check would miss them; the top-level-colon heuristic catches them.
+  // 回归：`hover:` 后面跟伪类/伪元素/peer 变体时不搬——`hover-class` 表达不了
+  // focus/active/peer 的条件，搬过去修饰符就丢了。这些会编译成单个复合选择器（没有空白、
+  // 没有 `@media`），按选择器形状判断会漏掉；靠「顶层冒号」启发式才能识别。
   it.each([
     'hover:focus:bg-red',
     'hover:active:bg-red',
@@ -211,10 +208,9 @@ describe('transformer-hover (vue)', () => {
     expect(result).toBe(`<div class="${tok}"/>`)
   })
 
-  // Regression: multiple `class` attributes (malformed but tolerated) — every class attribute
-  // is stripped of its `hover:` tokens, not just the last one. Without per-slot edits, earlier
-  // class attributes kept a stale duplicate of the moved tokens. Here both class attributes
-  // become empty and are dropped entirely.
+  // 回归：多个 `class` 属性（畸形但能容忍）——每个 class 属性里的 `hover:` token 都要
+  // 清掉，不能只处理最后一个。不按位置逐个编辑的话，前面的 class 属性会留下搬走 token
+  // 的旧副本。这个用例里两个 class 属性都被清空、整体删除。
   it('strips hover: tokens from all class attributes when multiple exist', async () => {
     const transformer = transformerHover()
     const result = await transform(
@@ -235,8 +231,8 @@ describe('transformer-hover (vue)', () => {
     expect(result).toBe('<div class="p-2" class="m-4" hover-class="bg-red text-xl"/>')
   })
 
-  // Regression: a doubly-important token (`!hover:!bg-red`) is invalid; the transformer must
-  // leave it in place rather than re-emit it as a different invalid token (`!!bg-red`).
+  // 回归：双重 important（`!hover:!bg-red`）是非法写法；transformer 必须原样保留，
+  // 而不是换成一个同样非法的 token（`!!bg-red`）。
   it('leaves an invalid doubly-important !hover:!bg-red token in place', async () => {
     const transformer = transformerHover()
     const result = await transform('<div class="!hover:!bg-red"/>', transformer, 'foo.vue')
@@ -296,7 +292,7 @@ describe('transformer-hover (jsx)', () => {
     expect(result).toBe('<div className={x ? \'hover:bg-red\' : \'\'}/>')
   })
 
-  // Regression: value-less hoverClass shorthand rewritten to a valued form.
+  // 回归：无值的 hoverClass 简写改写成带值的形式。
   it('rewrites a value-less hoverClass shorthand instead of duplicating it', async () => {
     const transformer = transformerHover()
     const result = await transform(
@@ -305,5 +301,22 @@ describe('transformer-hover (jsx)', () => {
       'foo.tsx',
     )
     expect(result).toBe('<div hoverClass="bg-red"/>')
+  })
+})
+
+describe('transformer-hover: alias closed loop with presetApplet postprocess', () => {
+  // hover-class 的值是运行时类名，而 postprocess 生成的 CSS 选择器是别名化形式。
+  // 搬移的 token 必须也别名化，两侧才能对上（按压态样式静默失效的回归防护）。
+  // 注意本文件的上文 transform() 用的是 presetWind3（不带 applet postprocess），
+  // 所以这里直接用 presetApplet 走完整管线断言源码与 CSS 一致
+  it('hover-class alias matches generated CSS selector', async () => {
+    const { presetApplet } = await import('@unocss-applet/preset-applet')
+    const uno = await createGenerator({ presets: [presetApplet()], transformers: [transformerHover()] })
+    const s = new MagicString('<div class="hover:bg-red/50"/>')
+    for (const t of uno.config.transformers ?? [])
+      await t.transform(s, 'foo.vue', { uno, tokens: new Set() } as any)
+    expect(s.toString()).toBe('<div hover-class="bg-red_a_50"/>')
+    const { css } = await uno.generate(s.toString(), { preflights: false })
+    expect(css).toContain('.bg-red_a_50{')
   })
 })
