@@ -5,17 +5,19 @@
 `unocss-applet` **不是** UnoCSS 的 fork，而是对 `@unocss/preset-wind3` / `@unocss/preset-wind4` 的包裹层。小程序端的兼容由两处配合实现：
 
 - **`presetApplet` 的 postprocess**：在生成 CSS 时把选择器里的非法字符（`. : [ / % ! # ( ) ...`）替换为 `_a_`，并把非 ASCII（如中文）编码为字符码。
-- **`transformerApplet`（由 `presetApplet` 自动注入）**：把源码模板里含非法字符的工具类（如 `py-3.5`、`bg-[url(...)]`）改写为 applet 安全别名，并注册为 shortcut 指回原始工具类。
+- **`transformerApplet`（由 `presetApplet` 自动注入）**：把源码里能放类名的位置（模板 `class` 属性、`:class` 表达式里的字符串字面量、`.js/.ts` 字符串、模板文本等）中的非法字符工具类（如 `py-3.5`、`bg-[url(...)]`）改写为 applet 安全别名，并注册为 shortcut 指回原始工具类。改写前会先解析代码（`.vue` 用 Vue 模板编译器、`.js/.ts/.jsx/.tsx` 用 oxc），所以可执行代码不会被碰：数组下标 `m[1]`、注释、正则、`@click` 等指令表达式和插值 `{{ }}` 里的字符串都保持原样（[#114](https://github.com/unocss-applet/unocss-applet/issues/114)）。已知类型的文件解析失败时直接跳过改写（宁可漏一个工具类，也不损坏脚本），只有不认识的文件类型回退为整文件正则改写。完整边界见 [`packages/preset-applet/README.md`](./packages/preset-applet/README.md) 的「源码改写规则」。
 
 两者闭环后，绝大多数 wind3/wind4 工具类可在小程序端正常使用。
 
+与 `transformerHover` 组合时，实际执行顺序是 hover 先（用户 transformers 在前）、applet 后（preset 注入在后）：hover 先把 `hover:` token 搬进 `hover-class`，applet 只处理剩余 token，不会与 hover 的编辑重叠。这一顺序不变量由 `test/transformer-applet-source-safety.test.ts` 固定。
+
 ## 版本支持
 
-`unocss-applet` 当前已验证支持 UnoCSS [`~66.10.0`](https://github.com/unocss/unocss/releases/tag/v66.10.0)。
+`unocss-applet` 当前已验证支持 UnoCSS [`~66.10.1`](https://github.com/unocss/unocss/releases/tag/v66.10.1)。
 
-- 主包 `unocss-applet` 的 `peerDependencies.unocss` 与 monorepo catalog 均锁定为 `~66.10.0`（仅允许 patch 升级，minor/主版本不变）。
+- 主包 `unocss-applet` 的 `peerDependencies.unocss` 与 monorepo catalog 均锁定为 `~66.10.1`（仅允许 patch 升级，minor/主版本不变）。
 - 需要 Node.js `>= 22.12`：本包 `transformer-attributify` / `transformer-hover` 的运行时依赖 `magic-string@1.x` 仅提供 ESM 入口，构建工具在 CJS 链上加载它（如 Taro webpack 的 `@unocss/webpack`）依赖 Node 22.12 起默认支持的 `require(esm)`。
-- **Taro（Webpack/CJS 链路）已知上游缺陷**：unocss 自 66.8 起，`@unocss/webpack` 的 CJS 产物外部依赖 ESM-only 的 `magic-string@1.x`，且其打包 interop 在 `require(esm)` 返回的命名空间上取错 default，构建时报 `magic_string.default is not a constructor`（uni-app/Vite 走 ESM 入口，不受影响）。本仓库以 [`patches/@unocss__webpack@66.10.0.patch`](./patches/@unocss__webpack@66.10.0.patch) 修复 Taro 示例构建（CI 会构建 `build:taro:weapp` / `build:taro:h5`），上游修复后移除；直接使用 `@unocss/webpack@66.8+` 的 Taro 项目会命中同样问题，可参考该补丁处理。
+- **Taro（Webpack/CJS 链路）已知上游缺陷**：unocss 自 66.8 起，`@unocss/webpack` 的 CJS 产物外部依赖 ESM-only 的 `magic-string@1.x`，且其打包 interop 在 `require(esm)` 返回的命名空间上取错 default，构建时报 `magic_string.default is not a constructor`（uni-app/Vite 走 ESM 入口，不受影响）。本仓库以 [`patches/@unocss__webpack@66.10.1.patch`](./patches/@unocss__webpack@66.10.1.patch) 修复 Taro 示例构建（CI 会构建 `build:taro:weapp` / `build:taro:h5`），上游修复后移除；直接使用 `@unocss/webpack@66.8+` 的 Taro 项目会命中同样问题，可参考该补丁处理。66.10.0 与 66.10.1 的 CJS 产物字节级一致，补丁仅随版本号改名。
 - 下表矩阵基于此版本验证；上游 minor/patch 升级通常兼容，主版本升级需重新验证。
 - 下方各 preset/transformer 的「支持 / 部分支持 / 不支持」结论均针对此版本。
 

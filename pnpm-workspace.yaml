@@ -1,8 +1,36 @@
 catalogMode: prefer
 
-shellEmulator: true
+minimumReleaseAgeExclude:
+  - '@unocss/cli@66.10.1'
+  - '@unocss/config@66.10.1'
+  - '@unocss/core@66.10.1'
+  - '@unocss/eslint-config@66.10.1'
+  - '@unocss/eslint-plugin@66.10.1'
+  - '@unocss/extractor-arbitrary-variants@66.10.1'
+  - '@unocss/inspector@66.10.1'
+  - '@unocss/preset-attributify@66.10.1'
+  - '@unocss/preset-icons@66.10.1'
+  - '@unocss/preset-mini@66.10.1'
+  - '@unocss/preset-tagify@66.10.1'
+  - '@unocss/preset-typography@66.10.1'
+  - '@unocss/preset-uno@66.10.1'
+  - '@unocss/preset-web-fonts@66.10.1'
+  - '@unocss/preset-wind3@66.10.1'
+  - '@unocss/preset-wind4@66.10.1'
+  - '@unocss/preset-wind@66.10.1'
+  - '@unocss/rollup@66.10.1'
+  - '@unocss/rule-utils@66.10.1'
+  - '@unocss/transformer-attributify-jsx@66.10.1'
+  - '@unocss/transformer-compile-class@66.10.1'
+  - '@unocss/transformer-directives@66.10.1'
+  - '@unocss/transformer-variant-group@66.10.1'
+  - '@unocss/vite@66.10.1'
+  - '@unocss/webpack@66.10.1'
+  - unocss@66.10.1
 
 trustPolicy: off
+shellEmulator: true
+
 packages:
   - packages/*
   - examples/*
@@ -11,13 +39,27 @@ packages:
 # "magic_string.default is not a constructor"。patch 去掉 node-mode 标志，改读命名空间
 # 真实的 .default；背景见 COMPATIBILITY.md，上游修复后删除本条目与 patches/。
 patchedDependencies:
-  '@unocss/webpack@66.10.0': patches/@unocss__webpack@66.10.0.patch
+  '@unocss/webpack@66.10.1': patches/@unocss__webpack@66.10.1.patch
+
+configDependencies:
+  '@pnpm/plugin-trusted-deps': ^0.2.2
+
+allowBuilds:
+  '@parcel/watcher': true
+  '@swc/core': true
+  '@tarojs/binding': true
+  '@tarojs/cli': true
+  core-js: true
+  core-js-pure: true
+  esbuild: true
+  swiper: true
+
 catalogs:
   eslint:
-    '@antfu/eslint-config': ^9.3.0
-    eslint: ^10.9.1
+    '@antfu/eslint-config': ^9.5.1
+    eslint: ^10.10.0
   icons:
-    '@iconify-json/carbon': ^1.2.25
+    '@iconify-json/carbon': ^1.2.26
     '@iconify-json/tabler': ^1.2.38
   react:
     '@types/react': ^18.3.31
@@ -28,7 +70,7 @@ catalogs:
     '@babel/plugin-transform-class-properties': ^7.29.7
     '@babel/preset-react': ^7.29.7
     '@babel/runtime': ^7.29.7
-    '@pmmmwh/react-refresh-webpack-plugin': ^0.6.2
+    '@pmmmwh/react-refresh-webpack-plugin': ^0.6.3
     '@tarojs/cli': 4.2.1
     '@tarojs/components': 4.2.1
     '@tarojs/helper': 4.2.1
@@ -53,7 +95,7 @@ catalogs:
     tsconfig-paths-webpack-plugin: ^4.2.0
     webpack: 5.91.0
   types:
-    '@types/node': ^24.13.3
+    '@types/node': ^26.5.0
   typescript:
     typescript: ^6.0.3
   uni-app:
@@ -83,33 +125,25 @@ catalogs:
     vue-i18n: ^9.0.0
     vue-tsc: ^3.3.11
   unocss:
-    '@unocss/core': ~66.10.0
-    '@unocss/eslint-config': ~66.10.0
-    '@unocss/preset-attributify': ~66.10.0
-    '@unocss/preset-icons': ~66.10.0
-    '@unocss/preset-mini': ~66.10.0
-    '@unocss/preset-wind3': ~66.10.0
-    '@unocss/preset-wind4': ~66.10.0
-    # 精确钉死：patchedDependencies 绑定 66.10.0，波浪号范围内的 66.10.x 升级会导致
-    # patch 静默失配（只剩安装警告），升级时必须连 patch 一起处理
-    '@unocss/webpack': 66.10.0
-    unocss: ~66.10.0
+    '@unocss/core': ~66.10.1
+    '@unocss/eslint-config': ~66.10.1
+    '@unocss/preset-attributify': ~66.10.1
+    '@unocss/preset-icons': ~66.10.1
+    '@unocss/preset-mini': ~66.10.1
+    '@unocss/preset-wind3': ~66.10.1
+    '@unocss/preset-wind4': ~66.10.1
+    # 精确钉死：patchedDependencies 绑定版本号，波浪号范围内的升级会导致
+    # patch 静默失配（只剩安装警告），升级时必须连 patch 一起处理。
+    # 66.10.0 与 66.10.1 的 CJS 产物字节级一致（shasum 已比对），patch 跟着版本号改名即可
+    '@unocss/webpack': 66.10.1
+    unocss: ~66.10.1
   utils:
-    bumpp: ^12.2.1
+    '@vue/compiler-dom': ~3.5.42
+    bumpp: ^12.3.0
     concurrently: ^10.0.5
-    magic-string: ^1.2.2
-    tsdown: ^0.22.14
+    magic-string: ^1.2.3
+    oxc-parser: ^0.149.0
+    tsdown: ^0.23.0
   vite:
     vite: ^5.4.21
     vitest: ^3.2.7
-configDependencies:
-  '@pnpm/plugin-trusted-deps': 0.2.2+sha512-+ZupiXKJhW2fbSilfyRp+wrAY54MKg+c0JWSFGdeb/y9bUoYN5u4XLOZ0Txk7O2bBa6NMhWrX5mwmsHP3/nm9Q==
-allowBuilds:
-  '@parcel/watcher': true
-  '@swc/core': true
-  '@tarojs/binding': true
-  '@tarojs/cli': true
-  core-js: true
-  core-js-pure: true
-  esbuild: true
-  swiper: true
