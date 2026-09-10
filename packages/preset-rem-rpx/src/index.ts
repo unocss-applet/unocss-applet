@@ -5,19 +5,19 @@ const rpxRE = /(-?[.\d]+)rpx/g
 
 export interface RemRpxOptions {
   /**
-   * 1rem = n px
+   * 1rem 等于多少 px
    * @default 16
    */
   baseFontSize?: number
 
   /**
-   * screen width in px
+   * 屏幕宽度，单位 px
    * @default 375
    */
   screenWidth?: number
 
   /**
-   * rem to rpx or rpx to rem
+   * rem 转 rpx，还是 rpx 转 rem
    * @default 'rem2rpx'
    */
   mode?: 'rem2rpx' | 'rpx2rem'

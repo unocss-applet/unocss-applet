@@ -1,64 +1,62 @@
 import type { SourceCodeTransformer } from '@unocss/core'
 import type { TransformerHoverOptions } from './types'
 import MagicString from 'magic-string'
+import { encodeNonSpaceLatin, UNSUPPORTED_CHARS } from '../../shared/src'
 
 export * from './types'
 
 /**
- * Move `hover:xxx` utilities into the mini-program-native `hover-class` attribute.
+ * 把 `hover:xxx` 工具类挪进小程序原生的 `hover-class` 属性。
  *
- * Mini-programs don't support the `:hover` pseudo-class in wxss — `hover:xxx` utilities
- * emitted by UnoCSS are silently dropped at runtime. Native `view`/`button` components
- * instead take a string `hover-class` attribute applied while pressed. This transformer
- * rewrites `hover:` utilities out of the static `class` / `className` attribute and into
- * `hover-class` (stripping the `hover:` prefix, since the attribute already implies the
- * pressed state), so the utilities actually take effect on the applet side.
+ * 小程序的 wxss 不支持 `:hover` 伪类，UnoCSS 生成的 `hover:xxx` 工具类在运行时会被
+ * 直接丢掉。原生的 `view` / `button` 组件是靠字符串类型的 `hover-class` 属性在按压时
+ * 生效的。本 transformer 把静态 `class` / `className` 里的 `hover:` 工具类搬到
+ * `hover-class`（去掉 `hover:` 前缀，因为属性本身已经表示按压态），让这些工具类在小程序端
+ * 真正起作用。搬进 hover-class 的 token 会同时做别名化（不支持字符换 `_a_`、非 ASCII
+ * 编码成字符码，与 `presetApplet` 的 postprocess 同一套规则）并注册 shortcut，
+ * 让运行时类名与生成的 CSS 选择器一致——不别名化的话 `hover:bg-red/50` 搬出去是
+ * `bg-red/50`，CSS 侧是 `.bg-red_a_50`，wxss 引用不到，按压态静默失效。
  *
- * `hover-class` is string-only (official Weixin/Alipay docs), so the output is always a
- * single space-joined string — never an array. An empty result is never emitted:
- * `hover-class=""` is harmless, but `hover-class="none"` is a sentinel that disables the
- * hover effect, and emitting an empty value risks colliding with a framework default.
+ * `hover-class` 只接受字符串（微信/支付宝官方文档），所以输出永远是单个空格拼接的字符串，
+ * 不会是数组。永远不会输出空值：`hover-class=""` 虽然无害，但 `hover-class="none"` 是关闭
+ * 按压效果的保留值，输出空值有和框架默认值撞车的风险。
  *
- * Scope: `.vue` (uni-app / Taro-vue) and `.jsx`/`.tsx` (Taro React). Same regex-based
- * gotchas and mitigations as `transformer-attributify` — see its block comment for the
- * full list (JSX `>` inside expression containers, fragments, comments). In particular a
- * `>` inside any JSX expression container is treated as the tag's closing `>`, so the
- * element is matched only up to that `>` and silently skipped.
+ * 适用范围：`.vue`（uni-app / Taro-vue）和 `.jsx` / `.tsx`（Taro React）。正则匹配的坑和
+ * 对策与 `transformer-attributify` 相同——完整清单见它的文件头注释（JSX 表达式容器里的
+ * `>`、Fragment 短语法、注释等）。尤其注意：JSX 表达式容器里的任何 `>` 都会被当成标签的
+ * 结束 `>`，元素只匹配到那个 `>` 为止，然后被静默跳过。
  *
- * Eligibility (what gets moved): a token is moved only if, after stripping an optional
- * leading `!` important modifier and the `hover:` prefix, the remaining body (a) is a real
- * UnoCSS utility AND (b) carries no further variant qualifier — detected via a top-level `:`
- * outside any `[...]` arbitrary-value group. So `hover:bg-red`, `!hover:bg-red`,
- * `hover:bg-[url(http://x)]`, `hover:bg-red/50` all move; `hover:dark:bg-red`,
- * `hover:focus:bg-red`, `hover:peer-focus:bg-red`, `dark:hover:bg-red` do not (hover-class
- * can't gate on dark/focus/media/peer). A leading `!` is re-applied to the moved body.
+ * 搬移条件：一个 token 只有在去掉开头的 `!` important 修饰符和 `hover:` 前缀之后，剩余部分
+ * (a) 是真实的 UnoCSS 工具类，且 (b) 不再带任何变体限定——判定方式是 `[...]` 任意值分组
+ * 之外是否存在顶层 `:`——才会被搬移。所以 `hover:bg-red`、`!hover:bg-red`、
+ * `hover:bg-[url(http://x)]`、`hover:bg-red/50` 都会搬；`hover:dark:bg-red`、
+ * `hover:focus:bg-red`、`hover:peer-focus:bg-red`、`dark:hover:bg-red` 不会（hover-class
+ * 没法表达 dark/focus/media/peer 这些条件）。搬移后，开头的 `!` 会重新加回剩余部分。
  *
- * Out of scope:
- * - Variant-qualified `hover:` (any side): `dark:hover:`, `md:hover:`, `hover:dark:`,
- *   `hover:focus:`, `hover:peer-focus:` — left in `class` (see eligibility above).
- * - `hover:` tokens inside dynamic `:class="[cond ? 'hover:a' : 'hover:b']"` /
- *   `className={[...]}` expressions: a regex can't reliably parse JS expressions to extract
- *   the literals. Write `hover-class` manually in that case.
- * - Non-utility `hover:` tokens (body not recognised by UnoCSS): left in `class`.
+ * 不处理的情况：
+ * - 带其他变体的 `hover:`（无论变体在哪一侧）：`dark:hover:`、`md:hover:`、`hover:dark:`、
+ *   `hover:focus:`、`hover:peer-focus:` —— 留在 `class` 里（见上面的搬移条件）。
+ * - 动态表达式 `:class="[cond ? 'hover:a' : 'hover:b']"` / `className={[...]}` 里的
+ *   `hover:` token：正则没法可靠地从 JS 表达式里提取出字符串字面量。这种情况请手写
+ *   `hover-class`。
+ * - 不是工具类的 `hover:` token（剩余部分 UnoCSS 不认识）：留在 `class` 里。
  */
 const splitterRE = /[\s'"`;]+/g
 
-// Contract: capture group 1 MUST be the full attribute segment, spanning from the first
-// attribute after the tag name through the last attribute before the closing `/?>`. The
-// attribute-loop below maps regex indices from attrSeg-space into match-space via
-// `segOffset` — depends on this invariant.
+// 约定：捕获组 1 必须是完整的属性段，从标签名后的第一个属性开始，到闭合 `/?>` 前的最后一个
+// 属性为止。下面的属性循环通过 `segOffset` 把 attrSeg 里的下标映射回完整匹配里的下标，
+// 依赖这个约定成立。
 // eslint-disable-next-line regexp/no-super-linear-backtracking, regexp/no-dupe-disjunctions
 const elementRE = /<\w(?=.*>)[\w:.$-]*\s(((".*?>?.*?")|.*?)*?)\/?>/gs
-// Captures unquoted JSX values with `\S+`, which truncates at the first whitespace inside a
-// `{...}` expression container (`{a ? b : c}` → `{a`). JSX attribute handling re-extracts
-// the full container via `scanBracedExpression` below.
+// 无引号的 JSX 值由 `\S+` 捕获，它会在 `{...}` 表达式容器里的第一个空白处截断
+// （`{a ? b : c}` → `{a`）。后面的 JSX 属性处理会通过 `scanBracedExpression` 重新提取
+// 完整容器。
 // eslint-disable-next-line regexp/no-super-linear-backtracking
 const attributeRE = /([[?\w\u00A0-\uFFFF-:()#%.\]]+)(?:\s*=\s*('[^']*'|"[^"]*"|\S+))?/g
 
 /**
- * Skip a quoted run (`'...'`, `"..."`, or template `` `...` ``) inside an attribute value,
- * returning the index just past the closing quote. Used by `scanBracedExpression` so braces
- * inside string/template literals don't throw off the depth counter.
+ * 跳过属性值里的一段引号内容（`'...'`、`"..."` 或模板字符串 `` `...` ``），返回闭引号之后
+ * 的下标。供 `scanBracedExpression` 使用，让字符串/模板字符串里的花括号不干扰深度计数。
  */
 function skipQuoted(seg: string, quoteStart: number, end: number): number | null {
   const quote = seg[quoteStart]
@@ -74,10 +72,10 @@ function skipQuoted(seg: string, quoteStart: number, end: number): number | null
 }
 
 /**
- * Scan a balanced `{...}` expression in `seg[braceStart..end)`. Returns the slice `{...}`
- * including both braces, or `null` if unbalanced. Mirrors `transformer-attributify`'s helper
- * so JSX ternaries / object literals / template strings in attribute values are read whole
- * rather than truncated at the first whitespace by `attributeRE`.
+ * 扫描 `seg[braceStart..end)` 里从 `braceStart` 开始的配平 `{...}` 表达式。返回含两端花括号
+ * 的 `{...}` 片段，配不平则返回 `null`。与 `transformer-attributify` 里的同名函数一致，
+ * 目的是让属性值里的 JSX 三元表达式 / 对象字面量 / 模板字符串能被完整读出，而不是被
+ * `attributeRE` 在第一个空白处截断。
  */
 function scanBracedExpression(seg: string, braceStart: number, end: number): string | null {
   if (seg[braceStart] !== '{')
@@ -104,21 +102,19 @@ function scanBracedExpression(seg: string, braceStart: number, end: number): str
   return null
 }
 
-/** A pending position-based edit on `matchStrTemp`: replace `[start, end)` with `replacement`. */
+/** 对 `matchStrTemp` 的一次待应用的位置编辑：把 `[start, end)` 替换为 `replacement`。 */
 interface AttrEdit { start: number, end: number, replacement: string }
 
 /**
- * True if `body` contains a top-level `:` variant separator (a `:` NOT inside an arbitrary-
- * value `[...]` group). Pure utility bodies (`bg-red`, `bg-[url(http://x)]`,
- * `content-['a:b']`, `w-[calc(100%-1px)]`, `bg-red/50`) have no top-level `:`; any variant
- * form (`dark:`, `focus:`, `active:`, `peer-focus:`, `md:`, `hover:` itself, …) does, and
- * those can't be expressed by `hover-class` (no way to gate on focus/dark/media/peer), so
- * they must be left in `class`.
+ * 判断 `body` 里是否有顶层的 `:` 变体分隔符（即不在任意值 `[...]` 分组内的 `:`）。纯工具类
+ * body（`bg-red`、`bg-[url(http://x)]`、`content-['a:b']`、`w-[calc(100%-1px)]`、
+ * `bg-red/50`）没有顶层 `:`；任何变体写法（`dark:`、`focus:`、`active:`、`peer-focus:`、
+ * `md:`、`hover:` 自身等）都有，而 `hover-class` 表达不了这些条件（没法按 focus/dark/media/
+ * peer 生效），所以必须留在 `class` 里。
  *
- * This is more robust than inspecting the parsed selector's shape: pseudo-class variants
- * (`focus:`, `active:`) compile to a single compound selector with no whitespace / no
- * `@media` parent, so a selector-shape check would wrongly classify them as pure. A top-level
- * colon in the body is the defining feature of a variant form.
+ * 这个判定比去看解析出来的选择器形状更可靠：伪类变体（`focus:`、`active:`）编译后是单个
+ * 复合选择器，没有空白、也没有 `@media` 父级，按选择器形状判断会把它们误判成纯工具类。
+ * body 里的顶层冒号就是变体写法的标志。
  */
 function hasVariantSeparator(body: string): boolean {
   let depth = 0
@@ -134,17 +130,22 @@ function hasVariantSeparator(body: string): boolean {
 }
 
 export function transformerHover(options: TransformerHoverOptions = {}): SourceCodeTransformer {
+  // 别名化用的替换正则。与 presetApplet 的 postprocess 同一套字符表（UNSUPPORTED_CHARS），
+  // 保证搬进 hover-class 的别名与 CSS 选择器一致。本包暂无 unsupportedChars 选项，
+  // 若 presetApplet 将来自定义了字符表，两侧需同步
+  const escapedUnsupportedChars = UNSUPPORTED_CHARS.map(char => char.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+  const charReplaceReg = new RegExp(`[${escapedUnsupportedChars.join('')}]`, 'g')
   return {
     name: 'transformer-hover',
     enforce: 'pre',
-    async transform(s, id, { uno }) {
+    async transform(s, id, { uno, tokens: unoTokens }) {
       if (!/\.(?:vue|[jt]sx)$/.test(id))
         return
 
       const isJsx = /\.(?:j|t)sx$/.test(id)
       const classAttrName = options.classAttributeName ?? (isJsx ? 'className' : 'class')
-      // Vue uses kebab-case `hover-class`; JSX uses camelCase `hoverClass`. The dynamic
-      // binding forms are `:hover-class` (Vue) and `hoverClass={expr}` (JSX).
+      // Vue 用 kebab-case 的 `hover-class`；JSX 用 camelCase 的 `hoverClass`。动态绑定的
+      // 写法分别是 `:hover-class`（Vue）和 `hoverClass={expr}`（JSX）。
       const hoverAttrName = options.hoverAttributeName ?? (isJsx ? 'hoverClass' : 'hover-class')
 
       const code = new MagicString(s.toString())
@@ -155,43 +156,40 @@ export function transformerHover(options: TransformerHoverOptions = {}): SourceC
         const start = eleMatch.index!
         let matchStrTemp = eleMatch[0]
         const attrSeg = eleMatch[1] || ''
-        // attrSeg offset within the full tag match: the element regex is `<\w[\w:.$-]*\s(...)`,
-        // so the first whitespace separates the tag name from attributes and attrSeg begins
-        // right after it. Use `search(/\s/)` rather than `indexOf(' ')` so a tab or newline
-        // between the tag name and the first attribute is handled — `indexOf(' ')` would
-        // return -1 there and shift every downstream index into the tag name, corrupting it.
+        // attrSeg 在完整标签匹配里的偏移：元素正则是 `<\w[\w:.$-]*\s(...)`，第一个空白就是
+        // 标签名和属性的分界，attrSeg 紧跟其后。这里用 `search(/\s/)` 而不是 `indexOf(' ')`，
+        // 为的是兼容标签名和第一个属性之间出现制表符或换行的情况——那种时候 `indexOf(' ')`
+        // 会返回 -1，后面所有下标都会错位到标签名上，把标签改坏。
         const segOffset = eleMatch[0].search(/\s/) + 1
         const attributes = Array.from(attrSeg.matchAll(attributeRE))
 
-        // Hover tokens collected from THIS element's class attribute(s), to be moved into
-        // hover-class.
+        // 从当前元素的 class 属性里收集到的 hover token，稍后搬进 hover-class。
         const hoverTokens: string[] = []
-        // Per-static-class-attribute edit descriptor. An element may legally have multiple
-        // `class` attributes in malformed-but-tolerated markup, and each must be rewritten
-        // independently — a single (start,end,value) triple would only remember the LAST one
-        // and leave earlier `class` attributes with their `hover:` tokens duplicated in both
-        // the (untouched) literal and the new `hover-class`.
+        // 每个静态 class 属性各自的编辑描述。畸形但被容忍的写法里，一个元素可能有多个
+        // `class` 属性，必须逐个改写——只记一份 (start,end,value) 的话只会记住最后一个，
+        // 前面的 `class` 属性里的 `hover:` token 会原样留着，同时出现在旧字面量和新
+        // `hover-class` 里。
         interface ClassSlotEdit { valueStart: number, valueEnd: number, kept: string }
         const classSlotEdits: ClassSlotEdit[] = []
-        // Pending position-based edits, applied right-to-left so earlier indices stay valid.
+        // 待应用的位置编辑，从右往左应用，保证前面的下标始终有效。
         const edits: AttrEdit[] = []
-        // Existing hover-class slot state: detected during the attribute walk so we can merge
-        // into it rather than injecting a duplicate attribute.
-        let hoverAttrValue = '' // static literal value, if present
-        let hoverAttrStart = -1 // span of the static hover-class VALUE (between quotes)
+        // 已有 hover-class 槽位的状态：在属性遍历时识别出来，后面往里合并，而不是注入
+        // 重复的属性。
+        let hoverAttrValue = '' // 静态字面量值（如果有）
+        let hoverAttrStart = -1 // 静态 hover-class 值的 span（引号之间）
         let hoverAttrEnd = -1
-        // Dynamic hover-class (`:hover-class="expr"` / `hoverClass={expr}`): wrap expr in a
-        // template literal so collected tokens append at runtime without losing the original.
-        let hoverDynContent = '' // raw `{expr}` or `"expr"` snippet
-        let hoverDynStart = -1 // absolute span in matchStrTemp
+        // 动态 hover-class（`:hover-class="expr"` / `hoverClass={expr}`）：稍后把 expr 包进
+        // 模板字符串，让收集到的 token 在运行时追加，不丢原值。
+        let hoverDynContent = '' // 原始的 `{expr}` 或 `"expr"` 片段
+        let hoverDynStart = -1 // matchStrTemp 里的绝对 span
         let hoverDynEnd = -1
-        // Value-less shorthand (`<div hover-class/>`): span of the bare attribute token, so it
-        // can be rewritten to a valued form rather than leaving a duplicate attribute behind.
+        // 无值简写（`<div hover-class/>`）：记录裸属性 token 的 span，后面把它改写成带值
+        // 形式，而不是注入重复的属性。
         let hoverShorthandStart = -1
         let hoverShorthandEnd = -1
 
-        // Pre-scan braced `{...}` containers so stray sub-tokens inside them (from spreads or
-        // value bindings tokenised by `attributeRE`) are not misread as standalone attributes.
+        // 预扫描 `{...}` 表达式容器，避免容器内部的零散子 token（来自 spread 或被
+        // `attributeRE` 切碎的值绑定）被误读成独立属性。
         const consumedRanges: Array<[number, number]> = []
         if (isJsx) {
           for (let i = 0; i < attrSeg.length; i++) {
@@ -224,8 +222,8 @@ export function transformerHover(options: TransformerHoverOptions = {}): SourceC
           let content = attribute[2]
           const contentOffset = content ? matchStr.indexOf(content) : -1
 
-          // JSX value bindings `attr={expr}`: re-extract the full `{...}` if `attributeRE`
-          // truncated it at the first whitespace inside the braces.
+          // JSX 值绑定 `attr={expr}`：如果 `attributeRE` 在花括号内的第一个空白处截断了值，
+          // 就重新提取完整的 `{...}`。
           let braceUnbalanced = false
           if (isJsx && content && content.startsWith('{') && !content.endsWith('}')) {
             const braceStart = attrStart + contentOffset
@@ -242,10 +240,9 @@ export function transformerHover(options: TransformerHoverOptions = {}): SourceC
 
           const isJsxDynamicValue = isJsx && !!content && /^\{[\s\S]*\}$/.test(content)
 
-          // --- class / className slot ---
-          // Vue dynamic `:class` / JSX dynamic `className={expr}`: a regex can't reliably
-          // extract `hover:` literals from a JS expression, so dynamic class bindings are
-          // left untouched. Only the STATIC literal is harvested.
+          // --- class / className 槽位 ---
+          // Vue 动态 `:class` / JSX 动态 `className={expr}`：正则没法可靠地从 JS 表达式里
+          // 提取 `hover:` 字面量，所以动态类绑定原样保留，只收集静态字面量。
           const isStaticClass = name === classAttrName && !isJsxDynamicValue && !!content
             && !content.startsWith('{')
           if (isStaticClass) {
@@ -254,23 +251,34 @@ export function transformerHover(options: TransformerHoverOptions = {}): SourceC
             const kept: string[] = []
             let movedAny = false
             for (const tok of tokens) {
-              // Strip a leading `!` important modifier so both `hover:bg-red` and
-              // `!hover:bg-red` are eligible (UnoCSS treats them as the same rule, applied
-              // with `!important`). The `!` is re-applied to the body when moved.
+              // 去掉开头的 `!` important 修饰符，让 `hover:bg-red` 和 `!hover:bg-red` 都符合
+              // 搬移条件（UnoCSS 把它们当成同一条规则，加 `!important` 应用）。搬移时 `!`
+              // 会重新加回剩余部分。
               const important = tok.startsWith('!')
               const stripped = important ? tok.slice(1) : tok
-              // Only standalone `hover:` (no preceding variant) is eligible; a token like
-              // `dark:hover:bg-red` starts with `dark:`, not `hover:`, so it's correctly left
-              // in place — hover-class can't express a variant qualifier.
+              // 只有独立的 `hover:`（前面没有其他变体）符合条件；`dark:hover:bg-red` 这种
+              // token 开头是 `dark:` 不是 `hover:`，会正确地留在原地——hover-class 表达
+              // 不了变体限定。
               if (stripped.startsWith('hover:')) {
                 const body = stripped.slice('hover:'.length)
                 const moved = important ? `!${body}` : body
-                // Validate the REASSEMBLED token (not just the body) so a doubly-important
-                // input like `!hover:!bg-red` doesn't get re-emitted as the invalid `!!bg-red`.
-                // And reject any body carrying a variant qualifier (`hover:focus:`,
-                // `hover:dark:`) via `hasVariantSeparator`'s top-level-colon check.
+                // 校验的是重新拼好的 token（不只是 body），这样 `!hover:!bg-red` 这种双重
+                // important 的输入不会被输出成非法的 `!!bg-red`。同时用
+                // `hasVariantSeparator` 的顶层冒号检查拒绝带变体限定的 body
+                // （`hover:focus:`、`hover:dark:`）。
                 if (!hasVariantSeparator(body) && (await uno.parseToken(moved))?.[0]) {
-                  hoverTokens.push(moved)
+                  // 搬进 hover-class 的值是运行时类名，而 postprocess 生成的 CSS 选择器是
+                  // 别名化形式（`bg-red/50` → `.bg-red_a_50`）；不别名化的话两侧对不上，
+                  // 按压态样式静默失效。用与 postprocess 同一套字符表/编码，保证别名一致
+                  const alias = encodeNonSpaceLatin(important ? `!${body}`.replace(charReplaceReg, '_a_') : body.replace(charReplaceReg, '_a_'))
+                  if (alias !== moved) {
+                    // 注册 别名 -> 原始工具类 的 shortcut，让别名 token 也能生成 CSS
+                    // （与 transformerApplet 的做法一致）
+                    const util = await uno.parseToken(moved)
+                    uno.config.shortcuts.push([alias, moved, { layer: util?.[0]?.[4]?.layer }])
+                    unoTokens?.add?.(alias)
+                  }
+                  hoverTokens.push(alias)
                   movedAny = true
                   continue
                 }
@@ -278,10 +286,9 @@ export function transformerHover(options: TransformerHoverOptions = {}): SourceC
               kept.push(tok)
             }
             if (movedAny) {
-              // Record THIS class attribute's value span for rewriting below. Each static
-              // class attribute gets its own edit so multiple `class` attrs are all stripped.
-              // Span is the inner content between the quotes (contentOffset..+content.length
-              // covers the quoted value including quotes; +1/-1 trims to the inner value).
+              // 记录当前这个 class 属性值的 span，供下面改写。每个静态 class 属性都有自己
+              // 的编辑，多个 `class` 属性都能被清理。span 是引号之间的内容
+              // （contentOffset..+content.length 覆盖含引号的值，+1/-1 收窄到内部值）。
               const valueStart = segOffset + attrStart + contentOffset + 1
               classSlotEdits.push({
                 valueStart,
@@ -292,32 +299,31 @@ export function transformerHover(options: TransformerHoverOptions = {}): SourceC
             continue
           }
 
-          // --- hover-class slot detection ---
-          // Match the hover attribute in any of its forms: static `hover-class` /
-          // `hoverClass`, dynamic Vue `:hover-class`, or dynamic JSX `hoverClass={expr}`.
+          // --- hover-class 槽位识别 ---
+          // 覆盖 hover 属性的几种写法：静态 `hover-class` / `hoverClass`、Vue 动态
+          // `:hover-class`、JSX 动态 `hoverClass={expr}`。
           const isHoverAttr = name === hoverAttrName
             || (!isJsx && name === `:${hoverAttrName}`)
           if (!isHoverAttr)
             continue
 
           if (isJsxDynamicValue || (!isJsx && name.startsWith(':'))) {
-            // Dynamic hover-class. Wrap expr in a template literal later. Span covers the
-            // quoted value (Vue `:hover-class="expr"`) or the braced expression (JSX
-            // `hoverClass={expr}`); for Vue we strip the surrounding quotes when wrapping.
+            // 动态 hover-class。稍后把表达式包进模板字符串。span 覆盖引号内的值
+            // （Vue `:hover-class="expr"`）或花括号表达式（JSX `hoverClass={expr}`）；
+            // Vue 侧包模板字符串时会去掉外层引号。
             hoverDynContent = content
             hoverDynStart = segOffset + attrStart + contentOffset
             hoverDynEnd = hoverDynStart + content.length
           }
           else if (content) {
-            // Static hover-class literal — read its tokens so they merge with collected ones.
+            // 静态 hover-class 字面量——读出它的 token，与收集到的合并。
             hoverAttrValue = content.replace(/['"`]/g, '')
             hoverAttrStart = segOffset + attrStart + contentOffset + 1
             hoverAttrEnd = hoverAttrStart + content.length - 2
           }
           else {
-            // Value-less shorthand (`<div hover-class/>`). No value span to overwrite, but
-            // the attribute is present — record its span so we rewrite it to a valued form
-            // below instead of injecting a duplicate `hover-class="..."`.
+            // 无值简写（`<div hover-class/>`）。没有值 span 可覆盖，但属性存在——记录它的
+            // span，下面直接改写成带值形式，而不是注入重复的 `hover-class="..."`。
             hoverShorthandStart = segOffset + attrStart
             hoverShorthandEnd = hoverShorthandStart + matchStr.length
           }
@@ -329,14 +335,14 @@ export function transformerHover(options: TransformerHoverOptions = {}): SourceC
         if (!hoverTokens.length)
           continue
 
-        // Merge any pre-existing static hover-class tokens first, preserving their order
-        // relative to the newly collected ones (issue example 2: `text-xl bg-red`).
+        // 先合并已有的静态 hover-class token，保持它们相对新收集 token 的顺序
+        // （issue 示例 2：`text-xl bg-red`）。
         const merged = hoverAttrValue
           ? [...hoverAttrValue.split(splitterRE).filter(Boolean), ...hoverTokens]
           : hoverTokens
 
         if (hoverAttrStart !== -1) {
-          // Overwrite the existing static hover-class value.
+          // 覆盖已有的静态 hover-class 值。
           edits.push({
             start: hoverAttrStart,
             end: hoverAttrEnd,
@@ -344,57 +350,52 @@ export function transformerHover(options: TransformerHoverOptions = {}): SourceC
           })
         }
         else if (hoverDynContent) {
-          // Wrap the dynamic hover-class expression in a template literal that appends the
-          // collected tokens at runtime via `${...}` interpolation:
+          // 把动态 hover-class 表达式包进模板字符串，用 `${...}` 插值在运行时追加收集到的
+          // token：
           //   Vue :hover-class="expr"  -> :hover-class="`${expr} tokens`"
           //   JSX hoverClass={expr}    -> hoverClass={`${expr} tokens`}
-          // The original expression is preserved verbatim inside `${}` so its runtime value
-          // isn't lost; collected tokens are appended as a static suffix.
-          // Vue content is the quoted `"expr"`; JSX content is the braced `{expr}`. Both
-          // slice(1, -1) yields the inner expression.
+          // 原表达式原样放进 `${}`，运行时值不会丢；收集到的 token 作为静态后缀追加。
+          // Vue 的 content 是带引号的 `"expr"`；JSX 的是花括号 `{expr}`。两者都
+          // slice(1, -1) 取出内部表达式。
           const expr = hoverDynContent.slice(1, -1)
           const template = `\`\${${expr}} ${merged.join(' ')}\``
-          // Preserve the Vue binding's original quote char so an expression containing `"`
-          // (wrapped in `'...\'`) doesn't collide with the wrapper — hardcoding `"` would
-          // terminate the attribute value early and corrupt the markup.
+          // 保留 Vue 绑定原有的引号字符，避免表达式里含 `"`（包在 `'...'` 里）时和外层
+          // 引号撞车——写死 `"` 会提前终止属性值，改坏标记。
           const vueQuote = hoverDynContent[0] === '\'' ? '\'' : '"'
           edits.push({
             start: hoverDynStart,
             end: hoverDynEnd,
-            // Vue `:hover-class="expr"` -> `:hover-class="`${expr} tokens`"` (quoted).
-            // JSX `hoverClass={expr}` -> `hoverClass={`${expr} tokens`}` (braced).
+            // Vue `:hover-class="expr"` -> `:hover-class="`${expr} tokens`"`（带引号）。
+            // JSX `hoverClass={expr}` -> `hoverClass={`${expr} tokens`}`（带花括号）。
             replacement: isJsx ? `{${template}}` : `${vueQuote}${template}${vueQuote}`,
           })
         }
         else if (hoverShorthandStart !== -1) {
-          // Rewrite the value-less shorthand `hover-class` to a valued `hover-class="..."`.
+          // 把无值简写 `hover-class` 改写成带值的 `hover-class="..."`。
           edits.push({
             start: hoverShorthandStart,
             end: hoverShorthandEnd,
             replacement: `${hoverAttrName}="${merged.join(' ')}"`,
           })
         }
-        // The "no existing hover-class attribute" case is handled by the injection below
-        // (after the collapse pass), since the insert position must be computed against the
-        // collapsed text rather than the original.
+        // 「原本没有 hover-class 属性」的情况由下面的注入逻辑处理（在 collapse 之后），
+        // 因为插入位置要基于折叠后的文本计算，而不是原始文本。
 
-        // Rewrite each static class attribute (tokens removed). If a class becomes empty,
-        // drop the whole attribute by expanding the edit to cover `class="..."`. Each slot
-        // is handled independently so multiple `class` attributes are all stripped.
+        // 改写每个静态 class 属性（删掉搬走的 token）。class 被删空时，把编辑范围扩大到
+        // 整个 `class="..."` 属性，直接删掉。每个槽位独立处理，多个 `class` 属性都能清理。
         for (const { valueStart, valueEnd, kept } of classSlotEdits) {
           if (kept) {
             edits.push({ start: valueStart, end: valueEnd, replacement: kept })
           }
           else {
-            // Expand to swallow the entire `name="value"` attribute. valueStart points at the
-            // first char inside the opening quote; back up to the attribute name and forward
-            // past the closing quote.
-            // Attribute layout in matchStrTemp: ...<sp>name<sp?>=<sp?>"value"<sp?>...
-            let i = valueStart - 1 // opening quote
-            i-- // now at `=` or a space
+            // 扩大到吞掉整个 `name="value"` 属性。valueStart 指向开引号内的第一个字符；
+            // 向后退到属性名，向前越过闭引号。
+            // matchStrTemp 里属性的排布：...<sp>name<sp?>=<sp?>"value"<sp?>...
+            let i = valueStart - 1 // 开引号
+            i-- // 现在在 `=` 或空格上
             while (i >= 0 && /[\s=]/.test(matchStrTemp[i]!))
               i--
-            // i now at the last char of the attribute name; walk back to its start.
+            // i 现在在属性名的最后一个字符上；继续向前走到属性名开头。
             while (i >= 0 && /[\w$:.-]/.test(matchStrTemp[i]!))
               i--
             const attrNameStart = i + 1
@@ -406,13 +407,13 @@ export function transformerHover(options: TransformerHoverOptions = {}): SourceC
           }
         }
 
-        // Apply edits right-to-left so earlier indices stay valid.
+        // 从右往左应用编辑，保证前面的下标始终有效。
         edits.sort((a, b) => b.start - a.start)
         for (const { start: eStart, end: eEnd, replacement: eRep } of edits)
           matchStrTemp = `${matchStrTemp.slice(0, eStart)}${eRep}${matchStrTemp.slice(eEnd)}`
 
-        // Collapse orphan whitespace left by attribute deletions (quote + brace aware), same
-        // approach as `transformer-attributify`.
+        // 折叠属性删除留下的孤立空白（感知引号和花括号），思路与 `transformer-attributify`
+        // 相同。
         let collapsed = ''
         let runStart = -1
         const flushRun = (): void => {
@@ -449,15 +450,13 @@ export function transformerHover(options: TransformerHoverOptions = {}): SourceC
           }
         }
         matchStrTemp = collapsed
-        // Strip a stray space between the last attribute and a bare closing `>`, but KEEP one
-        // before self-closing `/>` (`<div />` is idiomatic in both Vue and JSX). Matches the
-        // sibling `transformer-attributify`'s collapse pass verbatim — kept identical so the
-        // two transformers emit the same whitespace shape on the same input.
+        // 去掉最后一个属性和裸闭合 `>` 之间的杂散空格，但自闭合 `/>` 前保留一个
+        // （`<div />` 在 Vue 和 JSX 里都是惯用写法）。和 `transformer-attributify`
+        // 的折叠 pass 逐字一致——保持相同输入产出相同空白形状。
         matchStrTemp = matchStrTemp.replace(/(["'}])\s+(>)$/, '$1$2')
 
-        // Inject hover-class attribute if none existed (no static value, no dynamic binding,
-        // no shorthand) and we have tokens to write. Done after the collapse pass so the
-        // insert position is computed against current text.
+        // 没有现成的 hover-class（无静态值、无动态绑定、无简写）且有 token 要写时，
+        // 注入 hover-class 属性。放在折叠 pass 之后，插入位置才能基于当前文本算对。
         if (hoverAttrStart === -1 && !hoverDynContent && hoverShorthandStart === -1 && hoverTokens.length) {
           const selfClosing = matchStrTemp.endsWith('/>')
           const insertPos = matchStrTemp.length - (selfClosing ? 2 : 1)
@@ -469,9 +468,8 @@ export function transformerHover(options: TransformerHoverOptions = {}): SourceC
         changed = true
       }
 
-      // Only overwrite the source when something actually changed. On an empty file (or one
-      // with no eligible elements) `s.overwrite(0, 0, ...)` / `(0, len, same)` would throw or
-      // be a wasted no-op; MagicString rejects zero-length overwrites.
+      // 真的有变化时才回写源码。空文件（或没有可处理元素）时 `s.overwrite(0, 0, ...)`
+      // 或 `(0, len, 原文)` 会抛异常或白做一次；MagicString 拒绝零长度改写。
       if (changed)
         s.overwrite(0, s.original.length, code.toString())
     },

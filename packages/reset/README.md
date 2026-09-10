@@ -203,4 +203,4 @@ import '@unocss-applet/reset/taro/tailwind-v4.css'
 
 ## License
 
-MIT License © 2022-PRESENT ModyQyW
+MIT License &copy; 2022-PRESENT ModyQyW

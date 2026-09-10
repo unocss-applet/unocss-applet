@@ -43,6 +43,8 @@
     "@unocss/core": "catalog:unocss",
     "@unocss/preset-mini": "catalog:unocss",
     "@unocss/preset-wind3": "catalog:unocss",
-    "@unocss/preset-wind4": "catalog:unocss"
+    "@unocss/preset-wind4": "catalog:unocss",
+    "@vue/compiler-dom": "catalog:utils",
+    "oxc-parser": "catalog:utils"
   }
 }

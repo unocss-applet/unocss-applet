@@ -15,9 +15,9 @@ export * from './types'
 export function presetApplet(options: PresetAppletOptions = {}): Preset<object> {
   options.preset = options.preset ?? 'wind3'
   const unsupportedChars = [...UNSUPPORTED_CHARS, ...(options.unsupportedChars ?? [])]
-  // postprocess receives a selector already escaped once by UnoCSS (e.g. `.` -> `\.`),
-  // so building a regex to match those chars requires escaping a second time; a single
-  // escape would leave the regex matching the literal backslash instead of the source char.
+  // postprocess 拿到的 selector 已经被 UnoCSS 转义过一次（比如 `.` 变成 `\.`），
+  // 所以要构建一个能匹配这些字符的正则，得再转义一次；只转义一次的话，正则匹配到的
+  // 会是字面上的反斜杠，而不是原始字符。
   const escapedUnsupportedChars = unsupportedChars.map(char => escapeSelector(escapeSelector(char)))
   const charTestReg = new RegExp(`${escapedUnsupportedChars.join('|')}`)
   const charReplaceReg = new RegExp(charTestReg, 'g')
@@ -28,12 +28,12 @@ export function presetApplet(options: PresetAppletOptions = {}): Preset<object> 
     return str
   }
 
-  // `questionMark` rule's matcher — matches a bare `?` (and `where`) as a utility. Applet wxss
-  // can't express its `:where`-style selector, and worse: UnoCSS's default extractor splits a
-  // ternary (`true ? 1 : 0`) into tokens, so `?` enters `matched` and `transformerApplet`
-  // rewrites it to `_a_`, corrupting script (#108). Removed by pattern rather than `pop()`,
-  // since `pop()` relies on `questionMark` being the array's last entry — an upstream change
-  // that appends another rule would silently leave it in place and reintroduce #108.
+  // `questionMark` 规则的 matcher —— 它会把单独的 `?`（还有 `where`）当作工具类。小程序
+  // wxss 写不出它需要的 `:where` 类选择器，更麻烦的是 UnoCSS 默认 extractor 会把三元表达式
+  // （`true ? 1 : 0`）拆成 token，`?` 就进了 `matched`，`transformerApplet` 会把它改写成
+  // `_a_`，直接损坏脚本代码（#108）。这里按 pattern 匹配来删，而不是用 `pop()`：`pop()`
+  // 依赖 `questionMark` 恰好是数组最后一项，万一上游往后追加了新规则，`pop()` 会漏删，
+  // #108 就悄悄回来了。
   // @see https://github.com/unocss/unocss/blob/main/packages-presets/preset-mini/src/_rules/question-mark.ts
   const isQuestionMarkRule = (rule: unknown): boolean => {
     const pattern = Array.isArray(rule) ? rule[0] : rule
@@ -51,26 +51,26 @@ export function presetApplet(options: PresetAppletOptions = {}): Preset<object> 
 
     if (options.preset === 'wind3') {
       preset = internalPresetWind3({ ...(presetOptions as PresetWind3Options) })
-      // drop the `questionMark` rule (see `isQuestionMarkRule` above for why by-pattern, not `pop()`).
+      // 删掉 `questionMark` 规则（为什么按 pattern 匹配而不是 `pop()`，见上面 `isQuestionMarkRule` 的注释）。
       preset.rules = preset.rules?.filter(rule => !isQuestionMarkRule(rule))
-      // replace the built-in `variantSpaceAndDivide` (position 1): the upstream variant targets
-      // `> * + *`, which applets can't express — applet needs an explicit element list
-      // (`> view + view`, etc.). Inject the wildcard variant at the same time.
+      // 替换内置的 `variantSpaceAndDivide`（位置 1）：上游 variant 生成的是相邻兄弟选择器
+      // `>:not([hidden])~:not([hidden])`，小程序 wxss 解析不了，只能改成明确的元素列表
+      // （`> view + view` 这类）。顺手在这里注入 wildcard variant。
       preset.variants?.splice(1, 1, ...variantSpaceAndDivide(options), ...variantWildcard(options))
-      // wind3 preflight reuses the mini-style preflightBase; applet controls variablePrefix/on-demand here
+      // wind3 的 preflight 复用 mini 风格的 preflightBase；variablePrefix 和按需生成由 applet 在这里控制
       preset.preflights = preflights(presetOptions)
     }
     else if (options.preset === 'wind4') {
-      // applet can't express a universal selector: wind4's `property` preflight defaults its
-      // selector to `*, ::before, ::after, ::backdrop` (scoped only by an `@supports` query).
-      // Replace the `*` with `:not(not)` for parity with the wind3 #99 fix; merge with any
-      // user-provided `preflights` so a user's `reset: false` / `theme` config is preserved.
+      // 小程序写不出通配选择器：wind4 的 `property` preflight 默认 selector 是
+      // `*, ::before, ::after, ::backdrop`（只靠一条 `@supports` 查询限定范围）。
+      // 把 `*` 换成 `:not(not)`，和 wind3 的 #99 修复保持一致；同时合并用户自己配的
+      // `preflights`，用户的 `reset: false` / `theme` 配置不会丢。
       // @see https://github.com/unocss-applet/unocss-applet/issues/99
       const wind4Options = presetOptions as PresetWind4Options
       const userProperty = wind4Options.preflights?.property
       wind4Options.preflights = {
         ...wind4Options.preflights,
-        // leave a user's explicit `property: false` untouched so they can still disable it
+        // 用户明确写了 `property: false` 就不动，保留关闭它的能力
         ...(userProperty === false
           ? { property: false }
           : {
@@ -83,31 +83,30 @@ export function presetApplet(options: PresetAppletOptions = {}): Preset<object> 
 
       preset = internalPresetWind4({ ...wind4Options })
 
-      // drop the `questionMark` rule: same incompatibility as wind3 above.
+      // 删掉 `questionMark` 规则：原因和上面 wind3 一样。
       // @see https://github.com/unocss/unocss/blob/main/packages-presets/preset-wind4/src/rules/question-mark.ts
       preset.rules = preset.rules?.filter(rule => !isQuestionMarkRule(rule))
-      // wind4 ships its own reset/theme/property preflights (trackedTheme/trackedProperties);
-      // keep them as-is — overriding with the wind3-style preflight would drop them all.
+      // wind4 自带 reset/theme/property preflights（trackedTheme/trackedProperties）；
+      // 保持原样——用 wind3 风格的 preflight 覆盖会把它们全丢掉。
     }
 
     return {
       ...preset,
       name: 'unocss-preset-applet',
-      // postprocess rewrites each generated selector so it is applet-safe:
-      //   1. replace unsupported chars (`.`, `:`, `[`, ...) with `_a_`
-      //   2. encode any non-ASCII (e.g. CJK) into char codes, since applet class names
-      //      must match `[A-Za-z0-9_-]`
-      // This runs after UnoCSS has resolved rules, so it covers everything wind3/wind4 emit.
+      // postprocess 把每条生成的 selector 改写成小程序能用的形式：
+      //   1. 把不支持字符（`.`、`:`、`[` 等）替换为 `_a_`
+      //   2. 把非 ASCII 字符（比如中文）编码成字符码，因为小程序类名只能匹配
+      //      `[A-Za-z0-9_-]`
+      // 它在 UnoCSS 解析完规则之后运行，所以 wind3/wind4 产出的所有选择器都会被覆盖到。
       //
-      // wind3 emits complex variants as a flat compound selector (e.g.
-      // `.group[data-state=open] .group-data-\[state\=open\]\:font-bold`), so aliasing
-      // `util.selector` is sufficient. wind4 restructures these into a nested form: the
-      // original class moves into `util.parent` (used as the wrapping selector) and
-      // `util.selector` becomes a relative `&:is(...)` body. Without aliasing `parent`,
-      // the wrapping class keeps `\:` `\[` `\=` `\]` and is unreachable from applet wxss.
-      // At-rules in `parent` (`@media`, `@supports`) carry raw `:`/`(`/`)` that are part
-      // of their query, not class names; the double-escaped regex only matches the
-      // backslash-escaped form, so it leaves those intact.
+      // wind3 把复杂 variant 生成成一个扁平的复合 selector（比如
+      // `.group[data-state=open] .group-data-\[state\=open\]\:font-bold`），所以只处理
+      // `util.selector` 就够了。wind4 会把它重构成嵌套形式：原始类名挪进 `util.parent`
+      // （用作外层包裹 selector），`util.selector` 变成相对的 `&:is(...)` 主体。不处理
+      // `parent` 的话，外层类名会留着 `\:` `\[` `\=` `\]`，小程序 wxss 里引用不到。
+      // `parent` 里的 at-rule（`@media`、`@supports`）本身带有原始的 `:`/`(`/`)`，
+      // 那些是查询语法的一部分，不是类名；双重转义的正则只匹配反斜杠转义后的形式，
+      // 所以不会误伤它们。
       postprocess: [
         (util) => {
           if (util.selector) {
@@ -122,9 +121,9 @@ export function presetApplet(options: PresetAppletOptions = {}): Preset<object> 
         },
       ],
       configResolved(config) {
-        // auto-register the source-code transformer so users only need to add this preset;
-        // the transformer aliases unsupported tokens in the source into applet-safe class names
-        // and registers them as shortcuts so they resolve back to the original utilities.
+        // 自动注册 source-code transformer，用户只要加这个 preset 就行；transformer 负责
+        // 把源码里含不支持字符的 token 改写成小程序安全的类名，并注册成 shortcut
+        // 指回原始工具类。
         if (!config.transformers)
           config.transformers = []
         config.transformers.push(transformerApplet(options))

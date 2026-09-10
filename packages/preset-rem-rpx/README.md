@@ -98,4 +98,4 @@ export interface RemRpxOptions {
 
 ## License
 
-MIT License © 2022-PRESENT [Neil Lee](https://github.com/zguolee)
+MIT License &copy; 2022-PRESENT [Neil Lee](https://github.com/zguolee)

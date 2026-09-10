@@ -1,11 +1,11 @@
 /**
- * Encode non-space Latin characters
- * @param str - The string to encode
+ * 把非空格的非 ASCII 字符编码成字符码
+ * @param str - 要编码的字符串
  * @example
  * ```ts
  * encodeNonSpaceLatin('你好') // '203202'
  * ```
- * @returns The encoded string
+ * @returns 编码后的字符串
  */
 export function encodeNonSpaceLatin(str: string): string {
   // eslint-disable-next-line regexp/prefer-w, regexp/no-obscure-range
@@ -14,9 +14,9 @@ export function encodeNonSpaceLatin(str: string): string {
   if (!regex.test(str))
     return str
 
-  // for unocss shortcuts, e.g. 'a-bg': 'bg-gray-100 dark:bg-black'
-  // will generate classes like '.a-bg' and '.dark $$ .a-bg'
-  // so we need skip the ' $$ ' in the encoded string
+  // unocss 的 shortcut 会生成形如 '.a-bg' 和 '.dark $$ .a-bg' 的类名
+  // （比如 'a-bg': 'bg-gray-100 dark:bg-black'），
+  // 所以编码时要跳过 ' $$ '，不能把它也转成字符码
   if (str.includes(' $$ '))
     return str
 

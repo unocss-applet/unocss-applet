@@ -103,4 +103,4 @@ JSX 侧不在支持范围内（元素匹配器基于正则，并非完整的 JSX
 
 ## License
 
-MIT License © 2022-PRESENT [Neil Lee](https://github.com/zguolee)
+MIT License &copy; 2022-PRESENT [Neil Lee](https://github.com/zguolee)

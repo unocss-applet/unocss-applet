@@ -1,11 +1,13 @@
 /**
- * Characters disallowed in applet (mini-program) class names.
+ * 小程序类名里不允许出现的字符。
  *
- * Applet wxss rejects these in selectors because it has no support for the corresponding
- * selector syntax — `.`/`#` (class/id), `:`/`[]`/`()` (pseudo/attribute/functional),
- * `*` (universal), `/`, `%`, operators, etc. They get rewritten to `_a_` by the preset's
- * postprocess / transformer so generated and source utilities stay referenceable.
- * `=` is included to let the transformer distinguish attributify tokens (`foo=bar`).
+ * 小程序 wxss 不支持对应的选择器语法，所以这些字符在 wxss 的选择器里没法用：
+ * `.`/`#`（类选择器/ID 选择器）、`:`/`[]`/`()`（伪类/属性选择器/函数式写法）、
+ * `*`（通配符）、`/`、`%`、各种运算符等。preset 的 postprocess 和 transformer 会把这些
+ * 字符改写成 `_a_`，让生成的 CSS 和源码里的工具类都能被正常引用。
+ * 把 `=` 也算进来，是为了让 transformer 能识别并跳过 attributify 风格的 token（`foo=bar`）——
+ * `[...]` 括号里的 `=` 不受影响，因为 data 属性变体需要它
+ * （比如 `group-data-[state=open]:font-bold`）。
  */
 export const UNSUPPORTED_CHARS = [
   '.',

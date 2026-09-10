@@ -73,12 +73,12 @@ export default defineConfig({
 
 ## 移动条件
 
-仅当 `hover:` 去掉可选前导 `!` important 修饰符和 `hover:` 前缀后，剩余 body 是一个**无进一步变体限定符**的真实 UnoCSS 工具类时才移动（即 body 的顶层 `:` 必须位于 `[...]` 任意值组之内）。前导 `!` 会随 body 一起保留。
+仅当 `hover:` 去掉可选前导 `!` important 修饰符和 `hover:` 前缀后，剩余 body 是一个**无进一步变体限定符**的真实 UnoCSS 工具类时才移动（即 body 的顶层 `:` 必须位于 `[...]` 任意值组之内）。前导 `!` 会随 body 一起保留。移动时会同时做别名化（不支持字符换 `_a_`、非 ASCII 编码，与 `presetApplet` 的 postprocess 同一套规则）并注册对应的 shortcut，让 `hover-class` 的值与生成的 CSS 选择器一致。
 
 | 输入 | 是否移动 | 结果 |
 | --- | :---: | --- |
-| `hover:bg-red`、`!hover:bg-red` | ✅ | `hover-class="bg-red"` / `hover-class="!bg-red"` |
-| `hover:bg-[url(http://x)]`、`hover:bg-red/50` | ✅ | 任意值与透明度修饰符照常移动 |
+| `hover:bg-red`、`!hover:bg-red` | ✅ | `hover-class="bg-red"` / `hover-class="_a_bg-red"` |
+| `hover:bg-[url(http://x)]`、`hover:bg-red/50` | ✅ | 照常移动，值形如 `bg-_a_url_a_...` / `bg-red_a_50` |
 | `hover:dark:bg-red`、`hover:focus:bg-red`、`hover:peer-focus:bg-red` | ❌ | `hover-class` 无法表达 dark/focus/peer 限定 |
 | `dark:hover:bg-red`、`md:hover:p-2` | ❌ | 限定符在 `hover:` 之前 |
 | `hover:notarealthing` | ❌ | 不是已识别的工具类 |
@@ -111,4 +111,4 @@ export interface TransformerHoverOptions {
 
 ## License
 
-MIT License © 2023-present [UnoCSS Applet](https://github.com/unocss-applet/unocss-applet)
+MIT License &copy; 2023-present [UnoCSS Applet](https://github.com/unocss-applet/unocss-applet)

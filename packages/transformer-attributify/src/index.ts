@@ -6,35 +6,33 @@ import MagicString from 'magic-string'
 export * from './types'
 
 /**
- * Attributify mode for applets (uni-app / Taro on the mini-program side).
+ * 小程序端的 attributify 模式（uni-app / Taro 的小程序端）。
  *
- * Unlike upstream `@unocss/preset-attributify` — which works at runtime via attribute
- * selectors like `[un-text='']` — applets can't use attribute selectors in wxss. This
- * transformer instead compiles attributify usage in the template into plain `class="..."`
- * at build time, e.g. `<view text="red" mt-2 />` -> `<view class="text-red mt-2" />`.
+ * 上游 `@unocss/preset-attributify` 靠运行时的属性选择器（如 `[un-text='']`）工作，
+ * 而小程序的 wxss 不支持属性选择器。所以本 transformer 改为在构建期把模板里的
+ * attributify 写法编译成普通的 `class="..."`，例如
+ * `<view text="red" mt-2 />` -> `<view class="text-red mt-2" />`。
  *
- * Scope: `.vue` (uni-app / Taro-vue) and `.jsx`/`.tsx` (Taro React) files. JSX dynamic
- * expressions (`text={cond ? 'a' : 'b'}`, `{...spread}`) can't be statically compiled, so
- * only static attributes and value-less shorthand are handled on the JSX side.
+ * 处理范围：`.vue`（uni-app / Taro-vue）和 `.jsx`/`.tsx`（Taro React）文件。JSX 里的动态
+ * 表达式（`text={cond ? 'a' : 'b'}`、`{...spread}`）没法在构建期静态编译，所以 JSX 侧只
+ * 处理静态属性和无值的简写属性。
  *
- * Out of scope on the JSX side (the regex-based element matcher isn't a full JSX parser):
- * - Fragment short syntax `<` + `>...</` + `>` — not matched (no leading `\w`).
- * - String/comment children that look like tags (e.g. a string child `'<div>'`, or a JSX
- *   comment containing `<foo>`) may be misread as real tags. Keep such content out of
- *   templates, or run this transformer only on hand-written markup where it isn't a concern.
- * - A `>` inside any JSX expression container is treated as the tag's closing `>`, so an
- *   element whose attribute expression contains `>` — arrow functions (`onClick={() => fn()}`),
- *   comparison operators (`disabled={a > b}`), or `<`/`>` inside string literals — is matched
- *   only up to that `>` and silently skipped (utilities on that element are dropped without
- *   error). This is the most common gotcha in real Taro/React code; move utilities on such
- *   elements into a literal `className="..."` to avoid the drop.
+ * JSX 侧的已知边界（正则匹配元素，不是完整的 JSX 解析器）：
+ * - Fragment 简写 `<` + `>...</` + `>` 不会命中（开头没有 `\w`）。
+ * - 长得像标签的字符串/注释子节点（比如字符串子节点 `'<div>'`，或包含 `<foo>` 的 JSX
+ *   注释）可能被误读成真标签。别把这类内容写进模板，或者只在手写标记上启用本
+ *   transformer 就没事。
+ * - JSX 表达式容器里的 `>` 会被当成标签的结束 `>`，所以属性表达式里带 `>` 的元素——
+ *   箭头函数（`onClick={() => fn()}`）、比较运算（`disabled={a > b}`）、字符串字面量里的
+ *   `<`/`>`——只会被匹配到那个 `>` 为止，然后被整个跳过（元素上的工具类会静默丢失，
+ *   不报错）。这是真实 Taro/React 代码里最常见的坑；把这类元素上的工具类挪进字面量
+ *   `className="..."` 就能避开。
  */
 const splitterRE = /[\s'"`;]+/g
-// Contract: capture group 1 MUST be the full attribute segment, spanning from the first
-// attribute after the tag name through the last attribute before the closing `/?>`. The
-// attribute-loop below computes the group's offset into the full match via `indexOf(attrSeg)`
-// and maps regex indices from attrSeg-space into match-space — both depend on this invariant.
-// Any change here (new capture groups, trimming the segment) requires re-verifying segOffset.
+// 契约：捕获组 1 必须是完整的属性段——从标签名后的第一个属性开始，到闭合 `/?>` 之前的
+// 最后一个属性为止。下方的属性循环靠 `indexOf(attrSeg)` 算出这个组在整个匹配里的偏移，
+// 再把正则索引从 attrSeg 坐标系换算到整段匹配的坐标系——两处都依赖这个约定。
+// 改这里的正则（加捕获组、裁剪段落）都要重新核对 `segOffset`。
 function genElementRE(ignoreTagPrefixes: string[] = []): RegExp {
   if (!ignoreTagPrefixes.length)
     // eslint-disable-next-line regexp/no-super-linear-backtracking, regexp/no-dupe-disjunctions
@@ -48,30 +46,28 @@ function genElementRE(ignoreTagPrefixes: string[] = []): RegExp {
     return [capitalized, hyphenated]
   })
 
-  // `ignoreTagPrefixes` is non-empty here (early-returned above), and `flatMap` over it yields
-  // ≥2 entries per prefix, so `patterns` is always non-empty — no empty-lookahead branch needed.
+  // 走到这里 `ignoreTagPrefixes` 一定非空（上面已经提前返回），每个前缀经过 `flatMap`
+  // 会产出至少 2 项，所以 `patterns` 永远不为空——不需要处理空前瞻分支。
   const ignorePattern = `(?!${patterns.join('|')})`
   return new RegExp(`<${ignorePattern}\\w(?=.*>)[\\w:.$-]*\\s(((".*?>?.*?")|.*?)*?)\\/?>`, 'gs')
 }
-// Captures unquoted JSX values with `\S+`, which truncates at the first whitespace inside a
-// `{...}` expression container (`{a ? b : c}` → `{a`). JSX attribute handling re-extracts the
-// full container via `scanBracedExpression` below; any change to this regex's value capture
-// must be re-verified against that recovery layer.
+// 无引号的 JSX 值用 `\S+` 捕获，会在 `{...}` 表达式容器内的第一个空白处被截断
+// （`{a ? b : c}` → `{a`）。JSX 属性处理会通过下面的 `scanBracedExpression` 重新取出完整
+// 容器；改动这里对值的捕获逻辑时，必须连着这层补救一起核对。
 // eslint-disable-next-line regexp/no-super-linear-backtracking
 const attributeRE = /([[?\w\u00A0-\uFFFF-:()#%.\]]+)(?:\s*=\s*('[^']*'|"[^"]*"|\S+))?/g
 
 /**
- * Skip a quoted run (`'...'`, `"..."`, or template `` `...` ``) inside an attribute value,
- * returning the index just past the closing quote. Template literals are single tokens at
- * this layer (no `${}` interpolation parsing) — the brace counter that calls this only needs
- * to know where the literal ends so its internal `{`/`}` aren't counted against the depth.
- * Returns `null` if the quote is never closed before `end`.
+ * 跳过属性值里的一段引号内容（`'...'`、`"..."` 或模板字符串 `` `...` ``），返回结束引号
+ * 后面那个字符的下标。在这一层，模板字符串被当作单个 token（不解析 `${}` 插值）——
+ * 调用方只需要知道字面量在哪结束，这样内部的 `{`/`}` 就不会被算进花括号深度。
+ * 引号没在 `end` 之前闭合时返回 `null`。
  */
 function skipQuoted(seg: string, quoteStart: number, end: number): number | null {
   const quote = seg[quoteStart]
   for (let i = quoteStart + 1; i < end; i++) {
     if (seg[i] === '\\') {
-      i++ // skip escaped char
+      i++ // 跳过转义字符
       continue
     }
     if (seg[i] === quote)
@@ -81,18 +77,16 @@ function skipQuoted(seg: string, quoteStart: number, end: number): number | null
 }
 
 /**
- * Scan a balanced `{...}` expression in `seg[braceStart..end)` starting at `braceStart`.
+ * 从 `braceStart` 开始，扫描 `seg[braceStart..end)` 里配平的 `{...}` 表达式。
  *
- * `attributeRE` captures unquoted JSX values as `\S+`, which truncates at the first
- * whitespace inside a `{...}` expression container (e.g. `{cond ? 'a' : 'b'}` → `{cond`).
- * This re-extracts the full container by matching braces. Returns the slice `{...}`
- * including both braces, or `null` if braces are unbalanced (truncated source).
+ * `attributeRE` 用 `\S+` 捕获无引号的 JSX 值，会在 `{...}` 表达式容器内的第一个空白处被
+ * 截断（比如 `{cond ? 'a' : 'b'}` → `{cond`）。这里通过配对花括号重新取出完整容器，
+ * 返回包含两侧花括号的 `{...}` 片段；花括号不配平（源码被截断）时返回 `null`。
  *
- * String/template literals inside the expression are skipped via `skipQuoted`, so braces
- * within them (e.g. `'}'`, `${obj}`) don't throw off the depth counter. Nested template
- * `${...}` interpolation still isn't fully parsed — a `}` inside an interpolated expression
- * could still mis-balance — but that pattern is uncommon enough in className expressions
- * that this layer is sufficient in practice.
+ * 表达式里的字符串/模板字面量通过 `skipQuoted` 跳过，所以字面量里的花括号（比如
+ * `'}'`、`${obj}`）不会干扰深度计数。嵌套模板的 `${...}` 插值仍然没有完整解析——插值
+ * 表达式里出现 `}` 还是可能算错配平——但这种写法在 className 表达式里足够少见，
+ * 这一层在实际使用中够用了。
  */
 function scanBracedExpression(seg: string, braceStart: number, end: number): string | null {
   if (seg[braceStart] !== '{')
@@ -104,7 +98,7 @@ function scanBracedExpression(seg: string, braceStart: number, end: number): str
       const after = skipQuoted(seg, i, end)
       if (after === null)
         return null
-      i = after - 1 // for-loop ++ brings us to the char after the closing quote
+      i = after - 1 // for 循环的 ++ 会把 i 带到结束引号的下一个字符
       continue
     }
     if (ch === '{') {
@@ -119,7 +113,7 @@ function scanBracedExpression(seg: string, braceStart: number, end: number): str
   return null
 }
 
-/** A pending position-based edit on `matchStrTemp`: replace `[start, end)` with `replacement`. */
+/** 一条待应用的位置编辑：把 `matchStrTemp` 的 `[start, end)` 替换为 `replacement`。 */
 interface AttrEdit { start: number, end: number, replacement: string }
 
 const defaultIgnoreAttributes = ['placeholder', 'setup', 'lang', 'scoped']
@@ -136,7 +130,7 @@ export function transformerAttributify(options: TransformerAttributifyOptions = 
     name: 'transformer-attributify',
     enforce: 'pre',
     async transform(s, id, { uno }) {
-      // process Vue SFCs and JSX/TSX; the regex assumes HTML-like template syntax
+      // 只处理 Vue SFC 和 JSX/TSX；正则假设的是 HTML 风格的模板语法
       if (!/\.(?:vue|[jt]sx)$/.test(id))
         return
 
@@ -149,68 +143,60 @@ export function transformerAttributify(options: TransformerAttributifyOptions = 
         const start = eleMatch.index!
         let matchStrTemp = eleMatch[0]
         let hasStaticClass = false
-        // static class literal captured only to decide whether appended utilities need a
-        // leading space separator; presence is tracked by `hasStaticClass` above, since the
-        // literal can be empty (and `''` is falsy, which would otherwise mis-flag absence).
+        // 静态 class 字面量只用来决定追加的工具类前面要不要加空格；是否存在由上面的
+        // `hasStaticClass` 跟踪，因为字面量可能是空串（而 `''` 是假值，直接判断会误报不存在）。
         let staticClassValue = ''
-        // For JSX dynamic `className={expr}` / `class={expr}`: record the attribute name, the
-        // raw `{expr}` snippet, and the token's absolute span in matchStrTemp so utilities can
-        // be appended via a template literal that preserves the runtime expression. The span is
-        // kept so the rewrite is position-anchored rather than `indexOf`-based — the latter would
-        // land on the first substring match and could corrupt a sibling attribute whose value
-        // happens to contain `className={...}` (same first-match trap the static path avoids).
+        // JSX 的动态 `className={expr}` / `class={expr}`：记录属性名、原始 `{expr}` 片段，
+        // 以及这个 token 在 matchStrTemp 里的绝对 span，之后把工具类用模板字符串追加进去，
+        // 保留运行时表达式。保留 span 是为了让改写按位置锚定，而不是靠 `indexOf`——
+        // 后者会命中第一个子串匹配，可能碰巧匹配到某个兄弟属性的值，把它改坏
+        // （静态路径避开的「首个匹配」陷阱，这里是同一个坑）。
         let dynamicClassName = ''
         let dynamicClassContent = ''
         let dynamicClassStart = -1
         let dynamicClassEnd = -1
         const attrSelectors: string[] = []
         const attrSeg = eleMatch[1] || ''
-        // `attributeRE` indices are relative to attrSeg; map them into matchStrTemp by adding
-        // attrSeg's offset inside the full tag match. The element regex is `<\w[\w:.$-]*\s(...)`,
-        // so the first whitespace is exactly the tag-name/attribute separator and attrSeg begins
-        // right after it. `indexOf(attrSeg)` would be wrong when a value-less attribute's name
-        // equals the tag name (e.g. `<flex flex />`): attrSeg `"flex "` then also matches inside
-        // `<flex `, landing the offset on the tag name instead of the attribute segment.
-        const segOffset = eleMatch[0].indexOf(' ') + 1
+        // 元素正则是 `<\w[\w:.$-]*\s(...)`，第一个空白正好是标签名和属性的分割点，
+        // attrSeg 紧跟在它后面。用 `search(/\s/)` 而不是 `indexOf(' ')`，兼容制表符/换行
+        // 的情况（如 `<view\n  m-2 />`）——那种时候 `indexOf(' ')` 会返回 -1，后面所有
+        // 下标都错位到标签名上，把标签改坏。用 `indexOf(attrSeg)` 则会在无值属性的名字
+        // 恰好等于标签名时出错（如 `<flex flex />`）：attrSeg `"flex "` 在 `<flex ` 里
+        // 也匹配，偏移会落在标签名上而不是属性段上。
+        const segOffset = eleMatch[0].search(/\s/) + 1
         const attributes = Array.from(attrSeg.matchAll(attributeRE))
 
-        // Pending position-based edits applied to matchStrTemp once we know whether utilities
-        // were collected. Replaces the previous `String.replace` approach — that rewrote the
-        // FIRST substring match, which could land on an unrelated attribute whose value happened
-        // to equal `name` or `existsClass`
-        // (e.g. `<div data-foo="text-red" className="text-red" mt-2 />`). Indices below are
-        // matchStrTemp-relative.
+        // 待应用的位置编辑，确认收集到工具类后一次性应用到 matchStrTemp。取代之前的
+        // `String.replace` 方案——那会改写第一个子串匹配，可能碰巧命中某个值恰好等于
+        // `name` 或 `existsClass` 的无关属性
+        // （比如 `<div data-foo="text-red" className="text-red" mt-2 />`）。下面的下标都是
+        // 相对 matchStrTemp 的。
         const edits: AttrEdit[] = []
-        // Insertion point queued at a static `class`/`className` closing quote; held by
-        // reference so it can be filled once `attrSelectors` is known without rescanning edits.
+        // 在静态 `class`/`className` 的结束引号处排队一个插入点；按引用持有这个编辑对象，
+        // 等 `attrSelectors` 确定后直接填内容，不用重新扫描编辑列表。
         let appendEdit: AttrEdit | null = null
 
-        // Push a deletion edit for just the attribute token itself (no surrounding
-        // whitespace). Adjacent deletions therefore never overlap on a shared space —
-        // overlap would corrupt later edits whose indices were computed against the
-        // original string. Orphan whitespace left behind is cleaned up by a single
-        // collapse pass after all edits are applied.
+        // 只为属性 token 本身（不含周围空白）推入一条删除编辑。相邻的删除因此不会在
+        // 共享的空格上重叠——重叠会让后面那些按原始字符串算好下标的编辑全部失效。
+        // 删除留下的孤儿空白由所有编辑应用之后的一次折叠 pass 统一清理。
         const pushRemoval = (attrStart: number, attrLen: number): void => {
           const absStart = segOffset + attrStart
           edits.push({ start: absStart, end: absStart + attrLen, replacement: '' })
         }
 
-        // JSX `{...}` expression containers are tokenised by `attributeRE` into the leading
-        // `name={fragment` (value bindings) or `{fragment` (spreads) plus stray sub-tokens
-        // (`?`, `b`, `:`, `c` in `{a ? b : c}`). The `{` itself isn't in `attributeRE`'s char
-        // class, so it's never yielded as a token — a spread's FIRST token is whatever follows
-        // the `{` (e.g. `...` for `{...x}`, `a:` for `{ a: b }`), and inner identifiers that
-        // happen to look like utilities (`flex`, `block`) would otherwise be consumed and
-        // deleted, corrupting the runtime object (e.g. `{ a: flex }` -> `{ a: }`).
+        // `attributeRE` 会把 JSX 的 `{...}` 表达式容器切成开头一段（值绑定的 `name={fragment`
+        // 或展开语法的 `{fragment`）加零散的子 token（`{a ? b : c}` 里的 `?`、`b`、`:`、`c`）。
+        // `{` 本身不在 `attributeRE` 的字符类里，永远不会单独成为 token——展开语法的第一个
+        // token 是 `{` 后面的内容（`{...x}` 是 `...`，`{ a: b }` 是 `a:`），而容器内部碰巧长得
+        // 像工具类的标识符（`flex`、`block`）否则会被当作属性消费并删除，把运行时对象改坏
+        // （`{ a: flex }` -> `{ a: }`）。
         //
-        // Pre-scan `attrSeg` once and record every braced container's span. A lazy in-loop
-        // watermark does NOT suffice: a spread's first stray token (`...`, or `flex` in
-        // `{ a: flex }`) doesn't start with `{`, so it would never trigger the per-token
-        // re-extraction that would advance a watermark — yet it must still be skipped. Spreads
-        // can appear anywhere in the attribute list (`<Comp className="x" {...rest} />`), so we
-        // need ALL container spans up front. A token whose START falls strictly inside a span
-        // is an inner stray and is skipped; a value binding's leading `name=` token starts
-        // before `{`, so it survives and reaches the per-token re-extraction below.
+        // 所以提前扫描一遍 attrSeg，记下每个花括号容器的 span。循环里的惰性水位线不够用：
+        // 展开语法的第一个零散 token（`...`，或 `{ a: flex }` 里的 `flex`）不是以 `{` 开头的，
+        // 永远触发不了能把水位线推进的重提取，但它同样必须被跳过。展开语法可能出现在属性
+        // 列表的任何位置（`<Comp className="x" {...rest} />`），所以需要提前拿到全部容器的
+        // span。起始位置严格落在某个 span 内的 token 是内部零散 token，直接跳过；值绑定的
+        // 开头 `name=` token 起点在 `{` 之前，不受影响，会继续走到下面的逐 token 重提取。
         const consumedRanges: Array<[number, number]> = []
         if (isJsx) {
           for (let i = 0; i < attrSeg.length; i++) {
@@ -221,12 +207,11 @@ export function transformerAttributify(options: TransformerAttributifyOptions = 
               consumedRanges.push([i, i + full.length - 1])
               i += full.length - 1
             }
-            // Unbalanced — leave it; the per-token re-extraction below will flag skipElement.
+            // 不配平——先放着；下面的逐 token 重提取会标记 skipElement。
           }
         }
-        // True if `pos` falls strictly inside any consumed container span. Half-open at the
-        // start so the value-binding's leading token (which starts at the attribute name,
-        // before `{`) is NOT considered consumed; the inner strays after `{` are.
+        // `pos` 是否严格落在某个已消费容器的 span 内。起点取半开区间：值绑定的开头 token
+        // （从属性名开始，在 `{` 之前）不算已消费；`{` 之后的内部零散 token 算。
         const isInsideConsumed = (pos: number): boolean => {
           for (const [s, e] of consumedRanges) {
             if (pos > s && pos <= e)
@@ -241,30 +226,28 @@ export function transformerAttributify(options: TransformerAttributifyOptions = 
           const name = attribute[1]
           const attrStart = attribute.index!
 
-          // this token starts strictly inside a previously scanned `{...}` container — it's an
-          // inner stray of a spread or value binding, not a real attribute; skip it.
+          // 这个 token 的起点严格落在之前扫描的 `{...}` 容器内——它是展开语法或值绑定的
+          // 内部零散 token，不是真属性；跳过。
           if (isInsideConsumed(attrStart))
             continue
 
-          // skip Vue dynamic bindings (`:foo="..."`) — value is a JS expression, not utility tokens
+          // 跳过 Vue 动态绑定（`:foo="..."`）——值是 JS 表达式，不是工具类 token
           if (name.startsWith(':'))
             continue
 
           let content = attribute[2]
 
-          // Offset of `content` within matchStr — used both to locate the start of a `{...}`
-          // container for re-extraction AND to compute the attribute's end span for the dynamic
-          // class rewrite. Computed unconditionally because the dynamic-class span (below) needs
-          // it even when content is NOT re-extracted (e.g. whitespace-free `{c}` or
-          // `className = {c}` where `=` has surrounding spaces).
+          // `content` 在 matchStr 里的偏移——既用来定位 `{...}` 容器的起点（供重提取），
+          // 也用来算动态 class 改写所需的属性结束 span。无条件计算，因为下面的动态 class
+          // span 即使在 content 没有被重提取时也需要它（比如不带空白的 `{c}`，或 `=` 两侧
+          // 有空格的 `className = {c}`）。
           const contentOffset = content ? matchStr.indexOf(content) : -1
 
-          // JSX value bindings `attr={expr}`: `attributeRE` captures unquoted values with `\S+`,
-          // which truncates at the first whitespace inside a `{...}` container
-          // (`{cond ? 'a' : 'b'}` → `{cond`). Re-extract the full `{...}` via brace balancing so
-          // dynamic detection works for ternaries, object literals, template strings, and spaced
-          // identifiers alike. Whitespace-free `{expr}` (e.g. `{c}`) is already captured whole by
-          // `\S+`; only the truncated case needs re-extraction.
+          // JSX 值绑定 `attr={expr}`：`attributeRE` 用 `\S+` 捕获无引号值，会在 `{...}`
+          // 容器内的第一个空白处截断（`{cond ? 'a' : 'b'}` → `{cond`）。通过花括号配平重新
+          // 取出完整 `{...}`，这样三目、对象字面量、模板字符串、带空格的标识符都能被动态
+          // 检测覆盖。不带空白的 `{expr}`（如 `{c}`）已经被 `\S+` 完整捕获；只有被截断的
+          // 情况需要重提取。
           let braceUnbalanced = false
           if (isJsx && content && content.startsWith('{') && !content.endsWith('}')) {
             const braceStart = attrStart + contentOffset
@@ -273,9 +256,8 @@ export function transformerAttributify(options: TransformerAttributifyOptions = 
               content = full
             }
             else {
-              // expression container isn't balanced in the matched slice — can't safely classify
-              // or rewrite. Skip this whole element so neither the attribute nor its `m-2`
-              // shorthand gets silently dropped or duplicated.
+              // 表达式容器在匹配到的片段里不配平——没法安全地分类或改写。跳过整个元素，
+              // 免得这个属性或它的 `m-2` 简写被静默丢弃或重复添加。
               braceUnbalanced = true
             }
           }
@@ -284,10 +266,9 @@ export function transformerAttributify(options: TransformerAttributifyOptions = 
             break
           }
 
-          // JSX dynamic bindings `attr={expr}` (except `class`/`className`, handled below to
-          // preserve the runtime value) carry a JS expression that can't be statically compiled
-          // to utility tokens at build time — skip. Vue's `:attr="..."` is already skipped by
-          // the `:` guard above.
+          // JSX 动态绑定 `attr={expr}`（`class`/`className` 除外，它们在下面单独处理以保留
+          // 运行时值）携带的是 JS 表达式，无法在构建期静态编译成工具类 token——跳过。
+          // Vue 的 `:attr="..."` 已经被上面的 `:` 判断跳过了。
           const isJsxDynamicValue = isJsx && !!content && /^\{[\s\S]*\}$/.test(content)
           if (isJsxDynamicValue && !['class', 'className'].includes(name))
             continue
@@ -295,11 +276,11 @@ export function transformerAttributify(options: TransformerAttributifyOptions = 
           const nonPrefixed = name.replace(prefix, '')
           if (!ignoreAttributes.includes(nonPrefixed)) {
             if (!content) {
-              // non-valued attributes, e.g. `<div mt-2 />` -> class `mt-2`
+              // 无值属性，如 `<div mt-2 />` -> class `mt-2`
               if (prefixedOnly && prefix && !name.startsWith(prefix))
                 continue
               if (isValidSelector(nonPrefixed) && nonValuedAttribute) {
-                // only keep it if UnoCSS actually recognises the token as a utility
+                // 只有 UnoCSS 确实认识这个 token 是工具类才保留
                 if (await uno.parseToken(nonPrefixed)) {
                   attrSelectors.push(nonPrefixed)
                   deleteAttributes && pushRemoval(attrStart, matchStr.length)
@@ -307,34 +288,30 @@ export function transformerAttributify(options: TransformerAttributifyOptions = 
               }
             }
             else {
-              // valued attributes, e.g. `<div text="red" p="2" />`
+              // 有值属性，如 `<div text="red" p="2" />`
               if (name.includes('hover-class'))
-                // `hover-class` is a native applet attribute, never an attributify target
+                // `hover-class` 是小程序原生属性，永远不是 attributify 的目标
                 continue
               if (['class', 'className'].includes(name)) {
-                // Vue `:class` is already filtered by the `name.startsWith(':')` guard above;
-                // `name` here is literally `class` or `className`, never contains `:`.
+                // Vue 的 `:class` 已经被上面的 `name.startsWith(':')` 过滤了；这里的 `name`
+                // 一定就是字面的 `class` 或 `className`，不含 `:`。
                 if (isJsxDynamicValue) {
-                  // JSX `className={expr}` / `class={expr}` — can't read expr at build time, but
-                  // remember the attribute name and raw `{expr}` snippet so utilities can be
-                  // appended via a template literal below, preserving the runtime expression.
-                  // Span covers `name=` + any whitespace around `=` + the (possibly re-extracted)
-                  // full `{...}` expression. Anchored on `contentOffset` rather than a hardcoded
-                  // `name.length + 1`, which would undershoot when `=` has surrounding spaces
-                  // (e.g. `className = {c}`) and leave the trailing expression chars outside the
-                  // rewrite, producing invalid JSX.
+                  // JSX 的 `className={expr}` / `class={expr}`——构建期读不到 expr，但记下属性名
+                  // 和原始 `{expr}` 片段，之后把工具类用模板字符串追加进去，保留运行时表达式。
+                  // span 覆盖 `name=` + `=` 两侧可能的空白 + （可能重提取过的）完整 `{...}`
+                  // 表达式。用 `contentOffset` 锚定而不是硬编码 `name.length + 1`——后者在 `=`
+                  // 两侧有空格时（如 `className = {c}`）会偏短，表达式尾部字符落在改写范围外，
+                  // 产生非法 JSX。
                   dynamicClassName = name
                   dynamicClassContent = content
                   dynamicClassStart = segOffset + attrStart
                   dynamicClassEnd = dynamicClassStart + contentOffset + content.length
                 }
                 else {
-                  // static `class="foo"` / `className="foo"` — queue a zero-width insertion
-                  // point at THIS attribute's closing quote so generated utilities append inside
-                  // the string, rather than to the first substring match of the value elsewhere
-                  // in the tag. The replacement is filled in below once attrSelectors is known;
-                  // holding the edit object by reference avoids a string sentinel, which would
-                  // be ambiguous if the class value itself happened to contain it.
+                  // 静态 `class="foo"` / `className="foo"`——在这个属性的结束引号处排队一个
+                  // 零宽度插入点，让收集到的工具类追加进字符串内部，而不是追加到标签里第一个
+                  // 值子串匹配的位置。替换内容等 `attrSelectors` 确定后在下面填入；按引用持有
+                  // 编辑对象而不是用字符串哨兵——万一 class 值本身包含哨兵字符串就有歧义了。
                   hasStaticClass = true
                   staticClassValue = content.replace(/['"`]/g, '')
                   const insertAt = segOffset + attrStart + matchStr.length - 1
@@ -350,10 +327,10 @@ export function transformerAttributify(options: TransformerAttributifyOptions = 
 
                 for (const v of content.split(splitterRE).filter(Boolean)) {
                   let token = v
-                  // value shorthand: b="~ green dark:red dark:2"
+                  // 值简写：b="~ green dark:red dark:2"
                   if (v.includes(':')) {
-                    // variant-prefixed value, e.g. `dark:red` on `text` -> try `dark:text-red`
-                    // first, fall back to the raw token if the prefix form isn't a utility
+                    // 带变体前缀的值，如 `text` 属性上的 `dark:red` -> 先试 `dark:text-red`，
+                    // 前缀形式不是工具类时退回原始 token
                     const splitV = v.split(':')
                     token = `${splitV[0]}:${splitV[1]}`
                     if (await uno.parseToken(`${nonPrefixed}-${splitV[1]}`))
@@ -362,8 +339,8 @@ export function transformerAttributify(options: TransformerAttributifyOptions = 
                       result.push(`${splitV[0]}:${splitV[1]}`)
                   }
                   else {
-                    // `~` references the attribute name itself (self shorthand);
-                    // leading `!` is UnoCSS important modifier, kept in front of the composed token
+                    // `~` 指属性名本身（自引用简写）；
+                    // 开头的 `!` 是 UnoCSS 的 important 修饰符，保持在拼出的 token 前面
                     if (v === '~')
                       token = nonPrefixed
                     else if (v.startsWith('!'))
@@ -387,47 +364,40 @@ export function transformerAttributify(options: TransformerAttributifyOptions = 
 
         if (attrSelectors.length) {
           if (hasStaticClass && appendEdit) {
-            // fill in the queued insertion point at the static class attribute's closing quote.
-            // Skip the leading separator when the existing value is empty, so `class=""` plus
-            // utilities yields `class="m-2"`, not `class=" m-2"`.
+            // 填入之前在静态 class 属性结束引号处排队的插入点。已有值为空时跳过开头的
+            // 分隔空格，这样 `class=""` 加上工具类得到 `class="m-2"`，而不是 `class=" m-2"`。
             const sep = staticClassValue ? ' ' : ''
             appendEdit.replacement = `${sep}${attrSelectors.join(' ')}`
           }
           else if (dynamicClassContent) {
-            // JSX `className={expr}` / `class={expr}` — wrap expr in a template literal so
-            // generated utilities are appended at runtime without losing the original value.
-            // e.g. `className={c}` + `m-2` -> `className={`${c} m-2`}`.
-            // Anchored to the span captured in the attribute loop, NOT an `indexOf` of the
-            // assembled target — that would rewrite the first substring match and could corrupt
-            // a sibling attribute whose value happens to equal `className={...}`.
+            // JSX 的 `className={expr}` / `class={expr}`——把 expr 包进模板字符串，让生成的
+            // 工具类在运行时追加，不丢失原值。比如 `className={c}` + `m-2` ->
+            // `className={`${c} m-2`}`。
+            // 锚定到属性循环里记录的 span，而不是对拼好的目标做 `indexOf`——后者会命中第一个
+            // 子串匹配，可能碰坏某个值恰好等于 `className={...}` 的兄弟属性。
             const expr = dynamicClassContent.slice(1, -1)
             const utilities = attrSelectors.join(' ')
-            // Assemble `name={`${expr} utilities`}` via plain concatenation, not `String.replace`,
-            // so `expr` containing `$&`, `$1`, `$<name>`, or `$$` is copied literally rather than
-            // interpreted as a replacement pattern.
+            // 用普通字符串拼接组装 `name={`${expr} utilities`}`，不用 `String.replace`——
+            // 这样 `expr` 里的 `$&`、`$1`、`$<name>`、`$$` 会原样复制，不会被当成替换模式解释。
             const replacement = `${dynamicClassName}={\`\${${expr}} ${utilities}\`}`
             edits.push({ start: dynamicClassStart, end: dynamicClassEnd, replacement })
           }
 
-          // Apply queued position-based edits in a single right-to-left sweep so earlier
-          // indices stay valid as later spans are rewritten. Spans are half-open: [start, end);
-          // token-only deletions never overlap, so non-overlap holds even with a leading-space
-          // insertion at the static class attribute's closing quote.
+          // 把排队的位置编辑按从右到左的顺序一次应用，这样改写后面的 span 时前面下标依然有效。
+          // span 是半开区间：[start, end)。纯 token 删除不会重叠，所以即使静态 class 属性的
+          // 结束引号处有带前导空格的插入，不重叠的性质也成立。
           edits.sort((a, b) => b.start - a.start)
           for (const { start: eStart, end: eEnd, replacement: eRep } of edits)
             matchStrTemp = `${matchStrTemp.slice(0, eStart)}${eRep}${matchStrTemp.slice(eEnd)}`
 
-          // Attribute deletions leave behind the whitespace that used to separate them, so
-          // consecutive deletions produce runs of `  ` in the tag header, and a trailing space
-          // before the closing `>`/`/>`. Collapse runs to a single space and drop the trailing
-          // run entirely — but only OUTSIDE quoted attribute values AND JSX `{...}` expression
-          // containers, both of which may legitimately contain multiple spaces (or any other
-          // whitespace-sensitive content) and must be copied byte-for-byte. Covering braced
-          // expressions verbatim also protects nested template literals inside them
-          // (e.g. the `className={`${expr} m-2`}` this transformer emits), whose own backtick
-          // strings can't be reliably tracked here because `${...}` interpolation may itself
-          // contain unbalanced quotes. Walks char-by-char tracking quote + brace state;
-          // O(tag length), tags are short.
+          // 属性删除会留下原来分隔属性用的空白，连续删除会在标签头部产生连续空格，还会在
+          // 闭合 `>`/`/>` 前留一个尾随空格。把连续空白折叠成单个空格，并整个丢掉尾随的那段
+          // ——但只处理引号属性值和 JSX `{...}` 表达式容器之外的部分：这两处可能合法地包含
+          // 多个空格（或其他对空白敏感的内容），必须逐字节保留。把花括号表达式整体原样拷贝
+          // 也顺带保护了里面嵌套的模板字符串（比如本 transformer 生成的
+          // `className={`${expr} m-2`}`），它自己的反引号字符串没法可靠跟踪，因为 `${...}`
+          // 插值里可能有不配平的引号。逐字符扫描，跟踪引号和花括号状态；O(标签长度)，
+          // 标签都很短。
           let collapsed = ''
           let runStart = -1
           const flushRun = (): void => {
@@ -446,11 +416,10 @@ export function transformerAttributify(options: TransformerAttributifyOptions = 
               continue
             }
             if (ch === '{') {
-              // copy a balanced `{...}` expression verbatim, skipping over any quoted runs
-              // inside it so `}` within a string doesn't collapse the depth. Brace detection
-              // here is best-effort: a `}` inside a `${...}` interpolation isn't modeled, but
-              // that pattern is rare in className expressions and the worst case is leaving
-              // the expression untouched (a missing collapse), never corrupting its content.
+              // 把配平的 `{...}` 表达式原样拷贝，跳过内部的引号段落，这样字符串里的 `}`
+              // 不会弄乱深度。这里的花括号检测是尽力而为：`${...}` 插值里的 `}` 没有建模，
+              // 但这种写法在 className 表达式里很少见，最坏结果是表达式没被折叠（少了一次
+              // 折叠），不会把内容改坏。
               flushRun()
               const close = scanBracedExpression(matchStrTemp, i, matchStrTemp.length)
               if (close) {
@@ -458,7 +427,7 @@ export function transformerAttributify(options: TransformerAttributifyOptions = 
                 i += close.length - 1
                 continue
               }
-              // unbalanced — fall through to per-char handling rather than risk truncation
+              // 不配平——退回逐字符处理，宁可少折叠也不截断
             }
             if (/\s/.test(ch)) {
               if (runStart === -1)
@@ -469,27 +438,24 @@ export function transformerAttributify(options: TransformerAttributifyOptions = 
               collapsed += ch
             }
           }
-          // Intentionally do NOT flush a trailing run here — that drops the orphan space
-          // before the closing `>`/`/>` left by an attribute deletion.
+          // 这里故意不 flush 尾随的空白段——这样才能丢掉属性删除后留在闭合 `>`/`/>` 前
+          // 的孤儿空格。
           matchStrTemp = collapsed
-          // Strip a stray space between the last attribute and a non-self-closing `>`
-          // (e.g. `<div class="x" >` -> `<div class="x">`). Self-closing `/>` keeps its
-          // space — `<div />` is idiomatic in both Vue and JSX.
+          // 去掉最后一个属性和非自闭合 `>` 之间的多余空格
+          // （如 `<div class="x" >` -> `<div class="x">`）。自闭合 `/>` 保留空格——
+          // `<div />` 在 Vue 和 JSX 里都是惯用写法。
           matchStrTemp = matchStrTemp.replace(/(["'}])\s+(>)$/, '$1$2')
 
-          // Inject a class attribute when none existed. Done after the edits + collapse above
-          // so the insert position is computed against the current matchStrTemp, not the
-          // original — otherwise deletions that reached the closing `>` would shift the insert
-          // point into the middle of the surviving text. The collapse pass already trimmed the
-          // trailing space before `>`/`/>`, so the injected attribute needs a leading space of
-          // its own to separate it from the last surviving attribute (or the tag name).
+          // 原本没有 class 属性时注入一个。放在上面的编辑和折叠之后做，插入位置基于当前的
+          // matchStrTemp 计算，而不是原始字符串——否则触及闭合 `>` 的删除会让插入点落进
+          // 存活文本的中间。折叠 pass 已经把 `>`/`/>` 前的尾随空格去掉了，所以注入的属性
+          // 需要自己带一个前导空格，与最后一个存活的属性（或标签名）分开。
           if (!hasStaticClass && !dynamicClassContent) {
             const classAttr = isJsx ? 'className' : 'class'
             const selfClosing = matchStrTemp.endsWith('/>')
             const insertPos = matchStrTemp.length - (selfClosing ? 2 : 1)
-            // Skip the leading space if a separator already precedes the insert point — the
-            // collapse pass keeps a single space between the tag name (or last surviving
-            // attribute) and the closing `>`, so injecting another would produce `<div  class=`.
+            // 插入点前面已有分隔空格时跳过前导空格——折叠 pass 会在标签名（或最后一个
+            // 存活属性）和闭合 `>` 之间保留单个空格，再注入一个会得到 `<div  class=`。
             const sep = matchStrTemp[insertPos - 1] === ' ' ? '' : ' '
             matchStrTemp = `${matchStrTemp.slice(0, insertPos)}${sep}${classAttr}="${attrSelectors.join(' ')}"${matchStrTemp.slice(insertPos)}`
           }
