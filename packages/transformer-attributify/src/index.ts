@@ -464,7 +464,14 @@ export function transformerAttributify(options: TransformerAttributifyOptions = 
         }
       }
 
-      s.overwrite(0, s.original.length, code.toString())
+      // 仅在真的有改动时才回写。无实质修改时这次整文件 overwrite 是 no-op 编辑：
+      // MagicString 会把整个文件记成已编辑 chunk，但 hasChanged() 返回 false——
+      // unocss 的 applyTransformers 因此不会重建 MagicString，下一个 pre transformer
+      // （transformerApplet）按原文偏移 overwrite 时就会抛
+      // `cannot split a chunk that has already been edited`（create-uni CI mp-weixin + ano-ui）。
+      // 与 transformer-hover 的 `if (changed)` 回写保持一致。
+      if (code.hasChanged())
+        s.overwrite(0, s.original.length, code.toString())
     },
   }
 }

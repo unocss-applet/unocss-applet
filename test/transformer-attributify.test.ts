@@ -452,3 +452,31 @@ describe('transformer-attributify (jsx)', async () => {
     })
   })
 })
+
+describe('transformer-attributify: no-op edit must not mark MagicString edited', () => {
+  // 无 attributify 写法的 .vue（如 ano-ui 的组件）：transform 后内容不变，
+  // 但旧的实现仍无条件 `s.overwrite(0, s.original.length, …)`——内容相同，
+  // hasChanged() 是 false，MagicString 内部却留下一个覆盖全文件的"已编辑" chunk。
+  // unocss 的 applyTransformers 不会重建 MagicString，下一个 pre transformer
+  // （transformerApplet）按原文偏移 overwrite 就抛
+  // `cannot split a chunk that has already been edited`（create-uni CI）。
+  it('leaves MagicString without edited chunks when content is unchanged', async () => {
+    const code = `<button\n    class="box-border items-center justify-center rounded text-center inline-flex gap-2 m-0"\n    :hover-class="disabled ? '' : '!before:op10'"\n  >\n    <slot />\n  </button>\n`
+    const transformer = transformerAttributify()
+    const uno = await createGenerator({
+      presets: [presetWind3(), presetAttributify()],
+      transformers: [transformer],
+    })
+    const s = new MagicString(code)
+    await transformer.transform(s, 'x.vue', { uno, tokens: new Set() } as any)
+
+    expect(s.toString()).toBe(code) // 无实质改动
+    expect(s.hasChanged()).toBe(false)
+    // 关键断言：内部没有产生"已编辑" chunk——否则后续 transformer 会炸
+    let chunk = (s as any).firstChunk
+    while (chunk) {
+      expect(chunk.edited, 'chunk marked edited on a no-op transform').toBeFalsy()
+      chunk = chunk.next
+    }
+  })
+})
