@@ -17,25 +17,24 @@ pnpm add @unocss-applet/transformer-hover -D # with pnpm
 **仅在小程序端启用**——H5 端 `:hover` 伪类原生可用，启用反而会破坏它。沿用你为 `transformerAttributify` 已经写好的 `isApplet` 分支即可。
 
 ```ts
-// uni-app (vite.config.ts)
+// uni-app (uno.config.ts)
 import process from 'node:process'
 import { transformerHover } from '@unocss-applet/transformer-hover'
+import { defineConfig } from 'unocss'
 
 const isApplet = process.env.UNI_PLATFORM?.startsWith('mp-') ?? false
 
-export default {
-  // ...
-  UnoCSS: {
-    transformers: [
-      ...(isApplet ? [transformerHover()] : []),
-    ],
-  },
-}
+export default defineConfig({
+  transformers: [
+    ...(isApplet ? [transformerHover()] : []),
+  ],
+})
 ```
 
 ```ts
 // Taro (uno.config.ts)
 import process from 'node:process'
+import { defineConfig } from 'unocss'
 import { transformerHover } from 'unocss-applet'
 
 const isApplet = process.env.TARO_ENV !== 'h5'
@@ -111,4 +110,4 @@ export interface TransformerHoverOptions {
 
 ## License
 
-MIT License &copy; 2023-present [UnoCSS Applet](https://github.com/unocss-applet/unocss-applet)
+MIT License &copy; 2022-PRESENT [Neil Lee](https://github.com/nei1ee)
