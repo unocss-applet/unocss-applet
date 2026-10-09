@@ -2,7 +2,7 @@
 
 感谢你对 unocss-applet 的兴趣！本文档介绍项目架构与开发流程，帮助你快速参与贡献。
 
-## 贡献指南
+## 项目简介
 
 unocss-applet 让 [UnoCSS](https://github.com/unocss/unocss) 能在 uni-app、Taro 构建的小程序中运行，兼容小程序不支持的语法（`~`、`/`、`:()` 等选择器字符，以及 `space-x-*`、`divide-*` 等依赖后代/伪元素的工具类）。它**不是** UnoCSS 的 fork，而是通过包裹上游 `@unocss/preset-wind3` / `@unocss/preset-wind4` 并注入转换器来工作。
 
@@ -46,7 +46,7 @@ unocss-applet 让 [UnoCSS](https://github.com/unocss/unocss) 能在 uni-app、Ta
 
 ### 架构图
 
-下图展示包之间的依赖关系。实线为 `workspace:*` 包依赖，虚线为源码内相对路径导入（不产生包依赖）。
+下图展示包之间的依赖关系。实线为 `workspace:*` 包依赖，粗线为 npm registry 依赖（版本经 `catalog:` 统一管理），虚线为源码内相对路径导入（不产生包依赖）。
 
 ```mermaid
 graph TD
@@ -69,19 +69,19 @@ graph TD
   app -->|workspace| attr
   app -->|workspace| hover
 
-  preset -->|workspace| core
-  preset -->|workspace| wind3
-  preset -->|workspace| wind4
+  preset ==>|npm| core
+  preset ==>|npm| wind3
+  preset ==>|npm| wind4
   preset -.->|相对路径导入 ../../shared/src| shared
 
-  attr -->|workspace| core
-  attr -->|workspace| ms
+  attr ==>|npm| core
+  attr ==>|npm| ms
 
-  hover -->|workspace| core
-  hover -->|workspace| ms
+  hover ==>|npm| core
+  hover ==>|npm| ms
 
-  wind3 -.->|传递依赖| mini
-  wind4 -.->|传递依赖| mini
+  wind3 ==>|传递依赖| mini
+  wind4 ==>|传递依赖| mini
 ```
 
 **关键点：**
@@ -184,7 +184,7 @@ chore(deps): bump unocss to 66.8
 
 ### 上游依赖补丁（patches/）
 
-`patches/@unocss__webpack@66.10.0.patch` 修复 `@unocss/webpack@66.8+` CJS 产物的 interop 缺陷：其 node-mode interop 在 `require(esm)` 下把 magic-string 命名空间当作 default 导出，Taro webpack 构建报 `magic_string.default is not a constructor`。背景详见 [`COMPATIBILITY.md`](./COMPATIBILITY.md)。
+`patches/@unocss__webpack@66.10.1.patch` 修复 `@unocss/webpack@66.8+` CJS 产物的 interop 缺陷：其 node-mode interop 在 `require(esm)` 下把 magic-string 命名空间当作 default 导出，Taro webpack 构建报 `magic_string.default is not a constructor`。背景详见 [`COMPATIBILITY.md`](./COMPATIBILITY.md)。
 
 升级 unocss 时注意：patch 绑定精确版本，pnpm 安装会提示 `The following patches were not used`。先跑 `pnpm build:taro:weapp` 与 `pnpm build:taro:h5` 确认新版是否已修复——已修复则删除 `patches/` 与 `pnpm-workspace.yaml` 的 `patchedDependencies` 条目；未修复则用 `pnpm patch @unocss/webpack@<新版本>` 重打同款补丁（把产物里的 `__toESM(require("magic-string"), 1)` 改为 `__toESM(require("magic-string"))`）。
 
@@ -197,3 +197,5 @@ pnpm release
 ```
 
 这会交互式升版本号、打 tag、推送，随后由 CI（GitHub Actions）完成发布。贡献者无需关心发布。
+
+有其他问题请到 [GitHub Issues](https://github.com/unocss-applet/unocss-applet/issues) 提出。
