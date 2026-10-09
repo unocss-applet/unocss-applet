@@ -2,7 +2,7 @@
   "name": "@unocss-applet/preset-rem-rpx",
   "type": "module",
   "version": "0.15.1",
-  "description": "Coverts rem <=> rpx for utils.",
+  "description": "Converts rem <=> rpx for utils.",
   "author": "Neil Lee <zguolee@foxmail.com>",
   "license": "MIT",
   "homepage": "https://github.com/unocss-applet/unocss-applet/tree/main/packages/preset-rem-rpx#readme",
