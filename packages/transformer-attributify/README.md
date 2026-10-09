@@ -63,6 +63,13 @@ export interface TransformerAttributifyOptions {
    * @default true
    */
   deleteAttributes?: boolean
+
+  /**
+   * 忽略处理的标签名前缀列表。
+   * 例如传 ['uni'] 会同时忽略 <UniIcon> 和 <uni-icon>
+   * @default []
+   */
+  ignoreTagPrefixes?: string[]
 }
 ```
 
@@ -103,4 +110,4 @@ JSX 侧不在支持范围内（元素匹配器基于正则，并非完整的 JSX
 
 ## License
 
-MIT License &copy; 2022-PRESENT [Neil Lee](https://github.com/zguolee)
+MIT License &copy; 2022-PRESENT [Neil Lee](https://github.com/nei1ee)
