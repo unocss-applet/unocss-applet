@@ -1,14 +1,18 @@
 <p align="center">
-<img src="https://github.com/unocss-applet/unocss-applet/raw/main/public/logo.svg" alt="UnoCSS Applet logo" style="width:100px;" />
+<img src="https://github.com/unocss-applet/unocss-applet/raw/main/public/logo.svg" alt="UnoCSS Applet logo" width="100" />
 <h1 align="center">UnoCSS Applet</h1>
 <p align="center">在小程序(<a href="https://github.com/dcloudio/uni-app">UniApp</a> 和 <a href="https://github.com/NervJS/taro">Taro</a>)中使用<a href="https://github.com/unocss/unocss">UnoCSS</a>，兼容不支持的语法。</p>
 </p>
 <p align="center">
+<a href="https://github.com/unocss-applet/unocss-applet/blob/main/LICENSE"><img src="https://img.shields.io/github/license/unocss-applet/unocss-applet.svg?style=flat&colorA=858585&colorB=F17F42" alt="License"></a>
+<a href="https://github.com/unocss-applet/unocss-applet/stargazers"><img src="https://img.shields.io/github/stars/unocss-applet/unocss-applet?style=flat&colorA=858585&colorB=F17F42" alt="Stars"></a>
 <a href="https://www.npmjs.com/package/unocss-applet"><img src="https://img.shields.io/npm/v/unocss-applet?style=flat&colorA=858585&colorB=F17F42" alt="NPM version"></a>
 <a href="https://www.npmjs.com/package/unocss-applet"><img src="https://img.shields.io/npm/dm/unocss-applet?style=flat&colorA=858585&colorB=F17F42" alt="NPM Downloads"></a>
 <a href="https://bundlephobia.com/result?p=unocss-applet"><img src="https://img.shields.io/bundlephobia/minzip/unocss-applet?style=flat&colorA=858585&colorB=F17F42" alt="Bundle"></a>
-<a href="https://github.com/unocss-applet/unocss-applet/blob/main/LICENSE"><img src="https://img.shields.io/github/license/unocss-applet/unocss-applet.svg?style=flat&colorA=858585&colorB=F17F42" alt="License"></a>
 <a href="https://deepwiki.com/unocss-applet/unocss-applet"><img src="https://deepwiki.com/badge.svg" alt="Ask DeepWiki"></a>
+</p>
+<p align="center">
+<a href="https://github.com/nei1ee"><img src="https://img.shields.io/badge/Author-Neil%20Lee-blue?style=flat" alt="Author"></a>
 </p>
 
 ## 预设和插件
@@ -32,7 +36,7 @@ pnpm add unocss-applet -D # with pnpm
 
 ## 兼容性
 
-`unocss-applet` 当前已验证支持 UnoCSS `~66.10.0`（`peerDependencies` 锁定），需要 Node.js `>= 22.12`。各历史版本与 UnoCSS 的对应关系（如 `unocss-applet@0.13.x` 对应 `unocss@~66.7.4` / `~66.7.5`）及完整兼容矩阵见 [COMPATIBILITY.md](../../COMPATIBILITY.md)。
+`unocss-applet` 当前已验证支持 UnoCSS `~66.10.1`（`peerDependencies` 锁定），需要 Node.js `>= 22.12`。各历史版本与 UnoCSS 的对应关系（如 `unocss-applet@0.13.x` 对应 `unocss@~66.7.4` / `~66.7.5`）及完整兼容矩阵见 [COMPATIBILITY.md](../../COMPATIBILITY.md)。
 
 ## 使用
 
@@ -172,7 +176,7 @@ const config = {
 import 'uno.css'
 ```
 
-> 小程序端（weapp 等）与 H5 端均已验证可正常编译并生成工具类（Taro 4.2 + UnoCSS 66.10，Taro Webpack 链路需要 [`patches/@unocss__webpack@66.10.0.patch`](../../patches/@unocss__webpack@66.10.0.patch)，背景见 [`COMPATIBILITY.md`](../../COMPATIBILITY.md)）。完整可运行示例见仓库内 [`examples/taro`](../../examples/taro)。
+> 小程序端（weapp 等）与 H5 端均已验证可正常编译并生成工具类（Taro 4.2 + UnoCSS 66.10，Taro Webpack 链路需要 [`patches/@unocss__webpack@66.10.1.patch`](../../patches/@unocss__webpack@66.10.1.patch)，背景见 [`COMPATIBILITY.md`](../../COMPATIBILITY.md)）。完整可运行示例见仓库内 [`examples/taro`](../../examples/taro)。
 
 <br></details>
 
@@ -190,10 +194,14 @@ import 'uno.css'
 - [unibest](https://github.com/feige996/unibest)
 - [uni-vitesse](https://github.com/Ares-Chang/uni-vitesse)
 
+## 参与贡献
+
+参阅 [CONTRIBUTING.md](../../CONTRIBUTING.md)。
+
 ## 感谢
 
 - [UnoCSS](https://github.com/unocss/unocss)
 
 ## License
 
-MIT License &copy; 2022-PRESENT [Neil Lee](https://github.com/zguolee) 和所有贡献者。
+MIT License &copy; 2022-PRESENT [Neil Lee](https://github.com/nei1ee) 和所有贡献者。
