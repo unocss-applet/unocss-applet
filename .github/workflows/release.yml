@@ -17,7 +17,7 @@ jobs:
           fetch-depth: 0
 
       - name: Setup pnpm and Node.js
-        uses: pnpm/setup@v2
+        uses: pnpm/setup@v3
         with:
           cache: true
           require-lockfile: true
