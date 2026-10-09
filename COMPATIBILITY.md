@@ -27,6 +27,7 @@
 
 | unocss-applet | unocss | Node.js | 说明 |
 | --- | --- | --- | --- |
+| `0.15.0` – `0.15.1` | `~66.10.1` | `>=22.12` | 本包 `engines.node` 声明。 |
 | `0.14.0` | `~66.8.1` | `>=22.12` | 本包 `engines.node` 声明。 |
 | `0.13.8` | `~66.7.5` | 未声明 | 0.14.0 前未声明 `engines`，发布基于 Node 22 LTS。 |
 | `0.13.0` – `0.13.7` | `~66.7.4` | 未声明 | 0.13.0 起 peerDependencies 从 `>=66.0.0` 收紧为 `~66.7.4`；上游发布包自 66.7.0 起不再声明 `engines`。 |
@@ -47,9 +48,9 @@
 | `preset-mini` | ✅ 包裹 | ✅ | 由 `presetApplet({ preset: 'wind3' })` 内部包含；无需单独使用。 |
 | `preset-wind3` | ✅ 包裹 | ✅ | `presetApplet` 默认即基于 wind3，等价于 wind3。 |
 | `preset-wind4` | ⚠️ 部分支持 | ✅ | `presetApplet({ preset: 'wind4' })`。wind4 的新语法（`text-[...]`、`c-*`、`border-*`、`rounded-1/2` 等）在 applet 下存在已知生成失败项，完整清单见 [`test/preset-applet-wind4.test.ts`](./test/preset-applet-wind4.test.ts) 的 `unmatched` 内联快照。**推荐使用 `wind3`**（默认）。 |
-| [`preset-attributify`](https://unocss.dev/presets/attributify) | ❌ 不支持 | ✅ | 运行期依赖属性选择器 `[un-text=""]`，小程序 wxss 不支持。**变通**：小程序端改用本仓库 [`transformerAttributify`](./packages/transformer-attributify)，把属性编译进 `class=""`；H5 端仍用上游 `presetAttributify`。三套 example 均按此 if/else 分支配置。 |
+| [`preset-attributify`](https://unocss.dev/presets/attributify) | ❌ 不支持 | ✅ | 运行期依赖属性选择器 `[un-text=""]`，小程序 wxss 不支持。**变通**：小程序端改用本仓库 [`transformerAttributify`](./packages/transformer-attributify)，把属性编译进 `class=""`；H5 端仍用上游 `presetAttributify`。两套 example 均按此 if/else 分支配置。 |
 | [`preset-tagify`](https://unocss.dev/presets/tagify) | ❌ 不支持 | ✅ | 生成 `<marker>` 标签选择器，小程序不支持自定义标签选择器。无内置变通。 |
-| [`preset-icons`](https://unocss.dev/presets/icons) | ✅ 支持 | ✅ | 生成 `.i-xxx` 类名（`background-image` / `mask`），不依赖属性选择器。三套 example 均直接加载上游 `presetIcons`，无需额外处理。 |
+| [`preset-icons`](https://unocss.dev/presets/icons) | ✅ 支持 | ✅ | 生成 `.i-xxx` 类名（`background-image` / `mask`），不依赖属性选择器。两套 example 均直接加载上游 `presetIcons`，无需额外处理。 |
 | [`preset-typography`](https://unocss.dev/presets/typography) | ❌ 不支持 | ✅ | 重度使用 `:where` / `:is` / `:not` 与后代选择器，小程序不支持。无内置变通，建议手写 prose CSS 或使用 [`@unocss-applet/reset`](./packages/reset) 的 tailwind preflight。 |
 | [`preset-web-fonts`](https://unocss.dev/presets/web-fonts) | ⚠️ 受限 | ✅ | 通过 `@import` / `@font-face` 引入外链字体，小程序对外链字体支持因平台而异（通常需 `wx.loadFontFace` 或本地字体）。H5 端正常。 |
 | [`preset-rem-to-px`](https://unocss.dev/presets/rem-to-px) | ✅ | ✅ | 与本仓库 [`presetRemRpx`](./packages/preset-rem-rpx) 功能重叠。小程序端用 `presetRemRpx({ mode: 'rem2rpx' })`，H5 端用 `presetRemRpx({ mode: 'rpx2rem' })`，两端共用一份配置。 |
@@ -60,7 +61,7 @@
 
 | Transformer | 小程序端 | H5 端 | 说明与变通 |
 | --- | :---: | :---: | --- |
-| [`transformer-variant-group`](https://unocss.dev/transformers/variant-group) | ✅ 支持 | ✅ | 纯源码展开（`foo-(bar baz)` → `foo-bar foo-baz`），输出标准 class，可被 `presetApplet` 的 postprocess 再处理。三套 example 未启用，但可放心叠加。 |
+| [`transformer-variant-group`](https://unocss.dev/transformers/variant-group) | ✅ 支持 | ✅ | 纯源码展开（`foo-(bar baz)` → `foo-bar foo-baz`），输出标准 class，可被 `presetApplet` 的 postprocess 再处理。两套 example 未启用，但可放心叠加。 |
 | [`transformer-directives`](https://unocss.dev/transformers/directives) | ❌ 不支持 | ✅ | `@apply` / `@screen` 在 UnoCSS 的 generator 上下文里无法把声明绑定到自定义选择器（`.foo { @apply p-2; }` 只产出 `.p-2{...}`，`.foo` 包裹丢失），且小程序构建链不注入 UnoCSS 插件层来补救；`@screen` / `theme()` 等则被静默丢弃。H5 端配合 UnoCSS Vite/Webpack 插件可用。 |
 | [`transformer-compile-class`](https://unocss.dev/transformers/compile-class) | ⚠️ 需验证 | ✅ | 把 `:uno: xxx` 编译为 hash shortcut。hash 类名本身 applet 安全，但与 `transformerApplet` 叠加时需实际测试两者执行顺序与最终选择器是否符合预期。 |
 | [`transformer-attributify-jsx`](https://unocss.dev/transformers/attributify-jsx) | ➡️ 不适用 | ➡️ 不适用 | 面向 JSX/TSX 的无值 attributify，依赖运行期 `presetAttributify`，小程序端不可用。uni-app（Vue3）与 Taro React（JSX/TSX）均使用本仓库 `transformerAttributify`（已支持 `.vue`/`.jsx`/`.tsx`，JSX 端注入 `className`）。 |
