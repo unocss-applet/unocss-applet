@@ -184,9 +184,24 @@ chore(deps): bump unocss to 66.8
 
 ### 上游依赖补丁（patches/）
 
-`patches/@unocss__webpack@66.10.1.patch` 修复 `@unocss/webpack@66.8+` CJS 产物的 interop 缺陷：其 node-mode interop 在 `require(esm)` 下把 magic-string 命名空间当作 default 导出，Taro webpack 构建报 `magic_string.default is not a constructor`。背景详见 [`COMPATIBILITY.md`](./COMPATIBILITY.md)。
+[`patches/@unocss__webpack@66.12.0.patch`](./patches/@unocss__webpack@66.12.0.patch) 修的是 `@unocss/webpack@66.8+` CJS 产物的 interop 缺陷：其 node-mode interop 在 `require(esm)` 下把 magic-string 命名空间当成 default 导出，Taro webpack 构建报 `magic_string.default is not a constructor`。补丁只改一行，把 `__toESM(magic_string, 1)` 改成 `__toESM(magic_string)`。Node 从 22.12 起 `require(esm)` 返回的命名空间带 `__esModule: true`，去掉 node-mode 标志后 esbuild 的 helper 会保留命名空间里真正的 `MagicString` 类，Taro 构建才能过。背景详见 [`COMPATIBILITY.md`](./COMPATIBILITY.md)。
 
-升级 unocss 时注意：patch 绑定精确版本，pnpm 安装会提示 `The following patches were not used`。先跑 `pnpm build:taro:weapp` 与 `pnpm build:taro:h5` 确认新版是否已修复——已修复则删除 `patches/` 与 `pnpm-workspace.yaml` 的 `patchedDependencies` 条目；未修复则用 `pnpm patch @unocss/webpack@<新版本>` 重打同款补丁（把产物里的 `__toESM(require("magic-string"), 1)` 改为 `__toESM(require("magic-string"))`）。
+补丁改的是产物里的 chunk 文件，文件名跟着版本变（66.10.1 是 `dist/unplugin-DZWdE8SL.cjs`，66.12.0 是 `dist/unplugin-BGwGRfkV.cjs`），所以换版本必须重新生成，不能只改版本号。只改版本号时 pnpm 会提示 `The following patches were not used`，Taro 构建照样报错。重新生成的步骤：
+
+1. 先跑 `pnpm build:taro:weapp` 确认新版是否已修。已修则删掉 `patches/` 和 `pnpm-workspace.yaml` 里的 `patchedDependencies`。
+2. 没修则 `pnpm patch @unocss/webpack@<新版本>`，在打印出的目录里把那一行改掉，再 `pnpm patch-commit '<打印出的路径>'`。pnpm 会写出新的 patch 文件并更新 `patchedDependencies`。
+3. 删掉旧 patch 文件，`pnpm install` 后跑 `pnpm build:taro:weapp` 与 `pnpm build:taro:h5` 确认能过。
+
+### 升级上游 UnoCSS
+
+改 `pnpm-workspace.yaml` 里 `unocss` catalog 那一组版本时，下面这些地方要一起改，漏一处就会出验证不到的错：
+
+- `minimumReleaseAgeExclude`：列出新版本下每一个 `@unocss/*` 包和 `unocss` 本身，否则安装会被最小发布年龄拦住。
+- `patchedDependencies` 与 `patches/` 里的补丁文件名（按上一节的方式重新生成）。
+- `packages/unocss-applet/package.json` 的 `peerDependencies.unocss`：它表示下游可用的范围（当前 `>=66.10.1 <66.13.0`），与本仓库锁定的开发版本不是一回事，不要跟着 catalog 改成 `~x.y.z`。
+- `pnpm test:update` 只用来同步上游的有意变更。更新前逐条看 `test/assets/output/` 的 diff，确认每一项都能对应到上游提交；`preset-applet-wind4.test.ts` 里的 `unmatched` inline snapshot 记录已知不支持的目标，它变了就是兼容性结论变了，要同步改文档。
+- [`COMPATIBILITY.md`](./COMPATIBILITY.md) 的版本支持段落、版本对应表，以及 README 里写的已验证版本。
+- 最后跑 `pnpm build:taro:weapp`、`pnpm build:taro:h5`、`pnpm build:uni:mp-weixin`、`pnpm build:uni:h5`，真实构建链路的问题单测看不出来。
 
 ### 发布流程
 

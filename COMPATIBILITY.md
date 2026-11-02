@@ -13,12 +13,13 @@
 
 ## 版本支持
 
-`unocss-applet` 当前已验证支持 UnoCSS [`~66.10.1`](https://github.com/unocss/unocss/releases/tag/v66.10.1)。
+`unocss-applet` 当前验证的 UnoCSS 版本是 [`66.12.0`](https://github.com/unocss/unocss/releases/tag/v66.12.0)，`peerDependencies.unocss` 允许下游使用 `>=66.10.1 <66.13.0`，也就是 66.10 到 66.12 之间的任意版本。
 
-- 主包 `unocss-applet` 的 `peerDependencies.unocss` 与 monorepo catalog 均锁定为 `~66.10.1`（仅允许 patch 升级，minor/主版本不变）。
+- 本仓库的开发与测试环境（monorepo catalog）锁定 `~66.12.0`；下游按自己的需要取区间内的版本，超出区间时装包工具会给出 peer 警告。
+- 66.10.1 与 66.12.0 下 wind3 的生成结果逐字节相同，`test/assets/output/preset-wind3-targets.css` 在升级时没有变化。wind4 有差异：66.11 起规则排序不再受 token 顺序影响，66.12 起任意 CSS 变量颜色直接输出 `var(--x)`（不再包一层 `color-mix`）、`order-first` 改成 `-9999`。这些都是上游的有意变更，快照已同步。
 - 需要 Node.js `>= 22.12`：本包 `transformer-attributify` / `transformer-hover` 的运行时依赖 `magic-string@1.x` 仅提供 ESM 入口，构建工具在 CJS 链上加载它（如 Taro webpack 的 `@unocss/webpack`）依赖 Node 22.12 起默认支持的 `require(esm)`。
-- **Taro（Webpack/CJS 链路）已知上游缺陷**：unocss 自 66.8 起，`@unocss/webpack` 的 CJS 产物外部依赖 ESM-only 的 `magic-string@1.x`，且其打包 interop 在 `require(esm)` 返回的命名空间上取错 default，构建时报 `magic_string.default is not a constructor`（uni-app/Vite 走 ESM 入口，不受影响）。本仓库以 [`patches/@unocss__webpack@66.10.1.patch`](./patches/@unocss__webpack@66.10.1.patch) 修复 Taro 示例构建（CI 会构建 `build:taro:weapp` / `build:taro:h5`），上游修复后移除；直接使用 `@unocss/webpack@66.8+` 的 Taro 项目会命中同样问题，可参考该补丁处理。66.10.0 与 66.10.1 的 CJS 产物字节级一致，补丁仅随版本号改名。
-- 下表矩阵基于此版本验证；上游 minor/patch 升级通常兼容，主版本升级需重新验证。
+- **Taro（Webpack/CJS 链路）已知上游缺陷**：unocss 自 66.8 起，`@unocss/webpack` 的 CJS 产物外部依赖 ESM-only 的 `magic-string@1.x`，且其打包 interop 在 `require(esm)` 返回的命名空间上取错 default，构建时报 `magic_string.default is not a constructor`（uni-app/Vite 走 ESM 入口，不受影响）。本仓库以 [`patches/@unocss__webpack@66.12.0.patch`](./patches/@unocss__webpack@66.12.0.patch) 修复 Taro 示例构建（CI 会构建 `build:taro:weapp` / `build:taro:h5`），上游修复后移除；直接使用 `@unocss/webpack@66.8+` 的 Taro 项目会命中同样问题，可参考该补丁处理。补丁改的是产物里的 chunk 文件，文件名跟着版本变（66.10.1 是 `dist/unplugin-DZWdE8SL.cjs`，66.12.0 是 `dist/unplugin-BGwGRfkV.cjs`），升级时要用 `pnpm patch` 重新生成，只改 `patchedDependencies` 里的版本号会让补丁失配。
+- 下表矩阵基于 66.12.0 验证；上游 minor/patch 升级通常兼容，主版本升级需重新验证。
 - 下方各 preset/transformer 的「支持 / 部分支持 / 不支持」结论均针对此版本。
 
 ### unocss-applet 与 UnoCSS / Node.js 版本对应
@@ -27,6 +28,7 @@
 
 | unocss-applet | unocss | Node.js | 说明 |
 | --- | --- | --- | --- |
+| `0.16.0` | `>=66.10.1 <66.13.0` | `>=22.12` | peer 从 `~66.10.1` 改为区间，验证基于 66.12.0。 |
 | `0.15.0` – `0.15.1` | `~66.10.1` | `>=22.12` | 本包 `engines.node` 声明。 |
 | `0.14.0` | `~66.8.1` | `>=22.12` | 本包 `engines.node` 声明。 |
 | `0.13.8` | `~66.7.5` | 未声明 | 0.14.0 前未声明 `engines`，发布基于 Node 22 LTS。 |

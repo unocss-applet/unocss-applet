@@ -36,7 +36,7 @@ pnpm add unocss-applet -D # with pnpm
 
 ## 兼容性
 
-`unocss-applet` 当前已验证支持 UnoCSS `~66.10.1`（`peerDependencies` 锁定），需要 Node.js `>= 22.12`。
+`unocss-applet` 当前验证的 UnoCSS 版本是 `66.12.0`，`peerDependencies` 允许 `>=66.10.1 <66.13.0`，需要 Node.js `>= 22.12`。
 
 ## 使用
 

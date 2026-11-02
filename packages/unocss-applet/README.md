@@ -36,7 +36,7 @@ pnpm add unocss-applet -D # with pnpm
 
 ## 兼容性
 
-`unocss-applet` 当前已验证支持 UnoCSS `~66.10.1`（`peerDependencies` 锁定），需要 Node.js `>= 22.12`。各历史版本与 UnoCSS 的对应关系（如 `unocss-applet@0.13.x` 对应 `unocss@~66.7.4` / `~66.7.5`）及完整兼容矩阵见 [COMPATIBILITY.md](../../COMPATIBILITY.md)。
+`unocss-applet` 当前验证的 UnoCSS 版本是 `66.12.0`，`peerDependencies` 允许 `>=66.10.1 <66.13.0`，需要 Node.js `>= 22.12`。各历史版本与 UnoCSS 的对应关系（如 `unocss-applet@0.13.x` 对应 `unocss@~66.7.4` / `~66.7.5`）及完整兼容矩阵见 [COMPATIBILITY.md](../../COMPATIBILITY.md)。
 
 ## 使用
 
@@ -176,7 +176,7 @@ const config = {
 import 'uno.css'
 ```
 
-> 小程序端（weapp 等）与 H5 端均已验证可正常编译并生成工具类（Taro 4.2 + UnoCSS 66.10，Taro Webpack 链路需要 [`patches/@unocss__webpack@66.10.1.patch`](../../patches/@unocss__webpack@66.10.1.patch)，背景见 [`COMPATIBILITY.md`](../../COMPATIBILITY.md)）。完整可运行示例见仓库内 [`examples/taro`](../../examples/taro)。
+> 小程序端（weapp 等）与 H5 端均已验证可正常编译并生成工具类（Taro 4.2 + UnoCSS 66.12，Taro Webpack 链路需要 [`patches/@unocss__webpack@66.12.0.patch`](../../patches/@unocss__webpack@66.12.0.patch)，背景见 [`COMPATIBILITY.md`](../../COMPATIBILITY.md)）。完整可运行示例见仓库内 [`examples/taro`](../../examples/taro)。
 
 <br></details>
 
