@@ -1,8 +1,8 @@
-diff --git a/dist/unplugin-DZWdE8SL.cjs b/dist/unplugin-DZWdE8SL.cjs
-index a5da5eb25120b15e1785d72ef0a5a761a7e58229..527e8f911dfb8aa28757311b166d84ca439fa45c 100644
---- a/dist/unplugin-DZWdE8SL.cjs
-+++ b/dist/unplugin-DZWdE8SL.cjs
-@@ -32,7 +32,7 @@ let tinyglobby = require("tinyglobby");
+diff --git a/dist/unplugin-BGwGRfkV.cjs b/dist/unplugin-BGwGRfkV.cjs
+index 9b190b91d0705f03cb8da0fa7f7cf7c5bbed4bec..50b0295cdca7b9aa5a2c2c0fe4fd2d316d8022b3 100644
+--- a/dist/unplugin-BGwGRfkV.cjs
++++ b/dist/unplugin-BGwGRfkV.cjs
+@@ -31,7 +31,7 @@ let tinyglobby = require("tinyglobby");
  let _jridgewell_remapping = require("@jridgewell/remapping");
  _jridgewell_remapping = __toESM(_jridgewell_remapping, 1);
  let magic_string = require("magic-string");
