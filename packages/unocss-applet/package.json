@@ -43,7 +43,7 @@
     "prepublishOnly": "pnpm run build"
   },
   "peerDependencies": {
-    "unocss": "catalog:unocss"
+    "unocss": ">=66.10.1 <66.13.0"
   },
   "dependencies": {
     "@unocss-applet/preset-applet": "workspace:*",
