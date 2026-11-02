@@ -28,7 +28,7 @@ export function presetApplet(options: PresetAppletOptions = {}): Preset<object> 
     return str
   }
 
-  // `questionMark` 规则的 matcher —— 它会把单独的 `?`（还有 `where`）当作工具类。小程序
+  // `questionMark` 规则的 matcher 会把单独的 `?`（还有 `where`）当作工具类。小程序
   // wxss 写不出它需要的 `:where` 类选择器，更麻烦的是 UnoCSS 默认 extractor 会把三元表达式
   // （`true ? 1 : 0`）拆成 token，`?` 就进了 `matched`，`transformerApplet` 会把它改写成
   // `_a_`，直接损坏脚本代码（#108）。这里按 pattern 匹配来删，而不是用 `pop()`：`pop()`
@@ -53,9 +53,13 @@ export function presetApplet(options: PresetAppletOptions = {}): Preset<object> 
       preset = internalPresetWind3({ ...(presetOptions as PresetWind3Options) })
       // 删掉 `questionMark` 规则（为什么按 pattern 匹配而不是 `pop()`，见上面 `isQuestionMarkRule` 的注释）。
       preset.rules = preset.rules?.filter(rule => !isQuestionMarkRule(rule))
-      // 替换内置的 `variantSpaceAndDivide`（位置 1）：上游 variant 生成的是相邻兄弟选择器
+      // 替换内置的 `variantSpaceAndDivide`：上游 variant 生成的是相邻兄弟选择器
       // `>:not([hidden])~:not([hidden])`，小程序 wxss 解析不了，只能改成明确的元素列表
       // （`> view + view` 这类）。顺手在这里注入 wildcard variant。
+      // 下标是硬编码的：wind3 的 `variants()` 前两项是 `placeholderModifier` 和
+      // `variantSpaceAndDivide`（66.12.0 仍如此）。上游若在它前面插入新 variant，这里会换错
+      // 对象；`test/assets/output/preset-wind3-targets.css` 里 `space-x-*` 的 `>view+view`
+      // 会立刻对不上。
       preset.variants?.splice(1, 1, ...variantSpaceAndDivide(options), ...variantWildcard(options))
       // wind3 的 preflight 复用 mini 风格的 preflightBase；variablePrefix 和按需生成由 applet 在这里控制
       preset.preflights = preflights(presetOptions)
@@ -87,7 +91,7 @@ export function presetApplet(options: PresetAppletOptions = {}): Preset<object> 
       // @see https://github.com/unocss/unocss/blob/main/packages-presets/preset-wind4/src/rules/question-mark.ts
       preset.rules = preset.rules?.filter(rule => !isQuestionMarkRule(rule))
       // wind4 自带 reset/theme/property preflights（trackedTheme/trackedProperties）；
-      // 保持原样——用 wind3 风格的 preflight 覆盖会把它们全丢掉。
+      // 保持原样，用 wind3 风格的 preflight 覆盖会把它们全丢掉。
     }
 
     return {
