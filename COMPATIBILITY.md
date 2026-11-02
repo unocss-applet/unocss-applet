@@ -29,6 +29,7 @@
 | unocss-applet | unocss | Node.js | 说明 |
 | --- | --- | --- | --- |
 | `0.16.0` | `>=66.10.1 <66.13.0` | `>=22.12` | peer 从 `~66.10.1` 改为区间，验证基于 66.12.0。 |
+| `0.16.1` | `>=66.10.1 <66.13.0` | `>=22.12` | 修复 `[&>view]:` 这类含 `>` 的任意变体被丢弃（[#115](https://github.com/unocss-applet/unocss-applet/issues/115)），依赖与 peer 范围同 `0.16.0`。 |
 | `0.15.0` – `0.15.1` | `~66.10.1` | `>=22.12` | 本包 `engines.node` 声明。 |
 | `0.14.0` | `~66.8.1` | `>=22.12` | 本包 `engines.node` 声明。 |
 | `0.13.8` | `~66.7.5` | 未声明 | 0.14.0 前未声明 `engines`，发布基于 Node 22 LTS。 |
@@ -136,6 +137,17 @@ presets.push(presetIcons({ scale: 1.2, warn: true, /* ... */ }))
 | `:nth-child(2n)` 等 | `[&:nth-child(2n)]:`（任意值变体） | ~~`nth-child-2n:`~~ |
 
 任意值形式 `[&:nth-child(2n)]:` 经 `_a_` 别名后在小程序端可用；其余变体同理。详见 [#52](https://github.com/unocss-applet/unocss-applet/issues/52)。
+
+### 子选择器 / 后代选择器任意变体
+
+任意变体括号里的 `>`（子选择器）和空格（后代选择器）都能用：`&`、`>`、`[`、`]`、`:` 会变成 `_a_` 别名，`>` 和空格两个组合符原样保留，小程序 wxss 都支持。
+
+| 写法 | 生成的选择器 | 说明 |
+| --- | --- | --- |
+| `[&>view]:text-red` | `._a__a__a_view_a__a_text-red>view` | 只作用于直接子元素 |
+| `[&_view]:text-red` | `._a__a__view_a__a_text-red view` | 作用于所有后代 |
+
+`0.13.2` – `0.16.0` 期间，为挡掉 HTML 标签残渣而加的过滤把含 `>` 的 token 一并拒掉，`[&>view]:` 在源码里不被改写，类名与 wxss 对不上，样式静默失效；`0.16.1` 起只拒绝括号外的 `<` / `>`（[#115](https://github.com/unocss-applet/unocss-applet/issues/115)）。
 
 ### `hover:` 变体（小程序原生 `hover-class`）
 

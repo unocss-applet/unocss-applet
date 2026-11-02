@@ -85,6 +85,8 @@ export interface PresetAppletOptions {
 
 已知取舍：纯 `.ts` 里无法区分「类名字符串」和普通字符串，所以字符串字面量里的工具类一律改写——动态类写法（`:class="'p-2.5 ' + cls"`、公共 `.ts` 里的类名映射表）依赖这个行为，代价是 `obj['p-2.5']` 这类数据 key 也会被改写。`:class` 表达式里的字符串同理：只认 `bind` 指令的 `class`/`className` 参数，其余指令表达式和插值一律不碰，把误伤范围压到最小。
 
+括号外出现 `<` / `>` 的 token 不改写：纯文本模板里 extractor 会把标签残渣并进 token（如 `translate--1/2</text>`），改写它等于改坏源码。`[...]` 里的 `<` / `>` 不受影响，`[&>view]:text-red` 这类用子选择器写的任意变体照常别名（[#115](https://github.com/unocss-applet/unocss-applet/issues/115)）。
+
 与 `transformerHover` / `transformerAttributify` 共用：这三个 transformer 都是 `enforce: 'pre'`，共用同一个源码缓冲。hover / attributify 改写过的文件，`transformerApplet` 会基于改写后的内容继续处理剩余工具类，最后统一回写——不会因编辑重叠报错，也不会漏改。
 
 ## 示例
