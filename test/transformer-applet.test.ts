@@ -79,6 +79,18 @@ describe('transformer-applet', async () => {
     expect(await transform('<text>absolute top-1/2 left-1/2 translate--1/2</text>')).toMatchInlineSnapshot(`"<text>absolute top-1_a_2 left-1_a_2 translate--1/2</text>"`)
   })
 
+  // #115：`[&>view]` 这类任意变体把子选择器写在 `[...]` 里，`>` 在那里是合法写法，不能和
+  // #109 问题 2 的标签残留一起被拒。只拒绝括号外的 `<`/`>`。
+  it('keeps child-combinator arbitrary variants (#115)', async () => {
+    // 别名按 UNSUPPORTED_CHARS 逐字符替换算出：`[`、`&`、`>`、`]`、`:` 各变成 `_a_`，
+    // `view` 和 `text-red` 原样保留。
+    const alias = '_a__a__a_view_a__a_text-red'
+    expect(await transform('<view class="[&>view]:text-red" />')).toBe(`<view class="${alias}" />`)
+    // 模板里的类名和生成的选择器必须是同一个别名，否则小程序端匹配不到，样式静默失效。
+    const { css } = await uno.generate('<view class="[&>view]:text-red" />', { preflights: false })
+    expect(css).toContain(`.${alias}>view`)
+  })
+
   // #109 问题 1：注释里的工具类必须原样保留，而紧挨着的 class 属性里同一个工具类要照常
   // 改写。块注释（`/* */`）和 HTML 注释（`<!-- -->`）会被匹配；`//` 行注释故意不匹配，
   // 因为对无状态正则来说 URL 里的 `//` 和真行注释无法区分（见 transformers.ts）。

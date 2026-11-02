@@ -66,8 +66,12 @@ function collectVueSpans(code: string): Span[] {
   // program 解析；script/wxs 内容本身就是完整 program，不能再包
   function pushJsStrings(content: string, offset: number, filename: string, wrap: boolean): void {
     try {
-      const source = wrap ? `(${content})` : content
-      const shift = wrap ? -1 : 0
+      const source = wrap
+        ? `(${content})`
+        : content
+      const shift = wrap
+        ? -1
+        : 0
       const jsSpans = collectJsSpans(source, filename)
       for (const [start, end] of jsSpans)
         spans.push([offset + shift + start, offset + shift + end])
@@ -98,7 +102,9 @@ function collectVueSpans(code: string): Span[] {
           else if (prop.type === 7 && prop.exp) { // 指令表达式：只有类名语义的指令里的字符串字面量可改写。
             // 其余指令（@click 实参、v-model、自定义指令）是运行时代码，改写会破坏行为——
             // `@click="copy('p-2.5')"` 若被改成 `copy('p-2_a_5')`，剪贴板内容就坏了。
-            const arg = prop.arg ? String(prop.arg.content) : undefined
+            const arg = prop.arg
+              ? String(prop.arg.content)
+              : undefined
             // v-bind="obj"（无 arg）取不到类名语义，不碰；仅 :class / :hover-class 这类带 arg 的绑定才处理
             const isClassDirective = prop.name === 'bind' && !!arg
               && ['class', 'className', ...hoverAttrNames].includes(arg)
@@ -168,7 +174,10 @@ function collectVueSpans(code: string): Span[] {
  * `test/transformer-applet-source-safety.test.ts` 固定下来，改坏会失败。
  */
 export function transformerApplet(options: TransformerAppletOptions = {}): SourceCodeTransformer {
-  const unsupportedChars = [...UNSUPPORTED_CHARS, ...(options.unsupportedChars ?? [])]
+  const unsupportedChars = [
+    ...UNSUPPORTED_CHARS,
+    ...(options.unsupportedChars ?? []),
+  ]
   const escapedUnsupportedChars = unsupportedChars.map(char => escapeSelector(char))
   const charTestReg = new RegExp(`[${escapedUnsupportedChars.join('')}]`)
   const charReplaceReg = new RegExp(`[${escapedUnsupportedChars.join('')}]`, 'g')
@@ -189,7 +198,9 @@ export function transformerApplet(options: TransformerAppletOptions = {}): Sourc
       // ——MagicString 对已编辑区间的 slice 会抛错，之前那个吞错分支会让整个文件的工具类
       // 静默漏改。改成以当前内容为准：解析、匹配、收集编辑，最后用一次整文件 overwrite 回写
       // （整文件 overwrite 允许叠加，见 MagicString 语义）。
-      const source = s.hasChanged() ? s.toString() : s.original
+      const source = s.hasChanged()
+        ? s.toString()
+        : s.original
 
       const { matched } = await uno.generate(source, { preflights: false })
 
@@ -200,11 +211,12 @@ export function transformerApplet(options: TransformerAppletOptions = {}): Sourc
         .filter(i => charTestReg.test(i))
         .filter(i => !i.replace(/\[[^\]]*\]/g, '').includes('='))
         // #109：在纯文本模板里（如 `<text>...translate--1/2</text>`），extractor 会抽出
-        // 混入 HTML 标签残留字符的 token（如 `translate--1/2</text>`）。别名化它们会破坏源码；
-        // 而 `<`/`>` 不会出现在真实的类名 token 里，所以直接一律拒绝。故意用黑名单而不是
-        // 白名单——白名单得枚举所有合法 token 可能用到的字符（`!`、`#`、`.`、`/`……），
+        // 混入 HTML 标签残留字符的 token（如 `translate--1/2</text>`）。别名化它们会破坏源码，
+        // 所以括号外的 `<`/`>` 一律拒绝。`[...]` 里不能拒绝：`[&>view]` 这类任意变体就是靠
+        // 子选择器写的，`>` 在那里是合法字符，一刀切会把样式静默丢掉（#115）。故意用黑名单
+        // 而不是白名单——白名单得枚举所有合法 token 可能用到的字符（`!`、`#`、`.`、`/`……），
         // 而且 UnoCSS 以后加了新 token 形式时会静默丢掉工具类。
-        .filter(i => !/[<>]/.test(i))
+        .filter(i => !/[<>]/.test(i.replace(/\[[^\]]*\]/g, '')))
         // 长的排前面，这样一个 token 如果包含另一个（如 `dark:p-2.5` 包含 `p-2.5`），
         // 先拿走自己的完整 span；否则内层的 `p-2.5` 会先被改写，外层 token 的别名就
         // 写不进源码了，模板里会留下小程序不认的类名 `dark:p-2_a_5`（`:` 还在）。
@@ -213,7 +225,9 @@ export function transformerApplet(options: TransformerAppletOptions = {}): Sourc
       const spans = AST_ID_RE.test(id)
         ? (() => {
             try {
-              return id.endsWith('.vue') ? collectVueSpans(source) : collectJsSpans(source, id)
+              return id.endsWith('.vue')
+                ? collectVueSpans(source)
+                : collectJsSpans(source, id)
             }
             catch {
               // 已知类型的文件解析失败：跳过改写而不是回退整文件正则——回退会把
@@ -253,7 +267,11 @@ export function transformerApplet(options: TransformerAppletOptions = {}): Sourc
 
         // 注册 别名 -> 原始工具类 的 shortcut；tokens.add 让 UnoCSS 在提取/扫描时
         // 把别名当作已知 token
-        uno.config.shortcuts.push([replaced, replace, { layer }])
+        uno.config.shortcuts.push([
+          replaced,
+          replace,
+          { layer },
+        ])
         tokens.add(replaced)
 
         // 按独立 token 匹配每个工具类——`[A-Za-z0-9_]` 的前后瞻防止部分匹配
