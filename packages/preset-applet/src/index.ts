@@ -5,7 +5,7 @@ import type { PresetAppletOptions } from './types'
 import { definePreset, escapeSelector } from '@unocss/core'
 import { presetWind3 as internalPresetWind3 } from '@unocss/preset-wind3'
 import { presetWind4 as internalPresetWind4 } from '@unocss/preset-wind4'
-import { encodeNonSpaceLatin, UNSUPPORTED_CHARS } from '../../shared/src'
+import { encodeAppletChar, encodeNonSpaceLatin, UNSUPPORTED_CHARS } from '../../shared/src'
 import { preflights } from './preflights'
 import { transformerApplet } from './transformers'
 import { variantSpaceAndDivide, variantWildcard } from './variants'
@@ -18,13 +18,14 @@ export function presetApplet(options: PresetAppletOptions = {}): Preset<object> 
   // postprocess 拿到的 selector 已经被 UnoCSS 转义过一次（比如 `.` 变成 `\.`），
   // 所以要构建一个能匹配这些字符的正则，得再转义一次；只转义一次的话，正则匹配到的
   // 会是字面上的反斜杠，而不是原始字符。
-  const escapedUnsupportedChars = unsupportedChars.map(char => escapeSelector(escapeSelector(char)))
+  const escapedChars = new Map(unsupportedChars.map(char => [escapeSelector(char), encodeAppletChar(char)]))
+  const escapedUnsupportedChars = [...escapedChars.keys()].map(char => escapeSelector(char))
   const charTestReg = new RegExp(`${escapedUnsupportedChars.join('|')}`)
   const charReplaceReg = new RegExp(charTestReg, 'g')
 
   function replaceUnsupportedChars(str: string): string {
     if (charTestReg.test(str))
-      str = str.replace(charReplaceReg, '_a_')
+      str = str.replace(charReplaceReg, char => escapedChars.get(char)!)
     return str
   }
 
@@ -98,7 +99,7 @@ export function presetApplet(options: PresetAppletOptions = {}): Preset<object> 
       ...preset,
       name: 'unocss-preset-applet',
       // postprocess 把每条生成的 selector 改写成小程序能用的形式：
-      //   1. 把不支持字符（`.`、`:`、`[` 等）替换为 `_a_`
+      //   1. 把不支持字符（`.`、`:`、`[` 等）按英文名称编码，避免不同标点共用别名
       //   2. 把非 ASCII 字符（比如中文）编码成字符码，因为小程序类名只能匹配
       //      `[A-Za-z0-9_-]`
       // 它在 UnoCSS 解析完规则之后运行，所以 wind3/wind4 产出的所有选择器都会被覆盖到。

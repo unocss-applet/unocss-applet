@@ -3,7 +3,7 @@ import type { TransformerAppletOptions } from './types'
 import { escapeRegExp, escapeSelector } from '@unocss/core'
 import { parse as parseVue } from '@vue/compiler-dom'
 import { parseSync as parseJs } from 'oxc-parser'
-import { encodeNonSpaceLatin, UNSUPPORTED_CHARS } from '../../shared/src'
+import { encodeAppletChar, encodeNonSpaceLatin, UNSUPPORTED_CHARS } from '../../shared/src'
 
 type Span = [number, number]
 
@@ -158,7 +158,7 @@ function collectVueSpans(code: string): Span[] {
  *
  * 小程序 wxss 引用不了含 `.`、`:`、`[`、`/` 等字符的类名，而这些写法在 UnoCSS 里很常见
  * （`py-3.5`、`dark:bg-red`、`bg-[url(...)]`）。对每个匹配到的工具类，这个 transformer 会：
- *   1. 生成一个小程序安全的别名：不支持字符替换为 `_a_`，非 ASCII 字符（比如中文）
+ *   1. 生成一个小程序安全的别名：不支持字符按英文名称编码为 `_<名称>_`，非 ASCII 字符（比如中文）
  *      编码成字符码；
  *   2. 把别名注册成 shortcut 指回原始工具类，并保留原有的 layer；
  *   3. 把源码里的工具类改写成别名，让模板引用小程序安全的类名。
@@ -252,7 +252,7 @@ export function transformerApplet(options: TransformerAppletOptions = {}): Sourc
       }
 
       for (let replace of replacements) {
-        let replaced = replace.replace(charReplaceReg, '_a_')
+        let replaced = replace.replace(charReplaceReg, encodeAppletChar)
         replaced = encodeNonSpaceLatin(replaced)
 
         // 解析一次原始工具类，读出它的 layer，别名 shortcut 就能保留分层
