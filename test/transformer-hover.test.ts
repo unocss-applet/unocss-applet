@@ -169,7 +169,7 @@ describe('transformer-hover (vue)', () => {
   it('preserves a leading important modifier (!hover:bg-red)', async () => {
     const transformer = transformerHover()
     const result = await transform('<div class="!hover:bg-red"/>', transformer, 'foo.vue')
-    expect(result).toBe('<div hover-class="_a_bg-red"/>')
+    expect(result).toBe('<div hover-class="_exclamation_bg-red"/>')
   })
 
   // 基本校验：arbitrary value 里的 `:` 在 `[...]` 内部（不是变体分隔符）时，token 照常搬移；
@@ -181,7 +181,7 @@ describe('transformer-hover (vue)', () => {
       transformer,
       'foo.vue',
     )
-    expect(result).toBe('<div hover-class="bg-_a_url_a_http_a__a__a_x_a_png_a__a_"/>')
+    expect(result).toBe('<div hover-class="bg-_lbracket_url_lparen_http_colon__slash__slash_x_dot_png_rparen__rbracket_"/>')
   })
 
   // 回归：`hover:` 后面跟伪类/伪元素/peer 变体时不搬——`hover-class` 表达不了
@@ -315,8 +315,8 @@ describe('transformer-hover: alias closed loop with presetApplet postprocess', (
     const s = new MagicString('<div class="hover:bg-red/50"/>')
     for (const t of uno.config.transformers ?? [])
       await t.transform(s, 'foo.vue', { uno, tokens: new Set() } as any)
-    expect(s.toString()).toBe('<div hover-class="bg-red_a_50"/>')
+    expect(s.toString()).toBe('<div hover-class="bg-red_slash_50"/>')
     const { css } = await uno.generate(s.toString(), { preflights: false })
-    expect(css).toContain('.bg-red_a_50{')
+    expect(css).toContain('.bg-red_slash_50{')
   })
 })

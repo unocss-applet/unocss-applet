@@ -84,9 +84,9 @@ describe('preset-applet-wind3', () => {
     // `!important` 声明本身必须落地
     expect(css).toMatch(/font-weight:700 !important/)
     // 选择器里必须是小程序安全的别名，不能出现字面 `!`
-    expect(css).toContain('._a_font-bold')
-    expect(css).toContain('.font-bold_a_')
-    expect(css).toContain('.important_a_font-bold')
+    expect(css).toContain('._exclamation_font-bold')
+    expect(css).toContain('.font-bold_exclamation_')
+    expect(css).toContain('.important_colon_font-bold')
     // 任何还带着原始 `!` 的选择器在小程序端都是非法的
     expect(css).not.toMatch(/\.[\w-]*!/)
   })

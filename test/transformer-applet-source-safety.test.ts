@@ -118,7 +118,7 @@ describe('transformer-applet: JS/TS code must survive (#114)', () => {
     ].join('\n')
     expect(await transform(code, 'src/counter.vue')).toBe(
       [
-        '<template><view class="p-2_a_5">total: {{ p[0] + p[1] }}</view></template>',
+        '<template><view class="p-2_dot_5">total: {{ p[0] + p[1] }}</view></template>',
         '<script setup lang="ts">',
         'const p = [1, 2]',
         'p[0] = 10',
@@ -138,8 +138,8 @@ describe('transformer-applet: JS/TS code must survive (#114)', () => {
       [
         'export const m = [1, 5, 15, 30]',
         'export const defaultStep = m[1]',
-        'export const btnClass = \'text-_a_28rpx_a_ p-2_a_5\'',
-        'export const btnClassByType = { primary: \'bg-_a__a_07c160_a_ text-white\', warn: \'bg-_a__a_fa515c_a_\' }',
+        'export const btnClass = \'text-_lbracket_28rpx_rbracket_ p-2_dot_5\'',
+        'export const btnClassByType = { primary: \'bg-_lbracket__hash_07c160_rbracket_ text-white\', warn: \'bg-_lbracket__hash_fa515c_rbracket_\' }',
       ].join('\n'),
     )
   })
@@ -153,38 +153,38 @@ describe('transformer-applet: JS/TS code must survive (#114)', () => {
 describe('transformer-applet: class contexts must still be aliased', () => {
   it('static class attribute: decimals, variants, brackets, important', async () => {
     expect(await transform('<view class="p-2.5 dark:bg-[#fff] w-[200rpx] !font-bold" />', 'src/foo.vue'))
-      .toBe('<view class="p-2_a_5 dark_a_bg-_a__a_fff_a_ w-_a_200rpx_a_ _a_font-bold" />')
+      .toBe('<view class="p-2_dot_5 dark_colon_bg-_lbracket__hash_fff_rbracket_ w-_lbracket_200rpx_rbracket_ _exclamation_font-bold" />')
   })
 
   it('dynamic array binding: string literals inside :class="[...]"', async () => {
     expect(await transform('<view :class="[\'p-2.5\', cond ? \'m-2\' : \'mt-2.5\']" />', 'src/foo.vue'))
-      .toBe('<view :class="[\'p-2_a_5\', cond ? \'m-2\' : \'mt-2_a_5\']" />')
+      .toBe('<view :class="[\'p-2_dot_5\', cond ? \'m-2\' : \'mt-2_dot_5\']" />')
   })
 
   it('object binding: keys inside :class="{ ... }"', async () => {
     expect(await transform('<view :class="{ \'p-2.5\': active, \'m-2.5\': !active }" />', 'src/foo.vue'))
-      .toBe('<view :class="{ \'p-2_a_5\': active, \'m-2_a_5\': !active }" />')
+      .toBe('<view :class="{ \'p-2_dot_5\': active, \'m-2_dot_5\': !active }" />')
   })
 
   it('ternary string class in template', async () => {
     expect(await transform('<text :class="todo.done ? \'text-[#999]\' : \'text-[#333]\'">{{ todo.text }}</text>', 'src/foo.vue'))
-      .toBe('<text :class="todo.done ? \'text-_a__a_999_a_\' : \'text-_a__a_333_a_\'">{{ todo.text }}</text>')
+      .toBe('<text :class="todo.done ? \'text-_lbracket__hash_999_rbracket_\' : \'text-_lbracket__hash_333_rbracket_\'">{{ todo.text }}</text>')
   })
 
   it('concatenated class expression', async () => {
     expect(await transform('<view :class="\'p-2.5 \' + cls" />', 'src/foo.vue'))
-      .toBe('<view :class="\'p-2_a_5 \' + cls" />')
+      .toBe('<view :class="\'p-2_dot_5 \' + cls" />')
   })
 
   it('template interpolation next to a real class: only the class changes', async () => {
     expect(await transform('<view class="p-2.5">{{ arr[1] }}</view>', 'src/foo.vue'))
-      .toBe('<view class="p-2_a_5">{{ arr[1] }}</view>')
+      .toBe('<view class="p-2_dot_5">{{ arr[1] }}</view>')
   })
 
   it('vue SFC <style> block is not rewritten', async () => {
     const code = '<template><view class="p-2.5" /></template>\n<style scoped>\n.p-2\\.5 { color: red; }\n</style>'
     expect(await transform(code, 'src/foo.vue')).toBe(
-      '<template><view class="p-2_a_5" /></template>\n<style scoped>\n.p-2\\.5 { color: red; }\n</style>',
+      '<template><view class="p-2_dot_5" /></template>\n<style scoped>\n.p-2\\.5 { color: red; }\n</style>',
     )
   })
 
@@ -203,48 +203,48 @@ describe('transformer-applet: taro (React) daily patterns', () => {
   it('static className and ternary string classes in tsx', async () => {
     const code = '<View className="p-2.5"><Text className={count > 0 ? \'text-[#f00]\' : \'text-[#0f0]\'}>{count}</Text></View>'
     expect(await transform(code, 'src/foo.tsx'))
-      .toBe('<View className="p-2_a_5"><Text className={count > 0 ? \'text-_a__a_f00_a_\' : \'text-_a__a_0f0_a_\'}>{count}</Text></View>')
+      .toBe('<View className="p-2_dot_5"><Text className={count > 0 ? \'text-_lbracket__hash_f00_rbracket_\' : \'text-_lbracket__hash_0f0_rbracket_\'}>{count}</Text></View>')
   })
 
   it('classNames() helper: literals and object keys aliased', async () => {
     const code = '<View className={classNames(\'p-2.5\', { \'mt-2.5\': cond })} />'
     expect(await transform(code, 'src/foo.tsx'))
-      .toBe('<View className={classNames(\'p-2_a_5\', { \'mt-2_a_5\': cond })} />')
+      .toBe('<View className={classNames(\'p-2_dot_5\', { \'mt-2_dot_5\': cond })} />')
   })
 
   it('template literal className', async () => {
     // eslint-disable-next-line no-template-curly-in-string -- literal `${cls}` is fixture data
     const code = '<View className={`p-2.5 ${cls}`} />'
     // eslint-disable-next-line no-template-curly-in-string -- literal `${cls}` is fixture data
-    expect(await transform(code, 'src/foo.tsx')).toBe('<View className={`p-2_a_5 ${cls}`} />')
+    expect(await transform(code, 'src/foo.tsx')).toBe('<View className={`p-2_dot_5 ${cls}`} />')
   })
 
   it('array access in component body stays untouched', async () => {
     const code = 'function Page() {\n  const steps = [1, 2, 3]\n  const step = steps[1]\n  return <View className="p-2.5">{step}</View>\n}'
     expect(await transform(code, 'src/foo.tsx'))
-      .toBe('function Page() {\n  const steps = [1, 2, 3]\n  const step = steps[1]\n  return <View className="p-2_a_5">{step}</View>\n}')
+      .toBe('function Page() {\n  const steps = [1, 2, 3]\n  const step = steps[1]\n  return <View className="p-2_dot_5">{step}</View>\n}')
   })
 })
 
 describe('transformer-applet: UnoCSS capability boundary', () => {
   it('css variables: bg-$primary', async () => {
     expect(await transform('<view class="bg-$primary text-$color" />', 'src/foo.vue'))
-      .toBe('<view class="bg-_a_primary text-_a_color" />')
+      .toBe('<view class="bg-_dollar_primary text-_dollar_color" />')
   })
 
   it('arbitrary content with quotes and colon: content-[\'a:b\']', async () => {
     expect(await transform(`<view class="content-['a:b']" />`, 'src/foo.vue'))
-      .toBe(`<view class="content-_a__a_a_a_b_a__a_" />`)
+      .toBe(`<view class="content-_lbracket__apostrophe_a_colon_b_apostrophe__rbracket_" />`)
   })
 
   it('calc() with % and +: w-[calc(100%-200rpx)] h-[calc(100%+10px)]', async () => {
     expect(await transform('<view class="w-[calc(100%-200rpx)] h-[calc(100%+10px)]" />', 'src/foo.vue'))
-      .toBe('<view class="w-_a_calc_a_100_a_-200rpx_a__a_ h-_a_calc_a_100_a__a_10px_a__a_" />')
+      .toBe('<view class="w-_lbracket_calc_lparen_100_percent_-200rpx_rparen__rbracket_ h-_lbracket_calc_lparen_100_percent__plus_10px_rparen__rbracket_" />')
   })
 
   it('stacked variants and responsive breakpoints', async () => {
     expect(await transform('<view class="dark:hover:bg-red/50 md:text-sm" />', 'src/foo.vue'))
-      .toBe('<view class="dark_a_hover_a_bg-red_a_50 md_a_text-sm" />')
+      .toBe('<view class="dark_colon_hover_colon_bg-red_slash_50 md_colon_text-sm" />')
   })
 
   // 含 `=` 的 URL、important 的各种写法、负值工具类不在这里重复测——
@@ -253,19 +253,19 @@ describe('transformer-applet: UnoCSS capability boundary', () => {
 
   it('cjk inside an arbitrary value is aliased and encoded to char codes', async () => {
     expect(await transform(`<view class="content-['你好']" />`, 'src/foo.vue'))
-      .toBe(`<view class="content-_a__a_2032022909_a__a_" />`)
+      .toBe(`<view class="content-_lbracket__apostrophe_2032022909_apostrophe__rbracket_" />`)
   })
 
   // 含 `=` 的过滤器（括号里的 `=` 不算）现在会照常别名化这个 token，与 preset 的
   // postprocess 选择器改写两边闭环。
   it('group-data-[state=open]:font-bold is aliased on the source side too', async () => {
     expect(await transform('<view class="group-data-[state=open]:font-bold" />', 'src/foo.vue'))
-      .toBe('<view class="group-data-_a_state_a_open_a__a_font-bold" />')
+      .toBe('<view class="group-data-_lbracket_state_equals_open_rbracket__colon_font-bold" />')
   })
 
   it('wind4: bracket utilities are aliased the same way', async () => {
     expect(await transform('<view class="w-[200rpx] p-2.5" />', 'src/foo.vue', {}, { preset: 'wind4' }))
-      .toBe('<view class="w-_a_200rpx_a_ p-2_a_5" />')
+      .toBe('<view class="w-_lbracket_200rpx_rbracket_ p-2_dot_5" />')
   })
 })
 
@@ -283,8 +283,8 @@ describe('transformer-applet: css round-trip', () => {
     const cssAfter = (await uno.generate(s.toString(), { preflights: false })).css
 
     expect(cssAfter).toBe(cssBefore)
-    expect(cssBefore).toContain('.w-_a_200rpx_a_')
-    expect(cssBefore).toContain('.-ml-1_a_5')
+    expect(cssBefore).toContain('.w-_lbracket_200rpx_rbracket_')
+    expect(cssBefore).toContain('.-ml-1_dot_5')
     expect(cssBefore).toContain('!important')
   })
 })
@@ -295,7 +295,7 @@ describe('transformer-applet: known tradeoffs', () => {
   // obj['p-2.5'] 这样的数据 key 也会被改写。这里用测试固定下来，改坏会失败。
   it('a data-key string literal holding a utility is aliased as well', async () => {
     expect(await transform('const v = obj[\'p-2.5\']', 'src/foo.ts'))
-      .toBe('const v = obj[\'p-2_a_5\']')
+      .toBe('const v = obj[\'p-2_dot_5\']')
   })
 
   // AST 路径在改写前先解析代码，行注释会被识别成注释而原样保留——旧版无状态正则的
@@ -344,9 +344,9 @@ const counterTemplate = `<template>
 
 const counterTemplateAliased = `<template>
   <view class="p-4 flex items-center">
-    <button class="w-_a_80rpx_a_ p-2_a_5 text-_a_32rpx_a_" @click="decrement">-</button>
-    <text class="mx-4 w-_a_120rpx_a_ text-center text-_a_40rpx_a_ font-bold">{{ minutes }}{{ label }}</text>
-    <button class="w-_a_80rpx_a_ p-2_a_5 text-_a_32rpx_a_ _a_font-bold" @click="increment">+</button>
+    <button class="w-_lbracket_80rpx_rbracket_ p-2_dot_5 text-_lbracket_32rpx_rbracket_" @click="decrement">-</button>
+    <text class="mx-4 w-_lbracket_120rpx_rbracket_ text-center text-_lbracket_40rpx_rbracket_ font-bold">{{ minutes }}{{ label }}</text>
+    <button class="w-_lbracket_80rpx_rbracket_ p-2_dot_5 text-_lbracket_32rpx_rbracket_ _exclamation_font-bold" @click="increment">+</button>
   </view>
 </template>
 `
@@ -403,14 +403,14 @@ const todoTemplateAliased = `<template>
     <view
       v-for="(todo, i) in todos"
       :key="i"
-      class="flex items-center mt-2 p-2_a_5 rounded-lg"
-      :class="{ 'bg-_a__a_f7f7f7_a_': todo.done }"
+      class="flex items-center mt-2 p-2_dot_5 rounded-lg"
+      :class="{ 'bg-_lbracket__hash_f7f7f7_rbracket_': todo.done }"
       @click="toggle(i)"
     >
-      <view class="mr-2 w-_a_36rpx_a_ h-_a_36rpx_a_ border rounded-full" :class="todo.done ? 'bg-_a__a_07c160_a_' : 'bg-transparent'" />
-      <text :class="todo.done ? 'text-_a__a_999_a_ line-through' : 'text-_a__a_333_a_'">{{ i + 1 }}. {{ todo.text }}</text>
+      <view class="mr-2 w-_lbracket_36rpx_rbracket_ h-_lbracket_36rpx_rbracket_ border rounded-full" :class="todo.done ? 'bg-_lbracket__hash_07c160_rbracket_' : 'bg-transparent'" />
+      <text :class="todo.done ? 'text-_lbracket__hash_999_rbracket_ line-through' : 'text-_lbracket__hash_333_rbracket_'">{{ i + 1 }}. {{ todo.text }}</text>
     </view>
-    <text class="mt-4 text-_a_24rpx_a_ text-_a__a_999_a_">{{ remaining }} left · {{ w[today] }}</text>
+    <text class="mt-4 text-_lbracket_24rpx_rbracket_ text-_lbracket__hash_999_rbracket_">{{ remaining }} left · {{ w[today] }}</text>
   </view>
 </template>
 `
@@ -433,7 +433,7 @@ const optionsApiTemplate = `<template>
 `
 
 const optionsApiTemplateAliased = `<template>
-  <view class="p-2_a_5">
+  <view class="p-2_dot_5">
     <view :class="iconCls">step: {{ m[1] }}</view>
     <button @click="reset">reset</button>
   </view>
@@ -470,7 +470,7 @@ const optionsApiScriptAliased = `<script>
 export default {
   data() {
     return {
-      iconCls: 'w-_a_36rpx_a_ h-_a_36rpx_a_ rounded-full',
+      iconCls: 'w-_lbracket_36rpx_rbracket_ h-_lbracket_36rpx_rbracket_ rounded-full',
       m: [1, 5, 15, 30],
     }
   },
@@ -482,7 +482,7 @@ export default {
   methods: {
     reset() {
       const last = this.m[this.m.length - 1]
-      this.iconCls = last > 15 ? 'bg-_a__a_07c160_a_' : 'bg-_a__a_fa515c_a_'
+      this.iconCls = last > 15 ? 'bg-_lbracket__hash_07c160_rbracket_' : 'bg-_lbracket__hash_fa515c_rbracket_'
     },
   },
 }
@@ -511,7 +511,7 @@ module.exports = { fmt: fmt }
 describe('transformer-applet: uni-app wxs module', () => {
   it('subscripts inside a wxs module survive, template class still aliases', async () => {
     const code = `<template><view class="p-2.5">{{ utils.fmt(1) }}</view></template>\n${wxsModule}`
-    const expected = `<template><view class="p-2_a_5">{{ utils.fmt(1) }}</view></template>\n${wxsModule}`
+    const expected = `<template><view class="p-2_dot_5">{{ utils.fmt(1) }}</view></template>\n${wxsModule}`
     expect(await transform(code, 'src/foo.vue')).toBe(expected)
   })
 })
@@ -534,12 +534,12 @@ const tabsTemplate = `<template>
 
 const tabsTemplateAliased = `<template>
   <view class="p-4">
-    <view class="flex rounded-lg border border-_a__a_eee_a_">
+    <view class="flex rounded-lg border border-_lbracket__hash_eee_rbracket_">
       <view
         v-for="(tab, i) in tabs"
         :key="tab.key"
-        class="flex-1 py-2 text-center text-_a_28rpx_a_"
-        :class="i === active ? 'text-_a__a_07c160_a_ font-bold' : 'text-_a__a_999_a_'"
+        class="flex-1 py-2 text-center text-_lbracket_28rpx_rbracket_"
+        :class="i === active ? 'text-_lbracket__hash_07c160_rbracket_ font-bold' : 'text-_lbracket__hash_999_rbracket_'"
         @click="select(i)"
       >{{ tab.label }}</view>
     </view>
@@ -611,9 +611,9 @@ const emit = defineEmits<{ change: [key: string] }>()
 
 // 数据驱动的类名字符串——字面量必须改写，运行时的 class 才能和 wxss 对上
 const tabs: Tab[] = [
-  { key: 'all', label: 'all', cls: 'bg-_a__a_f7f7f7_a_ text-_a__a_999_a_' },
-  { key: 'active', label: 'active', cls: 'bg-_a__a_07c160_a_ text-white font-bold' },
-  { key: 'done', label: 'done', cls: 'bg-_a__a_fa515c_a_ text-white' },
+  { key: 'all', label: 'all', cls: 'bg-_lbracket__hash_f7f7f7_rbracket_ text-_lbracket__hash_999_rbracket_' },
+  { key: 'active', label: 'active', cls: 'bg-_lbracket__hash_07c160_rbracket_ text-white font-bold' },
+  { key: 'done', label: 'done', cls: 'bg-_lbracket__hash_fa515c_rbracket_ text-white' },
 ]
 
 const { active, reset } = useTabState(props.initial)
@@ -668,10 +668,10 @@ function Counter({ initial = 0 }: { initial?: number }) {
   const step = steps[1]
 
   return (
-    <View className="p-2_a_5 flex items-center">
-      <Button className="w-_a_80rpx_a_ text-_a_32rpx_a_" onClick={() => setCount(count - step)}>-</Button>
-      <Text className="mx-4 w-_a_120rpx_a_ text-center text-_a_40rpx_a_ font-bold">{count}</Text>
-      <Button className="w-_a_80rpx_a_ text-_a_32rpx_a_ _a_font-bold" onClick={() => setCount(count + step)}>+</Button>
+    <View className="p-2_dot_5 flex items-center">
+      <Button className="w-_lbracket_80rpx_rbracket_ text-_lbracket_32rpx_rbracket_" onClick={() => setCount(count - step)}>-</Button>
+      <Text className="mx-4 w-_lbracket_120rpx_rbracket_ text-center text-_lbracket_40rpx_rbracket_ font-bold">{count}</Text>
+      <Button className="w-_lbracket_80rpx_rbracket_ text-_lbracket_32rpx_rbracket_ _exclamation_font-bold" onClick={() => setCount(count + step)}>+</Button>
     </View>
   )
 }
@@ -748,8 +748,8 @@ function usePrices() {
 function PriceList({ tag = 'hot' }: { tag?: string }) {
   const { base, top } = usePrices()
   const [items, setItems] = useState<Item[]>([
-    { id: 1, name: 'A', price: base, cls: 'text-_a_24rpx_a_ text-_a__a_999_a_' },
-    { id: 2, name: 'B', price: top, cls: 'text-_a_28rpx_a_ font-bold' },
+    { id: 1, name: 'A', price: base, cls: 'text-_lbracket_24rpx_rbracket_ text-_lbracket__hash_999_rbracket_' },
+    { id: 2, name: 'B', price: top, cls: 'text-_lbracket_28rpx_rbracket_ font-bold' },
   ])
 
   const total = useMemo(() => items.reduce((sum, item, i) => sum + items[i].price, 0), [items])
@@ -764,13 +764,13 @@ function PriceList({ tag = 'hot' }: { tag?: string }) {
   }, [tag])
 
   return (
-    <View className="p-2_a_5">
+    <View className="p-2_dot_5">
       {items.map((item, i) => (
         <View key={item.id} className="flex items-center mt-2" onClick={checkout}>
-          <Text className={item.price > base ? 'text-_a__a_fa515c_a_ font-bold' : 'text-_a__a_999_a_'}>
+          <Text className={item.price > base ? 'text-_lbracket__hash_fa515c_rbracket_ font-bold' : 'text-_lbracket__hash_999_rbracket_'}>
             {item.name} {items[i].price}
           </Text>
-          <Text className={\`ml-2 w-_a_120rpx_a_ \${item.cls}\`}>{tag}</Text>
+          <Text className={\`ml-2 w-_lbracket_120rpx_rbracket_ \${item.cls}\`}>{tag}</Text>
         </View>
       ))}
     </View>
@@ -795,7 +795,7 @@ describe('transformer-applet: parse-failure and non-class attributes', () => {
   it('static non-class attribute values are never touched', async () => {
     const code = `<input placeholder="剩余 p-2.5 米" aria-label="py-3.5 视图" /><view class="p-2.5" />`
     expect(await transform(code, 'x.vue')).toBe(
-      '<input placeholder="剩余 p-2.5 米" aria-label="py-3.5 视图" /><view class="p-2_a_5" />',
+      '<input placeholder="剩余 p-2.5 米" aria-label="py-3.5 视图" /><view class="p-2_dot_5" />',
     )
   })
 
@@ -817,7 +817,7 @@ describe('transformer-applet: parse-failure and non-class attributes', () => {
     // `(const x = 'p-2.5')` 是语法错误 → 该片段被跳过
     const code = `<view :class="const x = 'p-2.5'"></view><view class="p-2.5"></view>`
     expect(await transform(code, 'x.vue')).toBe(
-      `<view :class="const x = 'p-2.5'"></view><view class="p-2_a_5"></view>`,
+      `<view :class="const x = 'p-2.5'"></view><view class="p-2_dot_5"></view>`,
     )
   })
 })
@@ -838,7 +838,7 @@ describe('transformer-applet: directives and interpolation are runtime code', ()
   // :class 是类名位置，字符串字面量仍要改写（动态类写法依赖此行为）
   it(':class string literals are still aliased', async () => {
     expect(await transform(`<view :class="'p-2.5 ' + cls" />`, 'x.vue'))
-      .toBe(`<view :class="'p-2_a_5 ' + cls" />`)
+      .toBe(`<view :class="'p-2_dot_5 ' + cls" />`)
   })
 })
 
@@ -853,7 +853,7 @@ describe('transformer-applet: coexists with transformerHover on one MagicString'
     const ctx = { tokens: new Set(), uno } as UnocssPluginContext
     for (const t of uno.config.transformers ?? [])
       await t.transform(s, 'x.vue', ctx)
-    expect(s.toString()).toBe(`<view hover-class="bg-red_a_50"/>`)
+    expect(s.toString()).toBe(`<view hover-class="bg-red_slash_50"/>`)
   })
 
   // Finding 1 的核心场景：hover 改写过的文件里还有别的需要别名化的工具类，
@@ -864,7 +864,7 @@ describe('transformer-applet: coexists with transformerHover on one MagicString'
     const ctx = { tokens: new Set(), uno } as UnocssPluginContext
     for (const t of uno.config.transformers ?? [])
       await t.transform(s, 'x.vue', ctx)
-    expect(s.toString()).toBe(`<view class="p-2_a_5" hover-class="bg-red"/>`)
+    expect(s.toString()).toBe(`<view class="p-2_dot_5" hover-class="bg-red"/>`)
   })
 
   // 没有不支持字符时 hover 照常搬移、applet 无事可做，确认无回归
@@ -883,6 +883,6 @@ describe('transformer-applet: hand-written hover-class is a class-name position'
   // 这个属性值是类名位置，必须与 postprocess 的选择器别名一致
   it('hand-written hover-class value is aliased', async () => {
     expect(await transform(`<view hover-class="p-2.5" />`, 'x.vue'))
-      .toBe(`<view hover-class="p-2_a_5" />`)
+      .toBe(`<view hover-class="p-2_dot_5" />`)
   })
 })

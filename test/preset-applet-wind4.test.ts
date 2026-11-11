@@ -834,9 +834,9 @@ describe('preset-applet-wind4', () => {
     const { css } = await uno.generate('!font-bold font-bold! important:font-bold', { preflights: false })
 
     expect(css).toMatch(/font-weight:var\(--fontWeight-bold\) !important/)
-    expect(css).toContain('._a_font-bold')
-    expect(css).toContain('.font-bold_a_')
-    expect(css).toContain('.important_a_font-bold')
+    expect(css).toContain('._exclamation_font-bold')
+    expect(css).toContain('.font-bold_exclamation_')
+    expect(css).toContain('.important_colon_font-bold')
     expect(css).not.toMatch(/\.[\w-]*!/)
   })
 
@@ -868,8 +868,8 @@ describe('preset-applet-wind4', () => {
     expect(css).not.toMatch(/\\\]/)
     expect(css).not.toMatch(/\\=/)
     // 而且要改写成小程序安全的别名
-    expect(css).toContain('.peer-aria-checked_a_bg-blue-500')
-    expect(css).toContain('.group-data-_a_state_a_open_a__a_font-bold')
-    expect(css).toContain('.in-_a_div_a__a_bg-red-400')
+    expect(css).toContain('.peer-aria-checked_colon_bg-blue-500')
+    expect(css).toContain('.group-data-_lbracket_state_equals_open_rbracket__colon_font-bold')
+    expect(css).toContain('.in-_lbracket_div_rbracket__colon_bg-red-400')
   })
 })

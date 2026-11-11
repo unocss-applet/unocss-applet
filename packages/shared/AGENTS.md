@@ -4,7 +4,7 @@
 
 ## 两个文件
 
-`src/constants.ts` 的 `UNSUPPORTED_CHARS` 是「小程序类名里不能出现哪些字符」的唯一来源。改这张表等于同时改三件事：`presetApplet` 的 postprocess 会把它们换成 `_a_`，`transformerApplet` 会据此把源码里的 token 改写成别名，`transformerHover` 搬移时用同一套判断。漏改一处会出现「源码改写了、CSS 没改写」或相反的错位。
+`src/constants.ts` 的 `UNSUPPORTED_CHARS` 是「小程序类名里不能出现哪些字符」的唯一来源。改这张表等于同时改三件事：`presetApplet` 的 postprocess 会把它们按英文名称换成 `_<名称>_`，`transformerApplet` 会据此把源码里的 token 改写成别名，`transformerHover` 搬移时用同一套判断。三处共用 `encodeAppletChar`，不同非法字符必须使用不同名称，避免分数和小数等工具类碰撞。漏改一处会出现「源码改写了、CSS 没改写」或相反的错位。
 
 `src/helper.ts` 的 `encodeNonSpaceLatin` 把非 ASCII 字符编码成字符码。` $$ ` 是 UnoCSS shortcut 的组合分隔符（`'a-bg': 'bg-gray-100 dark:bg-black'` 会生成 `dark $$ a-bg` 这类选择器），必须跳过不编码，否则选择器结构被破坏。
 

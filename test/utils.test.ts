@@ -1,5 +1,16 @@
-import { encodeNonSpaceLatin } from '@unocss-applet/shared'
+import { encodeAppletChar, encodeNonSpaceLatin, UNSUPPORTED_CHARS } from '@unocss-applet/shared'
 import { expect, it } from 'vitest'
+
+it('非法字符的编码各不相同', () => {
+  const aliases = UNSUPPORTED_CHARS.map(encodeAppletChar)
+  expect(new Set(aliases).size).toBe(UNSUPPORTED_CHARS.length)
+  expect(aliases.every(alias => /^_[a-z]+_$/.test(alias))).toBe(true)
+  expect(encodeAppletChar('/')).toBe('_slash_')
+  expect(encodeAppletChar('.')).toBe('_dot_')
+  expect(encodeAppletChar('~')).toBe('_tilde_')
+  expect(encodeAppletChar('。')).toBe('_unicodedaac_')
+  expect(encodeAppletChar('😀')).toBe('_unicodebpgaa_')
+})
 
 it('encodeNonSpaceLatin', () => {
   expect(encodeNonSpaceLatin('Hello, thank you, goodbye'))

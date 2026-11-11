@@ -4,7 +4,7 @@
 
 `unocss-applet` **不是** UnoCSS 的 fork，而是对 `@unocss/preset-wind3` / `@unocss/preset-wind4` 的包裹层。小程序端的兼容由两处配合实现：
 
-- **`presetApplet` 的 postprocess**：在生成 CSS 时把选择器里的非法字符（`. : [ / % ! # ( ) ...`）替换为 `_a_`，并把非 ASCII（如中文）编码为字符码。
+- **`presetApplet` 的 postprocess**：在生成 CSS 时把选择器里的非法字符（`. : [ / % ! # ( ) ...`）按英文名称编码为 `_<名称>_`（如 `/` → `_slash_`、`.` → `_dot_`），避免不同标点产生相同类名，并把非 ASCII（如中文）编码为字符码。升级编码格式后需完整重建模板和 CSS；启用本 preset 的 H5 端也使用同一规则。
 - **`transformerApplet`（由 `presetApplet` 自动注入）**：把源码里能放类名的位置（模板 `class` 属性、`:class` 表达式里的字符串字面量、`.js/.ts` 字符串、模板文本等）中的非法字符工具类（如 `py-3.5`、`bg-[url(...)]`）改写为 applet 安全别名，并注册为 shortcut 指回原始工具类。改写前会先解析代码（`.vue` 用 Vue 模板编译器、`.js/.ts/.jsx/.tsx` 用 oxc），所以可执行代码不会被碰：数组下标 `m[1]`、注释、正则、`@click` 等指令表达式和插值 `{{ }}` 里的字符串都保持原样（[#114](https://github.com/unocss-applet/unocss-applet/issues/114)）。已知类型的文件解析失败时直接跳过改写（宁可漏一个工具类，也不损坏脚本），只有不认识的文件类型回退为整文件正则改写。完整边界见 [`packages/preset-applet/README.md`](./packages/preset-applet/README.md) 的「源码改写规则」。
 
 两者闭环后，绝大多数 wind3/wind4 工具类可在小程序端正常使用。
@@ -136,22 +136,22 @@ presets.push(presetIcons({ scale: 1.2, warn: true, /* ... */ }))
 | `:only-of-type` / `:not(:only-of-type)` | `only-of-type:` / `not-only-of-type:` | |
 | `:nth-child(2n)` 等 | `[&:nth-child(2n)]:`（任意值变体） | ~~`nth-child-2n:`~~ |
 
-任意值形式 `[&:nth-child(2n)]:` 经 `_a_` 别名后在小程序端可用；其余变体同理。详见 [#52](https://github.com/unocss-applet/unocss-applet/issues/52)。
+任意值形式 `[&:nth-child(2n)]:` 经英文名称别名化后在小程序端可用；其余变体同理。详见 [#52](https://github.com/unocss-applet/unocss-applet/issues/52)。
 
 ### 子选择器 / 后代选择器任意变体
 
-任意变体括号里的 `>`（子选择器）和空格（后代选择器）都能用：`&`、`>`、`[`、`]`、`:` 会变成 `_a_` 别名，`>` 和空格两个组合符原样保留，小程序 wxss 都支持。
+任意变体括号里的 `>`（子选择器）和空格（后代选择器）都能用：类名里的 `&`、`>`、`[`、`]`、`:` 按英文名称变成 `_<名称>_` 别名，选择器结构里的 `>` 和空格两个组合符原样保留，小程序 wxss 都支持。
 
 | 写法 | 生成的选择器 | 说明 |
 | --- | --- | --- |
-| `[&>view]:text-red` | `._a__a__a_view_a__a_text-red>view` | 只作用于直接子元素 |
-| `[&_view]:text-red` | `._a__a__view_a__a_text-red view` | 作用于所有后代 |
+| `[&>view]:text-red` | `._lbracket__ampersand__gt_view_rbracket__colon_text-red>view` | 只作用于直接子元素 |
+| `[&_view]:text-red` | `._lbracket__ampersand__view_rbracket__colon_text-red view` | 作用于所有后代 |
 
 `0.13.2` – `0.16.0` 期间，为挡掉 HTML 标签残渣而加的过滤把含 `>` 的 token 一并拒掉，`[&>view]:` 在源码里不被改写，类名与 wxss 对不上，样式静默失效；`0.16.1` 起只拒绝括号外的 `<` / `>`（[#115](https://github.com/unocss-applet/unocss-applet/issues/115)）。
 
 ### `hover:` 变体（小程序原生 `hover-class`）
 
-小程序不支持 `:hover` 伪类，原生 `view`/`button` 通过字符串属性 `hover-class` 表达按下态。`hover:bg-red` 这类工具类经 `_a_` 别名后生成的 CSS 仍带 `:hover`，在小程序端被静默丢弃。使用本仓库 [`transformerHover`](./packages/transformer-hover) 把 `hover:` 工具类从 `class` 移到 `hover-class`（自动去前缀、合并既有值），即可在小程序端生效：
+小程序不支持 `:hover` 伪类，原生 `view`/`button` 通过字符串属性 `hover-class` 表达按下态。`hover:bg-red` 这类工具类经英文名称别名化后生成的 CSS 仍带 `:hover`，在小程序端被静默丢弃。使用本仓库 [`transformerHover`](./packages/transformer-hover) 把 `hover:` 工具类从 `class` 移到 `hover-class`（自动去前缀、合并既有值），即可在小程序端生效：
 
 ```html
 <div class="hover:bg-red hover:text-xl"/>

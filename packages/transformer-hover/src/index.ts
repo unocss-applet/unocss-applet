@@ -1,7 +1,7 @@
 import type { SourceCodeTransformer } from '@unocss/core'
 import type { TransformerHoverOptions } from './types'
 import MagicString from 'magic-string'
-import { encodeNonSpaceLatin, UNSUPPORTED_CHARS } from '../../shared/src'
+import { encodeAppletChar, encodeNonSpaceLatin, UNSUPPORTED_CHARS } from '../../shared/src'
 
 export * from './types'
 
@@ -12,10 +12,10 @@ export * from './types'
  * 直接丢掉。原生的 `view` / `button` 组件是靠字符串类型的 `hover-class` 属性在按压时
  * 生效的。本 transformer 把静态 `class` / `className` 里的 `hover:` 工具类搬到
  * `hover-class`（去掉 `hover:` 前缀，因为属性本身已经表示按压态），让这些工具类在小程序端
- * 真正起作用。搬进 hover-class 的 token 会同时做别名化（不支持字符换 `_a_`、非 ASCII
+ * 真正起作用。搬进 hover-class 的 token 会同时做别名化（不支持字符按英文名称编码、非 ASCII
  * 编码成字符码，与 `presetApplet` 的 postprocess 同一套规则）并注册 shortcut，
  * 让运行时类名与生成的 CSS 选择器一致——不别名化的话 `hover:bg-red/50` 搬出去是
- * `bg-red/50`，CSS 侧是 `.bg-red_a_50`，wxss 引用不到，按压态静默失效。
+ * `bg-red/50`，CSS 侧是 `.bg-red_slash_50`，wxss 引用不到，按压态静默失效。
  *
  * `hover-class` 只接受字符串（微信/支付宝官方文档），所以输出永远是单个空格拼接的字符串，
  * 不会是数组。永远不会输出空值：`hover-class=""` 虽然无害，但 `hover-class="none"` 是关闭
@@ -271,9 +271,9 @@ export function transformerHover(options: TransformerHoverOptions = {}): SourceC
                 // （`hover:focus:`、`hover:dark:`）。
                 if (!hasVariantSeparator(body) && (await uno.parseToken(moved))?.[0]) {
                   // 搬进 hover-class 的值是运行时类名，而 postprocess 生成的 CSS 选择器是
-                  // 别名化形式（`bg-red/50` → `.bg-red_a_50`）；不别名化的话两侧对不上，
+                  // 别名化形式（`bg-red/50` → `.bg-red_slash_50`）；不别名化的话两侧对不上，
                   // 按压态样式静默失效。用与 postprocess 同一套字符表/编码，保证别名一致
-                  const alias = encodeNonSpaceLatin(important ? `!${body}`.replace(charReplaceReg, '_a_') : body.replace(charReplaceReg, '_a_'))
+                  const alias = encodeNonSpaceLatin(moved.replace(charReplaceReg, encodeAppletChar))
                   if (alias !== moved) {
                     // 注册 别名 -> 原始工具类 的 shortcut，让别名 token 也能生成 CSS
                     // （与 transformerApplet 的做法一致）
