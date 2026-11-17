@@ -1,22 +1,24 @@
 import type { Preset, SourceCodeTransformer } from 'unocss'
 import process from 'node:process'
-import { defineConfig, presetAttributify, presetIcons } from 'unocss'
+import { defineConfig, presetAttributify, presetIcons, transformerVariantGroup } from 'unocss'
 
 import {
   presetApplet,
   presetRemRpx,
   transformerAttributify,
+  transformerHover,
 } from 'unocss-applet'
 
 // taro 小程序端 TARO_ENV 非 h5
 const isApplet = process.env.TARO_ENV !== 'h5'
 const presets: Preset[] = []
-const transformers: SourceCodeTransformer[] = []
+const transformers: SourceCodeTransformer[] = [transformerVariantGroup()]
 
 if (isApplet) {
   presets.push(presetApplet())
   presets.push(presetRemRpx())
   transformers.push(transformerAttributify({ ignoreAttributes: ['block'] }))
+  transformers.push(transformerHover())
 }
 else {
   presets.push(presetApplet())

@@ -2,7 +2,7 @@
 
 [UnoCSS](https://github.com/unocss/unocss) 的小程序预设，包裹 [`@unocss/preset-wind3`](https://github.com/unocss/unocss/tree/main/packages-presets/preset-wind3)（默认）/ [`@unocss/preset-wind4`](https://github.com/unocss/unocss/tree/main/packages-presets/preset-wind4)，对部分 CSS 选择器做转换以兼容小程序。
 
-`presetApplet` 会自动注入 `transformerApplet`：把源码里含非法字符的工具类改写为 `_a_` 别名，让模板里的类名与生成的 wxss 选择器对得上。改写范围有明确边界（见下文「源码改写规则」），不会碰 JS 代码。
+`presetApplet` 会自动注入 `transformerApplet`：把源码里含非法字符的工具类改写为英文名称别名，让模板里的类名与生成的 wxss 选择器对得上。改写范围有明确边界（见下文「源码改写规则」），不会碰 JS 代码。
 
 ## 安装
 
@@ -66,7 +66,29 @@ export interface PresetAppletOptions {
 
 - `space-x-*` / `space-y-*` / `divide-*`：上游用 `> * + *`，applet 改写为枚举元素选择器（默认 `view`/`button`/`text`/`image`，可通过 `betweenElements` 自定义）。
 - `*:` 通配变体：上游 `> *` 在 applet 展开为枚举元素选择器（同上，可通过 `wildcardElements` 自定义）。
-- 类名中的不支持字符（`. : [ / % ! # ( ) ...`）会被替换为 `_a_`，使生成的选择器在 applet wxss 中可引用。
+- 类名中的不支持字符（`. : [ / % ! # ( ) ...`）按英文名称编码为 `_<名称>_`，使生成的选择器在 applet wxss 中可引用。比如 `w-1/2` 变成 `w-1_slash_2`，`w-1.2` 变成 `w-1_dot_2`，两种宽度不会再共用一个类名。
+
+所有内置不支持字符使用不同的固定名称：
+
+| 符号 | 名称 | 符号 | 名称 |
+| --- | --- | --- | --- |
+| `.` | `dot` | `:` | `colon` |
+| `%` | `percent` | `!` | `exclamation` |
+| `#` | `hash` | `/` | `slash` |
+| `(` | `lparen` | `)` | `rparen` |
+| `[` | `lbracket` | `]` | `rbracket` |
+| `{` | `lbrace` | `}` | `rbrace` |
+| `,` | `comma` | `$` | `dollar` |
+| `@` | `at` | `+` | `plus` |
+| `^` | `caret` | `&` | `ampersand` |
+| `<` | `lt` | `>` | `gt` |
+| `'` | `apostrophe` | `"` | `quote` |
+| `\` | `backslash` | `?` | `question` |
+| `*` | `asterisk` | `=` | `equals` |
+
+通过 `unsupportedChars` 添加的 `~`、反引号、竖线、`;` 分别使用 `tilde`、`backtick`、`pipe`、`semicolon`。其他自定义字符以 `unicode` 为前缀，将字符码的十六进制数位 `0–f` 对应为字母 `a–p`，确保名称仍只含英文字母且彼此不同。此表只决定替换名称，不会扩大默认不支持字符列表。
+
+生成的别名格式为 `_<名称>_`。升级后请完整重建模板和 CSS；源码继续使用原始工具类，手写选择器或外部文件中引用的旧生成别名需要同步更新。小程序端和启用 `presetApplet` 的 H5 端使用相同编码；H5 端若只使用上游 preset，则不受影响。
 
 ## 源码改写规则
 
@@ -104,16 +126,16 @@ export interface PresetAppletOptions {
 ### 转换后
 
 ```html
-<div class="py-3_a_5 grid-cols-_a_0_a_7fr_repeat_a_7_a_1fr_a__a_">
+<div class="py-3_dot_5 grid-cols-_lbracket_0_dot_7fr_repeat_lparen_7_comma_1fr_rparen__rbracket_">
   py-3
 </div>
 
 <style>
-.grid-cols-_a_0_a_7fr_repeat_a_7_a_1fr_a__a_ {
+.grid-cols-_lbracket_0_dot_7fr_repeat_lparen_7_comma_1fr_rparen__rbracket_ {
   grid-template-columns: 0.7fr repeat(7,1fr);
 }
 
-.py-3_a_5 {
+.py-3_dot_5 {
   padding-top:0.875rem;padding-bottom: 0.875rem;
 }
 </style>

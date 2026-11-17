@@ -1,3 +1,45 @@
+// 固定名称便于检查构建产物，同时避免 `/` 和 `.` 等不同符号共用别名。
+const appletCharNames: Record<string, string> = {
+  '.': 'dot',
+  ':': 'colon',
+  '%': 'percent',
+  '!': 'exclamation',
+  '#': 'hash',
+  '(': 'lparen',
+  ')': 'rparen',
+  '[': 'lbracket',
+  ']': 'rbracket',
+  '/': 'slash',
+  ',': 'comma',
+  '$': 'dollar',
+  '{': 'lbrace',
+  '}': 'rbrace',
+  '@': 'at',
+  '+': 'plus',
+  '^': 'caret',
+  '&': 'ampersand',
+  '<': 'lt',
+  '>': 'gt',
+  '\'': 'apostrophe',
+  '\\': 'backslash',
+  '"': 'quote',
+  '?': 'question',
+  '*': 'asterisk',
+  '=': 'equals',
+  '~': 'tilde',
+  '`': 'backtick',
+  '|': 'pipe',
+  ';': 'semicolon',
+}
+
+/** 自定义字符没有固定名称时，将字符码的十六进制数位映射为 a–p，仍只使用英文字母。 */
+export function encodeAppletChar(char: string): string {
+  const name = Object.hasOwn(appletCharNames, char)
+    ? appletCharNames[char]
+    : `unicode${Array.from(char, c => c.codePointAt(0)!.toString(16).replace(/[\da-f]/g, digit => String.fromCharCode(97 + Number.parseInt(digit, 16)))).join('z')}`
+  return `_${name}_`
+}
+
 /**
  * 把非空格的非 ASCII 字符编码成字符码
  * @param str - 要编码的字符串
