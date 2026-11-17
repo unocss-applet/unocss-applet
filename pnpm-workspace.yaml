@@ -10,7 +10,7 @@ packages:
 # "magic_string.default is not a constructor"。patch 去掉 node-mode 标志，改读命名空间
 # 真实的 .default；背景见 COMPATIBILITY.md，上游修复后删除本条目与 patches/。
 patchedDependencies:
-  '@unocss/webpack@66.12.0': patches/@unocss__webpack@66.12.0.patch
+  '@unocss/webpack@66.13.0': patches/@unocss__webpack@66.13.0.patch
 
 configDependencies:
   '@pnpm/plugin-trusted-deps': ^0.2.2
@@ -96,19 +96,19 @@ catalogs:
     vue-i18n: ^9.0.0
     vue-tsc: ^3.3.11
   unocss:
-    '@unocss/core': ~66.12.0
-    '@unocss/eslint-config': ~66.12.0
-    '@unocss/preset-attributify': ~66.12.0
-    '@unocss/preset-icons': ~66.12.0
-    '@unocss/preset-mini': ~66.12.0
-    '@unocss/preset-wind3': ~66.12.0
-    '@unocss/preset-wind4': ~66.12.0
+    '@unocss/core': ~66.13.0
+    '@unocss/eslint-config': ~66.13.0
+    '@unocss/preset-attributify': ~66.13.0
+    '@unocss/preset-icons': ~66.13.0
+    '@unocss/preset-mini': ~66.13.0
+    '@unocss/preset-wind3': ~66.13.0
+    '@unocss/preset-wind4': ~66.13.0
     # 精确钉死：patchedDependencies 绑定版本号，波浪号范围内的升级会导致
     # patch 静默失配（只剩安装警告），升级时必须连 patch 一起处理。
     # patch 绑定补丁文件里的 chunk 文件名（随版本变化），换版本要重新生成 patch，
     # 不能只改版本号。
-    '@unocss/webpack': 66.12.0
-    unocss: ~66.12.0
+    '@unocss/webpack': 66.13.0
+    unocss: ~66.13.0
   utils:
     '@vue/compiler-dom': ~3.5.42
     bumpp: ^12.3.0
