@@ -18,7 +18,7 @@
 
 **`questionMark` 规则按 pattern 删，不按位置删。** 上游那条规则会把三元表达式里的 `?` 当成工具类，被 transformer 改写成 `_a_` 之后直接损坏脚本代码（#108）。用 `pop()` 依赖它恰好是数组最后一项，上游一追加规则就会漏删。
 
-**wind3 的 `variants` 用下标 1 替换。** 上游 `variants()` 前两项是 `placeholderModifier` 和 `variantSpaceAndDivide`（66.12.0 仍如此）。上游若在这个位置前面插入新变体，这里会换错对象，`test/assets/output/preset-wind3-targets.css` 里 `space-x-*` 的 `>view+view` 会立刻对不上。
+**wind3 的 `variants` 用下标 1 替换。** 上游 `variants()` 前两项是 `placeholderModifier` 和 `variantSpaceAndDivide`（66.13.0 仍如此）。上游若在这个位置前面插入新变体，这里会换错对象，`test/assets/output/preset-wind3-targets.css` 里 `space-x-*` 的 `>view+view` 会立刻对不上。
 
 **wind4 的 `property` preflight selector 必须去掉 `*`。** 小程序写不出通配选择器，默认的 `*, ::before, ::after, ::backdrop` 换成 `:not(not), ::before, ::after, ::backdrop`。用户显式写 `property: false` 时不要覆盖。
 

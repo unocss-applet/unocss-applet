@@ -36,7 +36,7 @@ pnpm add unocss-applet -D # with pnpm
 
 ## 兼容性
 
-`unocss-applet` 当前验证的 UnoCSS 版本是 `66.12.0`，`peerDependencies` 允许 `>=66.10.1 <66.13.0`，需要 Node.js `>= 22.12`。
+`unocss-applet` 当前验证的 UnoCSS 版本是 `66.13.0`，`peerDependencies` 允许 `>=66.10.1 <66.14.0`，需要 Node.js `>= 22.12`。
 
 ## 使用
 
@@ -57,6 +57,8 @@ export default defineConfig({
 ```
 
 小程序 / H5 的分支配置、uni-app 与 Taro 的平台接入、各选项的完整说明，请阅读主包 [packages/unocss-applet](./packages/unocss-applet) 的文档。
+
+上面示例带上了 `transformerAttributify`。上游作者建议默认写字面 `class`，attributify 留给已有代码或团队明确约定的场景，取舍见 [COMPATIBILITY.md](./COMPATIBILITY.md) 的「关于 attributify 的写法建议」。
 
 ## 示例
 

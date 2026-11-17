@@ -13,13 +13,13 @@
 
 ## 版本支持
 
-`unocss-applet` 当前验证的 UnoCSS 版本是 [`66.12.0`](https://github.com/unocss/unocss/releases/tag/v66.12.0)，`peerDependencies.unocss` 允许下游使用 `>=66.10.1 <66.13.0`，也就是 66.10 到 66.12 之间的任意版本。
+`unocss-applet` 当前验证的 UnoCSS 版本是 [`66.13.0`](https://github.com/unocss/unocss/releases/tag/v66.13.0)，`peerDependencies.unocss` 允许下游使用 `>=66.10.1 <66.14.0`，也就是 66.10 到 66.13 之间的任意版本。
 
-- 本仓库的开发与测试环境（monorepo catalog）锁定 `~66.12.0`；下游按自己的需要取区间内的版本，超出区间时装包工具会给出 peer 警告。
-- 66.10.1 与 66.12.0 下 wind3 的生成结果逐字节相同，`test/assets/output/preset-wind3-targets.css` 在升级时没有变化。wind4 有差异：66.11 起规则排序不再受 token 顺序影响，66.12 起任意 CSS 变量颜色直接输出 `var(--x)`（不再包一层 `color-mix`）、`order-first` 改成 `-9999`。这些都是上游的有意变更，快照已同步。
+- 本仓库的开发与测试环境（monorepo catalog）锁定 `~66.13.0`；下游按自己的需要取区间内的版本，超出区间时装包工具会给出 peer 警告。
+- 66.10.1、66.12.0 与 66.13.0 下 wind3 的生成结果逐字节相同，`test/assets/output/preset-wind3-targets.css` 在升级时没有变化。wind4 有差异：66.11 起规则排序不再受 token 顺序影响，66.12 起任意 CSS 变量颜色直接输出 `var(--x)`（不再包一层 `color-mix`）、`order-first` 改成 `-9999`，66.13 起主题变量按 key 排序输出、`contain-*` 的变量名按 `size` / `layout` / `paint` / `style` 归一且引用处带 `var(--x, )` 兜底（[#5400](https://github.com/unocss/unocss/pull/5400)、[#5459](https://github.com/unocss/unocss/pull/5459)）。这些都是上游的有意变更，快照已同步。
 - 需要 Node.js `>= 22.12`：本包 `transformer-attributify` / `transformer-hover` 的运行时依赖 `magic-string@1.x` 仅提供 ESM 入口，构建工具在 CJS 链上加载它（如 Taro webpack 的 `@unocss/webpack`）依赖 Node 22.12 起默认支持的 `require(esm)`。
-- **Taro（Webpack/CJS 链路）已知上游缺陷**：unocss 自 66.8 起，`@unocss/webpack` 的 CJS 产物外部依赖 ESM-only 的 `magic-string@1.x`，且其打包 interop 在 `require(esm)` 返回的命名空间上取错 default，构建时报 `magic_string.default is not a constructor`（uni-app/Vite 走 ESM 入口，不受影响）。本仓库以 [`patches/@unocss__webpack@66.12.0.patch`](./patches/@unocss__webpack@66.12.0.patch) 修复 Taro 示例构建（CI 会构建 `build:taro:weapp` / `build:taro:h5`），上游修复后移除；直接使用 `@unocss/webpack@66.8+` 的 Taro 项目会命中同样问题，可参考该补丁处理。补丁改的是产物里的 chunk 文件，文件名跟着版本变（66.10.1 是 `dist/unplugin-DZWdE8SL.cjs`，66.12.0 是 `dist/unplugin-BGwGRfkV.cjs`），升级时要用 `pnpm patch` 重新生成，只改 `patchedDependencies` 里的版本号会让补丁失配。
-- 下表矩阵基于 66.12.0 验证；上游 minor/patch 升级通常兼容，主版本升级需重新验证。
+- **Taro（Webpack/CJS 链路）已知上游缺陷**：unocss 自 66.8 起，`@unocss/webpack` 的 CJS 产物外部依赖 ESM-only 的 `magic-string@1.x`，且其打包 interop 在 `require(esm)` 返回的命名空间上取错 default，构建时报 `magic_string.default is not a constructor`（uni-app/Vite 走 ESM 入口，不受影响）。本仓库以 [`patches/@unocss__webpack@66.13.0.patch`](./patches/@unocss__webpack@66.13.0.patch) 修复 Taro 示例构建（CI 会构建 `build:taro:weapp` / `build:taro:h5`），上游修复后移除；直接使用 `@unocss/webpack@66.8+` 的 Taro 项目会命中同样问题，可参考该补丁处理。补丁改的是产物里的 chunk 文件，文件名跟着版本变（66.10.1 是 `dist/unplugin-DZWdE8SL.cjs`，66.12.0 是 `dist/unplugin-BGwGRfkV.cjs`，66.13.0 是 `dist/unplugin-3TNVNVlj.cjs`），升级时要用 `pnpm patch` 重新生成，只改 `patchedDependencies` 里的版本号会让补丁失配。
+- 下表矩阵基于 66.13.0 验证；上游 minor/patch 升级通常兼容，主版本升级需重新验证。
 - 下方各 preset/transformer 的「支持 / 部分支持 / 不支持」结论均针对此版本。
 
 ### unocss-applet 与 UnoCSS / Node.js 版本对应
@@ -28,8 +28,9 @@
 
 | unocss-applet | unocss | Node.js | 说明 |
 | --- | --- | --- | --- |
-| `0.16.0` | `>=66.10.1 <66.13.0` | `>=22.12` | peer 从 `~66.10.1` 改为区间，验证基于 66.12.0。 |
+| `0.16.2` | `>=66.10.1 <66.14.0` | `>=22.12` | 验证基于 66.13.0；wind4 快照随上游主题变量排序与 `contain-*` 修复同步，peer 上限放宽到 `<66.14.0`。 |
 | `0.16.1` | `>=66.10.1 <66.13.0` | `>=22.12` | 修复 `[&>view]:` 这类含 `>` 的任意变体被丢弃（[#115](https://github.com/unocss-applet/unocss-applet/issues/115)），依赖与 peer 范围同 `0.16.0`。 |
+| `0.16.0` | `>=66.10.1 <66.13.0` | `>=22.12` | peer 从 `~66.10.1` 改为区间，验证基于 66.12.0。 |
 | `0.15.0` – `0.15.1` | `~66.10.1` | `>=22.12` | 本包 `engines.node` 声明。 |
 | `0.14.0` | `~66.8.1` | `>=22.12` | 本包 `engines.node` 声明。 |
 | `0.13.8` | `~66.7.5` | 未声明 | 0.14.0 前未声明 `engines`，发布基于 Node 22 LTS。 |
@@ -51,7 +52,7 @@
 | `preset-mini` | ✅ 包裹 | ✅ | 由 `presetApplet({ preset: 'wind3' })` 内部包含；无需单独使用。 |
 | `preset-wind3` | ✅ 包裹 | ✅ | `presetApplet` 默认即基于 wind3，等价于 wind3。 |
 | `preset-wind4` | ⚠️ 部分支持 | ✅ | `presetApplet({ preset: 'wind4' })`。wind4 的新语法（`text-[...]`、`c-*`、`border-*`、`rounded-1/2` 等）在 applet 下存在已知生成失败项，完整清单见 [`test/preset-applet-wind4.test.ts`](./test/preset-applet-wind4.test.ts) 的 `unmatched` 内联快照。**推荐使用 `wind3`**（默认）。 |
-| [`preset-attributify`](https://unocss.dev/presets/attributify) | ❌ 不支持 | ✅ | 运行期依赖属性选择器 `[un-text=""]`，小程序 wxss 不支持。**变通**：小程序端改用本仓库 [`transformerAttributify`](./packages/transformer-attributify)，把属性编译进 `class=""`；H5 端仍用上游 `presetAttributify`。两套 example 均按此 if/else 分支配置。 |
+| [`preset-attributify`](https://unocss.dev/presets/attributify) | ❌ 不支持 | ✅ | 运行期依赖属性选择器 `[un-text=""]`，小程序 wxss 不支持。**变通**：小程序端改用本仓库 [`transformerAttributify`](./packages/transformer-attributify)，把属性编译进 `class=""`；H5 端仍用上游 `presetAttributify`。两套 example 均按此 if/else 分支配置。写法取舍见下文「关于 attributify 的写法建议」。 |
 | [`preset-tagify`](https://unocss.dev/presets/tagify) | ❌ 不支持 | ✅ | 生成 `<marker>` 标签选择器，小程序不支持自定义标签选择器。无内置变通。 |
 | [`preset-icons`](https://unocss.dev/presets/icons) | ✅ 支持 | ✅ | 生成 `.i-xxx` 类名（`background-image` / `mask`），不依赖属性选择器。两套 example 均直接加载上游 `presetIcons`，无需额外处理。 |
 | [`preset-typography`](https://unocss.dev/presets/typography) | ❌ 不支持 | ✅ | 重度使用 `:where` / `:is` / `:not` 与后代选择器，小程序不支持。无内置变通，建议手写 prose CSS 或使用 [`@unocss-applet/reset`](./packages/reset) 的 tailwind preflight。 |
@@ -68,7 +69,7 @@
 | [`transformer-directives`](https://unocss.dev/transformers/directives) | ❌ 不支持 | ✅ | `@apply` / `@screen` 在 UnoCSS 的 generator 上下文里无法把声明绑定到自定义选择器（`.foo { @apply p-2; }` 只产出 `.p-2{...}`，`.foo` 包裹丢失），且小程序构建链不注入 UnoCSS 插件层来补救；`@screen` / `theme()` 等则被静默丢弃。H5 端配合 UnoCSS Vite/Webpack 插件可用。 |
 | [`transformer-compile-class`](https://unocss.dev/transformers/compile-class) | ⚠️ 需验证 | ✅ | 把 `:uno: xxx` 编译为 hash shortcut。hash 类名本身 applet 安全，但与 `transformerApplet` 叠加时需实际测试两者执行顺序与最终选择器是否符合预期。 |
 | [`transformer-attributify-jsx`](https://unocss.dev/transformers/attributify-jsx) | ➡️ 不适用 | ➡️ 不适用 | 面向 JSX/TSX 的无值 attributify，依赖运行期 `presetAttributify`，小程序端不可用。uni-app（Vue3）与 Taro React（JSX/TSX）均使用本仓库 `transformerAttributify`（已支持 `.vue`/`.jsx`/`.tsx`，JSX 端注入 `className`）。 |
-| 本仓库 `transformerAttributify` | ✅ 官方变通 | ➡️ 不需要 | 小程序端 Attributify 的官方实现，把 `.vue` / `.jsx` / `.tsx` 模板里的属性编译进 `class=""`（JSX 端注入 `className`）。 |
+| 本仓库 `transformerAttributify` | ✅ 官方变通 | ➡️ 不需要 | 小程序端 Attributify 的官方实现，把 `.vue` / `.jsx` / `.tsx` 模板里的属性编译进 `class=""`（JSX 端注入 `className`）。只在沿用 attributify 写法时需要，写法取舍见下文「关于 attributify 的写法建议」。 |
 | 本仓库 [`transformerHover`](./packages/transformer-hover) | ✅ 官方变通 | ➡️ 不需要 | 把 `hover:` 工具类改写到原生 `hover-class` 属性（`view`/`button` 按下态）。`hover-class` 仅支持字符串，transformer 自动合并并去前缀。**仅小程序端启用**——H5 端 `:hover` 原生可用，启用反而失效。 |
 
 ## Extractors
@@ -110,9 +111,19 @@ presets.push(presetIcons({ scale: 1.2, warn: true, /* ... */ }))
 | --- | --- | --- | --- |
 | `presetApplet` | ✅ 必需 | ✅ 必需 | 包裹 wind3/wind4，注入 postprocess + transformerApplet，处理非法字符。 |
 | `presetRemRpx` | `rem2rpx`（默认） | `rpx2rem` | 两端 rem/rpx 互转，共用一份样式。 |
-| `transformerAttributify` | ✅ 必需（如需 attributify） | ❌ 不需要 | 小程序 attributify 变通方案，处理 `.vue` / `.jsx` / `.tsx`。 |
-| `presetAttributify`（上游） | ❌ 不可用 | ✅ 必需 | H5 端 attributify 运行期支持。 |
+| `transformerAttributify` | ➡️ 仅在沿用 attributify 写法时需要 | ➡️ 不需要 | 小程序 attributify 变通方案，处理 `.vue` / `.jsx` / `.tsx`。 |
+| `presetAttributify`（上游） | ❌ 不可用 | ➡️ 仅在沿用 attributify 写法时需要 | H5 端 attributify 运行期支持。 |
 | `presetIcons`（上游） | ✅ 可选 | ✅ 可选 | 图标，两端通用。 |
+
+### 关于 attributify 的写法建议
+
+上游作者 Anthony Fu 给 AI agent 的 UnoCSS 规则是：项目配置不清楚时避免使用 attributify 等高级特性，优先写基础的 `class`（[`antfu/skills` 的 UnoCSS skill](https://github.com/antfu/skills/blob/main/skills/unocss/SKILL.md)，基于 UnoCSS v66.10.5，生成于 2026-09-25；规则原文在该仓库的 `instructions/unocss.md`）。按这个定位，attributify 是需要明确约定才用的写法，默认写字面 `class`。
+
+对本仓库的含义：
+
+- `presetAttributify`（H5）与 `transformerAttributify`（小程序）继续维护，服务沿用了 attributify 的已有代码，以及团队里明确决定要用的项目。
+- 小程序端多一层构建期改写（模板属性 → `class=""`），排查样式问题时既要看模板改写结果，也要看生成的 wxss；`class` 写法不经过这一步。
+- 新写的模板按 `class="flex gap-2"` 组织即可，上面「推荐配置」里的 attributify 分支属于能力演示。
 
 ## 小程序端已知的非兼容点
 

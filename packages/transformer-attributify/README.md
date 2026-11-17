@@ -2,6 +2,12 @@
 
 为小程序启用 [UnoCSS](https://github.com/unocss/unocss) 的 Attributify 模式。
 
+## 写法建议
+
+上游作者 antfu 建议默认写 `class`，把 attributify 当成需要明确约定才用的高级写法（参考 <https://x.com/antfu7/status/2122498642519150947> 和 <https://github.com/antfu/skills/blob/main/skills/unocss/SKILL.md>）。这个 transformer 服务沿用了 attributify 的代码，以及团队里已经决定用 attributify 的项目；新代码直接写 `class="..."`，不需要它。
+
+小程序端多一层构建期改写（属性 → `class=""`），排查样式问题时既要看模板改写结果，也要看生成的 wxss。完整取舍见主仓库 [`COMPATIBILITY.md`](../../COMPATIBILITY.md) 的「关于 attributify 的写法建议」。
+
 ## 安装
 
 ```bash

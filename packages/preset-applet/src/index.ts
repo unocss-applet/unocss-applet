@@ -57,7 +57,7 @@ export function presetApplet(options: PresetAppletOptions = {}): Preset<object> 
       // `>:not([hidden])~:not([hidden])`，小程序 wxss 解析不了，只能改成明确的元素列表
       // （`> view + view` 这类）。顺手在这里注入 wildcard variant。
       // 下标是硬编码的：wind3 的 `variants()` 前两项是 `placeholderModifier` 和
-      // `variantSpaceAndDivide`（66.12.0 仍如此）。上游若在它前面插入新 variant，这里会换错
+      // `variantSpaceAndDivide`（66.13.0 仍如此）。上游若在它前面插入新 variant，这里会换错
       // 对象；`test/assets/output/preset-wind3-targets.css` 里 `space-x-*` 的 `>view+view`
       // 会立刻对不上。
       preset.variants?.splice(1, 1, ...variantSpaceAndDivide(options), ...variantWildcard(options))
